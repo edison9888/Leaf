@@ -1,0 +1,411 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DB1834E516B2875E004C0732 /* sep_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB1834E316B2875E004C0732 /* sep_line@2x.png */; };
+		DB1834E616B2875E004C0732 /* sep_line.png in Resources */ = {isa = PBXBuildFile; fileRef = DB1834E416B2875E004C0732 /* sep_line.png */; };
+		DB1834EC16B289D1004C0732 /* safari@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB1834E816B289D1004C0732 /* safari@2x.png */; };
+		DB1834ED16B289D1004C0732 /* safari.png in Resources */ = {isa = PBXBuildFile; fileRef = DB1834E916B289D1004C0732 /* safari.png */; };
+		DB1834EE16B289D1004C0732 /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB1834EA16B289D1004C0732 /* menu@2x.png */; };
+		DB1834EF16B289D1004C0732 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = DB1834EB16B289D1004C0732 /* menu.png */; };
+		DB1834F216B28BDB004C0732 /* refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB1834F016B28BDA004C0732 /* refresh@2x.png */; };
+		DB1834F316B28BDB004C0732 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = DB1834F116B28BDA004C0732 /* refresh.png */; };
+		DB61AECC16B2589D006EC642 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB61AECB16B2589D006EC642 /* UIKit.framework */; };
+		DB61AECE16B2589D006EC642 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB61AECD16B2589D006EC642 /* Foundation.framework */; };
+		DB61AED016B2589D006EC642 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB61AECF16B2589D006EC642 /* CoreGraphics.framework */; };
+		DB61AED616B2589D006EC642 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DB61AED416B2589D006EC642 /* InfoPlist.strings */; };
+		DB61AED816B2589D006EC642 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61AED716B2589D006EC642 /* main.m */; };
+		DB61AEDC16B2589D006EC642 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61AEDB16B2589D006EC642 /* AppDelegate.m */; };
+		DB61AEE516B25951006EC642 /* LeafMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61AEE416B25951006EC642 /* LeafMainViewController.m */; };
+		DB61AEFB16B25F68006EC642 /* LeafMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61AEFA16B25F68006EC642 /* LeafMenuController.m */; };
+		DB61AF0E16B26E19006EC642 /* NSSidebarController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61AF0B16B26E19006EC642 /* NSSidebarController.m */; };
+		DB61AF0F16B26E19006EC642 /* UIViewController+NSSidebarController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61AF0D16B26E19006EC642 /* UIViewController+NSSidebarController.m */; };
+		DB61AF1216B26F96006EC642 /* LeafNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61AF1116B26F96006EC642 /* LeafNavigationBar.m */; };
+		DB61AF2C16B276CA006EC642 /* header@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB61AF2816B276C9006EC642 /* header@2x.png */; };
+		DB61AF2D16B276CA006EC642 /* header.png in Resources */ = {isa = PBXBuildFile; fileRef = DB61AF2916B276C9006EC642 /* header.png */; };
+		DB61AF2E16B276CA006EC642 /* header_shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB61AF2A16B276CA006EC642 /* header_shadow@2x.png */; };
+		DB61AF2F16B276CA006EC642 /* header_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = DB61AF2B16B276CA006EC642 /* header_shadow.png */; };
+		DB61AF3816B27812006EC642 /* LeafCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61AF3316B27812006EC642 /* LeafCategory.m */; };
+		DB61AF3916B27812006EC642 /* UILabel+LeafHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61AF3716B27812006EC642 /* UILabel+LeafHelper.m */; };
+		DB8593D116B55EAD009773F1 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB8593D016B55EAD009773F1 /* Default-568h@2x.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		DB1834E316B2875E004C0732 /* sep_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sep_line@2x.png"; sourceTree = "<group>"; };
+		DB1834E416B2875E004C0732 /* sep_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sep_line.png; sourceTree = "<group>"; };
+		DB1834E816B289D1004C0732 /* safari@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "safari@2x.png"; sourceTree = "<group>"; };
+		DB1834E916B289D1004C0732 /* safari.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = safari.png; sourceTree = "<group>"; };
+		DB1834EA16B289D1004C0732 /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu@2x.png"; sourceTree = "<group>"; };
+		DB1834EB16B289D1004C0732 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
+		DB1834F016B28BDA004C0732 /* refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "refresh@2x.png"; sourceTree = "<group>"; };
+		DB1834F116B28BDA004C0732 /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh.png; sourceTree = "<group>"; };
+		DB61AEC716B2589D006EC642 /* Leaf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Leaf.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB61AECB16B2589D006EC642 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		DB61AECD16B2589D006EC642 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		DB61AECF16B2589D006EC642 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		DB61AED316B2589D006EC642 /* Leaf-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Leaf-Info.plist"; sourceTree = "<group>"; };
+		DB61AED516B2589D006EC642 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DB61AED716B2589D006EC642 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		DB61AED916B2589D006EC642 /* Leaf-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Leaf-Prefix.pch"; sourceTree = "<group>"; };
+		DB61AEDA16B2589D006EC642 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		DB61AEDB16B2589D006EC642 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		DB61AEE316B25951006EC642 /* LeafMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafMainViewController.h; path = Classes/LeafMainViewController.h; sourceTree = "<group>"; };
+		DB61AEE416B25951006EC642 /* LeafMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafMainViewController.m; path = Classes/LeafMainViewController.m; sourceTree = "<group>"; };
+		DB61AEF916B25F68006EC642 /* LeafMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafMenuController.h; path = Classes/LeafMenuController.h; sourceTree = "<group>"; };
+		DB61AEFA16B25F68006EC642 /* LeafMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafMenuController.m; path = Classes/LeafMenuController.m; sourceTree = "<group>"; };
+		DB61AF0A16B26E19006EC642 /* NSSidebarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSSidebarController.h; sourceTree = "<group>"; };
+		DB61AF0B16B26E19006EC642 /* NSSidebarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSSidebarController.m; sourceTree = "<group>"; };
+		DB61AF0C16B26E19006EC642 /* UIViewController+NSSidebarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+NSSidebarController.h"; sourceTree = "<group>"; };
+		DB61AF0D16B26E19006EC642 /* UIViewController+NSSidebarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+NSSidebarController.m"; sourceTree = "<group>"; };
+		DB61AF1016B26F96006EC642 /* LeafNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafNavigationBar.h; path = Views/LeafNavigationBar.h; sourceTree = "<group>"; };
+		DB61AF1116B26F96006EC642 /* LeafNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafNavigationBar.m; path = Views/LeafNavigationBar.m; sourceTree = "<group>"; };
+		DB61AF2816B276C9006EC642 /* header@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "header@2x.png"; sourceTree = "<group>"; };
+		DB61AF2916B276C9006EC642 /* header.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = header.png; sourceTree = "<group>"; };
+		DB61AF2A16B276CA006EC642 /* header_shadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "header_shadow@2x.png"; sourceTree = "<group>"; };
+		DB61AF2B16B276CA006EC642 /* header_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = header_shadow.png; sourceTree = "<group>"; };
+		DB61AF3216B27812006EC642 /* LeafCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafCategory.h; sourceTree = "<group>"; };
+		DB61AF3316B27812006EC642 /* LeafCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeafCategory.m; sourceTree = "<group>"; };
+		DB61AF3416B27812006EC642 /* LeafHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafHelper.h; sourceTree = "<group>"; };
+		DB61AF3516B27812006EC642 /* LeafMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafMacros.h; sourceTree = "<group>"; };
+		DB61AF3616B27812006EC642 /* UILabel+LeafHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+LeafHelper.h"; sourceTree = "<group>"; };
+		DB61AF3716B27812006EC642 /* UILabel+LeafHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+LeafHelper.m"; sourceTree = "<group>"; };
+		DB8593D016B55EAD009773F1 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DB61AEC416B2589D006EC642 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB61AECC16B2589D006EC642 /* UIKit.framework in Frameworks */,
+				DB61AECE16B2589D006EC642 /* Foundation.framework in Frameworks */,
+				DB61AED016B2589D006EC642 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DB61AEBC16B2589D006EC642 = {
+			isa = PBXGroup;
+			children = (
+				DB8593D016B55EAD009773F1 /* Default-568h@2x.png */,
+				DB61AF0816B26DA3006EC642 /* Vender */,
+				DB61AED116B2589D006EC642 /* Leaf */,
+				DB61AF1316B2721B006EC642 /* Resources */,
+				DB61AECA16B2589D006EC642 /* Frameworks */,
+				DB61AEC816B2589D006EC642 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DB61AEC816B2589D006EC642 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DB61AEC716B2589D006EC642 /* Leaf.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DB61AECA16B2589D006EC642 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DB61AECB16B2589D006EC642 /* UIKit.framework */,
+				DB61AECD16B2589D006EC642 /* Foundation.framework */,
+				DB61AECF16B2589D006EC642 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DB61AED116B2589D006EC642 /* Leaf */ = {
+			isa = PBXGroup;
+			children = (
+				DB61AEDA16B2589D006EC642 /* AppDelegate.h */,
+				DB61AEDB16B2589D006EC642 /* AppDelegate.m */,
+				DB61AEE216B2590D006EC642 /* Classes */,
+				DB61AEFF16B25FF3006EC642 /* Views */,
+				DB61AF3116B27812006EC642 /* Helper */,
+				DB61AED216B2589D006EC642 /* Supporting Files */,
+			);
+			path = Leaf;
+			sourceTree = "<group>";
+		};
+		DB61AED216B2589D006EC642 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DB61AED316B2589D006EC642 /* Leaf-Info.plist */,
+				DB61AED416B2589D006EC642 /* InfoPlist.strings */,
+				DB61AED716B2589D006EC642 /* main.m */,
+				DB61AED916B2589D006EC642 /* Leaf-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DB61AEE216B2590D006EC642 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				DB61AEE316B25951006EC642 /* LeafMainViewController.h */,
+				DB61AEE416B25951006EC642 /* LeafMainViewController.m */,
+				DB61AEF916B25F68006EC642 /* LeafMenuController.h */,
+				DB61AEFA16B25F68006EC642 /* LeafMenuController.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		DB61AEFF16B25FF3006EC642 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DB61AF1016B26F96006EC642 /* LeafNavigationBar.h */,
+				DB61AF1116B26F96006EC642 /* LeafNavigationBar.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		DB61AF0816B26DA3006EC642 /* Vender */ = {
+			isa = PBXGroup;
+			children = (
+				DB61AF0916B26E19006EC642 /* SidebarController */,
+			);
+			name = Vender;
+			sourceTree = "<group>";
+		};
+		DB61AF0916B26E19006EC642 /* SidebarController */ = {
+			isa = PBXGroup;
+			children = (
+				DB61AF0A16B26E19006EC642 /* NSSidebarController.h */,
+				DB61AF0B16B26E19006EC642 /* NSSidebarController.m */,
+				DB61AF0C16B26E19006EC642 /* UIViewController+NSSidebarController.h */,
+				DB61AF0D16B26E19006EC642 /* UIViewController+NSSidebarController.m */,
+			);
+			name = SidebarController;
+			path = Vender/SidebarController;
+			sourceTree = "<group>";
+		};
+		DB61AF1316B2721B006EC642 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DB1834F016B28BDA004C0732 /* refresh@2x.png */,
+				DB1834F116B28BDA004C0732 /* refresh.png */,
+				DB1834E816B289D1004C0732 /* safari@2x.png */,
+				DB1834E916B289D1004C0732 /* safari.png */,
+				DB1834EA16B289D1004C0732 /* menu@2x.png */,
+				DB1834EB16B289D1004C0732 /* menu.png */,
+				DB1834E316B2875E004C0732 /* sep_line@2x.png */,
+				DB1834E416B2875E004C0732 /* sep_line.png */,
+				DB61AF2816B276C9006EC642 /* header@2x.png */,
+				DB61AF2916B276C9006EC642 /* header.png */,
+				DB61AF2A16B276CA006EC642 /* header_shadow@2x.png */,
+				DB61AF2B16B276CA006EC642 /* header_shadow.png */,
+			);
+			name = Resources;
+			path = Leaf/Resources;
+			sourceTree = "<group>";
+		};
+		DB61AF3116B27812006EC642 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				DB61AF3216B27812006EC642 /* LeafCategory.h */,
+				DB61AF3316B27812006EC642 /* LeafCategory.m */,
+				DB61AF3416B27812006EC642 /* LeafHelper.h */,
+				DB61AF3516B27812006EC642 /* LeafMacros.h */,
+				DB61AF3616B27812006EC642 /* UILabel+LeafHelper.h */,
+				DB61AF3716B27812006EC642 /* UILabel+LeafHelper.m */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DB61AEC616B2589D006EC642 /* Leaf */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DB61AEDF16B2589D006EC642 /* Build configuration list for PBXNativeTarget "Leaf" */;
+			buildPhases = (
+				DB61AEC316B2589D006EC642 /* Sources */,
+				DB61AEC416B2589D006EC642 /* Frameworks */,
+				DB61AEC516B2589D006EC642 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Leaf;
+			productName = Leaf;
+			productReference = DB61AEC716B2589D006EC642 /* Leaf.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DB61AEBE16B2589D006EC642 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = Mobimtech;
+			};
+			buildConfigurationList = DB61AEC116B2589D006EC642 /* Build configuration list for PBXProject "Leaf" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = DB61AEBC16B2589D006EC642;
+			productRefGroup = DB61AEC816B2589D006EC642 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DB61AEC616B2589D006EC642 /* Leaf */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DB61AEC516B2589D006EC642 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB61AED616B2589D006EC642 /* InfoPlist.strings in Resources */,
+				DB61AF2C16B276CA006EC642 /* header@2x.png in Resources */,
+				DB61AF2D16B276CA006EC642 /* header.png in Resources */,
+				DB61AF2E16B276CA006EC642 /* header_shadow@2x.png in Resources */,
+				DB61AF2F16B276CA006EC642 /* header_shadow.png in Resources */,
+				DB1834E516B2875E004C0732 /* sep_line@2x.png in Resources */,
+				DB1834E616B2875E004C0732 /* sep_line.png in Resources */,
+				DB1834EC16B289D1004C0732 /* safari@2x.png in Resources */,
+				DB1834ED16B289D1004C0732 /* safari.png in Resources */,
+				DB1834EE16B289D1004C0732 /* menu@2x.png in Resources */,
+				DB1834EF16B289D1004C0732 /* menu.png in Resources */,
+				DB1834F216B28BDB004C0732 /* refresh@2x.png in Resources */,
+				DB1834F316B28BDB004C0732 /* refresh.png in Resources */,
+				DB8593D116B55EAD009773F1 /* Default-568h@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DB61AEC316B2589D006EC642 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB61AED816B2589D006EC642 /* main.m in Sources */,
+				DB61AEDC16B2589D006EC642 /* AppDelegate.m in Sources */,
+				DB61AEE516B25951006EC642 /* LeafMainViewController.m in Sources */,
+				DB61AEFB16B25F68006EC642 /* LeafMenuController.m in Sources */,
+				DB61AF0E16B26E19006EC642 /* NSSidebarController.m in Sources */,
+				DB61AF0F16B26E19006EC642 /* UIViewController+NSSidebarController.m in Sources */,
+				DB61AF1216B26F96006EC642 /* LeafNavigationBar.m in Sources */,
+				DB61AF3816B27812006EC642 /* LeafCategory.m in Sources */,
+				DB61AF3916B27812006EC642 /* UILabel+LeafHelper.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		DB61AED416B2589D006EC642 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DB61AED516B2589D006EC642 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DB61AEDD16B2589D006EC642 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		DB61AEDE16B2589D006EC642 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DB61AEE016B2589D006EC642 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Leaf/Leaf-Prefix.pch";
+				INFOPLIST_FILE = "Leaf/Leaf-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		DB61AEE116B2589D006EC642 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Leaf/Leaf-Prefix.pch";
+				INFOPLIST_FILE = "Leaf/Leaf-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DB61AEC116B2589D006EC642 /* Build configuration list for PBXProject "Leaf" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB61AEDD16B2589D006EC642 /* Debug */,
+				DB61AEDE16B2589D006EC642 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DB61AEDF16B2589D006EC642 /* Build configuration list for PBXNativeTarget "Leaf" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB61AEE016B2589D006EC642 /* Debug */,
+				DB61AEE116B2589D006EC642 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DB61AEBE16B2589D006EC642 /* Project object */;
+}
