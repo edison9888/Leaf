@@ -1,0 +1,18 @@
+# news list
+http://www.cnbeta.com/api/getNewsList.php?limit=20
+
+# news content
+http://www.cnbeta.com/api/getNewsContent2.php?articleId=[214305]
+
+# more 10:
+http://www.cnbeta.com/api/getNewsList.php?fromArticleId=214283&limit=10
+
+# top 10
+http://www.cnbeta.com/api/getTop10.php
+
+# hot comment
+http://www.cnbeta.com/api/getHMComment.php?limit=10
+
+# font
+normal: FZLTHK--GBK1-0 
+bold: FZLTZHK--GBK1-0
