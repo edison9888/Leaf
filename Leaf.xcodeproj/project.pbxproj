@@ -21,6 +21,10 @@
 		DB61AF3816B27812006EC642 /* LeafCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61AF3316B27812006EC642 /* LeafCategory.m */; };
 		DB61AF3916B27812006EC642 /* UILabel+LeafHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61AF3716B27812006EC642 /* UILabel+LeafHelper.m */; };
 		DB8593D116B55EAD009773F1 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB8593D016B55EAD009773F1 /* Default-568h@2x.png */; };
+		DB8593DC16B6C45C009773F1 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = DB8593DA16B6C45C009773F1 /* placeholder.png */; };
+		DB8593DD16B6C45C009773F1 /* placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB8593DB16B6C45C009773F1 /* placeholder@2x.png */; };
+		DB8593E016B6C46C009773F1 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DB8593DF16B6C46C009773F1 /* icon.png */; };
+		DB8593E216B6C475009773F1 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB8593E116B6C475009773F1 /* icon@2x.png */; };
 		DBD8259C16B6203C00EC4439 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD8259B16B6203C00EC4439 /* EGORefreshTableHeaderView.m */; };
 		DBD825A316B6204F00EC4439 /* LeafURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD825A016B6204F00EC4439 /* LeafURLConnection.m */; };
 		DBD825AA16B6211800EC4439 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBD825A916B6211800EC4439 /* QuartzCore.framework */; };
@@ -84,6 +88,10 @@
 		DB61AF3616B27812006EC642 /* UILabel+LeafHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+LeafHelper.h"; sourceTree = "<group>"; };
 		DB61AF3716B27812006EC642 /* UILabel+LeafHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+LeafHelper.m"; sourceTree = "<group>"; };
 		DB8593D016B55EAD009773F1 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		DB8593DA16B6C45C009773F1 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
+		DB8593DB16B6C45C009773F1 /* placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "placeholder@2x.png"; sourceTree = "<group>"; };
+		DB8593DF16B6C46C009773F1 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		DB8593E116B6C475009773F1 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		DBD8259A16B6203C00EC4439 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		DBD8259B16B6203C00EC4439 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		DBD8259F16B6204F00EC4439 /* LeafURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafURLConnection.h; sourceTree = "<group>"; };
@@ -155,6 +163,8 @@
 		DB61AEBC16B2589D006EC642 = {
 			isa = PBXGroup;
 			children = (
+				DB8593E116B6C475009773F1 /* icon@2x.png */,
+				DB8593DF16B6C46C009773F1 /* icon.png */,
 				DB8593D016B55EAD009773F1 /* Default-568h@2x.png */,
 				DB61AF0816B26DA3006EC642 /* Vender */,
 				DB61AED116B2589D006EC642 /* Leaf */,
@@ -315,6 +325,8 @@
 		DBD825C616B644D600EC4439 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				DB8593DA16B6C45C009773F1 /* placeholder.png */,
+				DB8593DB16B6C45C009773F1 /* placeholder@2x.png */,
 				DBD825C716B644D600EC4439 /* blackArrow.png */,
 				DBD825C816B644D600EC4439 /* blackArrow@2x.png */,
 				DBD825C916B644D600EC4439 /* comment_box.png */,
@@ -439,6 +451,10 @@
 				DBD825E916B644D600EC4439 /* sep_line@2x.png in Resources */,
 				DBD825EA16B644D600EC4439 /* FZLanTingHei-DB-GBK.TTF in Resources */,
 				DBD825EB16B644D600EC4439 /* FZLanTingHei-R-GBK.TTF in Resources */,
+				DB8593DC16B6C45C009773F1 /* placeholder.png in Resources */,
+				DB8593DD16B6C45C009773F1 /* placeholder@2x.png in Resources */,
+				DB8593E016B6C46C009773F1 /* icon.png in Resources */,
+				DB8593E216B6C475009773F1 /* icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

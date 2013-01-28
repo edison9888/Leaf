@@ -59,7 +59,7 @@
     }
     UIImage *image = nil;
     [_count setTextColor:[UIColor whiteColor]];
-    switch (value % (arc4random() % 5)) {
+    switch (arc4random() % 5) {
         case LeafColorTypeGreen:
             image = [UIImage imageWithColor:kGreenColor];
             break;

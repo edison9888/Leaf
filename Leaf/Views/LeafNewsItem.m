@@ -6,6 +6,7 @@
 //  Copyright (c) 2013年 Mobimtech. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "LeafNewsItem.h"
 #import "LeafNewsData.h"
 #import "LeafCommentBox.h"
@@ -36,8 +37,7 @@
 {
     if (self = [super initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 102.0f)]) {
         UIImageView *theme = [[UIImageView alloc] initWithFrame:CGRectMake(4.0f, 10.0f, 78.0f, 78.0f)];
-        _theme = theme;
-        [_theme setContentMode:UIViewContentModeScaleToFill];
+        _theme = theme;       
 
         [self addSubview:_theme];
         [theme release];
@@ -91,7 +91,7 @@
     [_time setText:data.pubTime];
     [_time setFrame:CGRectMake(0.0f, CGOriginY(_title.frame) + CGHeight(_title.frame) + 2.0f, timeSize.width, timeSize.height)];
     offsetY += timeSize.height;
-    [_theme setImageWithURL:[NSURL URLWithString:data.theme] placeholderImage:[UIImage imageWithColor:[UIColor blueColor]]];
+    [_theme setImageWithURL:[NSURL URLWithString:data.theme] placeholderImage:[UIImage imageNamed:@"placeholder"]];
     CGFloat originX = CGOriginX(_theme.frame) + CGWidth(_theme.frame) + kPaddingTheme;
     CGFloat originY = (CGHeight(self.frame) - offsetY)/2.0f;
     [_content setFrame:CGRectMake(originX, originY, size.width, offsetY)];
