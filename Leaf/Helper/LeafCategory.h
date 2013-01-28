@@ -43,5 +43,6 @@
 @interface UIImage (LeafHelper)
 
 + (UIImage *)imageWithColor:(UIColor *)color;
+- (UIImage*)cropToSize:(CGSize)newSize;
 
 @end

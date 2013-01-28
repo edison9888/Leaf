@@ -20,7 +20,10 @@
     if (self) {
         [header setUserInteractionEnabled:YES];
         [self addSubview:header];
-          
+        UIImageView *shadow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"header_shadow"]];
+        [shadow setFrame:CGRectMake(CGOriginX(header.frame), CGHeight(header.frame) - 2.0f, CGWidth(shadow.frame), CGHeight(shadow.frame))];
+        [self addSubview:shadow];
+        [shadow release];
     }
     
     [header release];

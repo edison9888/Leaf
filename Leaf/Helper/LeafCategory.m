@@ -133,4 +133,27 @@
     return image;
 }
 
+- (UIImage*)cropToSize:(CGSize)newSize
+{
+	const CGSize size = self.size;
+    if (size.width < newSize.width || size.height < newSize.height) {
+        NSLog(@"don't need to crop.");
+        return self;
+    }
+	CGFloat x, y;
+	
+    x = (size.width - newSize.width) * 0.5f;
+    y = (size.height - newSize.height) * 0.5f;
+    
+    CGRect cropRect = CGRectMake(x * self.scale, y * self.scale, newSize.width * self.scale, newSize.height * self.scale);
+    
+	/// Create the cropped image
+	CGImageRef croppedImageRef = CGImageCreateWithImageInRect(self.CGImage, cropRect);
+	UIImage* cropped = [UIImage imageWithCGImage:croppedImageRef scale:self.scale orientation:self.imageOrientation];
+    
+	CGImageRelease(croppedImageRef);
+    
+	return cropped;
+}
+
 @end

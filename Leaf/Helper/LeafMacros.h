@@ -17,6 +17,6 @@
 #define __INT(v) [NSNumber numberWithInt:v]
 
 // Fonts
-#define kLeafFont10 [UIFont systemFontOfSize:10.0f]
-#define kLeafFont13 [UIFont systemFontOfSize:13.0f]
-#define kLeafBoldFont16 [UIFont boldSystemFontOfSize:16.0f]
+#define kLeafFont10 [UIFont fontWithName:@"FZLTHK--GBK1-0" size:10.0f]
+#define kLeafFont13 [UIFont fontWithName:@"FZLTHK--GBK1-0" size:13.0f]
+#define kLeafBoldFont16 [UIFont fontWithName:@"FZLTZHK--GBK1-0" size:16.0f]

@@ -36,5 +36,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>FZLanTingHei-DB-GBK.TTF</string>
+		<string>FZLanTingHei-R-GBK.TTF</string>
+	</array>
 </dict>
 </plist>

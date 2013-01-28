@@ -164,7 +164,7 @@ typedef enum {
 
 - (void)viewDidLoad
 {
-    self.navigationController.navigationBarHidden = YES;
+    //self.navigationController.navigationBarHidden = YES;
     [self.view addSubview:self.mainController.view];
     
     [super viewDidLoad];
@@ -317,7 +317,13 @@ typedef enum {
                 break;
             case NSSidebarControllerStateLeft:
                 if (revealedState == NSSidebarControllerStateNo)
+                {
                     [self reveal:NO side:NSSidebarControllerSideLeft];
+                    if (_mainController && [_mainController respondsToSelector:@selector(removeMask)])
+                    {
+                        [_mainController performSelector:@selector(removeMask)];
+                    }
+                }
                 else
                 {
                     [self reveal:NO side:NSSidebarControllerSideLeft];
