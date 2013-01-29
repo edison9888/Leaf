@@ -19,8 +19,10 @@ typedef enum
 
 @interface LeafNavigationBar : UIView
 {
-    
+    UIImageView *_leftIcon;
+    UIButton *_leftBtn;
 }
 
 - (void) addItemWithStyle:(LeafNavigationItemStyle)style target:(id)target action:(SEL)action;
+- (void) setTitle:(NSString *)title;
 @end

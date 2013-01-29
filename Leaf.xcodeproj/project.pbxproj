@@ -25,6 +25,9 @@
 		DB8593DD16B6C45C009773F1 /* placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB8593DB16B6C45C009773F1 /* placeholder@2x.png */; };
 		DB8593E016B6C46C009773F1 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DB8593DF16B6C46C009773F1 /* icon.png */; };
 		DB8593E216B6C475009773F1 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB8593E116B6C475009773F1 /* icon@2x.png */; };
+		DB8593E916B80D28009773F1 /* LeafContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8593E816B80D28009773F1 /* LeafContentViewController.m */; };
+		DB8593ED16B81012009773F1 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = DB8593EB16B81012009773F1 /* close.png */; };
+		DB8593EE16B81012009773F1 /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB8593EC16B81012009773F1 /* close@2x.png */; };
 		DBD8259C16B6203C00EC4439 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD8259B16B6203C00EC4439 /* EGORefreshTableHeaderView.m */; };
 		DBD825A316B6204F00EC4439 /* LeafURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD825A016B6204F00EC4439 /* LeafURLConnection.m */; };
 		DBD825AA16B6211800EC4439 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBD825A916B6211800EC4439 /* QuartzCore.framework */; };
@@ -92,6 +95,10 @@
 		DB8593DB16B6C45C009773F1 /* placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "placeholder@2x.png"; sourceTree = "<group>"; };
 		DB8593DF16B6C46C009773F1 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		DB8593E116B6C475009773F1 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
+		DB8593E716B80D28009773F1 /* LeafContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafContentViewController.h; path = Classes/LeafContentViewController.h; sourceTree = "<group>"; };
+		DB8593E816B80D28009773F1 /* LeafContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafContentViewController.m; path = Classes/LeafContentViewController.m; sourceTree = "<group>"; };
+		DB8593EB16B81012009773F1 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
+		DB8593EC16B81012009773F1 /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
 		DBD8259A16B6203C00EC4439 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		DBD8259B16B6203C00EC4439 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		DBD8259F16B6204F00EC4439 /* LeafURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafURLConnection.h; sourceTree = "<group>"; };
@@ -226,6 +233,8 @@
 				DB61AEE416B25951006EC642 /* LeafMainViewController.m */,
 				DB61AEF916B25F68006EC642 /* LeafMenuController.h */,
 				DB61AEFA16B25F68006EC642 /* LeafMenuController.m */,
+				DB8593E716B80D28009773F1 /* LeafContentViewController.h */,
+				DB8593E816B80D28009773F1 /* LeafContentViewController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -325,6 +334,8 @@
 		DBD825C616B644D600EC4439 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				DB8593EB16B81012009773F1 /* close.png */,
+				DB8593EC16B81012009773F1 /* close@2x.png */,
 				DB8593DA16B6C45C009773F1 /* placeholder.png */,
 				DB8593DB16B6C45C009773F1 /* placeholder@2x.png */,
 				DBD825C716B644D600EC4439 /* blackArrow.png */,
@@ -455,6 +466,8 @@
 				DB8593DD16B6C45C009773F1 /* placeholder@2x.png in Resources */,
 				DB8593E016B6C46C009773F1 /* icon.png in Resources */,
 				DB8593E216B6C475009773F1 /* icon@2x.png in Resources */,
+				DB8593ED16B81012009773F1 /* close.png in Resources */,
+				DB8593EE16B81012009773F1 /* close@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -487,6 +500,7 @@
 				DBD8260316B65E1300EC4439 /* SDWebImageManager.m in Sources */,
 				DBD8260416B65E1300EC4439 /* SDWebImagePrefetcher.m in Sources */,
 				DBD8260516B65E1300EC4439 /* UIImageView+WebCache.m in Sources */,
+				DB8593E916B80D28009773F1 /* LeafContentViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,31 +14,34 @@
 
 - (id)init
 {
-    UIImageView *header = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"header"]];
-    CGRect frame = header.frame;
-    self = [super initWithFrame:frame];
-    if (self) {
-        [header setUserInteractionEnabled:YES];
-        [self addSubview:header];
+    self = [super initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 44.0f)];
+    if (self) {        
         UIImageView *shadow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"header_shadow"]];
-        [shadow setFrame:CGRectMake(CGOriginX(header.frame), CGHeight(header.frame) - 2.0f, CGWidth(shadow.frame), CGHeight(shadow.frame))];
+        [shadow setFrame:CGRectMake(0.0f, 42.0f, CGWidth(shadow.frame), CGHeight(shadow.frame))];
         [self addSubview:shadow];
         [shadow release];
+        
+        UIImageView *leftIcon = [[UIImageView alloc] initWithFrame:CGRectMake(16.0f, 8.0f, 30.0f, 30.0f)];
+        _leftIcon = leftIcon;        
+        UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [leftBtn addSubview:_leftIcon];
+        [leftIcon release];
+        _leftBtn = leftBtn;
+        [_leftBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithRed:CGColorConvert(4.0f) green:CGColorConvert(135.0f) blue:CGColorConvert(220.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
+        [leftBtn setFrame:CGRectMake(0.0f, 0.0f, CGWidth(_leftIcon.frame) + 16.0f, 44.0f)];
+        [self addSubview:_leftBtn];
     }
     
-    [header release];
+    [self setBackgroundColor:[UIColor colorWithRed:CGColorConvert(236.0f) green:CGColorConvert(234.0f) blue:CGColorConvert(226.0f) alpha:1.0f]];
+    
     return self;
 }
 
 - (void)addHomeItemWithTarget:(id)target action:(SEL)action
 {
     UIImage *menuImage =  [UIImage imageNamed:@"menu"];
-    UIButton *menuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [menuBtn setImage:menuImage forState:UIControlStateNormal];
-    [menuBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithRed:CGColorConvert(135.0f) green:CGColorConvert(192.0f) blue:CGColorConvert(50.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
-    [menuBtn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-    [menuBtn setFrame:CGRectMake(16.0f, 8.0f, CGWidth(menuImage), CGHeight(menuImage))];
-    [self addSubview:menuBtn];
+    [_leftBtn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    [_leftIcon setImage:menuImage];
 }
 
 - (void)addItemWithStyle:(LeafNavigationItemStyle)style target:(id)target action:(SEL)action
@@ -51,6 +54,14 @@
         default:
             break;
     }
+}
+
+- (void)setTitle:(NSString *)title
+{
+    UILabel *label = [[UILabel alloc] initWithText:title font:kLeafFont13 textColor:[UIColor blackColor] andOrigin:CGPointMake(0.0f, 0.0f) constrainedToSize:CGSizeMake(220.0f, 40.0f)];
+    label.center = CGPointMake(CGWidth(self.frame)/2.0f, CGHeight(self.frame)/2.0f);
+    [self addSubview:label];
+    [label release];
 }
 
 @end

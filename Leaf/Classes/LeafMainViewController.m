@@ -83,6 +83,7 @@
     [view release];
     
     LeafNavigationBar *bar = [[LeafNavigationBar alloc] init];
+    [bar setTitle:@"cnbeta.com"];
     [bar addItemWithStyle:LeafNavigationItemStyleHome target:self action:@selector(homeItemClicked:)];
     _bar = bar;
     [self.view addSubview:bar];
