@@ -242,8 +242,8 @@
 		DB61AEFF16B25FF3006EC642 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				DBD825B816B628C500EC4439 /* EGOLoadMoreTableFooterView.m */,
 				DBD825B916B628C500EC4439 /* EGOLoadMoreTableFooterView.h */,
+				DBD825B816B628C500EC4439 /* EGOLoadMoreTableFooterView.m */,
 				DB61AF1016B26F96006EC642 /* LeafNavigationBar.h */,
 				DB61AF1116B26F96006EC642 /* LeafNavigationBar.m */,
 				DBD825EC16B6590200EC4439 /* LeafNewsItem.h */,

@@ -26,8 +26,11 @@
 
 #import "EGOLoadMoreTableFooterView.h"
 
+#define TEXT_COLOR	 [UIColor blackColor]
+#define kLabelFontSmall [UIFont fontWithName:@"FZLTHK--GBK1-0" size:12.0f]
+#define kLabelFontMid   [UIFont fontWithName:@"FZLTZHK--GBK1-0" size:13.0f]
+#define BACK_COLOR [UIColor colorWithRed:(217.0f/255.0f) green:(217.0f/255.0f) blue:(216.0f/255.0f) alpha:0.8f]
 
-#define TEXT_COLOR	 [UIColor colorWithRed:87.0/255.0 green:108.0/255.0 blue:137.0/255.0 alpha:1.0]
 #define FLIP_ANIMATION_DURATION 0.18f
 
 
@@ -52,12 +55,12 @@
     if (self = [super initWithFrame:frame]) {
 		
 		self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		self.backgroundColor = [UIColor colorWithRed:226.0/255.0 green:231.0/255.0 blue:237.0/255.0 alpha:1.0];
+		self.backgroundColor = BACK_COLOR;
 
 		
 		UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 20.0f, self.frame.size.width, 20.0f)];
 		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		label.font = [UIFont boldSystemFontOfSize:13.0f];
+		label.font = kLabelFontMid;
 		label.textColor = TEXT_COLOR;
 		label.shadowColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
 		label.shadowOffset = CGSizeMake(0.0f, 1.0f);

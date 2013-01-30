@@ -13,8 +13,8 @@
 #import "LeafNewsItem.h"
 #import "LeafNewsData.h"
 
-
-
+#define kNewsListURL @"http://www.cnbeta.com/api/getNewsList.php?limit=20"
+#define kMoreNewsURL @"http://www.cnbeta.com/api/getNewsList.php?fromArticleId=%@&limit=10"
 #define kLeafNewsItemTag 1001
 
 @implementation LeafMainViewController
@@ -67,10 +67,6 @@
     }
 }
 
-- (void)refresh
-{
-    [_connection GET:@"http://www.cnbeta.com/api/getNewsList.php?limit=20"];
-}
 
 #pragma mark - View lifecycle
 
@@ -99,8 +95,18 @@
     [self.view addSubview:tableView];
     [tableView release];
     
+    EGORefreshTableHeaderView *header = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, - CGHeight(_table.frame), CGWidth(_table.frame), CGHeight(_table.frame))];
+    header.delegate = self;
+    _headerView = header;
+    [_table addSubview:header];
+    [header release];
     
-    
+    EGOLoadMoreTableFooterView *footer = [[EGOLoadMoreTableFooterView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGWidth(_table.frame), 100.0f) andScrollView:_table];
+    _footerView = footer;
+    _footerView.delegate = self;
+    _footerView.hidden = YES;
+    [_table addSubview:_footerView];
+    [footer release];
     
     UIView *maskView = [[UIView alloc] initWithFrame:self.view.frame];
     maskView.backgroundColor = [UIColor clearColor];
@@ -112,7 +118,11 @@
     _leaves = [[NSMutableArray alloc] init];
     _connection = [[LeafURLConnection alloc] init];
     _connection.delegate = self;
-    [self refresh];
+    //[self refresh];
+    _reloading = NO;
+    _loadingMore = NO;
+    
+    [_headerView pullTheTrigle:_table];
 }
 
 
@@ -126,6 +136,89 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+
+#pragma mark -
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [_headerView egoRefreshScrollViewDidScroll:scrollView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [_headerView egoRefreshScrollViewDidEndDragging:scrollView];
+    [_footerView egoLoadMoreScrollViewDidEndDragging:scrollView];
+}
+
+#pragma mark -
+#pragma mark Data Source Loading / Reloading Methods
+
+- (void)reloadData{
+	if (!_loadingMore) {
+        [_connection GET:kNewsListURL];
+        _reloading = YES;
+    }
+}
+
+- (void)doneReloadingData{
+	
+	//  model should call this when its done loading
+    _reloading = NO;
+	[_headerView egoRefreshScrollViewDataSourceDidFinishedLoading:_table];
+}
+
+- (void)loadMoreData
+{
+    if (_leaves && _leaves.count > 0) {
+        LeafNewsData *data = [_leaves lastObject];
+        NSString *url = [NSString stringWithFormat:kMoreNewsURL, data.articleId];
+        [_connection GET:url];
+        
+    }
+
+    _loadingMore = YES;
+}
+
+- (void)doneLoadingMoreData
+{
+    _loadingMore = NO;
+    [_footerView egoLoadMoreScrollViewDataSourceDidFinishedLoading:_table];
+}
+
+
+#pragma mark -
+#pragma egoRefreshTableHeaderDelegate Methods
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
+{
+    [self reloadData];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView *)view
+{
+    return _reloading;
+}
+
+- (NSDate *)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView *)view
+{
+    return [NSDate date];
+}
+
+
+#pragma mark -
+#pragma EGOLoadMoreTableFooterDelegate Methods
+
+- (void)egoLoadMoreTableFooterDidTriggerLoadMore:(EGOLoadMoreTableFooterView *)view
+{
+    [self loadMoreData];
+}
+
+- (BOOL)egoLoadMoreTableFooterDataSourceIsLoading:(EGOLoadMoreTableFooterView *)view
+{
+    return _loadingMore;
 }
 
 
@@ -177,22 +270,28 @@
     }
     NSLog(@"didSelectRowAtIndexPath: %d", indexPath.row);
 }
-/*
+
+
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-}*/
+    if (indexPath.row > 5) {
+        [_footerView setFrame:CGRectMake(0.0f, _table.contentSize.height, CGWidth(_footerView.frame), CGHeight(_footerView.frame))];
+        _footerView.hidden = NO;
+    }
+}
+#pragma mark -
+#pragma mark - Parser JSON Data
 
-#pragma mark - 
-#pragma mark - LeafURLConnectionDelegate Methods
-
-- (void)didFinishLoadingData:(NSMutableData *)data
+- (void)dealWithData:(NSMutableData *)data clearFirst:(BOOL)clear
 {
-    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-    if (array) {
+    if (clear) {
         [_leaves removeAllObjects];
+    }
+    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+    if (array) {        
         for (int i = 0; i<array.count; i++) {
             NSDictionary *dict = [array objectAtIndex:i];
+            NSLog(@"dict: %@", [dict description]);
             if (dict) {
                 LeafNewsData *leaf = [[LeafNewsData alloc] init];
                 leaf.theme = [dict stringForKey:@"theme"];
@@ -205,7 +304,30 @@
             }
         }
         [_table reloadData];
-    }  
+    }
+    
+}
+
+#pragma mark - 
+#pragma mark - LeafURLConnectionDelegate Methods
+
+- (void)didFinishLoadingData:(NSMutableData *)data
+{
+    if (!data) {
+        NSLog(@"error: data is nil.");
+        return;
+    }
+    
+    if(_reloading && !_loadingMore) {
+        [self dealWithData:data clearFirst:YES];
+        [self doneReloadingData];
+    }
+    else if(_loadingMore && !_reloading) {
+        [self dealWithData:data clearFirst:NO];
+        [self doneLoadingMoreData];
+    }
+    
+        
 }
 
 @end

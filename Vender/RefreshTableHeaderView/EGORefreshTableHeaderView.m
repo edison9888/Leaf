@@ -27,9 +27,12 @@
 #import "EGORefreshTableHeaderView.h"
 
 
-#define TEXT_COLOR	 [UIColor colorWithRed:87.0/255.0 green:108.0/255.0 blue:137.0/255.0 alpha:1.0]
+#define TEXT_COLOR	 [UIColor blackColor]
+#define kLabelFontSmall [UIFont fontWithName:@"FZLTHK--GBK1-0" size:12.0f]   
+#define kLabelFontMid   [UIFont fontWithName:@"FZLTZHK--GBK1-0" size:13.0f]
 #define FLIP_ANIMATION_DURATION 0.18f
-
+#define BACK_COLOR [UIColor colorWithRed:(217.0f/255.0f) green:(217.0f/255.0f) blue:(216.0f/255.0f) alpha:0.8f]
+//  [UIColor colorWithRed:226.0/255.0 green:231.0/255.0 blue:237.0/255.0 alpha:1.0]
 
 @interface EGORefreshTableHeaderView (Private)
 - (void)setState:(EGOPullRefreshState)aState;
@@ -44,11 +47,11 @@
     if (self = [super initWithFrame:frame]) {
 		
 		self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		self.backgroundColor = [UIColor colorWithRed:226.0/255.0 green:231.0/255.0 blue:237.0/255.0 alpha:1.0];
+		self.backgroundColor = BACK_COLOR;
 
 		UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, frame.size.height - 30.0f, self.frame.size.width, 20.0f)];
 		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		label.font = [UIFont systemFontOfSize:12.0f];
+		label.font = kLabelFontSmall;
 		label.textColor = TEXT_COLOR;
 		label.shadowColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
 		label.shadowOffset = CGSizeMake(0.0f, 1.0f);
@@ -60,7 +63,7 @@
 		
 		label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, frame.size.height - 48.0f, self.frame.size.width, 20.0f)];
 		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		label.font = [UIFont boldSystemFontOfSize:13.0f];
+		label.font = kLabelFontMid;
 		label.textColor = TEXT_COLOR;
 		label.shadowColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
 		label.shadowOffset = CGSizeMake(0.0f, 1.0f);
@@ -110,10 +113,10 @@
 		NSDate *date = [_delegate egoRefreshTableHeaderDataSourceLastUpdated:self];
 		
 		NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-		[formatter setAMSymbol:@"AM"];
-		[formatter setPMSymbol:@"PM"];
-		[formatter setDateFormat:@"MM/dd/yyyy hh:mm:a"];
-		_lastUpdatedLabel.text = [NSString stringWithFormat:@"Last Updated: %@", [formatter stringFromDate:date]];
+		[formatter setAMSymbol:@"上午"];
+		[formatter setPMSymbol:@"下午"];
+		[formatter setDateFormat:@"yyyy-MM-dd hh:mm"];
+		_lastUpdatedLabel.text = [NSString stringWithFormat:@"最后更新: %@", [formatter stringFromDate:date]];
 		[[NSUserDefaults standardUserDefaults] setObject:_lastUpdatedLabel.text forKey:@"EGORefreshTableView_LastRefresh"];
 		[[NSUserDefaults standardUserDefaults] synchronize];
 		[formatter release];
@@ -131,7 +134,7 @@
 	switch (aState) {
 		case EGOOPullRefreshPulling:
 			
-			_statusLabel.text = @"释放刷新...";
+			_statusLabel.text = @"松开即可刷新...";
 			[CATransaction begin];
 			[CATransaction setAnimationDuration:FLIP_ANIMATION_DURATION];
 			_arrowImage.transform = CATransform3DMakeRotation((M_PI / 180.0) * 180.0f, 0.0f, 0.0f, 1.0f);
@@ -147,7 +150,7 @@
 				[CATransaction commit];
 			}
 			
-			_statusLabel.text = @"下拉刷新...";
+			_statusLabel.text = @"下拉可以刷新...";
 			[_activityView stopAnimating];
 			[CATransaction begin];
 			[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions]; 
@@ -175,6 +178,18 @@
 	_state = aState;
 }
 
+- (void)pullTheTrigle:(UIScrollView *)scrollView
+{
+    if ([_delegate respondsToSelector:@selector(egoRefreshTableHeaderDidTriggerRefresh:)]) {
+        [_delegate egoRefreshTableHeaderDidTriggerRefresh:self];
+    }
+    
+    [self setState:EGOOPullRefreshLoading];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.2];
+    scrollView.contentInset = UIEdgeInsetsMake(60.0f, 0.0f, 0.0f, 0.0f);
+    [UIView commitAnimations];
+}
 
 #pragma mark -
 #pragma mark ScrollView Methods
