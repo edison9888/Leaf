@@ -101,6 +101,7 @@
     
     
     
+    
     UIView *maskView = [[UIView alloc] initWithFrame:self.view.frame];
     maskView.backgroundColor = [UIColor clearColor];
     _mask = maskView;
@@ -143,6 +144,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.row < 0 || indexPath.row >= _leaves.count) {
+        NSLog(@"error: tableview out of bounds");
+        return nil;
+    }
     static NSString *identifier = @"Leaf";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
@@ -166,6 +171,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.row < 0 || indexPath.row >= _leaves.count) {
+        NSLog(@"error: tableview out of bounds");
+        return;
+    }
     NSLog(@"didSelectRowAtIndexPath: %d", indexPath.row);
 }
 /*

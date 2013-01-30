@@ -82,6 +82,10 @@
 
 - (void)loadData:(LeafNewsData *)data
 {
+    if (!data) {
+        NSLog(@"leaf item, data is nil.");
+        return;
+    }
     CGFloat offsetY = 0.0f;
     CGSize size = [data.title sizeWithFont:kCellTitleFont constrainedToSize:kMaxTitleSize lineBreakMode:_title.lineBreakMode];
     [_title setFrame:CGRectMake(0.0f, 0.0f, size.width, size.height)];
@@ -91,7 +95,15 @@
     [_time setText:data.pubTime];
     [_time setFrame:CGRectMake(0.0f, CGOriginY(_title.frame) + CGHeight(_title.frame) + 2.0f, timeSize.width, timeSize.height)];
     offsetY += timeSize.height;
-    [_theme setImageWithURL:[NSURL URLWithString:data.theme] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    
+    if (data.theme && [data.theme hasPrefix:@"http://"] && 
+        (![[data.theme lowercaseString] hasSuffix:@".gif"])) {
+        [_theme setImageWithURL:[NSURL URLWithString:data.theme] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    }
+    else {
+        [_theme setImage:[UIImage imageNamed:@"placeholder"]];
+    }
+    
     CGFloat originX = CGOriginX(_theme.frame) + CGWidth(_theme.frame) + kPaddingTheme;
     CGFloat originY = (CGHeight(self.frame) - offsetY)/2.0f;
     [_content setFrame:CGRectMake(originX, originY, size.width, offsetY)];
