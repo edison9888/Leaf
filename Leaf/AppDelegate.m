@@ -28,13 +28,15 @@
     LeafMainViewController *vc = [[LeafMainViewController alloc] init];
     LeafMenuController *leftVC = [[LeafMenuController alloc] init];
     NSSidebarController *rootVC = [[NSSidebarController alloc] initWithMainController:vc];
-
-    rootVC.leftController = leftVC;
-    self.window.rootViewController = rootVC;
+    rootVC.leftController = leftVC;    
+    UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:rootVC];
+    nv.navigationBarHidden = YES;
+    
+    self.window.rootViewController = nv;
     [vc release];
     [leftVC release];
     [rootVC release];
-    
+    [nv release];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;

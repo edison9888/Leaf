@@ -94,7 +94,7 @@
     _table.delegate = self;
     _table.dataSource = self;
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [_table setAllowsSelection:NO];
+    [_table setAllowsSelection:YES];
     [_table setBackgroundColor:[UIColor colorWithRed:CGColorConvert(236.0f) green:CGColorConvert(234.0f) blue:CGColorConvert(226.0f) alpha:1.0f]];
     [self.view addSubview:tableView];
     [tableView release];
@@ -146,7 +146,11 @@
     static NSString *identifier = @"Leaf";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier] autorelease];        
+        UIView *backColor = [[UIView alloc] initWithFrame:cell.frame];
+        backColor.backgroundColor = [UIColor colorWithRed:CGColorConvert(217.0f) green:CGColorConvert(217.0f) blue:CGColorConvert(216.0f) alpha:0.8f];
+        cell.selectedBackgroundView = backColor;
+        [backColor release];
         LeafNewsItem *item = [[LeafNewsItem alloc] init];
         item.tag = kLeafNewsItemTag;
         [cell.contentView addSubview:item];
@@ -159,11 +163,12 @@
     return cell;
 }
 
-/*
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"didSelectRowAtIndexPath: %d", indexPath.row);
 }
-
+/*
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
