@@ -270,12 +270,12 @@
     }
     LeafNewsData *data = [_leaves safeObjectAtIndex:indexPath.row];
     if (data) {
-        NSString *str = [NSString stringWithFormat:kArticleUrl, data.articleId];
-        LeafContentViewController *vc = [[LeafContentViewController alloc] initWithUrl:[NSURL URLWithString:str]];
+        NSString *url = [NSString stringWithFormat:kArticleUrl, data.articleId];
+        LeafContentViewController *vc = [[LeafContentViewController alloc] initWithUrl:url];
         if (self.sidebarController.navigationController) {
             [self.sidebarController.navigationController pushViewController:vc animated:YES];
-            [vc release];
-        }
+         }
+        [vc release];
         NSLog(@"didSelectRowAtIndexPath: %d", indexPath.row);
     }
     

@@ -27,6 +27,7 @@
         UILabel *label = [[UILabel alloc] initWithText:@"正在加载..." font:kLeafBoldFont13 textColor:[UIColor blackColor] andOrigin:CGPointZero];
         label.center = CGPointMake(CGWidth(frame)/2.0f, CGHeight(frame)/2.0f);
         [self addSubview:label];
+        [label release];
     }
     return self;
 }

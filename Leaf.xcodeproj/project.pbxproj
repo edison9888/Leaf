@@ -65,6 +65,7 @@
 		DBD8260516B65E1300EC4439 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD825FF16B65E1300EC4439 /* UIImageView+WebCache.m */; };
 		DBD8260716B6613900EC4439 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBD8260616B6613900EC4439 /* ImageIO.framework */; };
 		DBECD52D16BA9EA000C4AE31 /* LeafLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBECD52C16BA9EA000C4AE31 /* LeafLoadingView.m */; };
+		DBECD53316BAC32200C4AE31 /* leaf.css in Resources */ = {isa = PBXBuildFile; fileRef = DBECD53216BAC32200C4AE31 /* leaf.css */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -158,6 +159,7 @@
 		DBD8260616B6613900EC4439 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		DBECD52B16BA9EA000C4AE31 /* LeafLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafLoadingView.h; path = Views/LeafLoadingView.h; sourceTree = "<group>"; };
 		DBECD52C16BA9EA000C4AE31 /* LeafLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafLoadingView.m; path = Views/LeafLoadingView.m; sourceTree = "<group>"; };
+		DBECD53216BAC32200C4AE31 /* leaf.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = leaf.css; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -292,6 +294,7 @@
 			isa = PBXGroup;
 			children = (
 				DB70FDA316BA582800FD1A8E /* page.html */,
+				DBECD53216BAC32200C4AE31 /* leaf.css */,
 				DBD825C616B644D600EC4439 /* Images */,
 				DBD825D716B644D600EC4439 /* Fonts */,
 			);
@@ -485,6 +488,7 @@
 				DB70FD9616BA320800FD1A8E /* back.png in Resources */,
 				DB70FD9716BA320800FD1A8E /* back@2x.png in Resources */,
 				DB70FDA416BA582900FD1A8E /* page.html in Resources */,
+				DBECD53316BAC32200C4AE31 /* leaf.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

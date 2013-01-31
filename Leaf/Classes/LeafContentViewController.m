@@ -46,7 +46,7 @@
 {
     if (_loading.hidden) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-        
+        _loading.hidden = NO;
         CGPoint center = _loading.center;
         center.y -= 30.0f;
         
@@ -86,16 +86,52 @@
 
 - (void)GET
 {
+    [self showLeafLoadingView];
     if (!_connection) {
         _connection = [[LeafURLConnection alloc] init];
+        _connection.delegate = self;
     }
     
     [_connection GET:_url];
-    [self showLeafLoadingView];
+    
 }
 
 #pragma mark -
-#pragma Test UIWebView
+#pragma UIWebView Stuff
+
+- (NSString *)addLeafCSS:(NSString *)original
+{
+    NSMutableString *html = nil;
+    if (!original) {
+        NSLog(@"original is nil");
+        return nil;
+    }
+    NSRange range = [original rangeOfString:@"<style>"];
+    
+    if (range.length <= 0) {
+        NSLog(@"original does not contain <style>");
+        return nil;
+    }
+    html = [[NSMutableString alloc] init];
+    [html safeAppendString:[original substringToIndex:range.location]];
+    
+    NSString *sub = [original substringFromIndex:range.location];
+    if (sub.length > 0) {
+        NSRange rangeOfEnd = [sub rangeOfString:@">"];
+        if (rangeOfEnd.location > 0 && rangeOfEnd.length > 0) {
+            [html safeAppendString:[sub substringToIndex:rangeOfEnd.location + 1]];
+            if ([sub substringFromIndex:rangeOfEnd.location].length > 1) {
+                NSString *leafCSSPath = [[NSBundle mainBundle] pathForResource:@"leaf" ofType:@"css"];
+                NSString *leafCSS = [NSString stringWithContentsOfFile:leafCSSPath encoding:NSUTF8StringEncoding error:nil];
+                [html safeAppendString:leafCSS];
+                NSString *outOfEnd = [sub substringFromIndex:rangeOfEnd.location + 1];
+                [html safeAppendString:outOfEnd];
+            }
+        }
+    }
+    
+    return [html autorelease];
+}
 
 - (void)inject:(UIWebView *)webView
 {
@@ -146,6 +182,8 @@
     
     _connection = nil;
     
+    //[self loadLocalPage];
+    [self GET];
     //[self showLeafLoadingView];
     //[self performSelector:@selector(hideLeafLoadingView) withObject:nil afterDelay:3.0f];
 }
@@ -169,7 +207,7 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    
+    [self hideLeafLoadingView];
 }
 
 
@@ -179,9 +217,11 @@
 
 - (void)didFinishLoadingData:(NSMutableData *)data
 {
-    NSString *page = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"page content: %@", page);
+    NSString *page = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];    
+    NSString *html = [self addLeafCSS:page];
     [page release];
+    //NSLog(@"html: %@", html);
+    [_content loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] resourcePath] isDirectory:YES]];
 }
 
 - (void)didFailWithError:(NSError *)error
