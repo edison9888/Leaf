@@ -13,11 +13,13 @@
 // Color stuff
 #define CGColorConvert(value)           value/255.0f
 #define kLeafBackgroundColor    [UIColor colorWithRed:CGColorConvert(236.0f) green:CGColorConvert(234.0f) blue:CGColorConvert(226.0f) alpha:1.0f]
+#define kLeafHighlightColor     [UIColor colorWithRed:CGColorConvert(217.0f) green:CGColorConvert(217.0f) blue:CGColorConvert(216.0f) alpha:0.8f]
 
 // Number 
 #define __INT(v) [NSNumber numberWithInt:v]
 
 // Fonts
-#define kLeafFont10 [UIFont fontWithName:@"FZLTHK--GBK1-0" size:10.0f]
-#define kLeafFont13 [UIFont fontWithName:@"FZLTHK--GBK1-0" size:13.0f]
+#define kLeafFont10     [UIFont fontWithName:@"FZLTHK--GBK1-0" size:10.0f]
+#define kLeafFont13     [UIFont fontWithName:@"FZLTHK--GBK1-0" size:13.0f]
 #define kLeafBoldFont16 [UIFont fontWithName:@"FZLTZHK--GBK1-0" size:16.0f]
+#define kLeafBoldFont13 [UIFont fontWithName:@"FZLTZHK--GBK1-0" size:13.0f]

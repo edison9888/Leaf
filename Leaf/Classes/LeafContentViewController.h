@@ -7,11 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LeafURLConnection.h"
 
-@interface LeafContentViewController : UIViewController <UIWebViewDelegate>
+@class LeafLoadingView;
+@interface LeafContentViewController : UIViewController <UIWebViewDelegate, LeafURLConnectionDelegate>
 {
-    NSURL *_url;
+    @private
+    LeafLoadingView *_loading;
+    UIWebView *_content;
+    NSString *_url;
+    LeafURLConnection *_connection;
 }
 
-- (id)initWithUrl:(NSURL *)url;
+- (id)initWithUrl:(NSString *)url;
 @end
