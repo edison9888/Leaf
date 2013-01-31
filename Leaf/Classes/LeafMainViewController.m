@@ -12,9 +12,11 @@
 #import "LeafHelper.h"
 #import "LeafNewsItem.h"
 #import "LeafNewsData.h"
+#import "LeafContentViewController.h"
 
 #define kNewsListURL @"http://www.cnbeta.com/api/getNewsList.php?limit=20"
 #define kMoreNewsURL @"http://www.cnbeta.com/api/getNewsList.php?fromArticleId=%@&limit=10"
+#define kArticleUrl  @"http://www.cnbeta.com/api/getNewsContent2.php?articleId=%@"
 #define kLeafNewsItemTag 1001
 
 @implementation LeafMainViewController
@@ -37,12 +39,10 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void)homeItemClicked:(id)sender
+- (void)menuItemClicked:(id)sender
 {
-    NSLog(@"back home.");
     [self.sidebarController showLeftController];
     [_mask setHidden:NO];
-    
 }
 
 - (void)removeMask
@@ -80,7 +80,7 @@
     
     LeafNavigationBar *bar = [[LeafNavigationBar alloc] init];
     [bar setTitle:@"cnbeta.com"];
-    [bar addItemWithStyle:LeafNavigationItemStyleHome target:self action:@selector(homeItemClicked:)];
+    [bar addLeftItemWithStyle:LeafNavigationItemStyleMenu target:self action:@selector(menuItemClicked:)];
     _bar = bar;
     [self.view addSubview:bar];
     [bar release];
@@ -118,7 +118,7 @@
     _leaves = [[NSMutableArray alloc] init];
     _connection = [[LeafURLConnection alloc] init];
     _connection.delegate = self;
-    //[self refresh];
+
     _reloading = NO;
     _loadingMore = NO;
     
@@ -268,14 +268,24 @@
         NSLog(@"error: tableview out of bounds");
         return;
     }
-    NSLog(@"didSelectRowAtIndexPath: %d", indexPath.row);
+    LeafNewsData *data = [_leaves safeObjectAtIndex:indexPath.row];
+    if (data) {
+        NSString *str = [NSString stringWithFormat:kArticleUrl, data.articleId];
+        LeafContentViewController *vc = [[LeafContentViewController alloc] initWithUrl:[NSURL URLWithString:str]];
+        if (self.sidebarController.navigationController) {
+            [self.sidebarController.navigationController pushViewController:vc animated:YES];
+            [vc release];
+        }
+        NSLog(@"didSelectRowAtIndexPath: %d", indexPath.row);
+    }
+    
 }
 
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row > 5) {
-        [_footerView setFrame:CGRectMake(0.0f, _table.contentSize.height, CGWidth(_footerView.frame), CGHeight(_footerView.frame))];
+        [_footerView setFrame:CGRectMake(0.0f, _table.contentSize.height - 1.0f, CGWidth(_footerView.frame), CGHeight(_footerView.frame))];
         _footerView.hidden = NO;
     }
 }
@@ -291,7 +301,7 @@
     if (array) {        
         for (int i = 0; i<array.count; i++) {
             NSDictionary *dict = [array objectAtIndex:i];
-            NSLog(@"dict: %@", [dict description]);
+           
             if (dict) {
                 LeafNewsData *leaf = [[LeafNewsData alloc] init];
                 leaf.theme = [dict stringForKey:@"theme"];

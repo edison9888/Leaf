@@ -20,6 +20,12 @@
 		DB61AF1216B26F96006EC642 /* LeafNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61AF1116B26F96006EC642 /* LeafNavigationBar.m */; };
 		DB61AF3816B27812006EC642 /* LeafCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61AF3316B27812006EC642 /* LeafCategory.m */; };
 		DB61AF3916B27812006EC642 /* UILabel+LeafHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61AF3716B27812006EC642 /* UILabel+LeafHelper.m */; };
+		DB70FD9616BA320800FD1A8E /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = DB70FD9416BA320700FD1A8E /* back.png */; };
+		DB70FD9716BA320800FD1A8E /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB70FD9516BA320800FD1A8E /* back@2x.png */; };
+		DB70FD9B16BA45C600FD1A8E /* leaf.js in Resources */ = {isa = PBXBuildFile; fileRef = DB70FD9916BA45A900FD1A8E /* leaf.js */; };
+		DB70FDA416BA582900FD1A8E /* page.html in Resources */ = {isa = PBXBuildFile; fileRef = DB70FDA316BA582800FD1A8E /* page.html */; };
+		DB70FDB016BA751B00FD1A8E /* jquery-1.7.1.min.js in Resources */ = {isa = PBXBuildFile; fileRef = DB70FDAC16BA71FB00FD1A8E /* jquery-1.7.1.min.js */; };
+		DB70FDB116BA752300FD1A8E /* jquery-1.7.2.js in Resources */ = {isa = PBXBuildFile; fileRef = DB70FDAE16BA74F900FD1A8E /* jquery-1.7.2.js */; };
 		DB8593D116B55EAD009773F1 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB8593D016B55EAD009773F1 /* Default-568h@2x.png */; };
 		DB8593DC16B6C45C009773F1 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = DB8593DA16B6C45C009773F1 /* placeholder.png */; };
 		DB8593DD16B6C45C009773F1 /* placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB8593DB16B6C45C009773F1 /* placeholder@2x.png */; };
@@ -90,6 +96,12 @@
 		DB61AF3516B27812006EC642 /* LeafMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafMacros.h; sourceTree = "<group>"; };
 		DB61AF3616B27812006EC642 /* UILabel+LeafHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+LeafHelper.h"; sourceTree = "<group>"; };
 		DB61AF3716B27812006EC642 /* UILabel+LeafHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+LeafHelper.m"; sourceTree = "<group>"; };
+		DB70FD9416BA320700FD1A8E /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
+		DB70FD9516BA320800FD1A8E /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
+		DB70FD9916BA45A900FD1A8E /* leaf.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = leaf.js; sourceTree = "<group>"; };
+		DB70FDA316BA582800FD1A8E /* page.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = page.html; sourceTree = "<group>"; };
+		DB70FDAC16BA71FB00FD1A8E /* jquery-1.7.1.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.7.1.min.js"; sourceTree = "<group>"; };
+		DB70FDAE16BA74F900FD1A8E /* jquery-1.7.2.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.7.2.js"; sourceTree = "<group>"; };
 		DB8593D016B55EAD009773F1 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		DB8593DA16B6C45C009773F1 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
 		DB8593DB16B6C45C009773F1 /* placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "placeholder@2x.png"; sourceTree = "<group>"; };
@@ -280,6 +292,10 @@
 		DB61AF1316B2721B006EC642 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DB70FDA316BA582800FD1A8E /* page.html */,
+				DB70FDAC16BA71FB00FD1A8E /* jquery-1.7.1.min.js */,
+				DB70FDAE16BA74F900FD1A8E /* jquery-1.7.2.js */,
+				DB70FD9916BA45A900FD1A8E /* leaf.js */,
 				DBD825C616B644D600EC4439 /* Images */,
 				DBD825D716B644D600EC4439 /* Fonts */,
 			);
@@ -334,6 +350,8 @@
 		DBD825C616B644D600EC4439 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				DB70FD9416BA320700FD1A8E /* back.png */,
+				DB70FD9516BA320800FD1A8E /* back@2x.png */,
 				DB8593EB16B81012009773F1 /* close.png */,
 				DB8593EC16B81012009773F1 /* close@2x.png */,
 				DB8593DA16B6C45C009773F1 /* placeholder.png */,
@@ -442,6 +460,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB70FDB116BA752300FD1A8E /* jquery-1.7.2.js in Resources */,
+				DB70FDB016BA751B00FD1A8E /* jquery-1.7.1.min.js in Resources */,
+				DB70FD9B16BA45C600FD1A8E /* leaf.js in Resources */,
 				DB61AED616B2589D006EC642 /* InfoPlist.strings in Resources */,
 				DB8593D116B55EAD009773F1 /* Default-568h@2x.png in Resources */,
 				DBD825DA16B644D600EC4439 /* blackArrow.png in Resources */,
@@ -468,6 +489,9 @@
 				DB8593E216B6C475009773F1 /* icon@2x.png in Resources */,
 				DB8593ED16B81012009773F1 /* close.png in Resources */,
 				DB8593EE16B81012009773F1 /* close@2x.png in Resources */,
+				DB70FD9616BA320800FD1A8E /* back.png in Resources */,
+				DB70FD9716BA320800FD1A8E /* back@2x.png in Resources */,
+				DB70FDA416BA582900FD1A8E /* page.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -44,17 +44,33 @@
     [_leftIcon setImage:menuImage];
 }
 
-- (void)addItemWithStyle:(LeafNavigationItemStyle)style target:(id)target action:(SEL)action
+- (void)addBackItemWithTarget:(id)target action:(SEL)action
+{
+    UIImage *backImage = [UIImage imageNamed:@"back"];
+    [_leftBtn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    [_leftIcon setImage:backImage];
+}
+
+- (void)addLeftItemWithStyle:(LeafNavigationItemStyle)style target:(id)target action:(SEL)action
 {
     switch (style) {
-        case LeafNavigationItemStyleHome:
+        case LeafNavigationItemStyleMenu:
             [self addHomeItemWithTarget:target action:action];
             break;
-            
+        case LeafNavigationItemStyleBack:
+            [self addBackItemWithTarget:target action:action];
+            break;
         default:
             break;
     }
 }
+
+- (void)addRightItemWithStyle:(LeafNavigationItemStyle)style target:(id)target action:(SEL)action
+{
+    
+}
+
+
 
 - (void)setTitle:(NSString *)title
 {

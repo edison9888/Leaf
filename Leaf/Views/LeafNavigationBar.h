@@ -11,7 +11,8 @@
 typedef enum
 {
     LeafNavigationItemStyleNone = 0,
-    LeafNavigationItemStyleHome,
+    LeafNavigationItemStyleMenu,
+    LeafNavigationItemStyleBack,
     LeafNavigationItemStyleRefresh,
     LeafNavigationItemStyleSafari,
     LeafNavigationItemStyleShare    
@@ -23,6 +24,7 @@ typedef enum
     UIButton *_leftBtn;
 }
 
-- (void) addItemWithStyle:(LeafNavigationItemStyle)style target:(id)target action:(SEL)action;
+- (void) addLeftItemWithStyle:(LeafNavigationItemStyle)style target:(id)target action:(SEL)action;
+- (void) addRightItemWithStyle:(LeafNavigationItemStyle)style target:(id)target action:(SEL)action;
 - (void) setTitle:(NSString *)title;
 @end

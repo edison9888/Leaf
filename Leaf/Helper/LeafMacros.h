@@ -12,6 +12,7 @@
 
 // Color stuff
 #define CGColorConvert(value)           value/255.0f
+#define kLeafBackgroundColor    [UIColor colorWithRed:CGColorConvert(236.0f) green:CGColorConvert(234.0f) blue:CGColorConvert(226.0f) alpha:1.0f]
 
 // Number 
 #define __INT(v) [NSNumber numberWithInt:v]

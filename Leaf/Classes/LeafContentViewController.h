@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LeafContentViewController : UIViewController
+@interface LeafContentViewController : UIViewController <UIWebViewDelegate>
 {
     NSURL *_url;
 }
