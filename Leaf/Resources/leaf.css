@@ -1,6 +1,20 @@
 body {
     background:#ECEAE2 !important;
+    font-weight:normal !important;
 }
-span{
+span {
+    font-family:FZLanTingHei-R-GBK !important;
+    font-size:13pt !important;
+}
+h2 {
+    font-family:FZLanTingHei-DB-GBK !important;
+    font-weight: normal !important;
+    font-size:15pt !important;
+}
+b {
+    font-family:FZLanTingHei-DB-GBK !important;
+    font-weight: normal !important;
+}
+strong {
     font-family:FZLanTingHei-R-GBK !important;
 }
