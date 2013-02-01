@@ -185,7 +185,18 @@
     //[self performSelector:@selector(hideLeafLoadingView) withObject:nil afterDelay:3.0f];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+     _connection.delegate = self;
+    [super viewDidAppear:animated];
+}
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [_connection cancel];
+    _connection.delegate = nil;
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -223,9 +234,12 @@
 
 - (void)didFailWithError:(NSError *)error
 {
-    NSLog(@"didFailWithError");
     [self hideLeafLoadingView];
 }
 
+- (void)connectionDidCancel
+{
+    [self hideLeafLoadingView];
+}
 
 @end

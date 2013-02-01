@@ -170,6 +170,12 @@ typedef enum {
     [super viewDidLoad];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    if ([self.mainController respondsToSelector:@selector(mainViewWillAppear)]) {
+        [self.mainController performSelector:@selector(mainViewWillAppear)];
+    }
+}
 
 
 // TODO: only supports portrait orientation

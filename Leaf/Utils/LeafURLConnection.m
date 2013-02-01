@@ -97,8 +97,6 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    NSLog(@"didReceiveData.");
-       
     if (!_receivedData) {
         _receivedData = [[NSMutableData alloc] initWithData:data];
     }

@@ -118,18 +118,24 @@
     _leaves = [[NSMutableArray alloc] init];
     _connection = [[LeafURLConnection alloc] init];
     _connection.delegate = self;
-
     _reloading = NO;
     _loadingMore = NO;
     
     [_headerView pullTheTrigle:_table];
+    NSLog(@"viewDidLoad.");
 }
 
+- (void)mainViewWillAppear
+{
+    _connection.delegate = self;
+    NSLog(@"viewWillAppear");
+}
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-   
+    [_connection cancel];
+    _connection.delegate = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -318,6 +324,16 @@
     
 }
 
+- (void)stopLoadingAnimation
+{
+    if (_reloading && !_loadingMore) {
+        [self doneReloadingData];
+    }
+    else if(_loadingMore && !_reloading){
+        [self doneLoadingMoreData];
+    }
+}
+
 #pragma mark - 
 #pragma mark - LeafURLConnectionDelegate Methods
 
@@ -325,6 +341,7 @@
 {
     if (!data) {
         NSLog(@"error: data is nil.");
+        [self stopLoadingAnimation];
         return;
     }
     
@@ -338,6 +355,16 @@
     }
     
         
+}
+
+- (void)didFailWithError:(NSError *)error
+{
+    [self stopLoadingAnimation];
+}
+
+- (void)connectionDidCancel
+{
+    [self stopLoadingAnimation];
 }
 
 @end
