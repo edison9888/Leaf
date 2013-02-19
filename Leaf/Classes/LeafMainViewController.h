@@ -17,7 +17,6 @@
     
     LeafNavigationBar *_bar;
     LeafURLConnection *_connection;
-    UIView *_mask;
     UITableView *_table;
     NSMutableArray *_leaves;
     BOOL _loadingMore;

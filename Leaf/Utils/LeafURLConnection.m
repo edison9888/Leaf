@@ -36,7 +36,7 @@
 
 - (void)cancel
 {
-    NSLog(@"cancel connect.");
+    //NSLog(@"cancel connect.");
     if (_connection) {
         [_connection cancel];
         [_connection release], _connection = nil;

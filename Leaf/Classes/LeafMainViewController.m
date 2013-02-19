@@ -8,7 +8,8 @@
 
 #import "LeafMainViewController.h"
 #import "LeafNavigationBar.h"
-#import "UIViewController+NSSidebarController.h"
+
+#import "DDMenuController.h"
 #import "LeafHelper.h"
 #import "LeafNewsItem.h"
 #import "LeafNewsData.h"
@@ -25,7 +26,6 @@
 - (void)dealloc
 {
     _bar = nil;
-    _mask = nil;
     [_leaves release], _leaves = nil;
     [_connection release], _connection = nil;
     [super dealloc];
@@ -39,15 +39,15 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void)menuItemClicked:(id)sender
+- (void)showLeftController:(BOOL)animated
 {
-    [self.sidebarController showLeftController];
-    [_mask setHidden:NO];
+    DDMenuController *menuController = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).menuController;
+    [menuController showLeftController:animated];
 }
 
-- (void)removeMask
+- (void)menuItemClicked:(id)sender
 {
-    [_mask setHidden:YES];
+    [self showLeftController:YES];
 }
 
 - (void)printFonts
@@ -66,6 +66,7 @@
         
     }
 }
+
 
 
 #pragma mark - View lifecycle
@@ -108,13 +109,6 @@
     [_table addSubview:_footerView];
     [footer release];
     
-    UIView *maskView = [[UIView alloc] initWithFrame:self.view.frame];
-    maskView.backgroundColor = [UIColor clearColor];
-    _mask = maskView;
-    [self.view addSubview:maskView];
-    [maskView release];
-    [_mask setHidden:YES];   
-    
     _leaves = [[NSMutableArray alloc] init];
     _connection = [[LeafURLConnection alloc] init];
     _connection.delegate = self;
@@ -128,7 +122,7 @@
 - (void)mainViewWillAppear
 {
     _connection.delegate = self;
-    NSLog(@"viewWillAppear");
+    //NSLog(@"viewWillAppear");
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -278,13 +272,11 @@
     if (data) {
         NSString *url = [NSString stringWithFormat:kArticleUrl, data.articleId];
         LeafContentViewController *vc = [[LeafContentViewController alloc] initWithUrl:url];
-        if (self.sidebarController.navigationController) {
-            [self.sidebarController.navigationController pushViewController:vc animated:YES];
-         }
+        if (self.navigationController) {
+            [self.navigationController pushViewController:vc animated:YES];
+        }
         [vc release];
-        NSLog(@"didSelectRowAtIndexPath: %d", indexPath.row);
     }
-    
 }
 
 
@@ -295,6 +287,8 @@
         _footerView.hidden = NO;
     }
 }
+
+
 #pragma mark -
 #pragma mark - Parser JSON Data
 

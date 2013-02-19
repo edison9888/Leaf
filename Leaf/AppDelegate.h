@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class DDMenuController;
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
+@property (nonatomic, retain) DDMenuController *menuController;
 @end

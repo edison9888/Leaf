@@ -9,15 +9,17 @@
 #import "AppDelegate.h"
 #import "LeafMainViewController.h"
 #import "LeafMenuController.h"
-#import "NSSidebarController.h"
+#import "DDMenuController.h"
 
 @implementation AppDelegate
 
 @synthesize window = _window;
+@synthesize menuController = _menuController;
 
 - (void)dealloc
 {
     [_window release];
+    [_menuController release], _menuController = nil;
     [super dealloc];
 }
 
@@ -26,17 +28,20 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     
     LeafMainViewController *vc = [[LeafMainViewController alloc] init];
-    LeafMenuController *leftVC = [[LeafMenuController alloc] init];
-    NSSidebarController *rootVC = [[NSSidebarController alloc] initWithMainController:vc];
-    rootVC.leftController = leftVC;    
-    UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:rootVC];
+    UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:vc];
     nv.navigationBarHidden = YES;
-    
-    self.window.rootViewController = nv;
+
+    LeafMenuController *leftVC = [[LeafMenuController alloc] init];
+    DDMenuController *rootVC = [[DDMenuController alloc] initWithRootViewController:nv];
+    rootVC.leftViewController = leftVC;    
+    self.menuController = rootVC;    
+    self.window.rootViewController = rootVC;
+
     [vc release];
     [leftVC release];
-    [rootVC release];
     [nv release];
+    [rootVC release];
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;

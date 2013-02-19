@@ -193,9 +193,9 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    [super viewDidDisappear:animated];
     [_connection cancel];
     _connection.delegate = nil;
+    [super viewDidDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -214,6 +214,11 @@
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [self hideLeafLoadingView];
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     [self hideLeafLoadingView];
 }
