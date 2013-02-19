@@ -119,10 +119,10 @@
     NSLog(@"viewDidLoad.");
 }
 
-- (void)mainViewWillAppear
+- (void)viewWillAppear:(BOOL)animated
 {
     _connection.delegate = self;
-    //NSLog(@"viewWillAppear");
+    [super viewWillAppear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
