@@ -21,16 +21,7 @@
         [self addSubview:shadow];
         [shadow release];
         
-        UIImageView *leftIcon = [[UIImageView alloc] initWithFrame:CGRectMake(16.0f, 8.0f, 30.0f, 30.0f)];
-        _leftIcon = leftIcon;        
-        UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [leftBtn addSubview:_leftIcon];
-        [leftIcon release];
-        _leftBtn = leftBtn;
-        [_leftBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithRed:CGColorConvert(217.0f) green:CGColorConvert(217.0f) blue:CGColorConvert(216.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
-        //[UIImage imageWithColor:[UIColor colorWithRed:CGColorConvert(4.0f) green:CGColorConvert(135.0f) blue:CGColorConvert(220.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
-        [leftBtn setFrame:CGRectMake(0.0f, 0.0f, CGWidth(_leftIcon.frame) + 22.0f, 44.0f)];
-        [self addSubview:_leftBtn];
+        
     }
     
     [self setBackgroundColor:[UIColor colorWithRed:CGColorConvert(236.0f) green:CGColorConvert(234.0f) blue:CGColorConvert(226.0f) alpha:1.0f]];    
@@ -53,6 +44,20 @@
 
 - (void)addLeftItemWithStyle:(LeafNavigationItemStyle)style target:(id)target action:(SEL)action
 {
+    if (_leftBtn) {
+        NSLog(@"leftBtn already exists.");
+        return;
+    }
+    UIImageView *leftIcon = [[UIImageView alloc] initWithFrame:CGRectMake(16.0f, 8.0f, 30.0f, 30.0f)];
+    _leftIcon = leftIcon;        
+    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [leftBtn addSubview:_leftIcon];
+    [leftIcon release];
+    _leftBtn = leftBtn;
+    [_leftBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithRed:CGColorConvert(217.0f) green:CGColorConvert(217.0f) blue:CGColorConvert(216.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
+    //[UIImage imageWithColor:[UIColor colorWithRed:CGColorConvert(4.0f) green:CGColorConvert(135.0f) blue:CGColorConvert(220.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
+    [leftBtn setFrame:CGRectMake(0.0f, 0.0f, CGWidth(_leftIcon.frame) + 22.0f, 44.0f)];
+    [self addSubview:_leftBtn];
     switch (style) {
         case LeafNavigationItemStyleMenu:
             [self addHomeItemWithTarget:target action:action];
@@ -67,7 +72,33 @@
 
 - (void)addRightItemWithStyle:(LeafNavigationItemStyle)style target:(id)target action:(SEL)action
 {
+    if (_rightBtn) {
+        NSLog(@"rightBtn already exists.");
+        return;
+    }
     
+    UIImageView *rightIcon = [[UIImageView alloc] initWithFrame:CGRectMake(16.0f, 8.0f, 30.0f, 30.0f)];
+    _rightIcon = rightIcon;        
+    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightBtn addSubview:_rightIcon];
+    [rightIcon release];
+    _rightBtn = rightBtn;
+    [_rightBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithRed:CGColorConvert(217.0f) green:CGColorConvert(217.0f) blue:CGColorConvert(216.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
+    //[UIImage imageWithColor:[UIColor colorWithRed:CGColorConvert(4.0f) green:CGColorConvert(135.0f) blue:CGColorConvert(220.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
+    CGFloat width = CGWidth(_rightIcon.frame) + 22.0f;
+    [rightBtn setFrame:CGRectMake(CGWidth(self.frame) - width, 0.0f, width, 44.0f)];
+    [self addSubview:_rightBtn];
+    
+    switch (style) {
+        case LeafNavigationItemStyleSafari:
+            [_rightBtn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+            [_rightIcon setImage:[UIImage imageNamed:@"safari"]];
+            break;
+            
+        default:
+            break;
+    }
+ 
 }
 
 

@@ -22,6 +22,8 @@ typedef enum
 {
     UIImageView *_leftIcon;
     UIButton *_leftBtn;
+    UIImageView *_rightIcon;
+    UIButton *_rightBtn;
 }
 
 - (void) addLeftItemWithStyle:(LeafNavigationItemStyle)style target:(id)target action:(SEL)action;

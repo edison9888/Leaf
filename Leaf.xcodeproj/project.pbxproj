@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB41071016E86BFF00DE7DB7 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = DB41070B16E86BFF00DE7DB7 /* TFHpple.m */; };
+		DB41071116E86BFF00DE7DB7 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = DB41070D16E86BFF00DE7DB7 /* TFHppleElement.m */; };
+		DB41071216E86BFF00DE7DB7 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = DB41070F16E86BFF00DE7DB7 /* XPathQuery.m */; };
+		DB41071516E86D8E00DE7DB7 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DB41071416E86D8E00DE7DB7 /* libxml2.2.dylib */; };
 		DB4E547E16D3199C00CBF9EB /* DDMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB4E547C16D3199C00CBF9EB /* DDMenuController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		DB61AECC16B2589D006EC642 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB61AECB16B2589D006EC642 /* UIKit.framework */; };
 		DB61AECE16B2589D006EC642 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB61AECD16B2589D006EC642 /* Foundation.framework */; };
@@ -68,6 +72,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DB41070A16E86BFF00DE7DB7 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
+		DB41070B16E86BFF00DE7DB7 /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
+		DB41070C16E86BFF00DE7DB7 /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
+		DB41070D16E86BFF00DE7DB7 /* TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHppleElement.m; sourceTree = "<group>"; };
+		DB41070E16E86BFF00DE7DB7 /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPathQuery.h; sourceTree = "<group>"; };
+		DB41070F16E86BFF00DE7DB7 /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPathQuery.m; sourceTree = "<group>"; };
+		DB41071416E86D8E00DE7DB7 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		DB4E547C16D3199C00CBF9EB /* DDMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDMenuController.m; path = Vender/DDMenuController/DDMenuController.m; sourceTree = "<group>"; };
 		DB4E547D16D3199C00CBF9EB /* DDMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDMenuController.h; path = Vender/DDMenuController/DDMenuController.h; sourceTree = "<group>"; };
 		DB61AEC716B2589D006EC642 /* Leaf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Leaf.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -164,6 +175,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB41071516E86D8E00DE7DB7 /* libxml2.2.dylib in Frameworks */,
 				DBD8260716B6613900EC4439 /* ImageIO.framework in Frameworks */,
 				DBD825AA16B6211800EC4439 /* QuartzCore.framework in Frameworks */,
 				DB61AECC16B2589D006EC642 /* UIKit.framework in Frameworks */,
@@ -175,6 +187,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DB41070916E86BFF00DE7DB7 /* TFHpple */ = {
+			isa = PBXGroup;
+			children = (
+				DB41070A16E86BFF00DE7DB7 /* TFHpple.h */,
+				DB41070B16E86BFF00DE7DB7 /* TFHpple.m */,
+				DB41070C16E86BFF00DE7DB7 /* TFHppleElement.h */,
+				DB41070D16E86BFF00DE7DB7 /* TFHppleElement.m */,
+				DB41070E16E86BFF00DE7DB7 /* XPathQuery.h */,
+				DB41070F16E86BFF00DE7DB7 /* XPathQuery.m */,
+			);
+			name = TFHpple;
+			path = Vender/TFHpple;
+			sourceTree = "<group>";
+		};
 		DB4E547B16D3195700CBF9EB /* DDMenuController */ = {
 			isa = PBXGroup;
 			children = (
@@ -209,6 +235,7 @@
 		DB61AECA16B2589D006EC642 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DB41071416E86D8E00DE7DB7 /* libxml2.2.dylib */,
 				DBD8260616B6613900EC4439 /* ImageIO.framework */,
 				DBD825A916B6211800EC4439 /* QuartzCore.framework */,
 				DB61AECB16B2589D006EC642 /* UIKit.framework */,
@@ -276,6 +303,7 @@
 		DB61AF0816B26DA3006EC642 /* Vender */ = {
 			isa = PBXGroup;
 			children = (
+				DB41070916E86BFF00DE7DB7 /* TFHpple */,
 				DB4E547B16D3195700CBF9EB /* DDMenuController */,
 				DBD825EF16B65E1200EC4439 /* SDWebImage */,
 				DBD825B116B6285E00EC4439 /* MBProgressHUD */,
@@ -516,6 +544,9 @@
 				DB8593E916B80D28009773F1 /* LeafContentViewController.m in Sources */,
 				DBECD52D16BA9EA000C4AE31 /* LeafLoadingView.m in Sources */,
 				DB4E547E16D3199C00CBF9EB /* DDMenuController.m in Sources */,
+				DB41071016E86BFF00DE7DB7 /* TFHpple.m in Sources */,
+				DB41071116E86BFF00DE7DB7 /* TFHppleElement.m in Sources */,
+				DB41071216E86BFF00DE7DB7 /* XPathQuery.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -552,6 +583,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 			};
@@ -569,6 +601,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;

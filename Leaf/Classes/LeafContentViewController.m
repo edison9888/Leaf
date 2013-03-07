@@ -6,16 +6,19 @@
 //  Copyright (c) 2013年 Mobimtech. All rights reserved.
 //
 
+#import "TFHpple.h"
 #import "LeafContentViewController.h"
 #import "LeafNavigationBar.h"
 #import "LeafHelper.h"
 #import "LeafLoadingView.h"
 
 @implementation LeafContentViewController
+@synthesize videoUrl = _videoUrl;
 
 - (void)dealloc
 {
     [_url release], _url = nil;
+    [_videoUrl release], _videoUrl = nil;
     [_connection release], _connection = nil;
     
     _content = nil;
@@ -39,6 +42,11 @@
     if (self.navigationController) {
         [self.navigationController popViewControllerAnimated:YES];
     }
+}
+
+- (void)safariClicked:(id)sender
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_url]];
 }
 
 
@@ -130,6 +138,31 @@
     return nil;
 }
 
+- (void)validateVideoUrl:(NSString *)url
+{
+    NSMutableString *result = [[NSMutableString alloc] init];
+    NSString *sub = nil;
+    
+    if ([[url lowercaseString] hasPrefix:@"http://"]) {
+        sub = [url substringFromIndex:7];
+        [result safeAppendString:@"http://"];
+    }
+    else if([[url lowercaseString] hasPrefix:@"https://"]){
+        sub = [url substringFromIndex:8];
+        [result safeAppendString:@"https://"];
+    }
+    else
+    {
+        sub = url;
+        [result safeAppendString:@"http://"];
+    }
+    
+    [result safeAppendString:[sub stringByReplacingOccurrencesOfString:@"//" withString:@"/"]];
+    NSLog(@"result: %@", result);
+    self.videoUrl = result;
+    [result release];
+}
+
 - (void)inject:(UIWebView *)webView
 {
     NSString *leafJSPath = [[NSBundle mainBundle] pathForResource:@"leaf" ofType:@"js"];
@@ -161,6 +194,7 @@
     
     LeafNavigationBar *bar = [[LeafNavigationBar alloc] init];
     [bar addLeftItemWithStyle:LeafNavigationItemStyleBack target:self action:@selector(backClicked:)];
+    [bar addRightItemWithStyle:LeafNavigationItemStyleSafari target:self action:@selector(safariClicked:)];
     [self.view addSubview:bar];
     [bar release];
     
@@ -208,6 +242,16 @@
 
 #pragma UIWebViewDelegate Methods
 
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    if (navigationType == UIWebViewNavigationTypeLinkClicked) {
+        NSLog(@"UIWebViewNavigationTypeLinkClicked");
+    }
+    
+    NSLog(@"url: %@", [[request URL] absoluteString]);
+    return YES;
+}
+
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
     
@@ -216,6 +260,9 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     [self hideLeafLoadingView];
+    if (_videoUrl) {
+        [_content stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.getElementsByTagName('video')[0].src = '%@'", _videoUrl]];
+    }
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
@@ -233,6 +280,25 @@
     NSString *page = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];    
     NSString *html = [self injectLeafCSS:page];
     [page release];
+    
+    // xpath
+    NSData *htmlData = [html dataUsingEncoding:NSUTF8StringEncoding];
+    TFHpple * doc = [[TFHpple alloc] initWithHTMLData:htmlData];
+    NSArray * elements = [doc searchWithXPathQuery:@"//img"];
+    
+    //TFHppleElement *element = [elements objectAtIndex:0];
+    for (TFHppleElement *element in elements) {
+        NSLog(@"img[@src]: %@", [element objectForKey:@"src"]);
+    }
+    
+    NSArray *videoUrls = [doc searchWithXPathQuery:@"//video"];
+    if (videoUrls && videoUrls.count > 0) {
+        for (TFHppleElement *videoUrl in videoUrls) {
+            NSString *url = [videoUrl objectForKey:@"src"];
+            [self validateVideoUrl:url];
+        }
+    }
+    
     //NSLog(@"html: %@", html);
     [_content loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] resourcePath] isDirectory:YES]];
 }

@@ -17,7 +17,10 @@
     UIWebView *_content;
     NSString *_url;
     LeafURLConnection *_connection;
+    NSString *_videoUrl;
 }
+
+@property (nonatomic, retain) NSString *videoUrl; 
 
 - (id)initWithUrl:(NSString *)url;
 @end
