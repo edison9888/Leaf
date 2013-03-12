@@ -16,8 +16,10 @@
 #define kMaxLines       3
 #define kCellTitleFont  [UIFont fontWithName:@"FZLTZHK--GBK1-0" size:15.0f]
 #define kCellTimeFont   [UIFont fontWithName:@"FZLTHK--GBK1-0" size:10.0f]
-#define kMaxTitleSize   CGSizeMake(188.0f, 56.0f)
-#define kMaxTimeSize    CGSizeMake(188.0f, 10.0f)
+#define kMidTitleSize   CGSizeMake(188.0f, 56.0f)
+#define kMidTimeSize    CGSizeMake(188.0f, 10.0f)
+#define kMaxTitleSize   CGSizeMake(266.0f, 56.0f)
+#define kMaxTimeSize    CGSizeMake(266.0f, 10.0f)
 #define kPaddingTime    2.0f
 #define kPaddingTheme   10.0f
 @implementation LeafNewsItem
@@ -80,33 +82,54 @@
     return self;
 }
 
-- (void)loadData:(LeafNewsData *)data
+- (void)loadData:(LeafNewsData *)data withStyle:(LeafItemStyle)style
 {
     if (!data) {
         NSLog(@"leaf item, data is nil.");
         return;
     }
     CGFloat offsetY = 0.0f;
-    CGSize size = [data.title sizeWithFont:kCellTitleFont constrainedToSize:kMaxTitleSize lineBreakMode:_title.lineBreakMode];
-    [_title setFrame:CGRectMake(0.0f, 0.0f, size.width, size.height)];
-    [_title setText:data.title];
-    offsetY += size.height + kPaddingTime;
-    CGSize timeSize = [data.pubTime sizeWithFont:kCellTimeFont constrainedToSize:kMaxTimeSize];
-    [_time setText:data.pubTime];
-    [_time setFrame:CGRectMake(0.0f, CGOriginY(_title.frame) + CGHeight(_title.frame) + 2.0f, timeSize.width, timeSize.height)];
-    offsetY += timeSize.height;
     
-    if (data.theme && [data.theme hasPrefix:@"http://"] && 
-        (![[data.theme lowercaseString] hasSuffix:@".gif"])) {
-        [_theme setImageWithURL:[NSURL URLWithString:data.theme] placeholderImage:[UIImage imageNamed:@"placeholder"]];
-    }
-    else {
-        [_theme setImage:[UIImage imageNamed:@"placeholder"]];
+    if (style == LeafItemStyleFull) {
+        CGSize size = [data.title sizeWithFont:kCellTitleFont constrainedToSize:kMidTitleSize lineBreakMode:_title.lineBreakMode];
+        [_title setFrame:CGRectMake(0.0f, 0.0f, size.width, size.height)];
+        [_title setText:data.title];
+        offsetY += size.height + kPaddingTime;
+        CGSize timeSize = [data.pubTime sizeWithFont:kCellTimeFont constrainedToSize:kMidTimeSize];
+        [_time setText:data.pubTime];
+        [_time setFrame:CGRectMake(0.0f, CGOriginY(_title.frame) + CGHeight(_title.frame) + 2.0f, timeSize.width, timeSize.height)];
+        offsetY += timeSize.height;
+        [_theme setHidden:NO];
+        if (data.theme && [data.theme hasPrefix:@"http://"] && 
+            (![[data.theme lowercaseString] hasSuffix:@".gif"])) {                       
+            [_theme setImageWithURL:[NSURL URLWithString:data.theme] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+        }
+        else{
+            [_theme setImage:[UIImage imageNamed:@"placeholder"]];
+        }
+        
+        CGFloat originX = CGOriginX(_theme.frame) + CGWidth(_theme.frame) + kPaddingTheme;
+        CGFloat originY = (CGHeight(self.frame) - offsetY)/2.0f;
+        [_content setFrame:CGRectMake(originX, originY, size.width, offsetY)];
+    }    
+    else {       
+        [_theme setHidden:YES];
+        CGSize size = [data.title sizeWithFont:kCellTitleFont constrainedToSize:kMaxTitleSize lineBreakMode:_title.lineBreakMode];
+        [_title setFrame:CGRectMake(0.0f, 0.0f, size.width, size.height)];
+        [_title setText:data.title];
+        offsetY += size.height + kPaddingTime;
+        CGSize timeSize = [data.pubTime sizeWithFont:kCellTimeFont constrainedToSize:kMaxTimeSize];
+        [_time setText:data.pubTime];
+        [_time setFrame:CGRectMake(0.0f, CGOriginY(_title.frame) + CGHeight(_title.frame) + 2.0f, timeSize.width, timeSize.height)];
+        offsetY += timeSize.height;
+        
+        CGFloat originX = kPaddingTheme;
+        CGFloat originY = (CGHeight(self.frame) - offsetY)/2.0f;
+        [_content setFrame:CGRectMake(originX, originY, size.width, offsetY)];
+            
     }
     
-    CGFloat originX = CGOriginX(_theme.frame) + CGWidth(_theme.frame) + kPaddingTheme;
-    CGFloat originY = (CGHeight(self.frame) - offsetY)/2.0f;
-    [_content setFrame:CGRectMake(originX, originY, size.width, offsetY)];
+    
     
     [_box setText:data.cmtNum];
 }

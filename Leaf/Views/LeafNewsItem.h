@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum{
+    LeafItemStyleNone = 0,
+    LeafItemStyleSimple,
+    LeafItemStyleFull
+}LeafItemStyle;
+
 @class LeafCommentBox, LeafNewsData;
 @interface LeafNewsItem : UIView
 {
@@ -18,6 +24,6 @@
     UIView *_content;
 }
 
-- (void)loadData:(LeafNewsData *)data;
+- (void)loadData:(LeafNewsData *)data withStyle:(LeafItemStyle)style;
 
 @end

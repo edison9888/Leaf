@@ -256,7 +256,7 @@
     }
     LeafNewsData *data = [_leaves objectAtIndex:indexPath.row];
     LeafNewsItem *leafItem = (LeafNewsItem *)[cell.contentView viewWithTag:kLeafNewsItemTag];
-    [leafItem loadData:data];
+    [leafItem loadData:data withStyle:LeafItemStyleNone];
     
     return cell;
 }

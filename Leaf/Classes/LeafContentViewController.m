@@ -163,6 +163,16 @@
     [result release];
 }
 
+- (NSString *)purgeImageLinks:(NSString *)html
+{
+    NSRange r;
+    NSString *result = [[html copy] autorelease];
+    while ((r = [result rangeOfString:@"<img[^>]+>" options:NSRegularExpressionSearch]).location != NSNotFound) {
+        result = [result stringByReplacingCharactersInRange:r withString:@""];
+    }
+    return result;
+}
+
 - (void)inject:(UIWebView *)webView
 {
     NSString *leafJSPath = [[NSBundle mainBundle] pathForResource:@"leaf" ofType:@"js"];
@@ -298,9 +308,9 @@
             [self validateVideoUrl:url];
         }
     }
-    
-    //NSLog(@"html: %@", html);
-    [_content loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] resourcePath] isDirectory:YES]];
+    NSString *str = [self purgeImageLinks:html];
+    NSLog(@"html: %@", str);
+    [_content loadHTMLString:str baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] resourcePath] isDirectory:YES]];
 }
 
 - (void)didFailWithError:(NSError *)error
