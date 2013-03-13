@@ -11,6 +11,8 @@
 #import "LeafNavigationBar.h"
 #import "LeafHelper.h"
 #import "LeafLoadingView.h"
+#import "LeafConfig.h"
+
 
 @implementation LeafContentViewController
 @synthesize videoUrl = _videoUrl;
@@ -308,9 +310,13 @@
             [self validateVideoUrl:url];
         }
     }
-    NSString *str = [self purgeImageLinks:html];
-    NSLog(@"html: %@", str);
-    [_content loadHTMLString:str baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] resourcePath] isDirectory:YES]];
+    
+    LeafConfig *config = [LeafConfig sharedInstance];
+    if (config.simple) {
+        html = [self purgeImageLinks:html];
+    }    
+    NSLog(@"html: %@", html);
+    [_content loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] resourcePath] isDirectory:YES]];
 }
 
 - (void)didFailWithError:(NSError *)error

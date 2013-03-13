@@ -42,10 +42,12 @@ typedef enum {
     
     id _tap;
     id _pan;
+    id _backPan;
     
     CGFloat _panOriginX;
     CGPoint _panVelocity;
     DDMenuPanDirection _panDirection;
+    DDMenuPanDirection _backPanDirection;
 
     struct {
         unsigned int respondsToWillShowViewController:1;
@@ -67,6 +69,7 @@ typedef enum {
 
 @property(nonatomic,readonly) UITapGestureRecognizer *tap;
 @property(nonatomic,readonly) UIPanGestureRecognizer *pan;
+@property(nonatomic,readonly) UIPanGestureRecognizer *backPan;
 
 @property(nonatomic,assign) Class barButtonItemClass;
 

@@ -31,6 +31,7 @@
     _time = nil;
     _box = nil;
     _content = nil;
+    _seprator = nil;
     [super dealloc];
 }
 
@@ -76,6 +77,7 @@
         UIImageView *seprator  = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sep_line"]];
         seprator.center = CGPointMake(CGWidth(self.frame)/2.0f, CGHeight(self.frame)- 1.0f);
         [self addSubview:seprator];
+        _seprator = seprator;
         [seprator release];
     }
     
@@ -91,6 +93,8 @@
     CGFloat offsetY = 0.0f;
     
     if (style == LeafItemStyleFull) {
+        [self setFrame:CGRectMake(0.0f, 0.0f, 320.0f, 102.0f)];
+        _seprator.center = CGPointMake(CGWidth(self.frame)/2.0f, CGHeight(self.frame)- 1.0f);
         CGSize size = [data.title sizeWithFont:kCellTitleFont constrainedToSize:kMidTitleSize lineBreakMode:_title.lineBreakMode];
         [_title setFrame:CGRectMake(0.0f, 0.0f, size.width, size.height)];
         [_title setText:data.title];
@@ -112,7 +116,9 @@
         CGFloat originY = (CGHeight(self.frame) - offsetY)/2.0f;
         [_content setFrame:CGRectMake(originX, originY, size.width, offsetY)];
     }    
-    else {       
+    else {  
+        [self setFrame:CGRectMake(0.0f, 0.0f, 320.0f, 80.0f)];
+        _seprator.center = CGPointMake(CGWidth(self.frame)/2.0f, CGHeight(self.frame)- 1.0f);
         [_theme setHidden:YES];
         CGSize size = [data.title sizeWithFont:kCellTitleFont constrainedToSize:kMaxTitleSize lineBreakMode:_title.lineBreakMode];
         [_title setFrame:CGRectMake(0.0f, 0.0f, size.width, size.height)];

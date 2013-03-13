@@ -8,7 +8,7 @@
 
 #import "LeafMainViewController.h"
 #import "LeafNavigationBar.h"
-
+#import "LeafConfig.h"
 #import "DDMenuController.h"
 #import "LeafHelper.h"
 #import "LeafNewsItem.h"
@@ -227,6 +227,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    LeafConfig *config = [LeafConfig sharedInstance];
+    if (config.simple) {
+        return 80.0f;
+    }
+    // full mode        
     return 102.0f;
 }
 
@@ -256,7 +261,14 @@
     }
     LeafNewsData *data = [_leaves objectAtIndex:indexPath.row];
     LeafNewsItem *leafItem = (LeafNewsItem *)[cell.contentView viewWithTag:kLeafNewsItemTag];
-    [leafItem loadData:data withStyle:LeafItemStyleNone];
+    LeafConfig *config = [LeafConfig sharedInstance];
+    if (config.simple) {
+        [leafItem loadData:data withStyle:LeafItemStyleSimple];
+    }
+    else{
+        [leafItem loadData:data withStyle:LeafItemStyleFull];
+    }
+    
     
     return cell;
 }

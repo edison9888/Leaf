@@ -22,6 +22,7 @@ typedef enum{
     UILabel *_time;
     LeafCommentBox *_box;
     UIView *_content;
+    UIImageView *_seprator;
 }
 
 - (void)loadData:(LeafNewsData *)data withStyle:(LeafItemStyle)style;

@@ -27,7 +27,7 @@
 #import "DDMenuController.h"
 
 #define kMenuFullWidth 320.0f
-#define kMenuDisplayedWidth 280.0f
+#define kMenuDisplayedWidth 260.0f
 #define kMenuOverlayWidth (self.view.bounds.size.width - kMenuDisplayedWidth)
 #define kMenuBounceOffset 10.0f
 #define kMenuBounceDuration .3f
@@ -48,6 +48,7 @@
 
 @synthesize tap=_tap;
 @synthesize pan=_pan;
+@synthesize backPan = _backPan;
 
 
 - (id)initWithRootViewController:(UIViewController*)controller {
@@ -83,12 +84,21 @@
         _tap = tap;
     }
     
+    if (!_backPan) {
+        UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(backPan:)];
+        pan.delegate = (id<UIGestureRecognizerDelegate>)self;
+        [self.view addGestureRecognizer:pan];
+        [pan setEnabled:NO];
+        _backPan = pan;
+    }
+    
 }
 
 - (void)viewDidUnload {
     [super viewDidUnload];
     _tap = nil;
     _pan = nil;
+    _backPan = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
@@ -338,6 +348,25 @@
     
 }
 
+- (void)backPan:(UIPanGestureRecognizer*)gesture{
+    
+    if (gesture.state == UIGestureRecognizerStateBegan) {
+        CGPoint velocity = [gesture velocityInView:self.view];
+        if (velocity.x < 0) {
+            _backPanDirection = DDMenuPanDirectionLeft;
+        }
+        else{
+            _backPanDirection = DDMenuPanDirectionRight;
+        }
+    }
+    
+    if (gesture.state == UIGestureRecognizerStateEnded) {
+        if (_backPanDirection == DDMenuPanDirectionLeft || _backPanDirection == DDMenuPanDirectionRight) {
+            [gesture setEnabled:NO];
+            [self showRootController:YES];
+        }
+    }    
+}
 
 #pragma mark - UIGestureRecognizerDelegate
 
@@ -438,6 +467,7 @@
 - (void)showRootController:(BOOL)animated {
     
     [_tap setEnabled:NO];
+    [_backPan setEnabled:NO];
     _root.view.userInteractionEnabled = YES;
 
     CGRect frame = _root.view.frame;
@@ -509,6 +539,7 @@
         _root.view.frame = frame;
     } completion:^(BOOL finished) {
         [_tap setEnabled:YES];
+        [_backPan setEnabled:YES];
     }];
     
     if (!animated) {
@@ -551,6 +582,7 @@
         _root.view.frame = frame;
     } completion:^(BOOL finished) {
         [_tap setEnabled:YES];
+        [_backPan setEnabled:YES];
     }];
     
     if (!animated) {

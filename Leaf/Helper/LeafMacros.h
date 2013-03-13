@@ -21,5 +21,6 @@
 // Fonts
 #define kLeafFont10     [UIFont fontWithName:@"FZLTHK--GBK1-0" size:10.0f]
 #define kLeafFont13     [UIFont fontWithName:@"FZLTHK--GBK1-0" size:13.0f]
+#define kLeafFont15     [UIFont fontWithName:@"FZLTHK--GBK1-0" size:15.0f]
 #define kLeafBoldFont16 [UIFont fontWithName:@"FZLTZHK--GBK1-0" size:16.0f]
 #define kLeafBoldFont13 [UIFont fontWithName:@"FZLTZHK--GBK1-0" size:13.0f]

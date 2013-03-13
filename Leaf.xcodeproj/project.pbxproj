@@ -67,6 +67,7 @@
 		DBD8260416B65E1300EC4439 /* SDWebImagePrefetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD825FD16B65E1300EC4439 /* SDWebImagePrefetcher.m */; };
 		DBD8260516B65E1300EC4439 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD825FF16B65E1300EC4439 /* UIImageView+WebCache.m */; };
 		DBD8260716B6613900EC4439 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBD8260616B6613900EC4439 /* ImageIO.framework */; };
+		DBE3627816F0137200494A0C /* LeafConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE3627716F0137200494A0C /* LeafConfig.m */; };
 		DBECD52D16BA9EA000C4AE31 /* LeafLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBECD52C16BA9EA000C4AE31 /* LeafLoadingView.m */; };
 		DBECD53316BAC32200C4AE31 /* leaf.css in Resources */ = {isa = PBXBuildFile; fileRef = DBECD53216BAC32200C4AE31 /* leaf.css */; };
 /* End PBXBuildFile section */
@@ -165,6 +166,8 @@
 		DBD825FE16B65E1300EC4439 /* UIImageView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+WebCache.h"; sourceTree = "<group>"; };
 		DBD825FF16B65E1300EC4439 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		DBD8260616B6613900EC4439 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		DBE3627616F0137200494A0C /* LeafConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafConfig.h; sourceTree = "<group>"; };
+		DBE3627716F0137200494A0C /* LeafConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeafConfig.m; sourceTree = "<group>"; };
 		DBECD52B16BA9EA000C4AE31 /* LeafLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafLoadingView.h; path = Views/LeafLoadingView.h; sourceTree = "<group>"; };
 		DBECD52C16BA9EA000C4AE31 /* LeafLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafLoadingView.m; path = Views/LeafLoadingView.m; sourceTree = "<group>"; };
 		DBECD53216BAC32200C4AE31 /* leaf.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = leaf.css; sourceTree = "<group>"; };
@@ -354,6 +357,8 @@
 				DBD825A016B6204F00EC4439 /* LeafURLConnection.m */,
 				DBD825AE16B6244900EC4439 /* LeafNewsData.h */,
 				DBD825AF16B6244900EC4439 /* LeafNewsData.m */,
+				DBE3627616F0137200494A0C /* LeafConfig.h */,
+				DBE3627716F0137200494A0C /* LeafConfig.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -547,6 +552,7 @@
 				DB41071016E86BFF00DE7DB7 /* TFHpple.m in Sources */,
 				DB41071116E86BFF00DE7DB7 /* TFHppleElement.m in Sources */,
 				DB41071216E86BFF00DE7DB7 /* XPathQuery.m in Sources */,
+				DBE3627816F0137200494A0C /* LeafConfig.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
