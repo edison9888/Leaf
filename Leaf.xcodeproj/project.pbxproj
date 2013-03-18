@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB1ABDD416F6EBC400C36FC2 /* SDCachedURLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = DB1ABDD116F6EBC400C36FC2 /* SDCachedURLResponse.m */; };
+		DB1ABDD516F6EBC400C36FC2 /* SDURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = DB1ABDD316F6EBC400C36FC2 /* SDURLCache.m */; };
 		DB41071016E86BFF00DE7DB7 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = DB41070B16E86BFF00DE7DB7 /* TFHpple.m */; };
 		DB41071116E86BFF00DE7DB7 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = DB41070D16E86BFF00DE7DB7 /* TFHppleElement.m */; };
 		DB41071216E86BFF00DE7DB7 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = DB41070F16E86BFF00DE7DB7 /* XPathQuery.m */; };
@@ -73,6 +75,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DB1ABDD016F6EBC400C36FC2 /* SDCachedURLResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDCachedURLResponse.h; sourceTree = "<group>"; };
+		DB1ABDD116F6EBC400C36FC2 /* SDCachedURLResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDCachedURLResponse.m; sourceTree = "<group>"; };
+		DB1ABDD216F6EBC400C36FC2 /* SDURLCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDURLCache.h; sourceTree = "<group>"; };
+		DB1ABDD316F6EBC400C36FC2 /* SDURLCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDURLCache.m; sourceTree = "<group>"; };
 		DB41070A16E86BFF00DE7DB7 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
 		DB41070B16E86BFF00DE7DB7 /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
 		DB41070C16E86BFF00DE7DB7 /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
@@ -190,6 +196,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DB1ABDCF16F6EBC400C36FC2 /* SDURLCache */ = {
+			isa = PBXGroup;
+			children = (
+				DB1ABDD016F6EBC400C36FC2 /* SDCachedURLResponse.h */,
+				DB1ABDD116F6EBC400C36FC2 /* SDCachedURLResponse.m */,
+				DB1ABDD216F6EBC400C36FC2 /* SDURLCache.h */,
+				DB1ABDD316F6EBC400C36FC2 /* SDURLCache.m */,
+			);
+			name = SDURLCache;
+			path = Vender/SDURLCache;
+			sourceTree = "<group>";
+		};
 		DB41070916E86BFF00DE7DB7 /* TFHpple */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,6 +327,7 @@
 				DB41070916E86BFF00DE7DB7 /* TFHpple */,
 				DB4E547B16D3195700CBF9EB /* DDMenuController */,
 				DBD825EF16B65E1200EC4439 /* SDWebImage */,
+				DB1ABDCF16F6EBC400C36FC2 /* SDURLCache */,
 				DBD825B116B6285E00EC4439 /* MBProgressHUD */,
 				DBD8259916B6203C00EC4439 /* RefreshTableHeaderView */,
 			);
@@ -553,6 +572,8 @@
 				DB41071116E86BFF00DE7DB7 /* TFHppleElement.m in Sources */,
 				DB41071216E86BFF00DE7DB7 /* XPathQuery.m in Sources */,
 				DBE3627816F0137200494A0C /* LeafConfig.m in Sources */,
+				DB1ABDD416F6EBC400C36FC2 /* SDCachedURLResponse.m in Sources */,
+				DB1ABDD516F6EBC400C36FC2 /* SDURLCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

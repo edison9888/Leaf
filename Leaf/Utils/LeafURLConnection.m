@@ -52,7 +52,7 @@
         
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlStr]];
     [request setHTTPMethod:@"GET"];
-    
+    [request setCachePolicy:NSURLRequestReturnCacheDataElseLoad];
     self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
     
     if (!_connection) {
@@ -115,6 +115,17 @@
     
     self.connection = nil;
     [_receivedData release], _receivedData = nil;
+}
+
+- (NSCachedURLResponse *)connection:(NSURLConnection *)connection
+                  willCacheResponse:(NSCachedURLResponse *)cachedResponse
+{
+    NSCachedURLResponse *memOnlyCachedResponse =
+    [[NSCachedURLResponse alloc] initWithResponse:cachedResponse.response
+                                             data:cachedResponse.data
+                                         userInfo:cachedResponse.userInfo
+                                    storagePolicy:NSURLCacheStorageAllowed];
+    return [memOnlyCachedResponse autorelease];
 }
 
 

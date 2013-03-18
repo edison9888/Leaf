@@ -10,6 +10,7 @@
 #import "LeafMainViewController.h"
 #import "LeafMenuController.h"
 #import "DDMenuController.h"
+#import "SDURLCache.h"
 
 @implementation AppDelegate
 
@@ -26,6 +27,13 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+    
+    SDURLCache *urlCache = [[SDURLCache alloc] initWithMemoryCapacity:1024*1024   // 1MB mem cache
+                                                         diskCapacity:1024*1024*5 // 5MB disk cache
+                                                             diskPath:[SDURLCache defaultCachePath]
+                                                    enableForIOS5AndUp:YES];
+    [NSURLCache setSharedURLCache:urlCache];
+    [urlCache release];
     
     LeafMainViewController *vc = [[LeafMainViewController alloc] init];
     UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:vc];

@@ -55,11 +55,11 @@
     [sw addTarget:self action:@selector(imageModeChanged:) forControlEvents:UIControlEventValueChanged];
     sw.center = CGPointMake(sw.center.x, CGHeight(imageModeConfigPanel.frame)/2.0f);
     LeafConfig *config = [LeafConfig sharedInstance];
-    if (!config.simple) {
-        [sw setOn:NO];
+    if (config.simple) {
+        [sw setOn:YES];
     }
     else {
-        [sw setOn:YES];
+        [sw setOn:NO];
     }
     [imageModeConfigPanel addSubview:sw];
     [sw release];
