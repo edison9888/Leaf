@@ -60,4 +60,9 @@
  */
 - (BOOL)isCached:(NSURL *)url;
 
+/*
+ * Remove cache for specific request.
+ */
+- (void)removeCachedResponseForURL:(NSURL *)url;
+
 @end
