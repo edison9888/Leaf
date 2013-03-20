@@ -23,3 +23,11 @@ strong {
 a {
     color:#4a8711 !important;
 }
+video {
+    max-width:300px !important;
+    height:auto !important;
+}
+iframe {
+    max-width:300px !important;
+    height:auto !important;
+}
