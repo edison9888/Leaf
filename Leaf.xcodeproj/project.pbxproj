@@ -36,7 +36,7 @@
 		DBADCD8216F8444C00065CB5 /* LeafCache.m in Sources */ = {isa = PBXBuildFile; fileRef = DBADCD8116F8444C00065CB5 /* LeafCache.m */; };
 		DBADCD8A16F84CCA00065CB5 /* LeafMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBADCD8416F84CCA00065CB5 /* LeafMenuController.m */; };
 		DBADCD8B16F84CCA00065CB5 /* LeafMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBADCD8616F84CCA00065CB5 /* LeafMainViewController.m */; };
-		DBADCD8C16F84CCA00065CB5 /* LeafContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBADCD8816F84CCA00065CB5 /* LeafContentViewController.m */; };
+		DBADCD9716F94DE000065CB5 /* LeafContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBADCD9616F94DE000065CB5 /* LeafContentView.m */; };
 		DBD8259C16B6203C00EC4439 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD8259B16B6203C00EC4439 /* EGORefreshTableHeaderView.m */; };
 		DBD825A316B6204F00EC4439 /* LeafURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD825A016B6204F00EC4439 /* LeafURLConnection.m */; };
 		DBD825AA16B6211800EC4439 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBD825A916B6211800EC4439 /* QuartzCore.framework */; };
@@ -123,8 +123,8 @@
 		DBADCD8516F84CCA00065CB5 /* LeafMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafMenuController.h; path = Controllers/LeafMenuController.h; sourceTree = "<group>"; };
 		DBADCD8616F84CCA00065CB5 /* LeafMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafMainViewController.m; path = Controllers/LeafMainViewController.m; sourceTree = "<group>"; };
 		DBADCD8716F84CCA00065CB5 /* LeafMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafMainViewController.h; path = Controllers/LeafMainViewController.h; sourceTree = "<group>"; };
-		DBADCD8816F84CCA00065CB5 /* LeafContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafContentViewController.m; path = Controllers/LeafContentViewController.m; sourceTree = "<group>"; };
-		DBADCD8916F84CCA00065CB5 /* LeafContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafContentViewController.h; path = Controllers/LeafContentViewController.h; sourceTree = "<group>"; };
+		DBADCD9516F94DE000065CB5 /* LeafContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafContentView.h; path = Views/LeafContentView.h; sourceTree = "<group>"; };
+		DBADCD9616F94DE000065CB5 /* LeafContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafContentView.m; path = Views/LeafContentView.m; sourceTree = "<group>"; };
 		DBD8259A16B6203C00EC4439 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		DBD8259B16B6203C00EC4439 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		DBD8259F16B6204F00EC4439 /* LeafURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafURLConnection.h; sourceTree = "<group>"; };
@@ -301,8 +301,6 @@
 				DBADCD8516F84CCA00065CB5 /* LeafMenuController.h */,
 				DBADCD8616F84CCA00065CB5 /* LeafMainViewController.m */,
 				DBADCD8716F84CCA00065CB5 /* LeafMainViewController.h */,
-				DBADCD8816F84CCA00065CB5 /* LeafContentViewController.m */,
-				DBADCD8916F84CCA00065CB5 /* LeafContentViewController.h */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -320,6 +318,8 @@
 				DBD825BC16B6295E00EC4439 /* LeafCommentBox.m */,
 				DBECD52B16BA9EA000C4AE31 /* LeafLoadingView.h */,
 				DBECD52C16BA9EA000C4AE31 /* LeafLoadingView.m */,
+				DBADCD9516F94DE000065CB5 /* LeafContentView.h */,
+				DBADCD9616F94DE000065CB5 /* LeafContentView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -579,7 +579,7 @@
 				DBADCD8216F8444C00065CB5 /* LeafCache.m in Sources */,
 				DBADCD8A16F84CCA00065CB5 /* LeafMenuController.m in Sources */,
 				DBADCD8B16F84CCA00065CB5 /* LeafMainViewController.m in Sources */,
-				DBADCD8C16F84CCA00065CB5 /* LeafContentViewController.m in Sources */,
+				DBADCD9716F94DE000065CB5 /* LeafContentView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

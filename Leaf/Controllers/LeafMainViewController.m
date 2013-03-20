@@ -13,8 +13,8 @@
 #import "LeafHelper.h"
 #import "LeafNewsItem.h"
 #import "LeafNewsData.h"
-#import "LeafContentViewController.h"
 #import "LeafCache.h"
+#import "LeafContentView.h"
 
 #define kNewsListURL @"http://www.cnbeta.com/api/getNewsList.php?limit=20"
 #define kMoreNewsURL @"http://www.cnbeta.com/api/getNewsList.php?fromArticleId=%@&limit=10"
@@ -22,13 +22,14 @@
 #define kLeafNewsItemTag 1001
 
 @implementation LeafMainViewController
-
+@synthesize contentView = _contentView;
 
 - (void)dealloc
 {
     _bar = nil;
     [_leaves release], _leaves = nil;
     [_connection release], _connection = nil;
+    [_contentView release], _contentView = nil;
     [super dealloc];
 }
 
@@ -117,7 +118,13 @@
     _loadingMore = NO;
     
     [_headerView pullTheTrigle:_table];
-    NSLog(@"viewDidLoad.");
+    
+    _contentView = [[LeafContentView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGWidth(self.view.frame), CGHeight(self.view.frame))];
+    CGRect contentFrame = _contentView.frame;
+    contentFrame.origin.x += CGWidth(self.view.frame);
+    _contentView.frame = contentFrame;
+    [self.view addSubview:_contentView];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -284,12 +291,17 @@
     }
     LeafNewsData *data = [_leaves safeObjectAtIndex:indexPath.row];
     if (data) {
+        __block CGPoint center = _contentView.center;
         NSString *url = [NSString stringWithFormat:kArticleUrl, data.articleId];
-        LeafContentViewController *vc = [[LeafContentViewController alloc] initWithUrl:url];
-        if (self.navigationController) {
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-        [vc release];
+        [UIView animateWithDuration:0.3f 
+                              delay:0.0f 
+                            options:UIViewAnimationCurveEaseIn animations:^{
+                                center.x = CGWidth(self.view.frame)/2;
+                                _contentView.center = center;
+                            } 
+                         completion:^(BOOL finished) {
+                             [_contentView loadURL:url];
+                         }];        
     }
 }
 

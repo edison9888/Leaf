@@ -1,6 +1,7 @@
 body {
     background:#ECEAE2 !important;
     font-weight:normal !important;
+    word-wrap:break-word !important;
 }
 span {
     font-family:FZLanTingHei-R-GBK !important;
@@ -18,4 +19,7 @@ b {
 }
 strong {
     font-family:FZLanTingHei-R-GBK !important;
+}
+a {
+    color:#4a8711 !important;
 }

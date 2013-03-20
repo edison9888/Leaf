@@ -11,7 +11,7 @@
 #import "EGOLoadMoreTableFooterView.h"
 #import "LeafURLConnection.h"
 
-@class LeafNavigationBar;
+@class LeafNavigationBar, LeafContentView;
 @interface LeafMainViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, EGORefreshTableHeaderDelegate, EGOLoadMoreTableFooterDelegate, LeafURLConnectionDelegate>
 {
     
@@ -24,4 +24,7 @@
     EGORefreshTableHeaderView *_headerView;
     EGOLoadMoreTableFooterView *_footerView;
 }
+
+@property (nonatomic, retain) LeafContentView *contentView;
+
 @end

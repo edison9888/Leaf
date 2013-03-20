@@ -1,21 +1,55 @@
 //
-//  LeafContentViewController.m
+//  LeafContentView.m
 //  Leaf
 //
-//  Created by roger on 13-1-29.
+//  Created by roger qian on 13-3-20.
 //  Copyright (c) 2013年 Mobimtech. All rights reserved.
 //
 
+#import "LeafContentView.h"
 #import "TFHpple.h"
-#import "LeafContentViewController.h"
 #import "LeafNavigationBar.h"
 #import "LeafHelper.h"
 #import "LeafLoadingView.h"
 #import "LeafConfig.h"
 
-
-@implementation LeafContentViewController
+@implementation LeafContentView
 @synthesize videoUrl = _videoUrl;
+@synthesize url = _url;
+
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        LeafNavigationBar *bar = [[LeafNavigationBar alloc] init];
+        [bar addLeftItemWithStyle:LeafNavigationItemStyleBack target:self action:@selector(backClicked:)];
+        [bar addRightItemWithStyle:LeafNavigationItemStyleSafari target:self action:@selector(safariClicked:)];
+        [self addSubview:bar];
+        [bar release];
+        
+        UIWebView *content = [[UIWebView alloc] initWithFrame:CGRectMake(0.0f, 44.0f, CGWidth(self.frame), CGHeight(self.frame) - 44.0f)];
+        content.backgroundColor = [UIColor clearColor];
+        content.delegate = self;
+        content.scrollView.bounces = NO;
+        _content = content;
+        [self addSubview:content];
+        [content release];
+        
+        LeafLoadingView *loading = [[LeafLoadingView alloc] initWithFrame:CGRectMake(0.0f, CGHeight(self.frame), CGWidth(self.frame), 30.0f)];
+        _loading = loading;
+        [self addSubview:_loading];
+        [loading release];
+        
+        _connection = nil;
+        
+        UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
+        [self addGestureRecognizer:pan];
+        [pan release];
+
+    }
+    return self;
+}
+
 
 - (void)dealloc
 {
@@ -28,22 +62,29 @@
     [super dealloc];
 }
 
-- (id)initWithUrl:(NSString *)url
-{
-    if (self = [super init]) {
-        _url = [url retain];
-    }
-    
-    return self;
-}
-
 #pragma mark -
+
+- (void)showLeftView
+{
+    __block CGPoint center = self.center;
+
+    [UIView animateWithDuration:0.3f 
+                          delay:0.0f 
+                        options:UIViewAnimationCurveEaseInOut 
+                     animations:^{
+                         center.x = CGWidth(self.superview.frame) + CGWidth(self.frame)/2.0f;
+                         self.center = center;
+                     } 
+                     completion:^(BOOL finished) {
+                         [_content stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName('body')[0].innerHTML = ''"];
+                         [_connection cancel];
+                         _connection.delegate = nil;
+                     }];
+}
 
 - (void)backClicked:(id)sender
 {
-    if (self.navigationController) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
+    [self showLeftView];
 }
 
 - (void)safariClicked:(id)sender
@@ -54,44 +95,38 @@
 
 - (void)showLeafLoadingView
 {
-    if (_loading.hidden) {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-        _loading.hidden = NO;
-        CGPoint center = _loading.center;
-        center.y -= 30.0f;
-        
-        [UIView animateWithDuration:0.7f
-                              delay:0.25f
-                            options:UIViewAnimationCurveEaseOut
-                         animations:^{
-                             _loading.center = center;
-                         }
-                         completion:^(BOOL finished) {
-                             
-                         }];
-        
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
+    CGPoint center = _loading.center;
+    center.y = (CGHeight(self.frame) - CGHeight(_loading.frame)/2.0f);
+    
+    [UIView animateWithDuration:0.5f
+                          delay:0.0f
+                        options:UIViewAnimationCurveEaseOut
+                     animations:^{
+                         _loading.center = center;
+                     }
+                     completion:^(BOOL finished) {
+                         
+                     }];
 
-    }
 }
 
 
 - (void)hideLeafLoadingView
 {
-    if (!_loading.hidden) {
-        CGPoint center = _loading.center;
-        center.y += 30;
-        [UIView animateWithDuration:0.4f
-                              delay:0.0f
-                            options:UIViewAnimationCurveEaseIn
-                         animations:^{
-                             _loading.center = center;
-                         }
-                         completion:^(BOOL finished) {
-                             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                             _loading.hidden = YES;
-                         }];
-
-    }
+    CGPoint center = _loading.center;
+    center.y = CGHeight(self.frame) + CGHeight(_loading.frame)/2.0f;
+    [UIView animateWithDuration:0.4f
+                          delay:0.0f
+                        options:UIViewAnimationCurveEaseIn
+                     animations:^{
+                         _loading.center = center;
+                     }
+                     completion:^(BOOL finished) {
+                         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                     }];
+    
 }
 
 - (void)GET
@@ -108,6 +143,14 @@
 
 #pragma mark -
 #pragma UIWebView Stuff
+
+- (void)loadURL:(NSString *)url
+{
+    NSLog(@"loadURL: %@", url);
+    _connection.delegate = self;
+    self.url = url;
+    [self GET];
+}
 
 - (NSString *)injectLeafCSS:(NSString *)original
 {
@@ -196,61 +239,76 @@
     
 }
 
+
 #pragma mark -
-#pragma mark - ViewController Life Cycle
+#pragma mark - handle pan gesture
 
-- (void)viewDidLoad
+- (void)pan:(UIPanGestureRecognizer *)gesture
 {
-    [super viewDidLoad];
-    NSLog(@"url: %@", [_url description]);
+    if (gesture.state == UIGestureRecognizerStateBegan) {        
+        
+        _panOriginX = self.frame.origin.x;        
+        _panVelocity = CGPointMake(0.0f, 0.0f);
+        
+        if([gesture velocityInView:self.superview].x > 0) {
+            _panDirection = LeafPanDirectionRight;
+        } else {
+            _panDirection = LeafPanDirectionLeft;
+        }
+        
+    }
     
-    LeafNavigationBar *bar = [[LeafNavigationBar alloc] init];
-    [bar addLeftItemWithStyle:LeafNavigationItemStyleBack target:self action:@selector(backClicked:)];
-    [bar addRightItemWithStyle:LeafNavigationItemStyleSafari target:self action:@selector(safariClicked:)];
-    [self.view addSubview:bar];
-    [bar release];
-    
-    UIWebView *content = [[UIWebView alloc] initWithFrame:CGRectMake(0.0f, 44.0f, CGWidth(self.view.frame), CGHeight(self.view.frame) - 44.0f)];
-    content.backgroundColor = [UIColor clearColor];
-    content.delegate = self;
-    _content = content;
-    [self.view addSubview:content];
-    [content release];
-    
-    LeafLoadingView *loading = [[LeafLoadingView alloc] initWithFrame:CGRectMake(0.0f, CGHeight(self.view.frame), CGWidth(self.view.frame), 30.0f)];
-    _loading = loading;
-    _loading.hidden = YES;
-    [self.view addSubview:_loading];
-    [loading release];
-    
-    _connection = nil;
-    
-    //[self loadLocalPage];
-    [self GET];
-    //[self showLeafLoadingView];
-    //[self performSelector:@selector(hideLeafLoadingView) withObject:nil afterDelay:3.0f];
+    if (gesture.state == UIGestureRecognizerStateChanged) {
+        
+        CGPoint velocity = [gesture velocityInView:self.superview];
+        if((velocity.x*_panVelocity.x + velocity.y*_panVelocity.y) < 0) {
+            _panDirection = (_panDirection == LeafPanDirectionRight) ? LeafPanDirectionLeft : LeafPanDirectionRight;
+        }
+        
+        _panVelocity = velocity;        
+        CGPoint translation = [gesture translationInView:self.superview];
+        CGRect frame = self.frame;
+        frame.origin.x = _panOriginX + translation.x;
+        
+        if(frame.origin.x > 0)
+        {
+            if (_state == LeafPanStateNone) {
+                _state = LeafPanStateShowingLeft;
+            }
+            if (_state == LeafPanStateShowingLeft) {
+                self.frame = frame;
+            }
+        }
+    } 
+    else if (gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateCancelled) {
+        LeafPanCompletion  completion =  LeafPanCompletionNone;
+        
+        if (_state == LeafPanStateShowingLeft && _panDirection == LeafPanDirectionRight) {
+            completion = LeafPanCompletionLeft;
+        }
+        else if(_state == LeafPanStateShowingLeft && _panDirection == LeafPanDirectionLeft)
+        {
+            completion = LeafPanCompletionNone;
+        }
+       
+        if (completion == LeafPanCompletionLeft) {
+            [self showLeftView];
+        }
+        else if(completion == LeafPanDirectionNone){
+            __block CGPoint center = self.center;
+            [UIView animateWithDuration:0.3f 
+                                  delay:0.0f 
+                                options:UIViewAnimationCurveEaseIn 
+                             animations:^{
+                                 center.x = CGWidth(self.superview.frame)/2.0f;
+                                 self.center = center;
+                             } 
+                             completion:^(BOOL finished) {
+                
+                             }];
+        }
+    }
 }
-
-- (void)viewDidAppear:(BOOL)animated
-{
-     _connection.delegate = self;
-    [super viewDidAppear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [_connection cancel];
-    _connection.delegate = nil;
-    [super viewDidDisappear:animated];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
 
 #pragma UIWebViewDelegate Methods
 
@@ -328,5 +386,8 @@
 {
     [self hideLeafLoadingView];
 }
+
+
+
 
 @end
