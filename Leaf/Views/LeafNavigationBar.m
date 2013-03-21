@@ -11,17 +11,14 @@
 
 @implementation LeafNavigationBar
 
-
 - (id)init
 {
     self = [super initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 44.0f)];
     if (self) {        
         UIImageView *shadow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"header_shadow"]];
-        [shadow setFrame:CGRectMake(0.0f, 42.0f, CGWidth(shadow.frame), CGHeight(shadow.frame))];
+        [shadow setFrame:CGRectMake(0.0f, 40.0f, CGWidth(shadow.frame), CGHeight(shadow.frame))];
         [self addSubview:shadow];
-        [shadow release];
-        
-        
+        [shadow release];       
     }
     
     [self setBackgroundColor:[UIColor colorWithRed:CGColorConvert(236.0f) green:CGColorConvert(234.0f) blue:CGColorConvert(226.0f) alpha:1.0f]];    
@@ -100,8 +97,6 @@
     }
  
 }
-
-
 
 - (void)setTitle:(NSString *)title
 {

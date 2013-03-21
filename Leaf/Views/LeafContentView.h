@@ -43,6 +43,7 @@ typedef enum {
     LeafPanState _state;
 }
 
+@property (nonatomic, assign) BOOL mask;
 @property (nonatomic, retain) NSString *videoUrl; 
 @property (nonatomic, retain) NSString *url;
 - (void)loadURL:(NSString *)url;

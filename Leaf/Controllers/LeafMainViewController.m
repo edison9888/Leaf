@@ -20,16 +20,19 @@
 #define kMoreNewsURL @"http://www.cnbeta.com/api/getNewsList.php?fromArticleId=%@&limit=10"
 #define kArticleUrl  @"http://www.cnbeta.com/api/getNewsContent2.php?articleId=%@"
 #define kLeafNewsItemTag 1001
+#define kScaleFactor 5.0f
+#define kAlphaFactor 0.1f
 
 @implementation LeafMainViewController
-@synthesize contentView = _contentView;
 
 - (void)dealloc
 {
     _bar = nil;
     [_leaves release], _leaves = nil;
     [_connection release], _connection = nil;
-    [_contentView release], _contentView = nil;
+    _container = nil;
+    _contentView = nil;
+    _maskView = nil;
     [super dealloc];
 }
 
@@ -69,7 +72,28 @@
     }
 }
 
-
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"frame"]) {       
+        CGFloat originX = _contentView.frame.origin.x;        
+        CGFloat factor = 1 - originX/CGWidth(_contentView.frame);
+        CGFloat x = kScaleFactor * factor;
+        CGFloat y = kScaleFactor * factor;
+        CGFloat w = CGWidth(self.view.frame) - 2 * x;
+        CGFloat h = CGHeight(self.view.frame) - 2 * y;
+        _container.frame = CGRectMake(x, y, w, h);
+        [_table setFrame:CGRectMake(0.0f, 44.0f, CGWidth(_container.frame), CGHeight(_container.frame) - 44.0f)];
+        
+        _maskView.alpha = kAlphaFactor + factor;
+    }
+    else if([keyPath isEqualToString:@"simple"]){
+        [_table reloadData];
+    }
+    else if([keyPath isEqualToString:@"mask"]){
+        _maskView.hidden = !_contentView.mask;
+    }
+    
+}
 
 #pragma mark - View lifecycle
 
@@ -77,25 +101,29 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
-    self.view = view;
-    [view release];
+    self.view.backgroundColor = [UIColor blackColor];
+    
+    UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGWidth(self.view.frame), CGHeight(self.view.frame))];
+    _container = container;
+    [self.view addSubview:_container];
+    [container release];
+    _container.backgroundColor = [UIColor colorWithRed:CGColorConvert(236.0f) green:CGColorConvert(234.0f) blue:CGColorConvert(226.0f) alpha:1.0f];
     
     LeafNavigationBar *bar = [[LeafNavigationBar alloc] init];
     [bar setTitle:@"cnbeta.com"];
     [bar addLeftItemWithStyle:LeafNavigationItemStyleMenu target:self action:@selector(menuItemClicked:)];
     _bar = bar;
-    [self.view addSubview:bar];
+    [_container addSubview:bar];
     [bar release];
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 44.0f, CGWidth(self.view.frame), CGHeight(self.view.frame) - 44.0f)];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 44.0f, CGWidth(_container.frame), CGHeight(_container.frame) - 44.0f)];
     _table = tableView;
     _table.delegate = self;
     _table.dataSource = self;
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_table setAllowsSelection:YES];
     [_table setBackgroundColor:[UIColor colorWithRed:CGColorConvert(236.0f) green:CGColorConvert(234.0f) blue:CGColorConvert(226.0f) alpha:1.0f]];
-    [self.view addSubview:tableView];
+    [_container addSubview:tableView];
     [tableView release];
     
     EGORefreshTableHeaderView *header = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, - CGHeight(_table.frame), CGWidth(_table.frame), CGHeight(_table.frame))];
@@ -119,12 +147,24 @@
     
     [_headerView pullTheTrigle:_table];
     
-    _contentView = [[LeafContentView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGWidth(self.view.frame), CGHeight(self.view.frame))];
-    CGRect contentFrame = _contentView.frame;
-    contentFrame.origin.x += CGWidth(self.view.frame);
-    _contentView.frame = contentFrame;
-    [self.view addSubview:_contentView];
+    UIView *maskView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGWidth(self.view.frame), CGHeight(self.view.frame))];
+    _maskView = maskView;
+    [self.view addSubview:maskView];
+    [maskView release];
+    _maskView.backgroundColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.6f];
+    _maskView.alpha = 0.1f;
+    _maskView.hidden = YES;
     
+    LeafContentView *contentView = [[LeafContentView alloc] initWithFrame:CGRectMake(CGWidth(self.view.frame), 0.0f, CGWidth(self.view.frame), CGHeight(self.view.frame))];
+    [self.view addSubview:contentView];
+    _contentView = contentView;
+    _contentView.backgroundColor = [UIColor clearColor];
+    [contentView release];    
+    [_contentView addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:NULL];
+    [_contentView addObserver:self forKeyPath:@"mask" options:NSKeyValueObservingOptionNew context:NULL]; 
+    
+    LeafConfig *config = [LeafConfig sharedInstance];
+    [config addObserver:self forKeyPath:@"simple" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -290,18 +330,9 @@
         return;
     }
     LeafNewsData *data = [_leaves safeObjectAtIndex:indexPath.row];
-    if (data) {
-        __block CGPoint center = _contentView.center;
+    if (data) {       
         NSString *url = [NSString stringWithFormat:kArticleUrl, data.articleId];
-        [UIView animateWithDuration:0.3f 
-                              delay:0.0f 
-                            options:UIViewAnimationCurveEaseIn animations:^{
-                                center.x = CGWidth(self.view.frame)/2;
-                                _contentView.center = center;
-                            } 
-                         completion:^(BOOL finished) {
-                             [_contentView loadURL:url];
-                         }];        
+        [_contentView loadURL:url];        
     }
 }
 

@@ -16,11 +16,12 @@
 @implementation LeafContentView
 @synthesize videoUrl = _videoUrl;
 @synthesize url = _url;
+@synthesize mask;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {
+    if (self) {      
         LeafNavigationBar *bar = [[LeafNavigationBar alloc] init];
         [bar addLeftItemWithStyle:LeafNavigationItemStyleBack target:self action:@selector(backClicked:)];
         [bar addRightItemWithStyle:LeafNavigationItemStyleSafari target:self action:@selector(safariClicked:)];
@@ -66,21 +67,24 @@
 
 - (void)showLeftView
 {
-    __block CGPoint center = self.center;
-
-    [UIView animateWithDuration:0.3f 
+    __block CGRect frame = self.frame;
+    [_content stopLoading];
+    self.mask = YES;
+    [UIView animateWithDuration:0.4f 
                           delay:0.0f 
                         options:UIViewAnimationCurveEaseInOut 
                      animations:^{
-                         center.x = CGWidth(self.superview.frame) + CGWidth(self.frame)/2.0f;
-                         self.center = center;
+                         frame.origin.x = CGWidth(self.frame);
+                         self.frame = frame;
                      } 
                      completion:^(BOOL finished) {
                          [_content stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName('body')[0].innerHTML = ''"];
                          [_connection cancel];
                          _connection.delegate = nil;
+                         self.mask = NO;                         
                      }];
 }
+
 
 - (void)backClicked:(id)sender
 {
@@ -147,9 +151,19 @@
 - (void)loadURL:(NSString *)url
 {
     NSLog(@"loadURL: %@", url);
-    _connection.delegate = self;
-    self.url = url;
-    [self GET];
+    self.mask = YES;
+    __block CGRect frame = self.frame;
+    [UIView animateWithDuration:0.4f 
+                          delay:0.0f 
+                        options:UIViewAnimationCurveEaseIn animations:^{
+                            frame.origin.x = 0.0f;
+                            self.frame = frame;
+                         } 
+                     completion:^(BOOL finished) {
+                         _connection.delegate = self;
+                         self.url = url;
+                         [self GET];                         
+                     }];   
 }
 
 - (NSString *)injectLeafCSS:(NSString *)original
@@ -240,6 +254,7 @@
 }
 
 
+
 #pragma mark -
 #pragma mark - handle pan gesture
 
@@ -295,17 +310,20 @@
             [self showLeftView];
         }
         else if(completion == LeafPanDirectionNone){
-            __block CGPoint center = self.center;
-            [UIView animateWithDuration:0.3f 
-                                  delay:0.0f 
-                                options:UIViewAnimationCurveEaseIn 
-                             animations:^{
-                                 center.x = CGWidth(self.superview.frame)/2.0f;
-                                 self.center = center;
-                             } 
-                             completion:^(BOOL finished) {
-                
-                             }];
+            if (self.frame.origin.x > 0) {
+                self.mask = YES;
+                __block CGRect frame = self.frame;
+                [UIView animateWithDuration:0.3f 
+                                      delay:0.0f 
+                                    options:UIViewAnimationCurveEaseIn 
+                                 animations:^{
+                                     frame.origin.x = 0.0f;
+                                     self.frame = frame;                                     
+                                 } 
+                                 completion:^(BOOL finished) {
+                                     
+                                 }];
+            }          
         }
     }
 }

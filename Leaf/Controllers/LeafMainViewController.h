@@ -23,8 +23,9 @@
     BOOL _reloading;
     EGORefreshTableHeaderView *_headerView;
     EGOLoadMoreTableFooterView *_footerView;
+    LeafContentView *_contentView;
+    UIView *_container;
+    UIView *_maskView;
 }
-
-@property (nonatomic, retain) LeafContentView *contentView;
 
 @end

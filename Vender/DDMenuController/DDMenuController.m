@@ -352,6 +352,8 @@
     
     if (gesture.state == UIGestureRecognizerStateBegan) {
         CGPoint velocity = [gesture velocityInView:self.view];
+        _panVelocity = CGPointMake(0.0f, 0.0f);
+        _panOriginX = _root.view.frame.origin.x;
         if (velocity.x < 0) {
             _backPanDirection = DDMenuPanDirectionLeft;
         }
@@ -359,11 +361,31 @@
             _backPanDirection = DDMenuPanDirectionRight;
         }
     }
-    
-    if (gesture.state == UIGestureRecognizerStateEnded) {
-        if (_backPanDirection == DDMenuPanDirectionLeft || _backPanDirection == DDMenuPanDirectionRight) {
+    if (gesture.state == UIGestureRecognizerStateChanged) {
+        
+        CGPoint velocity = [gesture velocityInView:self.view];
+        if((velocity.x*_panVelocity.x + velocity.y*_panVelocity.y) < 0) {
+            _backPanDirection = (_backPanDirection == DDMenuPanDirectionRight)? DDMenuPanDirectionLeft : DDMenuPanDirectionRight;
+        }
+        
+        _panVelocity = velocity;        
+        CGPoint translation = [gesture translationInView:self.view];
+        CGRect frame = _root.view.frame;
+        frame.origin.x = _panOriginX + translation.x;
+        
+        if(frame.origin.x > 0 && frame.origin.x < kMenuDisplayedWidth)
+        {
+            _root.view.frame = frame;
+        }
+    } 
+    else if (gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateCancelled) {
+        if (_root.view.frame.origin.x < kMenuOverlayWidth || _backPanDirection == DDMenuPanDirectionLeft ) {
             [gesture setEnabled:NO];
             [self showRootController:YES];
+        }
+        else
+        {
+            [self showLeftController:YES];
         }
     }    
 }
