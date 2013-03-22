@@ -5,20 +5,22 @@ body {
 }
 span {
     font-family:FZLanTingHei-R-GBK !important;
-    font-size:13pt !important;
+    font-size:12pt !important;
+    font-weight: normal !important;
 }
 h2 {
-    font-family:FZLanTingHei-DB-GBK !important;
+    font-family:FZLanTingHei-R-GBK !important;
     font-weight: normal !important;
-    font-size:16pt !important;
+    font-size:15pt !important;
     text-align:left !important;
 }
 b {
-    font-family:FZLanTingHei-DB-GBK !important;
+    font-family:FZLanTingHei-R-GBK !important;
     font-weight: normal !important;
 }
 strong {
     font-family:FZLanTingHei-R-GBK !important;
+    font-weight: normal !important;
 }
 a {
     color:#4a8711 !important;

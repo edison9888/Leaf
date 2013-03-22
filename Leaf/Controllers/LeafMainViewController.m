@@ -107,7 +107,7 @@
     _container = container;
     [self.view addSubview:_container];
     [container release];
-    _container.backgroundColor = [UIColor colorWithRed:CGColorConvert(236.0f) green:CGColorConvert(234.0f) blue:CGColorConvert(226.0f) alpha:1.0f];
+    _container.backgroundColor = kLeafBackgroundColor;
     
     LeafNavigationBar *bar = [[LeafNavigationBar alloc] init];
     [bar setTitle:@"cnbeta.com"];
@@ -122,7 +122,7 @@
     _table.dataSource = self;
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_table setAllowsSelection:YES];
-    [_table setBackgroundColor:[UIColor colorWithRed:CGColorConvert(236.0f) green:CGColorConvert(234.0f) blue:CGColorConvert(226.0f) alpha:1.0f]];
+    [_table setBackgroundColor:kLeafBackgroundColor];
     [_container addSubview:tableView];
     [tableView release];
     
@@ -281,7 +281,7 @@
         return 80.0f;
     }
     // full mode        
-    return 102.0f;
+    return 92.0f;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
