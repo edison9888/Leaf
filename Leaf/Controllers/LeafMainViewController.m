@@ -20,7 +20,7 @@
 #define kMoreNewsURL @"http://www.cnbeta.com/api/getNewsList.php?fromArticleId=%@&limit=10"
 #define kArticleUrl  @"http://www.cnbeta.com/api/getNewsContent2.php?articleId=%@"
 #define kLeafNewsItemTag 1001
-#define kScaleFactor 5.0f
+#define kScaleFactor 0.02f
 #define kAlphaFactor 0.1f
 
 @implementation LeafMainViewController
@@ -77,13 +77,10 @@
     if ([keyPath isEqualToString:@"frame"]) {       
         CGFloat originX = _contentView.frame.origin.x;        
         CGFloat factor = 1 - originX/CGWidth(_contentView.frame);
-        CGFloat x = kScaleFactor * factor;
-        CGFloat y = kScaleFactor * factor;
-        CGFloat w = CGWidth(self.view.frame) - 2 * x;
-        CGFloat h = CGHeight(self.view.frame) - 2 * y;
-        _container.frame = CGRectMake(x, y, w, h);
-        [_table setFrame:CGRectMake(0.0f, 44.0f, CGWidth(_container.frame), CGHeight(_container.frame) - 44.0f)];
         
+        CGFloat scale = 1.0f - (kScaleFactor * factor);        
+        CGAffineTransform transform = CGAffineTransformScale(CGAffineTransformIdentity, scale, scale);
+        _container.transform = transform;
         _maskView.alpha = kAlphaFactor + factor;
     }
     else if([keyPath isEqualToString:@"simple"]){
