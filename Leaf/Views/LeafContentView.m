@@ -371,8 +371,8 @@
     
     // xpath
     NSData *htmlData = [html dataUsingEncoding:NSUTF8StringEncoding];
-    TFHpple * doc = [[TFHpple alloc] initWithHTMLData:htmlData];
-    NSArray * elements = [doc searchWithXPathQuery:@"//img"];
+    TFHpple *doc = [[TFHpple alloc] initWithHTMLData:htmlData];
+    NSArray *elements = [doc searchWithXPathQuery:@"//img"];
     
     //TFHppleElement *element = [elements objectAtIndex:0];
     for (TFHppleElement *element in elements) {
@@ -393,6 +393,7 @@
     }    
     //NSLog(@"html: %@", html);
     [_content loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] resourcePath] isDirectory:YES]];
+    [doc release];
 }
 
 - (void)didFailWithError:(NSError *)error

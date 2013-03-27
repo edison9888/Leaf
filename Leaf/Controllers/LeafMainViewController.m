@@ -15,10 +15,14 @@
 #import "LeafNewsData.h"
 #import "LeafCache.h"
 #import "LeafContentView.h"
+#import "LeafDownloadTask.h"
+
 
 #define kNewsListURL @"http://www.cnbeta.com/api/getNewsList.php?limit=20"
+#define kDownloadNewsListURL @"http://www.cnbeta.com/api/getNewsList.php?limit=50"
 #define kMoreNewsURL @"http://www.cnbeta.com/api/getNewsList.php?fromArticleId=%@&limit=10"
 #define kArticleUrl  @"http://www.cnbeta.com/api/getNewsContent2.php?articleId=%@"
+
 #define kLeafNewsItemTag 1001
 #define kScaleFactor 0.02f
 #define kAlphaFactor 0.1f
@@ -33,6 +37,7 @@
     _container = nil;
     _contentView = nil;
     _maskView = nil;
+    [_queue release], _queue = nil;
     [super dealloc];
 }
 
@@ -162,6 +167,10 @@
     
     LeafConfig *config = [LeafConfig sharedInstance];
     [config addObserver:self forKeyPath:@"simple" options:NSKeyValueObservingOptionNew context:NULL];
+    
+    _queue = [[NSOperationQueue alloc] init];
+    
+    //[self downloadNews];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -413,6 +422,39 @@
 - (void)connectionDidCancel
 {
     [self stopLoadingAnimation];
+}
+
+#pragma mark - 
+#pragma mark - Download The Latest 50 News
+
+- (void)downloadNewsInfo
+{
+   // NSData *data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:kNewsListURL]];
+    NSData *data = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:kNewsListURL]] returningResponse:nil error:nil];
+    if (data) {
+       
+        NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        if (array) {        
+            for (int i = 0; i<array.count; i++) {
+                NSDictionary *dict = [array objectAtIndex:i];
+                
+                if (dict) {     
+                    NSString *articleId = [dict stringForKey:@"ArticleID"];
+                    if (articleId && ![articleId isEqualToString:@""]) {
+                        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kArticleUrl, articleId]];
+                        LeafDownloadTask *task = [[LeafDownloadTask alloc] initWithURL:url];
+                        [_queue addOperation:task];
+                        [task release];
+                    }
+                }
+            }            
+        }
+    }
+}
+
+- (void)downloadNews
+{
+    [self performSelectorInBackground:@selector(downloadNewsInfo) withObject:nil];
 }
 
 @end

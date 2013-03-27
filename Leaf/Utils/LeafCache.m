@@ -17,7 +17,7 @@ static LeafCache *_instance = nil;
 {
     @synchronized(self){
         if (!_instance) {
-            [[self alloc] init];
+            _instance = [[self alloc] init];
         }
     }
     return _instance;

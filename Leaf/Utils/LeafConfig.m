@@ -20,7 +20,7 @@ static LeafConfig *_instance;
 {
     @synchronized(self){
         if (!_instance) {
-            [[self alloc] init];
+            _instance = [[self alloc] init];
         }
     }
     

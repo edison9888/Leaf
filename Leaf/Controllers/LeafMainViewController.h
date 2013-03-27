@@ -26,6 +26,9 @@
     LeafContentView *_contentView;
     UIView *_container;
     UIView *_maskView;
+    NSOperationQueue *_queue;
 }
+
+- (void)downloadNews;
 
 @end
