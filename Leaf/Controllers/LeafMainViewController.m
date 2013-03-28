@@ -147,7 +147,7 @@
     _reloading = NO;
     _loadingMore = NO;
     
-    [_headerView pullTheTrigle:_table];
+    //[_headerView pullTheTrigle:_table];
     
     UIView *maskView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGWidth(self.view.frame), CGHeight(self.view.frame))];
     _maskView = maskView;
@@ -170,7 +170,7 @@
     
     _queue = [[NSOperationQueue alloc] init];
     
-    //[self downloadNews];
+    [self downloadNews];
 }
 
 - (void)viewWillAppear:(BOOL)animated
