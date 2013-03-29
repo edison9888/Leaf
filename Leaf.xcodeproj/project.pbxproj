@@ -13,10 +13,6 @@
 		DB41071116E86BFF00DE7DB7 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = DB41070D16E86BFF00DE7DB7 /* TFHppleElement.m */; };
 		DB41071216E86BFF00DE7DB7 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = DB41070F16E86BFF00DE7DB7 /* XPathQuery.m */; };
 		DB41071516E86D8E00DE7DB7 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DB41071416E86D8E00DE7DB7 /* libxml2.2.dylib */; };
-		DB49CAA91703DD20004F3C7B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB49CAA81703DD20004F3C7B /* SystemConfiguration.framework */; };
-		DB49CAAB1703DD28004F3C7B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB49CAAA1703DD28004F3C7B /* CFNetwork.framework */; };
-		DB49CAAD1703DD31004F3C7B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DB49CAAC1703DD31004F3C7B /* libz.dylib */; };
-		DB49CAAF1703DD42004F3C7B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB49CAAE1703DD42004F3C7B /* MobileCoreServices.framework */; };
 		DB49CABB17058244004F3C7B /* newslist@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB49CAB317058243004F3C7B /* newslist@2x.png */; };
 		DB49CABC17058244004F3C7B /* newslist.png in Resources */ = {isa = PBXBuildFile; fileRef = DB49CAB417058243004F3C7B /* newslist.png */; };
 		DB49CABD17058244004F3C7B /* downloaded@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB49CAB517058243004F3C7B /* downloaded@2x.png */; };
@@ -101,10 +97,6 @@
 		DB41070E16E86BFF00DE7DB7 /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPathQuery.h; sourceTree = "<group>"; };
 		DB41070F16E86BFF00DE7DB7 /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPathQuery.m; sourceTree = "<group>"; };
 		DB41071416E86D8E00DE7DB7 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
-		DB49CAA81703DD20004F3C7B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		DB49CAAA1703DD28004F3C7B /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
-		DB49CAAC1703DD31004F3C7B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		DB49CAAE1703DD42004F3C7B /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		DB49CAB317058243004F3C7B /* newslist@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newslist@2x.png"; sourceTree = "<group>"; };
 		DB49CAB417058243004F3C7B /* newslist.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newslist.png; sourceTree = "<group>"; };
 		DB49CAB517058243004F3C7B /* downloaded@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "downloaded@2x.png"; sourceTree = "<group>"; };
@@ -217,10 +209,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB49CAAF1703DD42004F3C7B /* MobileCoreServices.framework in Frameworks */,
-				DB49CAAD1703DD31004F3C7B /* libz.dylib in Frameworks */,
-				DB49CAAB1703DD28004F3C7B /* CFNetwork.framework in Frameworks */,
-				DB49CAA91703DD20004F3C7B /* SystemConfiguration.framework in Frameworks */,
 				DB41071516E86D8E00DE7DB7 /* libxml2.2.dylib in Frameworks */,
 				DBD8260716B6613900EC4439 /* ImageIO.framework in Frameworks */,
 				DBD825AA16B6211800EC4439 /* QuartzCore.framework in Frameworks */,
@@ -293,10 +281,6 @@
 		DB61AECA16B2589D006EC642 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DB49CAAE1703DD42004F3C7B /* MobileCoreServices.framework */,
-				DB49CAAC1703DD31004F3C7B /* libz.dylib */,
-				DB49CAAA1703DD28004F3C7B /* CFNetwork.framework */,
-				DB49CAA81703DD20004F3C7B /* SystemConfiguration.framework */,
 				DB41071416E86D8E00DE7DB7 /* libxml2.2.dylib */,
 				DBD8260616B6613900EC4439 /* ImageIO.framework */,
 				DBD825A916B6211800EC4439 /* QuartzCore.framework */,
