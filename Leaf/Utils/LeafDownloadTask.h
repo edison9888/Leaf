@@ -7,15 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-@class ASIWebPageRequest;
+
 @interface LeafDownloadTask : NSOperation
 {
     BOOL _finished;
     BOOL _executing;
     
 }
+
 @property (nonatomic, retain) NSURL *url;
-@property (nonatomic, retain) ASIWebPageRequest *request;
+
 - (id)initWithURL:(NSURL *)url;
 
 @end

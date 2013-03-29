@@ -9,22 +9,18 @@
 #import "LeafDownloadTask.h"
 #import "LeafHelper.h"
 #import "TFHpple.h"
-#import "ASIWebPageRequest.h"
-#import "ASIDownloadCache.h"
+
 
 #define kNewsListURL @"http://www.cnbeta.com/api/getNewsList.php?limit=50"
 #define kArticleUrl  @"http://www.cnbeta.com/api/getNewsContent2.php?articleId=%@"
 
 @implementation LeafDownloadTask
 @synthesize url = _url;
-@synthesize request = _request;
+
 - (void)dealloc
 {
     [_url release], _url = nil;
-    [_request setDelegate:nil];
-	[_request setDownloadProgressDelegate:nil];
-	[_request cancel];
-    [_request release], _request = nil;
+
     [super dealloc];
 }
 
@@ -96,70 +92,5 @@
     [self didChangeValueForKey:@"isFinished"];
      
 }
-
-
-- (void)fetchURL
-{
-	[_request setDelegate:nil];
-	[_request cancel];
-	[self setRequest:[ASIWebPageRequest requestWithURL:_url]];
-    
-	[_request setDidFailSelector:@selector(webPageFetchFailed:)];
-	[_request setDidFinishSelector:@selector(webPageFetchSucceeded:)];
-	[_request setDelegate:self];
-	[_request setDownloadProgressDelegate:self];
-	[_request setUrlReplacementMode:ASIReplaceExternalResourcesWithLocalURLs];
-	
-	// It is strongly recommended that you set both a downloadCache and a downloadDestinationPath for all ASIWebPageRequests
-	[_request setDownloadCache:[ASIDownloadCache sharedCache]];
-	[_request setCachePolicy:ASIOnlyLoadIfNotCachedCachePolicy];
-    
-	// This is actually the most efficient way to set a download path for ASIWebPageRequest, as it writes to the cache directly
-	[_request setDownloadDestinationPath:[[ASIDownloadCache sharedCache] pathToStoreCachedResponseDataForRequest:_request]];
-	
-	[[ASIDownloadCache sharedCache] setShouldRespectCacheControlHeaders:NO];
-	[_request startAsynchronous];
-}
-
-- (void)webPageFetchFailed:(ASIHTTPRequest *)theRequest
-{
-	
-}
-
-- (void)webPageFetchSucceeded:(ASIHTTPRequest *)theRequest
-{
-	NSURL *baseURL;
-	// If we're using ASIReplaceExternalResourcesWithLocalURLs, we must set the baseURL to point to our locally cached file
-    baseURL = [NSURL fileURLWithPath:[_request downloadDestinationPath]];
-	    
-	if ([theRequest downloadDestinationPath]) {
-		NSString *response = [NSString stringWithContentsOfFile:[theRequest downloadDestinationPath] encoding:[theRequest responseEncoding] error:nil];
-        NSLog(@"response %@", response);
-    } 
-}
-
-// At time of writing ASIWebPageRequests do not support automatic progress tracking across all requests needed for a page
-// The code below shows one approach you could use for tracking progress - it creates a new row with a progress indicator for each resource request
-// However, you could use the same approach and keep track of an overal total to show progress
-/*
-- (void)requestStarted:(ASIWebPageRequest *)theRequest
-{
-	
-}
-
-- (void)requestFinished:(ASIWebPageRequest *)theRequest
-{
-	if ([theRequest downloadDestinationPath]) {
-		NSString *response = [NSString stringWithContentsOfFile:[theRequest downloadDestinationPath] encoding:[theRequest responseEncoding] error:nil];
-        NSLog(@"response: %@", response);
-    } 
-}
-
-
-- (void)requestFailed:(ASIHTTPRequest *)request
-{
-    
-}
-*/
 
 @end
