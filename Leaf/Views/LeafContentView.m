@@ -21,7 +21,8 @@
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {      
+    if (self) {
+        self.backgroundColor = kLeafBackgroundColor;
         LeafNavigationBar *bar = [[LeafNavigationBar alloc] init];
         [bar addLeftItemWithStyle:LeafNavigationItemStyleBack target:self action:@selector(backClicked:)];
         [bar addRightItemWithStyle:LeafNavigationItemStyleSafari target:self action:@selector(safariClicked:)];

@@ -785,6 +785,13 @@
     
 }
 
+#pragma mark - Disable Auto Rotate for iOS 6
+
+- (BOOL)shouldAutorotate
+{
+    return NO;
+}
+
 
 #pragma mark - Actions 
 
