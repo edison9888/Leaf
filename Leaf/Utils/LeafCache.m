@@ -71,7 +71,7 @@ static LeafCache *_instance = nil;
 {
     if (self = [super init]) {
         _cache = [[SDURLCache alloc] initWithMemoryCapacity:1024*1024   // 1MB mem cache
-                                               diskCapacity:1024*1024*5000 // 50MB disk cache
+                                               diskCapacity:1024*1024*256 // 50MB disk cache
                                                    diskPath:[SDURLCache defaultCachePath]
                                          enableForIOS5AndUp:YES];
         [NSURLCache setSharedURLCache:_cache];

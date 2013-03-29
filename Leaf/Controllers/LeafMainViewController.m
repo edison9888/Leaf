@@ -94,6 +94,13 @@
     else if([keyPath isEqualToString:@"mask"]){
         _maskView.hidden = !_contentView.mask;
     }
+    else if([keyPath isEqualToString:@"isFinished"]){
+        LeafDownloadTask *task = (LeafDownloadTask *)object;
+        if (task.isFinished) {
+            _count++;
+            NSLog(@"Finished: %d", _count);
+        }
+    }
     
 }
 
@@ -424,13 +431,15 @@
     [self stopLoadingAnimation];
 }
 
+
+
 #pragma mark - 
 #pragma mark - Download The Latest 50 News
 
 - (void)downloadNewsInfo
 {
    // NSData *data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:kNewsListURL]];
-    NSData *data = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:kNewsListURL]] returningResponse:nil error:nil];
+    NSData *data = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:kDownloadNewsListURL]] returningResponse:nil error:nil];
     if (data) {
        
         NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
@@ -443,6 +452,7 @@
                     if (articleId && ![articleId isEqualToString:@""]) {
                         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kArticleUrl, articleId]];
                         LeafDownloadTask *task = [[LeafDownloadTask alloc] initWithURL:url];
+                        [task addObserver:self forKeyPath:@"isFinished" options:NSKeyValueObservingOptionNew context:nil];
                         [_queue addOperation:task];
                         [task release];
                     }
@@ -454,6 +464,7 @@
 
 - (void)downloadNews
 {
+    _count = 0;
     [self performSelectorInBackground:@selector(downloadNewsInfo) withObject:nil];
 }
 

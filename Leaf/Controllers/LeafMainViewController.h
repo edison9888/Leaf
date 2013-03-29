@@ -27,6 +27,7 @@
     UIView *_container;
     UIView *_maskView;
     NSOperationQueue *_queue;
+    int _count;
 }
 
 - (void)downloadNews;

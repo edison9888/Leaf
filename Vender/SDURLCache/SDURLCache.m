@@ -491,7 +491,7 @@ static NSDateFormatter* CreateDateFormatter(NSString *format)
         && cachedResponse.data.length < self.diskCapacity)
     {
         NSDictionary *headers = [(NSHTTPURLResponse *)cachedResponse.response allHeaderFields];
-        NSLog(@"HTTP Header: %@", [headers description]);
+        // NSLog(@"HTTP Header: %@", [headers description]);
         // RFC 2616 section 13.3.4 says clients MUST use Etag in any cache-conditional request if provided by server
         if (![headers objectForKey:@"Etag"])
         {

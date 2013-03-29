@@ -65,38 +65,37 @@
     }
     // If the operation is not canceled, begin executing the task.
     [self willChangeValueForKey:@"isExecuting"]; 
-    [NSThread detachNewThreadSelector:@selector(fetchURL) toTarget:self withObject:nil];
+    [NSThread detachNewThreadSelector:@selector(main) toTarget:self withObject:nil];
     _executing = YES; 
     [self didChangeValueForKey:@"isExecuting"];
 }
 
-/* - (void)main
-{
-    
+- (void)main
+{    
     [self willChangeValueForKey:@"isFinished"];
     _finished = NO;
     [self didChangeValueForKey:@"isFinished"];
     
     if (_url) {
         NSData *htmlData = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:_url] returningResponse:nil error:nil];
+        
         if (htmlData) {
             TFHpple *doc = [[TFHpple alloc] initWithHTMLData:htmlData];
             NSArray *elements = [doc searchWithXPathQuery:@"//img"];
-            
+            [doc release];
             for (TFHppleElement *element in elements) {                
                 NSString *imageUrl = [element objectForKey:@"src"];
                 [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]] returningResponse:nil error:nil];
-                NSLog(@"downloaded image: %@", imageUrl);
-            }
-            [doc release];
-        }
+                //NSLog(@"downloaded image: %@", imageUrl);
+            }            
+        }        
     } 
     
     [self willChangeValueForKey:@"isFinished"];
     _finished = YES;
     [self didChangeValueForKey:@"isFinished"];
      
-}*/
+}
 
 
 - (void)fetchURL
@@ -135,12 +134,14 @@
 	    
 	if ([theRequest downloadDestinationPath]) {
 		NSString *response = [NSString stringWithContentsOfFile:[theRequest downloadDestinationPath] encoding:[theRequest responseEncoding] error:nil];
+        NSLog(@"response %@", response);
     } 
 }
 
 // At time of writing ASIWebPageRequests do not support automatic progress tracking across all requests needed for a page
 // The code below shows one approach you could use for tracking progress - it creates a new row with a progress indicator for each resource request
 // However, you could use the same approach and keep track of an overal total to show progress
+/*
 - (void)requestStarted:(ASIWebPageRequest *)theRequest
 {
 	
@@ -159,5 +160,6 @@
 {
     
 }
+*/
 
 @end
