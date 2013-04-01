@@ -73,7 +73,7 @@
     self.mask = YES;
     [UIView animateWithDuration:0.4f 
                           delay:0.0f 
-                        options:UIViewAnimationCurveEaseInOut 
+                        options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
                          frame.origin.x = CGWidth(self.frame);
                          self.frame = frame;
@@ -107,7 +107,7 @@
     
     [UIView animateWithDuration:0.5f
                           delay:0.0f
-                        options:UIViewAnimationCurveEaseOut
+                        options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
                          _loading.center = center;
                      }
@@ -124,7 +124,7 @@
     center.y = CGHeight(self.frame) + CGHeight(_loading.frame)/2.0f;
     [UIView animateWithDuration:0.4f
                           delay:0.0f
-                        options:UIViewAnimationCurveEaseIn
+                        options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
                          _loading.center = center;
                      }
@@ -156,7 +156,8 @@
     __block CGRect frame = self.frame;
     [UIView animateWithDuration:0.4f 
                           delay:0.0f 
-                        options:UIViewAnimationCurveEaseIn animations:^{
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
                             frame.origin.x = 0.0f;
                             self.frame = frame;
                          } 
@@ -316,7 +317,7 @@
                 __block CGRect frame = self.frame;
                 [UIView animateWithDuration:0.3f 
                                       delay:0.0f 
-                                    options:UIViewAnimationCurveEaseIn 
+                                    options:UIViewAnimationOptionCurveEaseOut
                                  animations:^{
                                      frame.origin.x = 0.0f;
                                      self.frame = frame;                                     

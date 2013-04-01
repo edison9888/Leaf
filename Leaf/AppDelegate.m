@@ -10,7 +10,6 @@
 #import "LeafMainViewController.h"
 #import "LeafMenuController.h"
 #import "DDMenuController.h"
-#import "LeafCache.h"
 
 @implementation AppDelegate
 
@@ -27,8 +26,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
-    
-    [LeafCache sharedInstance];
     
     LeafMainViewController *vc = [[LeafMainViewController alloc] init];
     UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:vc];

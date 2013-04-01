@@ -11,7 +11,7 @@
 #import "EGOLoadMoreTableFooterView.h"
 #import "LeafURLConnection.h"
 
-@class LeafNavigationBar, LeafContentView;
+@class LeafNavigationBar, LeafContentView, ASINetworkQueue;
 @interface LeafMainViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, EGORefreshTableHeaderDelegate, EGOLoadMoreTableFooterDelegate, LeafURLConnectionDelegate>
 {
     
@@ -26,7 +26,8 @@
     LeafContentView *_contentView;
     UIView *_container;
     UIView *_maskView;
-    NSOperationQueue *_queue;
+    ASINetworkQueue *_queue;
+    //NSOperationQueue *_queue;
     int _count;
 }
 

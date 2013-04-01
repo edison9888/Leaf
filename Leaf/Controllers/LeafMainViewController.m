@@ -13,10 +13,11 @@
 #import "LeafHelper.h"
 #import "LeafNewsItem.h"
 #import "LeafNewsData.h"
-#import "LeafCache.h"
 #import "LeafContentView.h"
-#import "LeafDownloadTask.h"
-
+#import "ASIHTTPRequest.h"
+#import "ASINetworkQueue.h"
+#import "ASIWebPageRequest.h"
+#import "ASIDownloadCache.h"
 
 #define kNewsListURL @"http://www.cnbeta.com/api/getNewsList.php?limit=20"
 #define kDownloadNewsListURL @"http://www.cnbeta.com/api/getNewsList.php?limit=50"
@@ -37,6 +38,7 @@
     _container = nil;
     _contentView = nil;
     _maskView = nil;
+    [_queue cancelAllOperations];
     [_queue release], _queue = nil;
     [super dealloc];
 }
@@ -94,14 +96,6 @@
     else if([keyPath isEqualToString:@"mask"]){
         _maskView.hidden = !_contentView.mask;
     }
-    else if([keyPath isEqualToString:@"isFinished"]){
-        LeafDownloadTask *task = (LeafDownloadTask *)object;
-        if (task.isFinished) {
-            _count++;
-            NSLog(@"Finished: %d", _count);
-        }
-    }
-    
 }
 
 #pragma mark - View lifecycle
@@ -175,8 +169,6 @@
     LeafConfig *config = [LeafConfig sharedInstance];
     [config addObserver:self forKeyPath:@"simple" options:NSKeyValueObservingOptionNew context:NULL];
     
-    _queue = [[NSOperationQueue alloc] init];
-    
     [self downloadNews];
 }
 
@@ -219,7 +211,6 @@
 
 - (void)reloadData{
 	if (!_loadingMore) {
-        [[LeafCache sharedInstance] removeCacheForURL:[NSURL URLWithString:kNewsListURL]];
         [_connection GET:kNewsListURL];
         _reloading = YES;
     }
@@ -436,6 +427,27 @@
 #pragma mark - 
 #pragma mark - Download The Latest 50 News
 
+- (void)fetchURL:(NSURL *)url
+{
+    ASIWebPageRequest *_request = [ASIWebPageRequest requestWithURL:url];
+    
+	[_request setDidFailSelector:@selector(webPageFetchFailed:)];
+	[_request setDidFinishSelector:@selector(webPageFetchSucceeded:)];
+	[_request setDelegate:self];
+	[_request setDownloadProgressDelegate:self];
+	[_request setUrlReplacementMode:ASIReplaceExternalResourcesWithLocalURLs];
+	
+	// It is strongly recommended that you set both a downloadCache and a downloadDestinationPath for all ASIWebPageRequests
+	[_request setDownloadCache:[ASIDownloadCache sharedCache]];
+	[_request setCachePolicy:ASIOnlyLoadIfNotCachedCachePolicy];
+    
+	// This is actually the most efficient way to set a download path for ASIWebPageRequest, as it writes to the cache directly
+	[_request setDownloadDestinationPath:[[ASIDownloadCache sharedCache] pathToStoreCachedResponseDataForRequest:_request]];
+	
+	[[ASIDownloadCache sharedCache] setShouldRespectCacheControlHeaders:NO];
+    [_request startAsynchronous];
+}
+
 - (void)downloadNewsInfo
 {
    // NSData *data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:kNewsListURL]];
@@ -443,7 +455,10 @@
     if (data) {
        
         NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        if (array) {        
+        if (array) {
+            if (!_queue) {
+                _queue = [[ASINetworkQueue alloc] init];
+            }
             for (int i = 0; i<array.count; i++) {
                 NSDictionary *dict = [array objectAtIndex:i];
                 
@@ -451,10 +466,7 @@
                     NSString *articleId = [dict stringForKey:@"ArticleID"];
                     if (articleId && ![articleId isEqualToString:@""]) {
                         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kArticleUrl, articleId]];
-                        LeafDownloadTask *task = [[LeafDownloadTask alloc] initWithURL:url];
-                        [task addObserver:self forKeyPath:@"isFinished" options:NSKeyValueObservingOptionNew context:nil];
-                        [_queue addOperation:task];
-                        [task release];
+                        [self fetchURL:url];
                     }
                 }
             }            
@@ -467,5 +479,28 @@
     _count = 0;
     [self performSelectorInBackground:@selector(downloadNewsInfo) withObject:nil];
 }
+
+
+
+- (void)webPageFetchFailed:(ASIHTTPRequest *)theRequest
+{
+	[self willChangeValueForKey:@"isFinished"];
+}
+
+- (void)webPageFetchSucceeded:(ASIHTTPRequest *)theRequest
+{
+    
+	NSURL *baseURL;
+	// If we're using ASIReplaceExternalResourcesWithLocalURLs, we must set the baseURL to point to our locally cached file
+    baseURL = [NSURL fileURLWithPath:[theRequest downloadDestinationPath]];
+    
+	if ([theRequest downloadDestinationPath]) {
+		NSString *response = [NSString stringWithContentsOfFile:[theRequest downloadDestinationPath] encoding:[theRequest responseEncoding] error:nil];
+       // NSLog(@"WebPage: %@", response);
+        _count++;
+        NSLog(@"count: %d", _count);
+    }
+}
+
 
 @end
