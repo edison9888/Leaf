@@ -47,7 +47,7 @@ static NSArray *fileExtensionsToHandleAsHTML = nil;
 		@synchronized(self) {
 			if (!sharedCache) {
 				sharedCache = [[self alloc] init];
-				[sharedCache setStoragePath:[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"ASIHTTPRequestCache"]];
+				[sharedCache setStoragePath:[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"LeafCache"]];
 			}
 		}
 	}

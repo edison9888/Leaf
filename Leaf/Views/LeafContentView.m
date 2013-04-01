@@ -71,9 +71,9 @@
     __block CGRect frame = self.frame;
     [_content stopLoading];
     self.mask = YES;
-    [UIView animateWithDuration:0.4f 
+    [UIView animateWithDuration:0.3f
                           delay:0.0f 
-                        options:UIViewAnimationOptionCurveEaseInOut
+                        options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
                          frame.origin.x = CGWidth(self.frame);
                          self.frame = frame;
@@ -105,7 +105,7 @@
     CGPoint center = _loading.center;
     center.y = (CGHeight(self.frame) - CGHeight(_loading.frame)/2.0f);
     
-    [UIView animateWithDuration:0.5f
+    [UIView animateWithDuration:0.3f
                           delay:0.0f
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
@@ -122,7 +122,7 @@
 {
     CGPoint center = _loading.center;
     center.y = CGHeight(self.frame) + CGHeight(_loading.frame)/2.0f;
-    [UIView animateWithDuration:0.4f
+    [UIView animateWithDuration:0.3f
                           delay:0.0f
                         options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
@@ -154,7 +154,7 @@
     NSLog(@"loadURL: %@", url);
     self.mask = YES;
     __block CGRect frame = self.frame;
-    [UIView animateWithDuration:0.4f 
+    [UIView animateWithDuration:0.3f
                           delay:0.0f 
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
