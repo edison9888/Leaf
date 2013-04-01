@@ -148,7 +148,7 @@
     _reloading = NO;
     _loadingMore = NO;
     
-    //[_headerView pullTheTrigle:_table];
+    [_headerView pullTheTrigle:_table];
     
     UIView *maskView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGWidth(self.view.frame), CGHeight(self.view.frame))];
     _maskView = maskView;
@@ -169,7 +169,7 @@
     LeafConfig *config = [LeafConfig sharedInstance];
     [config addObserver:self forKeyPath:@"simple" options:NSKeyValueObservingOptionNew context:NULL];
     
-    [self downloadNews];
+    //[self downloadNews];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -485,7 +485,7 @@
 
 - (void)webPageFetchFailed:(ASIHTTPRequest *)theRequest
 {
-	[self willChangeValueForKey:@"isFinished"];
+	
 }
 
 - (void)webPageFetchSucceeded:(ASIHTTPRequest *)theRequest
@@ -497,7 +497,7 @@
     
 	if ([theRequest downloadDestinationPath]) {
 		NSString *response = [NSString stringWithContentsOfFile:[theRequest downloadDestinationPath] encoding:[theRequest responseEncoding] error:nil];
-       // NSLog(@"WebPage: %@", response);
+        NSLog(@"WebPage: %@", response);
         _count++;
         NSLog(@"count: %d", _count);
     }

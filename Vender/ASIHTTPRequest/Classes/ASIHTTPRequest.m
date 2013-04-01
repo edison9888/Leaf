@@ -311,6 +311,11 @@ static NSOperationQueue *sharedQueue = nil;
 	return self;
 }
 
++ (void)cancelAllRequests
+{
+    [sharedQueue cancelAllOperations];
+}
+
 + (id)requestWithURL:(NSURL *)newURL
 {
 	return [[[self alloc] initWithURL:newURL] autorelease];

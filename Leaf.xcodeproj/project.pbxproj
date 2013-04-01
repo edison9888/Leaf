@@ -795,13 +795,13 @@
 		DB61AEE016B2589D006EC642 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: shangjiang qian (NRFS79TKV7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: shangjiang qian (NRFS79TKV7)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Leaf/Leaf-Prefix.pch";
 				INFOPLIST_FILE = "Leaf/Leaf-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1B218A9E-5F29-47D0-9B8C-5466B2EF851E";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8C3A8181-0E8A-45E8-908D-E7F2ADE8E383";
 				WRAPPER_EXTENSION = app;
 			};
@@ -810,13 +810,13 @@
 		DB61AEE116B2589D006EC642 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: shangjiang qian (NRFS79TKV7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: shangjiang qian (NRFS79TKV7)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Leaf/Leaf-Prefix.pch";
 				INFOPLIST_FILE = "Leaf/Leaf-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1B218A9E-5F29-47D0-9B8C-5466B2EF851E";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CBAE35D4-0FAB-4E7B-B4DE-FA1F57417122";
 				WRAPPER_EXTENSION = app;
 			};
