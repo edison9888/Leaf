@@ -161,8 +161,7 @@
     LeafContentView *contentView = [[LeafContentView alloc] initWithFrame:CGRectMake(CGWidth(self.view.frame), 0.0f, CGWidth(self.view.frame), CGHeight(self.view.frame))];
     [self.view addSubview:contentView];
     _contentView = contentView;
-    _contentView.backgroundColor = [UIColor clearColor];
-    [contentView release];    
+    [contentView release];
     [_contentView addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:NULL];
     [_contentView addObserver:self forKeyPath:@"mask" options:NSKeyValueObservingOptionNew context:NULL]; 
     
@@ -457,9 +456,6 @@
        
         NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         if (array) {
-            if (!_queue) {
-                _queue = [[ASINetworkQueue alloc] init];
-            }
             for (int i = 0; i<array.count; i++) {
                 NSDictionary *dict = [array objectAtIndex:i];
                 

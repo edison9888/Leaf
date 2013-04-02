@@ -29,13 +29,7 @@
         [self addSubview:bar];
         [bar release];
         
-        UIWebView *content = [[UIWebView alloc] initWithFrame:CGRectMake(0.0f, 44.0f, CGWidth(self.frame), CGHeight(self.frame) - 44.0f)];
-        content.backgroundColor = [UIColor clearColor];
-        content.delegate = self;
-        content.scrollView.bounces = NO;
-        _content = content;
-        [self addSubview:content];
-        [content release];
+        
         
         LeafLoadingView *loading = [[LeafLoadingView alloc] initWithFrame:CGRectMake(0.0f, CGHeight(self.frame), CGWidth(self.frame), 30.0f)];
         _loading = loading;
@@ -43,7 +37,7 @@
         [loading release];
         
         _connection = nil;
-        
+        _content = nil;
         UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
         [self addGestureRecognizer:pan];
         [pan release];
@@ -58,9 +52,8 @@
     [_url release], _url = nil;
     [_videoUrl release], _videoUrl = nil;
     [_connection release], _connection = nil;
-    
-    _content = nil;
     _loading = nil;
+    
     [super dealloc];
 }
 
@@ -69,7 +62,10 @@
 - (void)showLeftView
 {
     __block CGRect frame = self.frame;
-    [_content stopLoading];
+    if (_content) {
+        [_content stopLoading];
+    }
+    
     self.mask = YES;
     [UIView animateWithDuration:0.3f
                           delay:0.0f 
@@ -79,10 +75,14 @@
                          self.frame = frame;
                      } 
                      completion:^(BOOL finished) {
-                         [_content stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName('body')[0].innerHTML = ''"];
                          [_connection cancel];
                          _connection.delegate = nil;
-                         self.mask = NO;                         
+                         if (_content) {
+                             [_content removeFromSuperview];
+                             [_content release], _content = nil;
+                         }
+                         self.mask = NO;
+                         
                      }];
 }
 
@@ -394,6 +394,14 @@
         html = [self purgeImageLinks:html];
     }    
     //NSLog(@"html: %@", html);
+    UIWebView *content = [[UIWebView alloc] initWithFrame:CGRectMake(0.0f, 44.0f, CGWidth(self.frame), CGHeight(self.frame) - 44.0f)];
+    content.backgroundColor = [UIColor clearColor];
+    content.opaque = NO;
+    content.delegate = self;
+    content.scrollView.bounces = NO;
+    _content = content;
+    [self addSubview:content];
+    [content release];
     [_content loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] resourcePath] isDirectory:YES]];
     [doc release];
 }
