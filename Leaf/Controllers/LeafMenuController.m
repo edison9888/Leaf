@@ -11,12 +11,20 @@
 #import "LeafConfig.h"
 #import "LeafMenuItem.h"
 
-#define kLeafMenuItemSize CGSizeMake(270.0f, 40.0f)
-#define kLeafMenuItemPaddingLeft 14.0f
-#define kLeafMenuItemBeginY 48.0f
+#define kLeafMenuItemSize CGSizeMake(240.0f, 60.0f)
+#define kLeafMenuItemBeginY 20.0f
 
 #define kLeafMenuItemNewslistColor [UIColor colorWithRed:CGColorConvert(220.0f) green:CGColorConvert(169.0f) blue:CGColorConvert(119.0f) alpha:1.0f] 
 #define kLeafMenuItemDownloadedListColor [UIColor colorWithRed:CGColorConvert(100.0f) green:CGColorConvert(222.0f) blue:CGColorConvert(100.0f) alpha:1.0f]
+
+#define kLeafMenuMidGreen  [UIColor colorWithRed:CGColorConvert(89.0) green:CGColorConvert(132.0) blue:CGColorConvert(122.0f) alpha:1.0f]
+#define kLeafMenuMidDarkGreen  [UIColor colorWithRed:CGColorConvert(62.0f) green:CGColorConvert(89.0f) blue:CGColorConvert(83.0f) alpha:1.0f]
+
+#define kLeafMenuBlue [UIColor colorWithRed:CGColorConvert(0.0f) green:CGColorConvert(174.0f) blue:CGColorConvert(192.0) alpha:1.0f]
+#define kLeafMenuDarkBlue [UIColor colorWithRed:CGColorConvert(0.0f) green:CGColorConvert(115.0) blue:CGColorConvert(126.0) alpha:1.0f]
+
+#define kLeafMenuGreen [UIColor colorWithRed:CGColorConvert(111.0f) green:CGColorConvert(202.0f) blue:CGColorConvert(43.0f) alpha:1.0f]
+#define kLeafMenuDarkGreen [UIColor colorWithRed:CGColorConvert(74.0f) green:CGColorConvert(135.0f) blue:CGColorConvert(38.0f) alpha:1.0f]
 
 @implementation LeafMenuController
 
@@ -41,6 +49,11 @@
     }
 }
 
+- (void)menuItemClicked:(id)sender
+{
+    
+}
+
 #pragma mark - View lifecycle
 
 
@@ -48,30 +61,26 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithRed:CGColorConvert(35.0f) green:CGColorConvert(38.0f) blue:CGColorConvert(43.0f) alpha:0.9];
+    self.view.backgroundColor = kLeafBackgroundColor;
     
     CGFloat offsetY = kLeafMenuItemBeginY;    
-    NSArray *titleArray = [NSArray arrayWithObjects:@"新闻列表", @"已离线", nil];
-    NSArray *logoArray = [NSArray arrayWithObjects:@"newslist", @"downloaded", nil];
-    NSArray *highlightArray = [NSArray arrayWithObjects:kLeafMenuItemNewslistColor, kLeafMenuItemDownloadedListColor, nil];
+    NSArray *titleArray = [NSArray arrayWithObjects:@"最近新闻", @"已下载", nil];
+    NSArray *imageArray = [NSArray arrayWithObjects:@"menu_latest", @"menu_saved", nil];
+    NSArray *colorArray = [NSArray arrayWithObjects:kLeafMenuMidGreen, kLeafMenuBlue, nil];
+    NSArray *hlArray = [NSArray arrayWithObjects:kLeafMenuMidDarkGreen, kLeafMenuDarkBlue, nil];
     
     for (int i = 0; i < titleArray.count; i++) {
-        LeafMenuItem *item = [[LeafMenuItem alloc] initWithFrame:CGRectMake(kLeafMenuItemPaddingLeft, offsetY, kLeafMenuItemSize.width, kLeafMenuItemSize.height)];
-        [item setImage:[UIImage imageNamed:[logoArray objectAtIndex:i]]];
-        [item setTitle:[titleArray objectAtIndex:i] highlight:[highlightArray objectAtIndex:i]];
-        [self.view addSubview:item];    
-        offsetY = CGOriginY(item.frame) + CGHeight(item.frame);
+        LeafMenuItem *item = [[LeafMenuItem alloc] initWithFrame:CGRectMake(0.0f, offsetY, kLeafMenuItemSize.width, kLeafMenuItemSize.height)];
+        item.tag = i;
+        [item setImage:[UIImage imageNamed:[imageArray objectAtIndex:i]]];
+        [item setTitle:[titleArray objectAtIndex:i]];
+        [item setColor:[colorArray objectAtIndex:i] highlight:[hlArray objectAtIndex:i]];
+        [item addTarget:self action:@selector(menuItemClicked:)];
+        
+        offsetY += CGHeight(item.frame) + 30.0f;
+        [self.view addSubview:item];
         [item release];
-        
-        UIImage *line = [UIImage imageNamed:@"divider_line"];
-        UIImageView *divider = [[UIImageView alloc] initWithFrame:CGRectMake(kLeafMenuItemPaddingLeft, offsetY, line.size.width, line.size.height)];
-        [divider setImage:line];
-        offsetY += line.size.height;
-        [self.view addSubview:divider];
-        [divider release];
-        
     }
-    
     
    /* UIView *imageModeConfigPanel = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 100.0f, 200.0f, 40.0f)];
     [imageModeConfigPanel setBackgroundColor:[UIColor yellowColor]];
