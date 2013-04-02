@@ -416,6 +416,15 @@
         return NO;
         
     }
+    if (gestureRecognizer == _backPan) {
+        
+        if (_root) {
+            return CGRectContainsPoint(_root.view.frame, [gestureRecognizer locationInView:self.view]);
+        }
+        
+        return NO;
+        
+    }
 
     return YES;
    
