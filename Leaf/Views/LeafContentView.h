@@ -28,6 +28,14 @@ typedef enum {
     LeafPanStateShowingRight
 } LeafPanState;
 
+@protocol LeafContentViewDelegate
+
+@optional
+- (void)imgLinkClicked:(NSArray *)urls cur:(NSString *)url;
+
+@end
+
+
 @class LeafLoadingView;
 @interface LeafContentView : UIView <UIWebViewDelegate, LeafURLConnectionDelegate>
 {
@@ -46,6 +54,9 @@ typedef enum {
 @property (nonatomic, assign) BOOL mask;
 @property (nonatomic, retain) NSString *videoUrl; 
 @property (nonatomic, retain) NSString *url;
+@property (nonatomic, assign) NSObject<LeafContentViewDelegate> *delegate;
 - (void)loadURL:(NSString *)url;
 
 @end
+
+

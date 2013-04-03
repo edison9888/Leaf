@@ -13,10 +13,21 @@
 #import "LeafLoadingView.h"
 #import "LeafConfig.h"
 
+
+@interface LeafContentView ()
+
+@property (nonatomic, retain) NSMutableArray *urls;
+@property (nonatomic, retain) NSSet *imgexts;
+@end
+
+
 @implementation LeafContentView
 @synthesize videoUrl = _videoUrl;
 @synthesize url = _url;
 @synthesize mask;
+@synthesize delegate = _delegate;
+@synthesize urls = _urls;
+@synthesize imgexts = _imgexts;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -42,6 +53,9 @@
         [self addGestureRecognizer:pan];
         [pan release];
 
+        _urls = [[NSMutableArray alloc] init];
+        
+        self.imgexts = [NSSet setWithObjects:@"png", @"jpg", @"jpeg", @"bmp", @"tif", @"tiff", nil];
     }
     return self;
 }
@@ -49,11 +63,13 @@
 
 - (void)dealloc
 {
+    [_urls release], _urls = nil;
+    [_imgexts release], _imgexts = nil;
     [_url release], _url = nil;
     [_videoUrl release], _videoUrl = nil;
     [_connection release], _connection = nil;
     _loading = nil;
-    
+    _delegate = nil;
     [super dealloc];
 }
 
@@ -336,6 +352,14 @@
 {
     if (navigationType == UIWebViewNavigationTypeLinkClicked) {
         NSLog(@"UIWebViewNavigationTypeLinkClicked");
+        NSString *extension = [[[[request URL] absoluteString] pathExtension] lowercaseString];
+        
+        if (extension && [_imgexts containsObject:extension]) {
+            if ([_delegate respondsToSelector:@selector(imgLinkClicked:cur:)]) {
+                [_delegate imgLinkClicked:_urls cur:[[request URL] absoluteString]];
+                return NO;
+            }
+        }
     }
     
     NSLog(@"url: %@", [[request URL] absoluteString]);
@@ -376,9 +400,14 @@
     TFHpple *doc = [[TFHpple alloc] initWithHTMLData:htmlData];
     NSArray *elements = [doc searchWithXPathQuery:@"//img"];
     
+    [_urls removeAllObjects];
     //TFHppleElement *element = [elements objectAtIndex:0];
     for (TFHppleElement *element in elements) {
-        NSLog(@"img[@src]: %@", [element objectForKey:@"src"]);
+        NSString *link = [element objectForKey:@"src"];
+        NSString *ext = [[link lowercaseString] pathExtension];
+        if ([_imgexts containsObject:ext]) {
+            [_urls addObject:link];
+        }
     }
     
     NSArray *videoUrls = [doc searchWithXPathQuery:@"//video"];

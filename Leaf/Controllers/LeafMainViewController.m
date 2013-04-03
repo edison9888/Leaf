@@ -14,6 +14,8 @@
 #import "LeafNewsItem.h"
 #import "LeafNewsData.h"
 #import "LeafContentView.h"
+#import "LeafPhotoViewController.h"
+
 #import "ASIHTTPRequest.h"
 #import "ASINetworkQueue.h"
 #import "ASIWebPageRequest.h"
@@ -161,6 +163,7 @@
     LeafContentView *contentView = [[LeafContentView alloc] initWithFrame:CGRectMake(CGWidth(self.view.frame), 0.0f, CGWidth(self.view.frame), CGHeight(self.view.frame))];
     [self.view addSubview:contentView];
     _contentView = contentView;
+    _contentView.delegate = (NSObject<LeafContentViewDelegate> *)self;
     [contentView release];
     [_contentView addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:NULL];
     [_contentView addObserver:self forKeyPath:@"mask" options:NSKeyValueObservingOptionNew context:NULL]; 
@@ -500,5 +503,20 @@
     }
 }
 
+#pragma mark -
+#pragma mark - LeafContentViewDelegate
+
+- (void)imgLinkClicked:(NSArray *)urls cur:(NSString *)url
+{
+    for (int i = 0; i < urls.count; i++) {
+        if ([url isEqualToString:[urls objectAtIndex:i]]) {
+            NSLog(@"index: %d, url: %@", i, url);
+        }
+    }
+    LeafPhotoViewController *vc = [[LeafPhotoViewController alloc] initWithURLs:urls];
+    [self presentViewController:vc animated:YES completion:NULL];
+    [vc release];
+    
+}
 
 @end
