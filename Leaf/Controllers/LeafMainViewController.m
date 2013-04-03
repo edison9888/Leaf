@@ -224,14 +224,15 @@
 
 - (void)loadMoreData
 {
-    if (_leaves && _leaves.count > 0) {
-        LeafNewsData *data = [_leaves lastObject];
-        NSString *url = [NSString stringWithFormat:kMoreNewsURL, data.articleId];
-        [_connection GET:url];
-        
+    if (!_reloading) {
+        if (_leaves && _leaves.count > 0) {
+            LeafNewsData *data = [_leaves lastObject];
+            NSString *url = [NSString stringWithFormat:kMoreNewsURL, data.articleId];
+            [_connection GET:url];
+        }
+        _loadingMore = YES;
     }
-
-    _loadingMore = YES;
+    
 }
 
 - (void)doneLoadingMoreData
