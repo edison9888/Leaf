@@ -10,9 +10,10 @@
 #import "EGORefreshTableHeaderView.h"
 #import "EGOLoadMoreTableFooterView.h"
 #import "LeafURLConnection.h"
+#import "LeafBaseViewController.h"
 
-@class LeafNavigationBar, LeafContentView, ASINetworkQueue;
-@interface LeafMainViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, EGORefreshTableHeaderDelegate, EGOLoadMoreTableFooterDelegate, LeafURLConnectionDelegate>
+@class LeafNavigationBar, ASINetworkQueue;
+@interface LeafMainViewController : LeafBaseViewController<UITableViewDelegate, UITableViewDataSource, EGORefreshTableHeaderDelegate, EGOLoadMoreTableFooterDelegate, LeafURLConnectionDelegate>
 {
     
     LeafNavigationBar *_bar;
@@ -23,11 +24,6 @@
     BOOL _reloading;
     EGORefreshTableHeaderView *_headerView;
     EGOLoadMoreTableFooterView *_footerView;
-    LeafContentView *_contentView;
-    UIView *_container;
-    UIView *_maskView;
-    ASINetworkQueue *_queue;
-    //NSOperationQueue *_queue;
     int _count;
 }
 

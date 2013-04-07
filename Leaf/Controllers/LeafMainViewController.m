@@ -13,7 +13,7 @@
 #import "LeafHelper.h"
 #import "LeafNewsItem.h"
 #import "LeafNewsData.h"
-#import "LeafContentView.h"
+#import "LeafContentViewController.h"
 #import "LeafPhotoViewController.h"
 
 #import "ASIHTTPRequest.h"
@@ -37,11 +37,7 @@
     _bar = nil;
     [_leaves release], _leaves = nil;
     [_connection release], _connection = nil;
-    _container = nil;
-    _contentView = nil;
-    _maskView = nil;
-    [_queue cancelAllOperations];
-    [_queue release], _queue = nil;
+    
     [super dealloc];
 }
 
@@ -83,21 +79,12 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:@"frame"]) {       
-        CGFloat originX = _contentView.frame.origin.x;        
-        CGFloat factor = 1 - originX/CGWidth(_contentView.frame);
-        
-        CGFloat scale = 1.0f - (kScaleFactor * factor);        
-        CGAffineTransform transform = CGAffineTransformScale(CGAffineTransformIdentity, scale, scale);
-        _container.transform = transform;
-        _maskView.alpha = kAlphaFactor + factor;
-    }
-    else if([keyPath isEqualToString:@"simple"]){
+    if([keyPath isEqualToString:@"simple"]){
         [_table reloadData];
+        return;
     }
-    else if([keyPath isEqualToString:@"mask"]){
-        _maskView.hidden = !_contentView.mask;
-    }
+    
+    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 }
 
 #pragma mark - View lifecycle
@@ -106,14 +93,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor blackColor];
-    
-    UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGWidth(self.view.frame), CGHeight(self.view.frame))];
-    _container = container;
-    [self.view addSubview:_container];
-    [container release];
-    _container.backgroundColor = kLeafBackgroundColor;
-    
+        
     LeafNavigationBar *bar = [[LeafNavigationBar alloc] init];
     [bar setTitle:@"cnbeta.com"];
     [bar addLeftItemWithStyle:LeafNavigationItemStyleMenu target:self action:@selector(menuItemClicked:)];
@@ -152,14 +132,7 @@
     
     [_headerView pullTheTrigle:_table];
     
-    UIView *maskView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGWidth(self.view.frame), CGHeight(self.view.frame))];
-    _maskView = maskView;
-    [self.view addSubview:maskView];
-    [maskView release];
-    _maskView.backgroundColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.6f];
-    _maskView.alpha = 0.1f;
-    _maskView.hidden = YES;
-    
+    /*
     LeafContentView *contentView = [[LeafContentView alloc] initWithFrame:CGRectMake(CGWidth(self.view.frame), 0.0f, CGWidth(self.view.frame), CGHeight(self.view.frame))];
     [self.view addSubview:contentView];
     _contentView = contentView;
@@ -167,7 +140,8 @@
     [contentView release];
     [_contentView addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:NULL];
     [_contentView addObserver:self forKeyPath:@"mask" options:NSKeyValueObservingOptionNew context:NULL]; 
-    
+    */
+     
     LeafConfig *config = [LeafConfig sharedInstance];
     [config addObserver:self forKeyPath:@"simple" options:NSKeyValueObservingOptionNew context:NULL];
     
@@ -339,7 +313,11 @@
     LeafNewsData *data = [_leaves safeObjectAtIndex:indexPath.row];
     if (data) {       
         NSString *url = [NSString stringWithFormat:kArticleUrl, data.articleId];
-        [_contentView loadURL:url];        
+        LeafContentViewController *vc = [[LeafContentViewController alloc] initWithURL:url];
+        vc.view.frame = self.view.bounds;
+        [self presentViewController:vc option:LeafAnimationOptionHorizontal completion:^{
+            [vc GET];
+        }];
     }
 }
 
