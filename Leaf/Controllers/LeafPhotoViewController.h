@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LeafPhotoViewController : UIViewController
+@interface LeafPhotoViewController : UIViewController <UIScrollViewDelegate>
 
 - (id)initWithURLs:(NSArray *)urls;
-
+- (void)setCurIndex:(int)index;
 @end

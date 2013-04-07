@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LeafPhotoView : UIView
+@interface LeafPhotoView : UIView <UIScrollViewDelegate>
 {
     @private
     UIScrollView *_scrollView;
@@ -19,5 +19,5 @@
 @property (nonatomic, assign, readonly) UIImageView *imageView;
 
 - (void)setURL:(NSURL *)url;
-
+- (void)resetFrame;
 @end

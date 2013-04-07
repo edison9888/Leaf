@@ -14,12 +14,21 @@
 #define kLeafBottomProgressBarH 2.0f
 
 @interface LeafPhotoViewController ()
+{
+    UIScrollView *_scrollView;
+    int cur;
+}
+
 @property (nonatomic, retain) NSArray *urls;
+@property (nonatomic, retain) NSMutableArray *photoViews;
+
+- (void)loadScrollViewWithPage:(int)page;
+
 @end
 
 @implementation LeafPhotoViewController
 @synthesize urls = _urls;
-
+@synthesize photoViews = _photoViews;
 - (void)dealloc
 {
     [_urls release], _urls = nil;
@@ -31,12 +40,17 @@
 {
     self = [super init];
     if (self) {
+        
         self.urls = urls;
     }
     
     return self;
 }
 
+- (void)setCurIndex:(int)index
+{
+    cur = index;
+}
 
 #pragma mark - 
 
@@ -52,15 +66,45 @@
 {
     [super viewDidLoad];
 	
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    _scrollView = scrollView;
+    _scrollView.delegate = self;
+    _scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    _scrollView.multipleTouchEnabled=YES;
+    _scrollView.scrollEnabled=YES;
+    _scrollView.directionalLockEnabled=YES;
+    _scrollView.canCancelContentTouches=YES;
+    _scrollView.delaysContentTouches=YES;
+    _scrollView.clipsToBounds=YES;
+    _scrollView.alwaysBounceHorizontal=YES;
+    _scrollView.bounces=YES;
+    _scrollView.pagingEnabled=YES;
+    _scrollView.showsVerticalScrollIndicator=NO;
+    _scrollView.showsHorizontalScrollIndicator=NO;
+    _scrollView.backgroundColor = self.view.backgroundColor;
+    _scrollView.contentSize = CGSizeMake(CGWidth(_scrollView.frame) * (_urls.count > 0 ? _urls.count : 1), CGHeight(_scrollView.frame));
+    [self.view addSubview:_scrollView];
+    [scrollView release];
+    
+    NSMutableArray *views = [[NSMutableArray alloc] init];
+    for (unsigned i = 0; i < _urls.count; i++) {
+        [views addObject:[NSNull null]];
+    }
+    self.photoViews = views;
+    [views release];
+    
     LeafBottomBar *bottom = [[LeafBottomBar alloc] initWithFrame:CGRectMake(0.0f, CGHeight(self.view.frame) - 40.0f - 1.0f, CGWidth(self.view.frame), 40.0f)];
     [self.view addSubview:bottom];
     [bottom addTarget:self action:@selector(returnClicked:)];
     [bottom release];
     
-    LeafPhotoView *photoView = [[LeafPhotoView alloc] initWithFrame:CGRectMake(0.0f, 10.0f, CGWidth(self.view.frame), CGHeight(self.view.frame) - 10.0f - 41.0f)];
-    [self.view addSubview:photoView];
-    [photoView setURL:[NSURL URLWithString:[_urls objectAtIndex:0]]];
-    [photoView release];
+    [self loadScrollViewWithPage:cur - 1];
+    [self loadScrollViewWithPage:cur];
+    [self loadScrollViewWithPage:cur + 1];
+    //_scrollView.contentOffset.x = cur * _scrollView.frame.size.width;
+    CGRect visibleRect = _scrollView.bounds;
+    visibleRect.origin.x = cur * _scrollView.frame.size.width;
+    [_scrollView scrollRectToVisible:visibleRect animated:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -68,5 +112,64 @@
     [super didReceiveMemoryWarning];
     
 }
+
+#pragma mark -
+#pragma scrollview stuff
+
+- (void)loadScrollViewWithPage:(int)page
+{
+    if (page < 0 || page >= _urls.count) {
+        return;
+    }
+    
+    LeafPhotoView *photo = [_photoViews safeObjectAtIndex:page];
+    if ([photo isKindOfClass:[NSNull class]]) {
+        LeafPhotoView *photoView = [[LeafPhotoView alloc] initWithFrame:_scrollView.bounds];
+        [_photoViews replaceObjectAtIndex:page withObject:photoView];
+        photo = photoView;
+        NSString *url = [_urls safeObjectAtIndex:page];
+        if (url) {
+           [photoView setURL:[NSURL URLWithString:url]];
+        }
+        
+        [photoView release];
+    }
+    
+    if (photo && photo.superview == nil) {
+        CGRect frame = _scrollView.frame;
+        frame.origin.x = CGWidth(_scrollView.frame) * page;
+        frame.origin.y = 0;
+        photo.frame = frame;
+        [_scrollView addSubview:photo];
+    }
+}
+
+- (void)resetFrame:(int)page
+{
+    if (page < 0 || page >= _urls.count) {
+        return;
+    }
+    LeafPhotoView *photo = [_photoViews safeObjectAtIndex:page];
+    if (photo && [photo isKindOfClass:[LeafPhotoView class]]) {
+        [photo resetFrame];
+    }
+}
+
+#pragma mark -
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat pageWidth = scrollView.frame.size.width;
+    
+    int page = floor((scrollView.contentOffset.x - pageWidth/2) / pageWidth) + 1;
+    [self loadScrollViewWithPage:page -1];
+    [self loadScrollViewWithPage:page];
+    [self loadScrollViewWithPage:page + 1];
+    
+    [self resetFrame:page - 1];
+    [self resetFrame:page + 1];
+}
+
 
 @end

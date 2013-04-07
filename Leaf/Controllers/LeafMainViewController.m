@@ -508,12 +508,14 @@
 
 - (void)imgLinkClicked:(NSArray *)urls cur:(NSString *)url
 {
+    int index = 0;
     for (int i = 0; i < urls.count; i++) {
         if ([url isEqualToString:[urls objectAtIndex:i]]) {
-            NSLog(@"index: %d, url: %@", i, url);
+            index = i;
         }
     }
     LeafPhotoViewController *vc = [[LeafPhotoViewController alloc] initWithURLs:urls];
+    [vc setCurIndex:index];
     [self presentViewController:vc animated:YES completion:NULL];
     [vc release];
     

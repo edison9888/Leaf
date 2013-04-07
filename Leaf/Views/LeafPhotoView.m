@@ -25,15 +25,20 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = kLeafBackgroundColor;
+        self.userInteractionEnabled = YES;
+		self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+		self.opaque = YES;
+        
         UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
         _scrollView = scrollView;
         [self addSubview:scrollView];
         [scrollView release];
         _scrollView.scrollEnabled = YES;
+        _scrollView.delegate = self;
 		_scrollView.pagingEnabled = NO;
 		_scrollView.clipsToBounds = NO;
-		_scrollView.maximumZoomScale = 3.0f;
+		_scrollView.maximumZoomScale = 2.0f;
 		_scrollView.minimumZoomScale = 1.0f;
 		_scrollView.showsVerticalScrollIndicator = NO;
 		_scrollView.showsHorizontalScrollIndicator = NO;
@@ -43,12 +48,12 @@
 		_scrollView.bounces = YES;
 		_scrollView.scrollsToTop = NO;
 		_scrollView.backgroundColor = [UIColor clearColor];
-		_scrollView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
+        _scrollView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
 		_scrollView.decelerationRate = UIScrollViewDecelerationRateFast;
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.bounds];
-        CGRect frame = CGRectInset(self.bounds, 10.0f, 20.0f);
         _imageView = imageView;
+        _imageView.backgroundColor = [UIColor clearColor];
         _imageView.contentMode = UIViewContentModeScaleAspectFit;
         [_scrollView addSubview:imageView];
         [imageView release];
@@ -75,5 +80,34 @@
         
                         }];
 }
+
+
+- (void)resetFrame
+{
+    [UIView animateWithDuration:0.2f
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         _scrollView.zoomScale = 1.0;
+                     }
+                     completion:^(BOOL finished) {
+                         _imageView.frame = self.bounds;
+                     }];
+}
+
+#pragma mark -
+#pragma mark - UIScrollViewDelegate Methods
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
+	return _imageView;
+}
+
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(float)scale
+{
+    NSLog(@"self.frame: %@", NSStringFromCGRect(self.frame));
+    NSLog(@"_scrollView.frame: %@", NSStringFromCGRect(_scrollView.frame));
+    NSLog(@"_imageView.frame: %@", NSStringFromCGRect(_imageView.frame));
+}
+
 
 @end
