@@ -52,7 +52,7 @@
     CGFloat width = CGWidth(self.bounds);
     CGRect frame = _progress.frame;
     frame.size.width = width * progress;
-    NSLog(@"new frame: %@", NSStringFromCGRect(frame));
+    
     [UIView animateWithDuration:0.1f
                           delay:0.0f
                         options:UIViewAnimationOptionCurveEaseOut

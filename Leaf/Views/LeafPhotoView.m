@@ -25,7 +25,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = kLeafBackgroundColor;
+        self.backgroundColor = [UIColor whiteColor];
         self.userInteractionEnabled = YES;
 		self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		self.opaque = YES;
