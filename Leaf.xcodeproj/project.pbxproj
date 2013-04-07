@@ -22,6 +22,7 @@
 		DB61AF1216B26F96006EC642 /* LeafNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61AF1116B26F96006EC642 /* LeafNavigationBar.m */; };
 		DB61AF3816B27812006EC642 /* LeafCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61AF3316B27812006EC642 /* LeafCategory.m */; };
 		DB61AF3916B27812006EC642 /* UILabel+LeafHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61AF3716B27812006EC642 /* UILabel+LeafHelper.m */; };
+		DB61B7531711501C00838477 /* LeafPhotoProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61B7521711501C00838477 /* LeafPhotoProgressBar.m */; };
 		DB70FD9616BA320800FD1A8E /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = DB70FD9416BA320700FD1A8E /* back.png */; };
 		DB70FD9716BA320800FD1A8E /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB70FD9516BA320800FD1A8E /* back@2x.png */; };
 		DB70FDA416BA582900FD1A8E /* page.html in Resources */ = {isa = PBXBuildFile; fileRef = DB70FDA316BA582800FD1A8E /* page.html */; };
@@ -129,6 +130,8 @@
 		DB61AF3516B27812006EC642 /* LeafMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafMacros.h; sourceTree = "<group>"; };
 		DB61AF3616B27812006EC642 /* UILabel+LeafHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+LeafHelper.h"; sourceTree = "<group>"; };
 		DB61AF3716B27812006EC642 /* UILabel+LeafHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+LeafHelper.m"; sourceTree = "<group>"; };
+		DB61B7511711501C00838477 /* LeafPhotoProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafPhotoProgressBar.h; path = Views/LeafPhotoProgressBar.h; sourceTree = "<group>"; };
+		DB61B7521711501C00838477 /* LeafPhotoProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafPhotoProgressBar.m; path = Views/LeafPhotoProgressBar.m; sourceTree = "<group>"; };
 		DB70FD9416BA320700FD1A8E /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		DB70FD9516BA320800FD1A8E /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
 		DB70FDA316BA582800FD1A8E /* page.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = page.html; sourceTree = "<group>"; };
@@ -387,6 +390,8 @@
 				DBE67FB2170BFFC100685DD2 /* LeafPhotoView.m */,
 				DBE67FBC170C180800685DD2 /* LeafBottomBar.h */,
 				DBE67FBD170C180800685DD2 /* LeafBottomBar.m */,
+				DB61B7511711501C00838477 /* LeafPhotoProgressBar.h */,
+				DB61B7521711501C00838477 /* LeafPhotoProgressBar.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -738,6 +743,7 @@
 				DBE67FB3170BFFC100685DD2 /* LeafPhotoView.m in Sources */,
 				DBE67FBE170C180800685DD2 /* LeafBottomBar.m in Sources */,
 				DBE67FC3170C1B9500685DD2 /* LeafPhotoViewController.m in Sources */,
+				DB61B7531711501C00838477 /* LeafPhotoProgressBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

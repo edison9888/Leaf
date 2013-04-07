@@ -430,7 +430,6 @@
     content.scrollView.bounces = NO;
     _content = content;
     [self addSubview:content];
-    [content release];
     [_content loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] resourcePath] isDirectory:YES]];
     [doc release];
 }

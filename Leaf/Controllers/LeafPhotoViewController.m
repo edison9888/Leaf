@@ -10,20 +10,22 @@
 #import "LeafPhotoView.h"
 #import "LeafBottomBar.h"
 #import "LeafHelper.h"
+#import "LeafPhotoProgressBar.h"
 
 #define kLeafBottomProgressBarH 2.0f
 
 @interface LeafPhotoViewController ()
 {
     UIScrollView *_scrollView;
-    int cur;
+    LeafPhotoProgressBar *_progressBar;
+    int _cur;
 }
 
 @property (nonatomic, retain) NSArray *urls;
 @property (nonatomic, retain) NSMutableArray *photoViews;
 
 - (void)loadScrollViewWithPage:(int)page;
-
+- (void)setProgress:(int)index;
 @end
 
 @implementation LeafPhotoViewController
@@ -32,7 +34,9 @@
 - (void)dealloc
 {
     [_urls release], _urls = nil;
-    
+    [_photoViews release], _photoViews = nil;
+    _scrollView = nil;
+    _progressBar = nil;
     [super dealloc];
 }
 
@@ -49,7 +53,7 @@
 
 - (void)setCurIndex:(int)index
 {
-    cur = index;
+    _cur = index;
 }
 
 #pragma mark - 
@@ -66,7 +70,7 @@
 {
     [super viewDidLoad];
 	
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGWidth(self.view.bounds), CGHeight(self.view.bounds) - kLeafBottomProgressBarH)];
     _scrollView = scrollView;
     _scrollView.delegate = self;
     _scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
@@ -93,17 +97,24 @@
     self.photoViews = views;
     [views release];
     
-    LeafBottomBar *bottom = [[LeafBottomBar alloc] initWithFrame:CGRectMake(0.0f, CGHeight(self.view.frame) - 40.0f - 1.0f, CGWidth(self.view.frame), 40.0f)];
+    LeafBottomBar *bottom = [[LeafBottomBar alloc] initWithFrame:CGRectMake(0.0f, CGHeight(self.view.frame) - 40.0f - kLeafBottomProgressBarH, CGWidth(self.view.frame), 40.0f)];
     [self.view addSubview:bottom];
     [bottom addTarget:self action:@selector(returnClicked:)];
     [bottom release];
     
-    [self loadScrollViewWithPage:cur - 1];
-    [self loadScrollViewWithPage:cur];
-    [self loadScrollViewWithPage:cur + 1];
+    LeafPhotoProgressBar *progressBar = [[LeafPhotoProgressBar alloc] initWithFrame:CGRectMake(0.0f, CGHeight(self.view.frame) - kLeafBottomProgressBarH, CGWidth(self.view.frame), kLeafBottomProgressBarH)];
+    [self.view addSubview:progressBar];
+    _progressBar = progressBar;
+    [progressBar release];
+    
+    [self setProgress:_cur];
+    
+    [self loadScrollViewWithPage:_cur - 1];
+    [self loadScrollViewWithPage:_cur];
+    [self loadScrollViewWithPage:_cur + 1];
     //_scrollView.contentOffset.x = cur * _scrollView.frame.size.width;
     CGRect visibleRect = _scrollView.bounds;
-    visibleRect.origin.x = cur * _scrollView.frame.size.width;
+    visibleRect.origin.x = _cur * _scrollView.frame.size.width;
     [_scrollView scrollRectToVisible:visibleRect animated:NO];
 }
 
@@ -111,6 +122,17 @@
 {
     [super didReceiveMemoryWarning];
     
+}
+
+- (void)setProgress:(int)index
+{
+    CGFloat progress = 0.0f;
+    if (_urls && _urls.count > 0) {
+        progress = (CGFloat)(index + 1 )/_urls.count;
+    }
+    
+    [_progressBar setProgress:progress];
+
 }
 
 #pragma mark -
@@ -169,6 +191,14 @@
     
     [self resetFrame:page - 1];
     [self resetFrame:page + 1];
+    _cur = page;
+    
+   
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self setProgress:_cur];
 }
 
 
