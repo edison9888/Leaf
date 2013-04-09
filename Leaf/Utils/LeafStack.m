@@ -38,7 +38,7 @@ SINGLETON_FOR_CLASS(LeafStack);
 - (void)pop:(UIViewController *)controller
 {
     int index = [_stack indexOfObject:controller];
-    NSLog(@"index: %d", index);
+    NSLog(@"index: %d ", index);
     if (controller) {
         [_stack removeObject:controller];
     }

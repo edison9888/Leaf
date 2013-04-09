@@ -182,12 +182,14 @@
                                  self.view.frame = frame;
                              }
                              completion:^(BOOL finished) {
-                                 self.hasMask = NO;
-                                 [self.view removeFromSuperview];
-                                 [[LeafStack sharedInstance] pop:self];
                                  if (_dismissBlock) {
                                      _dismissBlock();
                                  }
+                                 self.hasMask = NO;
+                                 [self removeObserver:self.parentController forKeyPath:@"hasMask"];
+                                 [self.view removeObserver:self.parentController forKeyPath:@"frame"];
+                                 [self.view removeFromSuperview];
+                                 [[LeafStack sharedInstance] pop:self];
                                  
                              }];
 
@@ -272,8 +274,6 @@
 
 - (void)dismissViewControllerWithOption:(LeafAnimationOption)option completion:(LeafBlock)block
 {
-    [self removeObserver:self.parentController forKeyPath:@"hasMask"];
-    [self.view removeObserver:self.parentController forKeyPath:@"frame"];
     __block CGRect frame = self.view.frame;
     
     if (option == LeafAnimationOptionHorizontal) {
@@ -289,7 +289,10 @@
                                 block(); 
                              }
                              self.hasMask = NO;
+                             [self removeObserver:self.parentController forKeyPath:@"hasMask"];
+                             [self.view removeObserver:self.parentController forKeyPath:@"frame"];
                              [self.view removeFromSuperview];
+                             
                              [[LeafStack sharedInstance] pop:self];
                          }];
     }
@@ -306,6 +309,8 @@
                                  block();
                              }
                              self.hasMask = NO;
+                             [self removeObserver:self.parentController forKeyPath:@"hasMask"];
+                             [self.view removeObserver:self.parentController forKeyPath:@"frame"];
                              [self.view removeFromSuperview];
                              [[LeafStack sharedInstance] pop:self];
                          }];

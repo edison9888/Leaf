@@ -38,6 +38,7 @@
     [_imgexts release], _imgexts = nil;
     [_videoUrl release], _videoUrl = nil;
     [_connection release], _connection = nil;
+    _content = nil;
     _loading = nil;
     [super dealloc];
 }
@@ -75,12 +76,13 @@
     content.scrollView.bounces = NO;
     _content = content;
     [_container addSubview:content];
-    
+    [content release];
     _connection = nil;
     
+    __block LeafContentViewController *contentViewController = self;
     [self enablePanLeftGestureWithDismissBlock:^{
-        [self blockDDMenuControllerGesture:NO];
-        [self cancelAll];
+        [contentViewController blockDDMenuControllerGesture:NO];
+        [contentViewController cancelAll];
     }];
     
     _urls = [[NSMutableArray alloc] init];
@@ -288,11 +290,6 @@
     
     NSLog(@"url: %@", [[request URL] absoluteString]);
     return YES;
-}
-
-- (void)webViewDidStartLoad:(UIWebView *)webView
-{
-    
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
