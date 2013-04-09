@@ -8,6 +8,8 @@
 
 #import "LeafBaseViewController.h"
 #import "LeafHelper.h"
+#import "LeafStack.h"
+#import "DDMenuController.h"
 
 #define kScaleFactor 0.02f
 #define kAlphaFactor 0.1f
@@ -15,12 +17,26 @@
 
 @interface LeafBaseViewController ()
 
+@property (nonatomic, copy) LeafBlock dismissBlock;
+@property (nonatomic, copy) LeafBlock coveredBlock;
+
 @end
 
 @implementation LeafBaseViewController
 
+@synthesize parentController = _parentController;
+
+@synthesize hasMask = _hasMask;
+@synthesize shouldBlockGesture = _shouldBlockGesture;
+@synthesize dismissBlock = _dismissBlock;
+@synthesize coveredBlock = _coveredBlock;
+
 - (void)dealloc
 {
+    NSLog(@"LeafBaseViewController dealloc!");
+    [_dismissBlock release], _dismissBlock = nil;
+    [_coveredBlock release], _coveredBlock = nil;
+    _parentController = nil;
     [super dealloc];
 }
 
@@ -43,12 +59,22 @@
     _mask = mask;
     _mask.backgroundColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.6f];
     [mask release];
+    
+    _shouldBlockGesture = NO;
+     
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+- (void)blockDDMenuControllerGesture:(BOOL)block
+{
+    DDMenuController *menuController = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).menuController;
+    menuController.shouldBlockGesture = block;
 }
 
 #pragma mark -
@@ -83,11 +109,19 @@
 #pragma mark -
 #pragma mark - Pan Gesture Stuff
 
-- (void)enablePanGesture
+- (void)enablePanLeftGestureWithDismissBlock:(LeafBlock)block
 {
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
+    pan.delegate = self;
     [self.view addGestureRecognizer:pan];
     [pan release];
+    
+    self.dismissBlock = block;
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    return !_shouldBlockGesture;
 }
 
 - (void)pan:(UIPanGestureRecognizer *)gesture
@@ -150,7 +184,11 @@
                              completion:^(BOOL finished) {
                                  self.hasMask = NO;
                                  [self.view removeFromSuperview];
-                                 [self release];
+                                 [[LeafStack sharedInstance] pop:self];
+                                 if (_dismissBlock) {
+                                     _dismissBlock();
+                                 }
+                                 
                              }];
 
         }
@@ -183,7 +221,8 @@
         NSLog(@"controller is nil.");
         return;
     }
-    
+    [[LeafStack sharedInstance] push:controller];
+    controller.parentController = self;
     [controller.view addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:NULL];
     [controller addObserver:self forKeyPath:@"hasMask" options:NSKeyValueObservingOptionNew context:NULL];
     if (option == LeafAnimationOptionHorizontal) {
@@ -207,10 +246,34 @@
                              }
                          }];
     }
+    else if (option == LeafAnimationOptionVertical) {
+        CGRect rect = controller.view.frame;
+        rect.origin.y = CGHeight(self.view.bounds);
+        controller.view.frame = rect;
+        [self.view addSubview:controller.view];
+        controller.hasMask = YES;
+        
+        __block CGRect frame = controller.view.frame;
+        [UIView animateWithDuration:0.3f
+                              delay:0.0f
+                            options:UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+                             frame.origin.y = 0.0f;
+                             controller.view.frame = frame;
+                         }
+                         completion:^(BOOL finished) {
+                             if (block) {
+                                 block();
+                             }
+                         }];
+    }
+
 }
 
 - (void)dismissViewControllerWithOption:(LeafAnimationOption)option completion:(LeafBlock)block
 {
+    [self removeObserver:self.parentController forKeyPath:@"hasMask"];
+    [self.view removeObserver:self.parentController forKeyPath:@"frame"];
     __block CGRect frame = self.view.frame;
     
     if (option == LeafAnimationOptionHorizontal) {
@@ -227,7 +290,24 @@
                              }
                              self.hasMask = NO;
                              [self.view removeFromSuperview];
-                             [self release];
+                             [[LeafStack sharedInstance] pop:self];
+                         }];
+    }
+    else if (option == LeafAnimationOptionVertical) {
+        [UIView animateWithDuration:0.3f
+                              delay:0.0f
+                            options:UIViewAnimationOptionCurveEaseIn
+                         animations:^{
+                             frame.origin.y = CGHeight(self.view.frame);
+                             self.view.frame = frame;
+                         }
+                         completion:^(BOOL finished) {
+                             if (block) {
+                                 block();
+                             }
+                             self.hasMask = NO;
+                             [self.view removeFromSuperview];
+                             [[LeafStack sharedInstance] pop:self];
                          }];
     }
 }

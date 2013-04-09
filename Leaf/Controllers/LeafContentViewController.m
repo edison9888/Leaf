@@ -12,11 +12,14 @@
 #import "LeafLoadingView.h"
 #import "TFHpple.h"
 #import "LeafConfig.h"
+#import "LeafPhotoViewController.h"
 
 @interface LeafContentViewController ()
 
 @property (nonatomic, retain) NSMutableArray *urls;
 @property (nonatomic, retain) NSSet *imgexts;
+
+- (void)cancelAll;
 
 @end
 
@@ -52,24 +55,33 @@
 {
     [super viewDidLoad];
 	
-    self.view.backgroundColor = kLeafBackgroundColor;
     LeafNavigationBar *bar = [[LeafNavigationBar alloc] init];
     [bar addLeftItemWithStyle:LeafNavigationItemStyleBack target:self action:@selector(backClicked:)];
     [bar addRightItemWithStyle:LeafNavigationItemStyleSafari target:self action:@selector(safariClicked:)];
-    [self.view addSubview:bar];
+    [_container addSubview:bar];
     [bar release];
     
     
     
     LeafLoadingView *loading = [[LeafLoadingView alloc] initWithFrame:CGRectMake(0.0f, CGHeight(self.view.frame), CGWidth(self.view.frame), 30.0f)];
     _loading = loading;
-    [self.view addSubview:_loading];
+    [_container addSubview:_loading];
     [loading release];
     
-    _connection = nil;
-    _content = nil;
+    UIWebView *content = [[UIWebView alloc] initWithFrame:CGRectMake(0.0f, 44.0f, CGWidth(self.view.frame), CGHeight(self.view.frame) - 44.0f)];
+    content.backgroundColor = [UIColor clearColor];
+    content.opaque = NO;
+    content.delegate = self;
+    content.scrollView.bounces = NO;
+    _content = content;
+    [_container addSubview:content];
     
-    [self enablePanGesture];
+    _connection = nil;
+    
+    [self enablePanLeftGestureWithDismissBlock:^{
+        [self blockDDMenuControllerGesture:NO];
+        [self cancelAll];
+    }];
     
     _urls = [[NSMutableArray alloc] init];
     self.imgexts = [NSSet setWithObjects:@"png", @"jpg", @"jpeg", @"bmp", @"tif", @"tiff", nil];
@@ -81,12 +93,24 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)cancelAll
+{
+    [_connection cancel];
+    _connection.delegate = nil;
+    [_content stopLoading];
+    _content.delegate = nil;
+}
+
 #pragma mark -
 #pragma mark - Handle Events
 
 - (void)backClicked:(id)sender
 {
-    [self dismissViewControllerWithOption:LeafAnimationOptionHorizontal completion:NULL];
+    [self dismissViewControllerWithOption:LeafAnimationOptionHorizontal
+                               completion:^(void){
+                                   [self cancelAll];
+                                   [self blockDDMenuControllerGesture:NO];
+                               }];
 }
 
 - (void)safariClicked:(id)sender
@@ -243,13 +267,22 @@
 {
     if (navigationType == UIWebViewNavigationTypeLinkClicked) {
         NSLog(@"UIWebViewNavigationTypeLinkClicked");
-        NSString *extension = [[[[request URL] absoluteString] pathExtension] lowercaseString];
+        NSString *url = [[request URL] absoluteString];
+        NSString *extension = [[url pathExtension] lowercaseString];
         
         if (extension && [_imgexts containsObject:extension]) {
-//            if ([_delegate respondsToSelector:@selector(imgLinkClicked:cur:)]) {
-//                [_delegate imgLinkClicked:_urls cur:[[request URL] absoluteString]];
-//                return NO;
-//            }
+            int index = [_urls indexOfObject:url];
+            index = index != NSNotFound? index:0;
+            LeafPhotoViewController *vc = [[LeafPhotoViewController alloc] initWithURLs:_urls];
+            [vc setCurIndex:index];
+            vc.view.frame = self.view.bounds;
+            [self presentViewController:vc
+                                 option:LeafAnimationOptionVertical
+                             completion:^(void){
+                                 self.shouldBlockGesture = YES;
+                             }];
+            [vc release];
+            return NO;
         }
     }
     
@@ -314,13 +347,7 @@
         html = [self purgeImageLinks:html];
     }
     //NSLog(@"html: %@", html);
-    UIWebView *content = [[UIWebView alloc] initWithFrame:CGRectMake(0.0f, 44.0f, CGWidth(self.view.frame), CGHeight(self.view.frame) - 44.0f)];
-    content.backgroundColor = [UIColor clearColor];
-    content.opaque = NO;
-    content.delegate = self;
-    content.scrollView.bounces = NO;
-    _content = content;
-    [self.view addSubview:content];
+    
     [_content loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] resourcePath] isDirectory:YES]];
     [doc release];
 }

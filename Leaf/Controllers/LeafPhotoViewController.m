@@ -60,7 +60,10 @@
 
 - (void)returnClicked:(id)sender
 {
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self dismissViewControllerWithOption:LeafAnimationOptionVertical
+                               completion:^void{
+                                   self.parentController.shouldBlockGesture = NO;
+                               }];
 }
 
 
@@ -85,9 +88,9 @@
     _scrollView.pagingEnabled=YES;
     _scrollView.showsVerticalScrollIndicator=NO;
     _scrollView.showsHorizontalScrollIndicator=NO;
-    _scrollView.backgroundColor = self.view.backgroundColor;
+    _scrollView.backgroundColor = [UIColor whiteColor];
     _scrollView.contentSize = CGSizeMake(CGWidth(_scrollView.frame) * (_urls.count > 0 ? _urls.count : 1), CGHeight(_scrollView.frame));
-    [self.view addSubview:_scrollView];
+    [_container addSubview:_scrollView];
     [scrollView release];
     
     NSMutableArray *views = [[NSMutableArray alloc] init];
@@ -98,12 +101,12 @@
     [views release];
     
     LeafBottomBar *bottom = [[LeafBottomBar alloc] initWithFrame:CGRectMake(0.0f, CGHeight(self.view.frame) - 40.0f - kLeafBottomProgressBarH, CGWidth(self.view.frame), 40.0f)];
-    [self.view addSubview:bottom];
+    [_container addSubview:bottom];
     [bottom addTarget:self action:@selector(returnClicked:)];
     [bottom release];
     
     LeafPhotoProgressBar *progressBar = [[LeafPhotoProgressBar alloc] initWithFrame:CGRectMake(0.0f, CGHeight(self.view.frame) - kLeafBottomProgressBarH, CGWidth(self.view.frame), kLeafBottomProgressBarH)];
-    [self.view addSubview:progressBar];
+    [_container addSubview:progressBar];
     _progressBar = progressBar;
     [progressBar release];
     

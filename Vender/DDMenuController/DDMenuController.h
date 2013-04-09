@@ -56,11 +56,12 @@ typedef enum {
         unsigned int canShowRight:1;
         unsigned int canShowLeft:1;
     } _menuFlags;
+    BOOL _shouldBlockGesture;
     
 }
 
 - (id)initWithRootViewController:(UIViewController*)controller;
-
+@property(nonatomic,assign) BOOL shouldBlockGesture;
 @property(nonatomic,assign) id <DDMenuControllerDelegate> delegate;
 
 @property(nonatomic,strong) UIViewController *leftViewController;

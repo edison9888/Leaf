@@ -40,6 +40,8 @@
 
 @implementation DDMenuController
 
+@synthesize shouldBlockGesture = _shouldBlockGesture;
+
 @synthesize delegate, barButtonItemClass;
 
 @synthesize leftViewController=_left;
@@ -394,6 +396,9 @@
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
 
+    if (_shouldBlockGesture) {
+        return NO;
+    }
     // Check for horizontal pan gesture
     if (gestureRecognizer == _pan) {
 

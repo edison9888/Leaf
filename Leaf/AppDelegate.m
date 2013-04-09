@@ -28,18 +28,15 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     
     LeafMainViewController *vc = [[LeafMainViewController alloc] init];
-    UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:vc];
-    nv.navigationBarHidden = YES;
 
     LeafMenuController *leftVC = [[LeafMenuController alloc] init];
-    DDMenuController *rootVC = [[DDMenuController alloc] initWithRootViewController:nv];
+    DDMenuController *rootVC = [[DDMenuController alloc] initWithRootViewController:vc];
     rootVC.leftViewController = leftVC;    
     self.menuController = rootVC;    
     self.window.rootViewController = rootVC;
 
     [vc release];
     [leftVC release];
-    [nv release];
     [rootVC release];
     
     self.window.backgroundColor = [UIColor whiteColor];

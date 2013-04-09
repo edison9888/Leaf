@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LeafBaseViewController.h"
 
-@interface LeafPhotoViewController : UIViewController <UIScrollViewDelegate>
+@interface LeafPhotoViewController : LeafBaseViewController <UIScrollViewDelegate>
 
 - (id)initWithURLs:(NSArray *)urls;
 - (void)setCurIndex:(int)index;

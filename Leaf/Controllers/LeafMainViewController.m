@@ -316,8 +316,11 @@
         LeafContentViewController *vc = [[LeafContentViewController alloc] initWithURL:url];
         vc.view.frame = self.view.bounds;
         [self presentViewController:vc option:LeafAnimationOptionHorizontal completion:^{
+            [self blockDDMenuControllerGesture:YES];
             [vc GET];
         }];
+        [vc release];
+        NSLog(@"after vc release.");
     }
 }
 

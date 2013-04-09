@@ -33,8 +33,8 @@ typedef enum {
     LeafPanStateShowingRight
 } LeafPanState;
 
-
-@interface LeafBaseViewController : UIViewController
+@class DDMenuController;
+@interface LeafBaseViewController : UIViewController <UIGestureRecognizerDelegate>
 {
     UIView *_container;
     UIView *_mask;
@@ -42,11 +42,16 @@ typedef enum {
     CGPoint _panVelocity;
     CGFloat _panOriginX;
     LeafPanState _state;
+    BOOL _shouldBlockGesture;
+    LeafBaseViewController *_parentController;
 }
 
 @property (nonatomic, assign) BOOL hasMask;
+@property (nonatomic, assign) BOOL shouldBlockGesture;
+@property (nonatomic, assign) LeafBaseViewController *parentController;
 
-- (void)enablePanGesture;
+- (void)enablePanLeftGestureWithDismissBlock:(LeafBlock)block;
+- (void)blockDDMenuControllerGesture:(BOOL)block;
 
 - (void)presentViewController:(LeafBaseViewController *)controller option:(LeafAnimationOption)option completion:(LeafBlock)block;
 - (void)dismissViewControllerWithOption:(LeafAnimationOption)option completion:(LeafBlock)block;
