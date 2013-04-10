@@ -154,6 +154,7 @@
         photo = photoView;
         NSString *url = [_urls safeObjectAtIndex:page];
         if (url) {
+            NSLog(@"url:%@", url);
            [photoView setURL:[NSURL URLWithString:url]];
         }
         

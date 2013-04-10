@@ -17,7 +17,6 @@
 @interface LeafContentViewController ()
 
 @property (nonatomic, retain) NSMutableArray *urls;
-@property (nonatomic, retain) NSSet *imgexts;
 
 - (void)cancelAll;
 
@@ -27,7 +26,6 @@
 @synthesize videoUrl = _videoUrl;
 @synthesize url = _url;
 @synthesize urls = _urls;
-@synthesize imgexts = _imgexts;
 
 
 - (void)dealloc
@@ -35,7 +33,6 @@
     [_url release], _url = nil;
     [_videoUrl release], _videoUrl = nil;
     [_urls release], _urls = nil;
-    [_imgexts release], _imgexts = nil;
     [_videoUrl release], _videoUrl = nil;
     [_connection release], _connection = nil;
     _content = nil;
@@ -86,7 +83,7 @@
     }];
     
     _urls = [[NSMutableArray alloc] init];
-    self.imgexts = [NSSet setWithObjects:@"png", @"jpg", @"jpeg", @"bmp", @"tif", @"tiff", nil];
+    //self.imgexts = [NSSet setWithObjects:@"png", @"jpg", @"jpeg", @"bmp", @"tif", @"tiff", nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -167,7 +164,7 @@
         _connection = [[LeafURLConnection alloc] init];
         _connection.delegate = self;
     }
-    
+    NSLog(@"article url: %@", _url);
     [_connection GET:_url];
     
 }
@@ -271,8 +268,8 @@
         NSLog(@"UIWebViewNavigationTypeLinkClicked");
         NSString *url = [[request URL] absoluteString];
         NSString *extension = [[url pathExtension] lowercaseString];
-        
-        if (extension && [_imgexts containsObject:extension]) {
+        NSLog(@"url: %@", url);
+        if ((extension && ![extension isEqualToString:@"gif"])) {
             int index = [_urls indexOfObject:url];
             index = index != NSNotFound? index:0;
             LeafPhotoViewController *vc = [[LeafPhotoViewController alloc] initWithURLs:_urls];
@@ -326,7 +323,7 @@
     for (TFHppleElement *element in elements) {
         NSString *link = [element objectForKey:@"src"];
         NSString *ext = [[link lowercaseString] pathExtension];
-        if ([_imgexts containsObject:ext]) {
+        if (ext && ![ext isEqualToString:@"gif"]) {
             [_urls addObject:link];
         }
     }
