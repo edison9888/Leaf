@@ -91,7 +91,11 @@
             [_rightBtn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
             [_rightIcon setImage:[UIImage imageNamed:@"safari"]];
             break;
-            
+        case LeafNavigationItemStyleShare:
+            [_rightBtn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+            [_rightIcon setImage:[UIImage imageNamed:@"share"]];
+            break;
+
         default:
             break;
     }

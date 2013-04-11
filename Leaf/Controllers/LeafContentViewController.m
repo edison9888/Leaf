@@ -27,9 +27,10 @@
 @synthesize videoUrl = _videoUrl;
 @synthesize url = _url;
 @synthesize urls = _urls;
-
+@synthesize articleTitle = _articleTitle;
 - (void)dealloc
 {
+    [_articleTitle release], _articleTitle = nil;
     [_url release], _url = nil;
     [_videoUrl release], _videoUrl = nil;
     [_urls release], _urls = nil;
@@ -40,11 +41,12 @@
     [super dealloc];
 }
 
-- (id)initWithURL:(NSString *)url
+- (id)initWithURL:(NSString *)url andTitle:(NSString *)title
 {
     
     if (self = [super init]) {
         self.url = url;
+        self.articleTitle = title;
     }
     return self;
 }
@@ -55,7 +57,7 @@
 	
     LeafNavigationBar *bar = [[LeafNavigationBar alloc] init];
     [bar addLeftItemWithStyle:LeafNavigationItemStyleBack target:self action:@selector(backClicked:)];
-    [bar addRightItemWithStyle:LeafNavigationItemStyleSafari target:self action:@selector(safariClicked:)];
+    [bar addRightItemWithStyle:LeafNavigationItemStyleShare target:self action:@selector(shareClicked:)];
     [_container addSubview:bar];
     [bar release];
     
@@ -121,10 +123,48 @@
                                }];
 }
 
+- (void)shareClicked:(id)sender
+{
+    UIGraphicsBeginImageContext(_content.scrollView.contentSize);
+    [ renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *viewImage =UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    LeafPhotoViewController *photoController = [[LeafPhotoViewController alloc] init];
+    
+    __block LeafPhotoViewController *controller = photoController;
+    [self presentViewController:photoController option:LeafAnimationOptionVertical
+                     completion:^(void){
+                         [controller setImage:viewImage];
+                     }];
+    [photoController release];
+    
+    return;
+    SinaWeibo *sinaweibo = [self sinaweibo];
+    if (sinaweibo.isAuthValid) {
+        UIGraphicsBeginImageContext(_content.scrollView.contentSize);
+        [_content.scrollView.layer renderInContext:UIGraphicsGetCurrentContext()];
+        UIImage *viewImage =UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        [sinaweibo requestWithURL:@"statuses/upload.json"
+                           params:[NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   _articleTitle, @"status",
+                                   viewImage, @"pic", nil]
+                       httpMethod:@"POST"
+                         delegate:self];
+    }
+    else
+    {
+        [sinaweibo logIn];
+    }
+
+}
+
 - (void)safariClicked:(id)sender
 {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_url]];
 }
+
 
 
 #pragma mark -
@@ -373,5 +413,20 @@
 {
     [self hideLeafLoadingView];
 }
+
+
+#pragma mark -
+#pragma mark - SinaWeiboRequestDelegate Methods
+
+- (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
+{
+    
+}
+
+- (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
+{
+    
+}
+
 
 @end

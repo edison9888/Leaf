@@ -19,6 +19,7 @@
     UIScrollView *_scrollView;
     LeafPhotoProgressBar *_progressBar;
     int _cur;
+    LeafPhotoView *_photoView;
 }
 
 @property (nonatomic, retain) NSArray *urls;
@@ -44,7 +45,6 @@
 {
     self = [super init];
     if (self) {
-        
         self.urls = urls;
     }
     
@@ -110,6 +110,12 @@
     _progressBar = progressBar;
     [progressBar release];
     
+    LeafPhotoView *photoView = [[LeafPhotoView alloc] initWithFrame:_scrollView.bounds];
+    _photoView = photoView;
+    [_scrollView addSubview:photoView];
+    [photoView release];
+    
+    /*
     [self setProgress:_cur];
     
     [self loadScrollViewWithPage:_cur - 1];
@@ -118,13 +124,18 @@
     //_scrollView.contentOffset.x = cur * _scrollView.frame.size.width;
     CGRect visibleRect = _scrollView.bounds;
     visibleRect.origin.x = _cur * _scrollView.frame.size.width;
-    [_scrollView scrollRectToVisible:visibleRect animated:NO];
+    [_scrollView scrollRectToVisible:visibleRect animated:NO];*/
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     
+}
+
+- (void)setImage:(UIImage *)image
+{
+    [_photoView setImage:image];
 }
 
 - (void)setProgress:(int)index

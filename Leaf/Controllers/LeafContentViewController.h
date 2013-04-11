@@ -12,7 +12,7 @@
 
 
 @class LeafLoadingView;
-@interface LeafContentViewController : LeafBaseViewController  <UIWebViewDelegate, LeafURLConnectionDelegate>
+@interface LeafContentViewController : LeafBaseViewController  <UIWebViewDelegate, LeafURLConnectionDelegate, SinaWeiboRequestDelegate>
 
 {
     @private
@@ -21,13 +21,15 @@
     NSString *_url;
     LeafURLConnection *_connection;
     NSString *_videoUrl;
-    
+    NSString *_articleTitle;
 
 }
 
 @property (nonatomic, retain) NSString *videoUrl;
 @property (nonatomic, retain) NSString *url;
+@property (nonatomic, retain) NSString *articleTitle;
 
-- (id)initWithURL:(NSString *)url;
+- (id)initWithURL:(NSString *)url andTitle:(NSString *)title;
 - (void)GET;
+
 @end

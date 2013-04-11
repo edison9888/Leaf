@@ -13,4 +13,5 @@
 
 - (id)initWithURLs:(NSArray *)urls;
 - (void)setCurIndex:(int)index;
+- (void)setImage:(UIImage *)image;
 @end

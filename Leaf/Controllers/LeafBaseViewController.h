@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SinaWeibo.h"
 
 typedef void (^LeafBlock)(void);
 
@@ -34,7 +35,7 @@ typedef enum {
 } LeafPanState;
 
 @class DDMenuController;
-@interface LeafBaseViewController : UIViewController <UIGestureRecognizerDelegate>
+@interface LeafBaseViewController : UIViewController <UIGestureRecognizerDelegate, SinaWeiboDelegate>
 {
     UIView *_container;
     UIView *_mask;
@@ -55,5 +56,5 @@ typedef enum {
 
 - (void)presentViewController:(LeafBaseViewController *)controller option:(LeafAnimationOption)option completion:(LeafBlock)block;
 - (void)dismissViewControllerWithOption:(LeafAnimationOption)option completion:(LeafBlock)block;
-
+- (SinaWeibo *)sinaweibo;
 @end

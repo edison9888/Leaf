@@ -106,6 +106,8 @@
 		DBF7136517165A5800FF0894 /* SinaWeiboRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DBF7135E17165A5800FF0894 /* SinaWeiboRequest.m */; };
 		DBF713681716631200FF0894 /* LeafWebViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DBF713671716631200FF0894 /* LeafWebViewController.bundle */; };
 		DBF7136B1716632900FF0894 /* LeafWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBF7136A1716632900FF0894 /* LeafWebViewController.m */; };
+		DBF7136E1716AF1600FF0894 /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = DBF7136C1716AF1600FF0894 /* share.png */; };
+		DBF7136F1716AF1600FF0894 /* share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DBF7136D1716AF1600FF0894 /* share@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -270,6 +272,8 @@
 		DBF713671716631200FF0894 /* LeafWebViewController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LeafWebViewController.bundle; sourceTree = "<group>"; };
 		DBF713691716632900FF0894 /* LeafWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafWebViewController.h; path = Controllers/LeafWebViewController.h; sourceTree = "<group>"; };
 		DBF7136A1716632900FF0894 /* LeafWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafWebViewController.m; path = Controllers/LeafWebViewController.m; sourceTree = "<group>"; };
+		DBF7136C1716AF1600FF0894 /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
+		DBF7136D1716AF1600FF0894 /* share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -596,6 +600,8 @@
 				DBD825D216B644D600EC4439 /* refresh@2x.png */,
 				DBD825D316B644D600EC4439 /* safari.png */,
 				DBD825D416B644D600EC4439 /* safari@2x.png */,
+				DBF7136C1716AF1600FF0894 /* share.png */,
+				DBF7136D1716AF1600FF0894 /* share@2x.png */,
 				DBD825D516B644D600EC4439 /* sep_line.png */,
 				DBD825D616B644D600EC4439 /* sep_line@2x.png */,
 			);
@@ -759,6 +765,8 @@
 				DBE67FC0170C181B00685DD2 /* bottom_bg.png in Resources */,
 				DBF7136217165A5800FF0894 /* SinaWeibo.bundle in Resources */,
 				DBF713681716631200FF0894 /* LeafWebViewController.bundle in Resources */,
+				DBF7136E1716AF1600FF0894 /* share.png in Resources */,
+				DBF7136F1716AF1600FF0894 /* share@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -77,8 +77,13 @@
                             _imageView.image = image;
                         }
                         failure:^(NSError *error) {
-        
+                            // TODO: handle error
                         }];
+}
+
+- (void)setImage:(UIImage *)image
+{
+    [_imageView setImage:image];
 }
 
 

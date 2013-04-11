@@ -19,5 +19,6 @@
 @property (nonatomic, assign, readonly) UIImageView *imageView;
 
 - (void)setURL:(NSURL *)url;
+- (void)setImage:(UIImage *)image;
 - (void)resetFrame;
 @end

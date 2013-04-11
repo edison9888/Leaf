@@ -6,20 +6,22 @@
 //  Copyright (c) 2013年 Mobimtech. All rights reserved.
 //
 
+#import "DDMenuController.h"
+
+#import "ASIHTTPRequest.h"
+#import "ASINetworkQueue.h"
+#import "ASIWebPageRequest.h"
+#import "ASIDownloadCache.h"
+
 #import "LeafMainViewController.h"
 #import "LeafNavigationBar.h"
 #import "LeafConfig.h"
-#import "DDMenuController.h"
 #import "LeafHelper.h"
 #import "LeafNewsItem.h"
 #import "LeafNewsData.h"
 #import "LeafContentViewController.h"
 #import "LeafPhotoViewController.h"
 
-#import "ASIHTTPRequest.h"
-#import "ASINetworkQueue.h"
-#import "ASIWebPageRequest.h"
-#import "ASIDownloadCache.h"
 
 #define kNewsListURL @"http://www.cnbeta.com/api/getNewsList.php?limit=20"
 #define kDownloadNewsListURL @"http://www.cnbeta.com/api/getNewsList.php?limit=50"
@@ -313,7 +315,8 @@
     LeafNewsData *data = [_leaves safeObjectAtIndex:indexPath.row];
     if (data) {       
         NSString *url = [NSString stringWithFormat:kArticleUrl, data.articleId];
-        LeafContentViewController *vc = [[LeafContentViewController alloc] initWithURL:url];
+        NSString *title = data.title;
+        LeafContentViewController *vc = [[LeafContentViewController alloc] initWithURL:url andTitle:title];
         vc.view.frame = self.view.bounds;
         [self presentViewController:vc option:LeafAnimationOptionHorizontal completion:^{
             [self blockDDMenuControllerGesture:YES];
@@ -484,22 +487,5 @@
     }
 }
 
-#pragma mark -
-#pragma mark - LeafContentViewDelegate
-
-- (void)imgLinkClicked:(NSArray *)urls cur:(NSString *)url
-{
-    int index = 0;
-    for (int i = 0; i < urls.count; i++) {
-        if ([url isEqualToString:[urls objectAtIndex:i]]) {
-            index = i;
-        }
-    }
-    LeafPhotoViewController *vc = [[LeafPhotoViewController alloc] initWithURLs:urls];
-    [vc setCurIndex:index];
-    [self presentViewController:vc animated:YES completion:NULL];
-    [vc release];
-    
-}
 
 @end

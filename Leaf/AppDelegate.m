@@ -10,16 +10,23 @@
 #import "LeafMainViewController.h"
 #import "LeafMenuController.h"
 #import "DDMenuController.h"
+#import "SinaWeibo.h"
+
 
 @implementation AppDelegate
 
+@synthesize weibo = _weibo;
 @synthesize window = _window;
 @synthesize menuController = _menuController;
+@synthesize mainController = _mainController;
+
 
 - (void)dealloc
 {
     [_window release];
+    [_weibo release]; _weibo = nil;
     [_menuController release], _menuController = nil;
+    [_mainController release], _mainController = nil;
     [super dealloc];
 }
 
@@ -27,20 +34,33 @@
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     
-    LeafMainViewController *vc = [[LeafMainViewController alloc] init];
+    LeafMainViewController *mainController = [[LeafMainViewController alloc] init];
+    self.mainController = mainController;
+    LeafMenuController *leftController = [[LeafMenuController alloc] init];
+    DDMenuController *rootController = [[DDMenuController alloc] initWithRootViewController:mainController];
+    rootController.leftViewController = leftController;
+    self.menuController = rootController;
+    self.window.rootViewController = rootController;
 
-    LeafMenuController *leftVC = [[LeafMenuController alloc] init];
-    DDMenuController *rootVC = [[DDMenuController alloc] initWithRootViewController:vc];
-    rootVC.leftViewController = leftVC;    
-    self.menuController = rootVC;    
-    self.window.rootViewController = rootVC;
-
-    [vc release];
-    [leftVC release];
-    [rootVC release];
+    [mainController release];
+    [leftController release];
+    [rootController release];
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    // weibo stuff
+    
+    _weibo = [[SinaWeibo alloc] initWithAppKey:kAppKey appSecret:kAppSecret appRedirectURI:kAppRedirectURI ssoCallbackScheme:@"org.roger.leaf" andDelegate:_mainController];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *sinaweiboInfo = [defaults objectForKey:@"SinaWeiboAuthData"];
+    if ([sinaweiboInfo objectForKey:@"AccessTokenKey"] && [sinaweiboInfo objectForKey:@"ExpirationDateKey"] && [sinaweiboInfo objectForKey:@"UserIDKey"])
+    {
+        _weibo.accessToken = [sinaweiboInfo objectForKey:@"AccessTokenKey"];
+        _weibo.expirationDate = [sinaweiboInfo objectForKey:@"ExpirationDateKey"];
+        _weibo.userID = [sinaweiboInfo objectForKey:@"UserIDKey"];
+    }
+    
     return YES;
 }
 
@@ -81,6 +101,11 @@
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    return [_weibo handleOpenURL:url];
 }
 
 @end
