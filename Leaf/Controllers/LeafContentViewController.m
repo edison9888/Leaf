@@ -125,39 +125,79 @@
 
 - (void)shareClicked:(id)sender
 {
-    UIGraphicsBeginImageContext(_content.scrollView.contentSize);
-    [ renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *viewImage =UIGraphicsGetImageFromCurrentImageContext();
+   // [[self sinaweibo] logOut];
+    CGPoint currentOffset = _content.scrollView.contentOffset;
+    
+    CGFloat totalHeight = _content.scrollView.contentSize.height;
+    CGFloat offsetY = 0.0f;
+    NSMutableArray *images = [[NSMutableArray alloc] init];
+    
+    while (offsetY < (totalHeight - 10.0f)) {
+        if ([UIScreen instancesRespondToSelector:@selector(scale)] &&
+            [[UIScreen mainScreen] scale] == 2.0f) {
+            UIGraphicsBeginImageContextWithOptions(_content.frame.size, NO, 2.0f);
+        }
+        else
+        {
+            UIGraphicsBeginImageContext(_content.frame.size);
+        }
+        
+        [_content.scrollView setContentOffset:CGPointMake(0.0f, offsetY)];
+        [_content.layer renderInContext:UIGraphicsGetCurrentContext()];
+        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        [images addObject:image];
+        offsetY += image.size.height;
+    }
+    
+    if ([UIScreen instancesRespondToSelector:@selector(scale)] &&
+        [[UIScreen mainScreen] scale] == 2.0f) {
+        UIGraphicsBeginImageContextWithOptions(_content.scrollView.contentSize, NO, 2.0f);
+    }
+    else
+    {
+        UIGraphicsBeginImageContext(_content.scrollView.contentSize);
+    }
+    offsetY = 0.0f;
+    
+    for (UIImage *image in  images) {
+        [image drawAtPoint:CGPointMake(0.0f, offsetY)];
+        offsetY += image.size.height;
+    }
+    UIImage *fullImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    LeafPhotoViewController *photoController = [[LeafPhotoViewController alloc] init];
+    [images release];
     
-    __block LeafPhotoViewController *controller = photoController;
-    [self presentViewController:photoController option:LeafAnimationOptionVertical
-                     completion:^(void){
-                         [controller setImage:viewImage];
-                     }];
-    [photoController release];
     
-    return;
+    
+    NSData *imageData = UIImagePNGRepresentation(fullImage);
+    UIImage *newImage = [UIImage imageWithData:imageData];
+    
+    [_content.scrollView setContentOffset:currentOffset];
+    
     SinaWeibo *sinaweibo = [self sinaweibo];
     if (sinaweibo.isAuthValid) {
-        UIGraphicsBeginImageContext(_content.scrollView.contentSize);
-        [_content.scrollView.layer renderInContext:UIGraphicsGetCurrentContext()];
-        UIImage *viewImage =UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
+        NSString *status = [NSString stringWithFormat:@"%@ -- (来自 Leaf)", _articleTitle];
         [sinaweibo requestWithURL:@"statuses/upload.json"
                            params:[NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   _articleTitle, @"status",
-                                   viewImage, @"pic", nil]
+                                   status, @"status",
+                                   newImage, @"pic", nil]
                        httpMethod:@"POST"
                          delegate:self];
+        [self showLeafLoadingView];
     }
     else
     {
         [sinaweibo logIn];
     }
-
+    
+    //    LeafPhotoViewController *photoController = [[LeafPhotoViewController alloc] init];
+    //    __block LeafPhotoViewController *controller = photoController;
+    //    [self presentViewController:photoController option:LeafAnimationOptionVertical
+    //                     completion:^(void){
+    //                         [controller setImage:fullImage];
+    //                     }];
+    //    [photoController release];
 }
 
 - (void)safariClicked:(id)sender
@@ -420,12 +460,14 @@
 
 - (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
 {
-    
+    NSLog(@"Error: failed");
+    [self hideLeafLoadingView];
 }
 
 - (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
 {
-    
+    NSLog(@"Success: post is ok.");
+    [self hideLeafLoadingView];
 }
 
 
