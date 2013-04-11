@@ -13,6 +13,7 @@
 #import "TFHpple.h"
 #import "LeafConfig.h"
 #import "LeafPhotoViewController.h"
+#import "LeafWebViewController.h"
 
 @interface LeafContentViewController ()
 
@@ -26,7 +27,6 @@
 @synthesize videoUrl = _videoUrl;
 @synthesize url = _url;
 @synthesize urls = _urls;
-
 
 - (void)dealloc
 {
@@ -83,7 +83,7 @@
     }];
     
     _urls = [[NSMutableArray alloc] init];
-    //self.imgexts = [NSSet setWithObjects:@"png", @"jpg", @"jpeg", @"bmp", @"tif", @"tiff", nil];
+    //[NSSet setWithObjects:@"png", @"jpg", @"jpeg", @"bmp", @"tif", @"tiff", nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -98,6 +98,15 @@
     _connection.delegate = nil;
     [_content stopLoading];
     _content.delegate = nil;
+}
+
+- (BOOL)isSupportedExtension:(NSString *)extension
+{
+    if (!extension) {
+        return NO;
+    }
+    NSSet *extensions = [NSSet setWithObjects:@"png", @"jpg", @"jpeg", @"bmp", @"tif", @"tiff", nil];
+    return [extensions containsObject:extension];
 }
 
 #pragma mark -
@@ -267,9 +276,10 @@
     if (navigationType == UIWebViewNavigationTypeLinkClicked) {
         NSLog(@"UIWebViewNavigationTypeLinkClicked");
         NSString *url = [[request URL] absoluteString];
+        NSString *doc = [[request mainDocumentURL] absoluteString];
         NSString *extension = [[url pathExtension] lowercaseString];
-        NSLog(@"url: %@", url);
-        if ((extension && ![extension isEqualToString:@"gif"])) {
+        NSLog(@"url: %@,\n doc: %@\n extension: %@", url, doc, extension);
+        if ([self isSupportedExtension:extension]) {
             int index = [_urls indexOfObject:url];
             index = index != NSNotFound? index:0;
             LeafPhotoViewController *vc = [[LeafPhotoViewController alloc] initWithURLs:_urls];
@@ -281,8 +291,16 @@
                                  self.shouldBlockGesture = YES;
                              }];
             [vc release];
-            return NO;
         }
+        else {
+            LeafWebViewController *vc = [[LeafWebViewController alloc] initWithUrl:request.URL];
+            [self presentViewController:vc option:LeafAnimationOptionVertical
+                             completion:^(void){
+                                 self.shouldBlockGesture = YES;
+                             }];
+            [vc release];
+        }
+        return NO;
     }
     
     NSLog(@"url: %@", [[request URL] absoluteString]);

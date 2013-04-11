@@ -58,7 +58,6 @@
 		DBA818161711B90E008D4864 /* LeafContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA818151711B90E008D4864 /* LeafContentViewController.m */; };
 		DBADCD8A16F84CCA00065CB5 /* LeafMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBADCD8416F84CCA00065CB5 /* LeafMenuController.m */; };
 		DBADCD8B16F84CCA00065CB5 /* LeafMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBADCD8616F84CCA00065CB5 /* LeafMainViewController.m */; };
-		DBADCD9716F94DE000065CB5 /* LeafContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBADCD9616F94DE000065CB5 /* LeafContentView.m */; };
 		DBD8259C16B6203C00EC4439 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD8259B16B6203C00EC4439 /* EGORefreshTableHeaderView.m */; };
 		DBD825A316B6204F00EC4439 /* LeafURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD825A016B6204F00EC4439 /* LeafURLConnection.m */; };
 		DBD825AA16B6211800EC4439 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBD825A916B6211800EC4439 /* QuartzCore.framework */; };
@@ -101,6 +100,12 @@
 		DBE67FC3170C1B9500685DD2 /* LeafPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE67FC2170C1B9500685DD2 /* LeafPhotoViewController.m */; };
 		DBECD52D16BA9EA000C4AE31 /* LeafLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBECD52C16BA9EA000C4AE31 /* LeafLoadingView.m */; };
 		DBECD53316BAC32200C4AE31 /* leaf.css in Resources */ = {isa = PBXBuildFile; fileRef = DBECD53216BAC32200C4AE31 /* leaf.css */; };
+		DBF7136217165A5800FF0894 /* SinaWeibo.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DBF7135717165A5800FF0894 /* SinaWeibo.bundle */; };
+		DBF7136317165A5800FF0894 /* SinaWeibo.m in Sources */ = {isa = PBXBuildFile; fileRef = DBF7135917165A5800FF0894 /* SinaWeibo.m */; };
+		DBF7136417165A5800FF0894 /* SinaWeiboAuthorizeView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBF7135B17165A5800FF0894 /* SinaWeiboAuthorizeView.m */; };
+		DBF7136517165A5800FF0894 /* SinaWeiboRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DBF7135E17165A5800FF0894 /* SinaWeiboRequest.m */; };
+		DBF713681716631200FF0894 /* LeafWebViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DBF713671716631200FF0894 /* LeafWebViewController.bundle */; };
+		DBF7136B1716632900FF0894 /* LeafWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBF7136A1716632900FF0894 /* LeafWebViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -190,8 +195,6 @@
 		DBADCD8516F84CCA00065CB5 /* LeafMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafMenuController.h; path = Controllers/LeafMenuController.h; sourceTree = "<group>"; };
 		DBADCD8616F84CCA00065CB5 /* LeafMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafMainViewController.m; path = Controllers/LeafMainViewController.m; sourceTree = "<group>"; };
 		DBADCD8716F84CCA00065CB5 /* LeafMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafMainViewController.h; path = Controllers/LeafMainViewController.h; sourceTree = "<group>"; };
-		DBADCD9516F94DE000065CB5 /* LeafContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafContentView.h; path = Views/LeafContentView.h; sourceTree = "<group>"; };
-		DBADCD9616F94DE000065CB5 /* LeafContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafContentView.m; path = Views/LeafContentView.m; sourceTree = "<group>"; };
 		DBD8259A16B6203C00EC4439 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		DBD8259B16B6203C00EC4439 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		DBD8259F16B6204F00EC4439 /* LeafURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafURLConnection.h; sourceTree = "<group>"; };
@@ -256,6 +259,17 @@
 		DBECD52B16BA9EA000C4AE31 /* LeafLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafLoadingView.h; path = Views/LeafLoadingView.h; sourceTree = "<group>"; };
 		DBECD52C16BA9EA000C4AE31 /* LeafLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafLoadingView.m; path = Views/LeafLoadingView.m; sourceTree = "<group>"; };
 		DBECD53216BAC32200C4AE31 /* leaf.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = leaf.css; sourceTree = "<group>"; };
+		DBF7135717165A5800FF0894 /* SinaWeibo.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SinaWeibo.bundle; sourceTree = "<group>"; };
+		DBF7135817165A5800FF0894 /* SinaWeibo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeibo.h; sourceTree = "<group>"; };
+		DBF7135917165A5800FF0894 /* SinaWeibo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeibo.m; sourceTree = "<group>"; };
+		DBF7135A17165A5800FF0894 /* SinaWeiboAuthorizeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeiboAuthorizeView.h; sourceTree = "<group>"; };
+		DBF7135B17165A5800FF0894 /* SinaWeiboAuthorizeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeiboAuthorizeView.m; sourceTree = "<group>"; };
+		DBF7135C17165A5800FF0894 /* SinaWeiboConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeiboConstants.h; sourceTree = "<group>"; };
+		DBF7135D17165A5800FF0894 /* SinaWeiboRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeiboRequest.h; sourceTree = "<group>"; };
+		DBF7135E17165A5800FF0894 /* SinaWeiboRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeiboRequest.m; sourceTree = "<group>"; };
+		DBF713671716631200FF0894 /* LeafWebViewController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LeafWebViewController.bundle; sourceTree = "<group>"; };
+		DBF713691716632900FF0894 /* LeafWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafWebViewController.h; path = Controllers/LeafWebViewController.h; sourceTree = "<group>"; };
+		DBF7136A1716632900FF0894 /* LeafWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafWebViewController.m; path = Controllers/LeafWebViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -369,6 +383,8 @@
 		DB61AEE216B2590D006EC642 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				DBF713691716632900FF0894 /* LeafWebViewController.h */,
+				DBF7136A1716632900FF0894 /* LeafWebViewController.m */,
 				DBA818111711AA9F008D4864 /* LeafBaseViewController.h */,
 				DBA818121711AA9F008D4864 /* LeafBaseViewController.m */,
 				DBADCD8516F84CCA00065CB5 /* LeafMenuController.h */,
@@ -396,8 +412,6 @@
 				DBD825BC16B6295E00EC4439 /* LeafCommentBox.m */,
 				DBECD52B16BA9EA000C4AE31 /* LeafLoadingView.h */,
 				DBECD52C16BA9EA000C4AE31 /* LeafLoadingView.m */,
-				DBADCD9516F94DE000065CB5 /* LeafContentView.h */,
-				DBADCD9616F94DE000065CB5 /* LeafContentView.m */,
 				DB49CAC3170582DE004F3C7B /* LeafMenuItem.h */,
 				DB49CAC4170582DF004F3C7B /* LeafMenuItem.m */,
 				DBE67FB1170BFFC100685DD2 /* LeafPhotoView.h */,
@@ -417,8 +431,9 @@
 				DB41070916E86BFF00DE7DB7 /* TFHpple */,
 				DB4E547B16D3195700CBF9EB /* DDMenuController */,
 				DBD825EF16B65E1200EC4439 /* SDWebImage */,
-				DBD825B116B6285E00EC4439 /* MBProgressHUD */,
 				DBD8259916B6203C00EC4439 /* RefreshTableHeaderView */,
+				DBD825B116B6285E00EC4439 /* MBProgressHUD */,
+				DBF7135217165A5800FF0894 /* WeiboSDK */,
 			);
 			name = Vender;
 			sourceTree = "<group>";
@@ -428,6 +443,7 @@
 			children = (
 				DB70FDA316BA582800FD1A8E /* page.html */,
 				DBECD53216BAC32200C4AE31 /* leaf.css */,
+				DBF713661716631200FF0894 /* Bundles */,
 				DBD825C616B644D600EC4439 /* Images */,
 				DBD825D716B644D600EC4439 /* Fonts */,
 			);
@@ -619,6 +635,38 @@
 			path = Vender/SDWebImage;
 			sourceTree = "<group>";
 		};
+		DBF7135217165A5800FF0894 /* WeiboSDK */ = {
+			isa = PBXGroup;
+			children = (
+				DBF7135617165A5800FF0894 /* SinaWeibo */,
+			);
+			name = WeiboSDK;
+			path = Vender/WeiboSDK;
+			sourceTree = "<group>";
+		};
+		DBF7135617165A5800FF0894 /* SinaWeibo */ = {
+			isa = PBXGroup;
+			children = (
+				DBF7135717165A5800FF0894 /* SinaWeibo.bundle */,
+				DBF7135817165A5800FF0894 /* SinaWeibo.h */,
+				DBF7135917165A5800FF0894 /* SinaWeibo.m */,
+				DBF7135A17165A5800FF0894 /* SinaWeiboAuthorizeView.h */,
+				DBF7135B17165A5800FF0894 /* SinaWeiboAuthorizeView.m */,
+				DBF7135C17165A5800FF0894 /* SinaWeiboConstants.h */,
+				DBF7135D17165A5800FF0894 /* SinaWeiboRequest.h */,
+				DBF7135E17165A5800FF0894 /* SinaWeiboRequest.m */,
+			);
+			path = SinaWeibo;
+			sourceTree = "<group>";
+		};
+		DBF713661716631200FF0894 /* Bundles */ = {
+			isa = PBXGroup;
+			children = (
+				DBF713671716631200FF0894 /* LeafWebViewController.bundle */,
+			);
+			path = Bundles;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -709,6 +757,8 @@
 				DBE67FBA170C17E200685DD2 /* photo_transmit.png in Resources */,
 				DBE67FBB170C17E200685DD2 /* photo_transmit@2x.png in Resources */,
 				DBE67FC0170C181B00685DD2 /* bottom_bg.png in Resources */,
+				DBF7136217165A5800FF0894 /* SinaWeibo.bundle in Resources */,
+				DBF713681716631200FF0894 /* LeafWebViewController.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -745,7 +795,6 @@
 				DBE3627816F0137200494A0C /* LeafConfig.m in Sources */,
 				DBADCD8A16F84CCA00065CB5 /* LeafMenuController.m in Sources */,
 				DBADCD8B16F84CCA00065CB5 /* LeafMainViewController.m in Sources */,
-				DBADCD9716F94DE000065CB5 /* LeafContentView.m in Sources */,
 				DB49CAC5170582E0004F3C7B /* LeafMenuItem.m in Sources */,
 				DB9FDE621709350D002E4052 /* ASIAuthenticationDialog.m in Sources */,
 				DB9FDE631709350D002E4052 /* ASIDataCompressor.m in Sources */,
@@ -764,6 +813,10 @@
 				DBA818131711AA9F008D4864 /* LeafBaseViewController.m in Sources */,
 				DBA818161711B90E008D4864 /* LeafContentViewController.m in Sources */,
 				DB61B75A17125EC200838477 /* LeafStack.m in Sources */,
+				DBF7136317165A5800FF0894 /* SinaWeibo.m in Sources */,
+				DBF7136417165A5800FF0894 /* SinaWeiboAuthorizeView.m in Sources */,
+				DBF7136517165A5800FF0894 /* SinaWeiboRequest.m in Sources */,
+				DBF7136B1716632900FF0894 /* LeafWebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -802,7 +855,7 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -827,7 +880,7 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;

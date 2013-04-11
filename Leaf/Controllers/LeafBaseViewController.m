@@ -173,6 +173,7 @@
         }
         
         if (completion == LeafPanCompletionLeft) {
+            [self viewWillDisappear:YES];
             __block CGRect frame = self.view.frame;
             [UIView animateWithDuration:0.3f
                                   delay:0.0f
@@ -189,6 +190,7 @@
                                  [self removeObserver:self.parentController forKeyPath:@"hasMask"];
                                  [self.view removeObserver:self.parentController forKeyPath:@"frame"];
                                  [self.view removeFromSuperview];
+                                 [self viewDidDisappear:YES];
                                  [[LeafStack sharedInstance] pop:self];
                                  
                              }];
@@ -227,6 +229,8 @@
     controller.parentController = self;
     [controller.view addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:NULL];
     [controller addObserver:self forKeyPath:@"hasMask" options:NSKeyValueObservingOptionNew context:NULL];
+    [controller viewWillAppear:YES];
+    
     if (option == LeafAnimationOptionHorizontal) {
         CGRect rect = controller.view.frame;
         rect.origin.x = CGWidth(self.view.bounds);
@@ -246,6 +250,7 @@
                              if (block) {
                                  block();
                              }
+                             [controller viewDidAppear:YES];
                          }];
     }
     else if (option == LeafAnimationOptionVertical) {
@@ -267,6 +272,7 @@
                              if (block) {
                                  block();
                              }
+                             [controller viewDidAppear:YES];
                          }];
     }
 
@@ -275,7 +281,7 @@
 - (void)dismissViewControllerWithOption:(LeafAnimationOption)option completion:(LeafBlock)block
 {
     __block CGRect frame = self.view.frame;
-    
+    [self viewWillDisappear:YES];
     if (option == LeafAnimationOptionHorizontal) {
         [UIView animateWithDuration:0.3f
                               delay:0.0f
@@ -292,7 +298,7 @@
                              [self removeObserver:self.parentController forKeyPath:@"hasMask"];
                              [self.view removeObserver:self.parentController forKeyPath:@"frame"];
                              [self.view removeFromSuperview];
-                             
+                             [self viewDidDisappear:YES];
                              [[LeafStack sharedInstance] pop:self];
                          }];
     }
@@ -312,6 +318,7 @@
                              [self removeObserver:self.parentController forKeyPath:@"hasMask"];
                              [self.view removeObserver:self.parentController forKeyPath:@"frame"];
                              [self.view removeFromSuperview];
+                             [self viewDidDisappear:YES];
                              [[LeafStack sharedInstance] pop:self];
                          }];
     }
