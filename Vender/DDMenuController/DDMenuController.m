@@ -520,11 +520,11 @@
         
     } completion:^(BOOL finished) {
         
-        if (_left && _left.view.superview) {
+        if (finished && _left && _left.view.superview) {
             [_left.view removeFromSuperview];
         }
         
-        if (_right && _right.view.superview) {
+        if (finished && _right && _right.view.superview) {
             [_right.view removeFromSuperview];
         }
         
