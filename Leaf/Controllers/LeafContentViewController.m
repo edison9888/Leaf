@@ -14,6 +14,7 @@
 #import "LeafConfig.h"
 #import "LeafPhotoViewController.h"
 #import "LeafWebViewController.h"
+#import <CommonCrypto/CommonDigest.h>
 
 @interface LeafContentViewController ()
 
@@ -111,6 +112,27 @@
     return [extensions containsObject:extension];
 }
 
+
+- (NSString *)cachePathForKey:(NSString *)key
+{
+     NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    const char *str = [key UTF8String];
+    NSString *extension = [key pathExtension];
+    unsigned char r[CC_MD5_DIGEST_LENGTH];
+    CC_MD5(str, (CC_LONG)strlen(str), r);
+    NSString *filename = [NSString stringWithFormat:@"%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
+                          r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], r[9], r[10], r[11], r[12], r[13], r[14], r[15]];
+    
+    return [[documentPath stringByAppendingPathComponent:filename] stringByAppendingPathExtension:extension];
+}
+
+- (void)saveFile:(NSData *)data atPath:(NSString *)path
+{
+    NSFileManager *manager = [[NSFileManager alloc] init];
+    [manager createFileAtPath:path contents:data attributes:NULL];
+    [manager release];
+}
+
 #pragma mark -
 #pragma mark - Handle Events
 
@@ -133,14 +155,15 @@
     NSMutableArray *images = [[NSMutableArray alloc] init];
     
     while (offsetY < (totalHeight - 10.0f)) {
-        if ([UIScreen instancesRespondToSelector:@selector(scale)] &&
+        /*if ([UIScreen instancesRespondToSelector:@selector(scale)] &&
             [[UIScreen mainScreen] scale] == 2.0f) {
             UIGraphicsBeginImageContextWithOptions(_content.frame.size, NO, 2.0f);
         }
         else
         {
             UIGraphicsBeginImageContext(_content.frame.size);
-        }
+        }*/
+        UIGraphicsBeginImageContext(_content.frame.size);
         
         [_content.scrollView setContentOffset:CGPointMake(0.0f, offsetY)];
         [_content.layer renderInContext:UIGraphicsGetCurrentContext()];
@@ -150,14 +173,15 @@
         offsetY += image.size.height;
     }
     
-    if ([UIScreen instancesRespondToSelector:@selector(scale)] &&
+    /*if ([UIScreen instancesRespondToSelector:@selector(scale)] &&
         [[UIScreen mainScreen] scale] == 2.0f) {
         UIGraphicsBeginImageContextWithOptions(_content.scrollView.contentSize, NO, 2.0f);
     }
     else
     {
         UIGraphicsBeginImageContext(_content.scrollView.contentSize);
-    }
+    }*/
+    UIGraphicsBeginImageContext(_content.scrollView.contentSize);
     offsetY = 0.0f;
     
     for (UIImage *image in  images) {
@@ -168,9 +192,10 @@
     UIGraphicsEndImageContext();
     [images release];
     
-    
-    
-    NSData *imageData = UIImagePNGRepresentation(fullImage);
+    NSData *imageData = UIImageJPEGRepresentation(fullImage, 0.5);
+    NSString *path = [self cachePathForKey:[NSString stringWithFormat:@"%@.jpg",_url]];
+    [self saveFile:imageData atPath:path];
+    return;
     UIImage *newImage = [UIImage imageWithData:imageData];
     
     [_content.scrollView setContentOffset:currentOffset];
