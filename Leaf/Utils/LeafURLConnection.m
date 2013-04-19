@@ -52,7 +52,7 @@
         
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlStr]];
     [request setHTTPMethod:@"GET"];
-    [request setCachePolicy:NSURLRequestReturnCacheDataElseLoad];
+    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
     
     if (!_connection) {

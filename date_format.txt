@@ -1,0 +1,24 @@
+- (NSString *)formattedDate:(NSDate *)date
+{
+     NSTimeInterval timeSinceDate = [[NSDate date] timeIntervalSinceDate:date];
+
+     // print up to 24 hours as a relative offset
+     if(timeSinceDate < 24.0 * 60.0 * 60.0)
+     {
+         NSUInteger hoursSinceDate = (NSUInteger)(timeSinceDate / (60.0 * 60.0));
+
+         switch(hoursSinceDate)
+         {
+              default: return [NSString stringWithFormat:@"%d hours ago", hoursSinceDate];
+              case 1: return @"1 hour ago";
+              case 0:
+                  NSUInteger minutesSinceDate = (NSUInteger)(timeSinceDate / 60.0);
+                  /* etc, etc */
+              break;
+         }
+     }
+     else
+     {
+          /* normal NSDateFormatter stuff here */
+     }
+}

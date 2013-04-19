@@ -115,16 +115,16 @@
     [_scrollView addSubview:photoView];
     [photoView release];
     
-    /*
+    
     [self setProgress:_cur];
     
     [self loadScrollViewWithPage:_cur - 1];
     [self loadScrollViewWithPage:_cur];
     [self loadScrollViewWithPage:_cur + 1];
-    //_scrollView.contentOffset.x = cur * _scrollView.frame.size.width;
+    
     CGRect visibleRect = _scrollView.bounds;
     visibleRect.origin.x = _cur * _scrollView.frame.size.width;
-    [_scrollView scrollRectToVisible:visibleRect animated:NO];*/
+    [_scrollView scrollRectToVisible:visibleRect animated:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -208,8 +208,8 @@
     [self resetFrame:page + 1];
     _cur = page;
     
-   
 }
+
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {

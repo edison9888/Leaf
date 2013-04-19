@@ -58,6 +58,11 @@
 		DBA818161711B90E008D4864 /* LeafContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA818151711B90E008D4864 /* LeafContentViewController.m */; };
 		DBADCD8A16F84CCA00065CB5 /* LeafMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBADCD8416F84CCA00065CB5 /* LeafMenuController.m */; };
 		DBADCD8B16F84CCA00065CB5 /* LeafMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBADCD8616F84CCA00065CB5 /* LeafMainViewController.m */; };
+		DBBF4690172114DB0083A924 /* comment_line.png in Resources */ = {isa = PBXBuildFile; fileRef = DBBF468E172114DB0083A924 /* comment_line.png */; };
+		DBBF4691172114DB0083A924 /* comment_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DBBF468F172114DB0083A924 /* comment_line@2x.png */; };
+		DBBF469417211E9C0083A924 /* LeafCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBBF469317211E9C0083A924 /* LeafCommentCell.m */; };
+		DBBF469B172125A30083A924 /* LeafCommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DBBF469A172125A30083A924 /* LeafCommentModel.m */; };
+		DBBF469E172130BA0083A924 /* LeafCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBBF469D172130BA0083A924 /* LeafCommentViewController.m */; };
 		DBD8259C16B6203C00EC4439 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD8259B16B6203C00EC4439 /* EGORefreshTableHeaderView.m */; };
 		DBD825A316B6204F00EC4439 /* LeafURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD825A016B6204F00EC4439 /* LeafURLConnection.m */; };
 		DBD825AA16B6211800EC4439 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBD825A916B6211800EC4439 /* QuartzCore.framework */; };
@@ -108,6 +113,8 @@
 		DBF7136B1716632900FF0894 /* LeafWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBF7136A1716632900FF0894 /* LeafWebViewController.m */; };
 		DBF7136E1716AF1600FF0894 /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = DBF7136C1716AF1600FF0894 /* share.png */; };
 		DBF7136F1716AF1600FF0894 /* share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DBF7136D1716AF1600FF0894 /* share@2x.png */; };
+		DBFFECB4171F928D00DCEC94 /* RFHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DBFFECB1171F928D00DCEC94 /* RFHUD.bundle */; };
+		DBFFECB5171F928D00DCEC94 /* RFHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFFECB3171F928D00DCEC94 /* RFHUD.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -197,6 +204,14 @@
 		DBADCD8516F84CCA00065CB5 /* LeafMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafMenuController.h; path = Controllers/LeafMenuController.h; sourceTree = "<group>"; };
 		DBADCD8616F84CCA00065CB5 /* LeafMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafMainViewController.m; path = Controllers/LeafMainViewController.m; sourceTree = "<group>"; };
 		DBADCD8716F84CCA00065CB5 /* LeafMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafMainViewController.h; path = Controllers/LeafMainViewController.h; sourceTree = "<group>"; };
+		DBBF468E172114DB0083A924 /* comment_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comment_line.png; sourceTree = "<group>"; };
+		DBBF468F172114DB0083A924 /* comment_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comment_line@2x.png"; sourceTree = "<group>"; };
+		DBBF469217211E9C0083A924 /* LeafCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafCommentCell.h; path = Views/LeafCommentCell.h; sourceTree = "<group>"; };
+		DBBF469317211E9C0083A924 /* LeafCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafCommentCell.m; path = Views/LeafCommentCell.m; sourceTree = "<group>"; };
+		DBBF4699172125A30083A924 /* LeafCommentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafCommentModel.h; sourceTree = "<group>"; };
+		DBBF469A172125A30083A924 /* LeafCommentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeafCommentModel.m; sourceTree = "<group>"; };
+		DBBF469C172130B90083A924 /* LeafCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafCommentViewController.h; path = Controllers/LeafCommentViewController.h; sourceTree = "<group>"; };
+		DBBF469D172130BA0083A924 /* LeafCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafCommentViewController.m; path = Controllers/LeafCommentViewController.m; sourceTree = "<group>"; };
 		DBD8259A16B6203C00EC4439 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		DBD8259B16B6203C00EC4439 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		DBD8259F16B6204F00EC4439 /* LeafURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafURLConnection.h; sourceTree = "<group>"; };
@@ -274,6 +289,9 @@
 		DBF7136A1716632900FF0894 /* LeafWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafWebViewController.m; path = Controllers/LeafWebViewController.m; sourceTree = "<group>"; };
 		DBF7136C1716AF1600FF0894 /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
 		DBF7136D1716AF1600FF0894 /* share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share@2x.png"; sourceTree = "<group>"; };
+		DBFFECB1171F928D00DCEC94 /* RFHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = RFHUD.bundle; sourceTree = "<group>"; };
+		DBFFECB2171F928D00DCEC94 /* RFHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFHUD.h; sourceTree = "<group>"; };
+		DBFFECB3171F928D00DCEC94 /* RFHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFHUD.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -364,8 +382,9 @@
 			children = (
 				DB61AEDA16B2589D006EC642 /* AppDelegate.h */,
 				DB61AEDB16B2589D006EC642 /* AppDelegate.m */,
-				DB61AEE216B2590D006EC642 /* Controllers */,
+				DBBF4698172125A10083A924 /* Models */,
 				DB61AEFF16B25FF3006EC642 /* Views */,
+				DB61AEE216B2590D006EC642 /* Controllers */,
 				DBD8259E16B6204F00EC4439 /* Utils */,
 				DB61AF3116B27812006EC642 /* Helper */,
 				DB61AED216B2589D006EC642 /* Supporting Files */,
@@ -399,6 +418,8 @@
 				DBE67FC2170C1B9500685DD2 /* LeafPhotoViewController.m */,
 				DBA818141711B90E008D4864 /* LeafContentViewController.h */,
 				DBA818151711B90E008D4864 /* LeafContentViewController.m */,
+				DBBF469C172130B90083A924 /* LeafCommentViewController.h */,
+				DBBF469D172130BA0083A924 /* LeafCommentViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -424,6 +445,8 @@
 				DBE67FBD170C180800685DD2 /* LeafBottomBar.m */,
 				DB61B7511711501C00838477 /* LeafPhotoProgressBar.h */,
 				DB61B7521711501C00838477 /* LeafPhotoProgressBar.m */,
+				DBBF469217211E9C0083A924 /* LeafCommentCell.h */,
+				DBBF469317211E9C0083A924 /* LeafCommentCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -438,6 +461,7 @@
 				DBD8259916B6203C00EC4439 /* RefreshTableHeaderView */,
 				DBD825B116B6285E00EC4439 /* MBProgressHUD */,
 				DBF7135217165A5800FF0894 /* WeiboSDK */,
+				DBFFECB0171F928D00DCEC94 /* RFHUD */,
 			);
 			name = Vender;
 			sourceTree = "<group>";
@@ -533,6 +557,15 @@
 			path = Reachability;
 			sourceTree = "<group>";
 		};
+		DBBF4698172125A10083A924 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DBBF4699172125A30083A924 /* LeafCommentModel.h */,
+				DBBF469A172125A30083A924 /* LeafCommentModel.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		DBD8259916B6203C00EC4439 /* RefreshTableHeaderView */ = {
 			isa = PBXGroup;
 			children = (
@@ -571,6 +604,8 @@
 		DBD825C616B644D600EC4439 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				DBBF468E172114DB0083A924 /* comment_line.png */,
+				DBBF468F172114DB0083A924 /* comment_line@2x.png */,
 				DBE67FBF170C181B00685DD2 /* bottom_bg.png */,
 				DBE67FB4170C17E200685DD2 /* photo_return.png */,
 				DBE67FB5170C17E200685DD2 /* photo_return@2x.png */,
@@ -673,6 +708,17 @@
 			path = Bundles;
 			sourceTree = "<group>";
 		};
+		DBFFECB0171F928D00DCEC94 /* RFHUD */ = {
+			isa = PBXGroup;
+			children = (
+				DBFFECB1171F928D00DCEC94 /* RFHUD.bundle */,
+				DBFFECB2171F928D00DCEC94 /* RFHUD.h */,
+				DBFFECB3171F928D00DCEC94 /* RFHUD.m */,
+			);
+			name = RFHUD;
+			path = Vender/RFHUD;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -767,6 +813,9 @@
 				DBF713681716631200FF0894 /* LeafWebViewController.bundle in Resources */,
 				DBF7136E1716AF1600FF0894 /* share.png in Resources */,
 				DBF7136F1716AF1600FF0894 /* share@2x.png in Resources */,
+				DBFFECB4171F928D00DCEC94 /* RFHUD.bundle in Resources */,
+				DBBF4690172114DB0083A924 /* comment_line.png in Resources */,
+				DBBF4691172114DB0083A924 /* comment_line@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -825,6 +874,10 @@
 				DBF7136417165A5800FF0894 /* SinaWeiboAuthorizeView.m in Sources */,
 				DBF7136517165A5800FF0894 /* SinaWeiboRequest.m in Sources */,
 				DBF7136B1716632900FF0894 /* LeafWebViewController.m in Sources */,
+				DBFFECB5171F928D00DCEC94 /* RFHUD.m in Sources */,
+				DBBF469417211E9C0083A924 /* LeafCommentCell.m in Sources */,
+				DBBF469B172125A30083A924 /* LeafCommentModel.m in Sources */,
+				DBBF469E172130BA0083A924 /* LeafCommentViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
