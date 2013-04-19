@@ -49,9 +49,20 @@
     [super viewDidLoad];
 	
     _commentModel = [[LeafCommentModel alloc] init];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadCommentSuccess:) name:kLeafLoadCommentSuccess object:_commentModel];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadCommentFailed:) name:kLeafLoadCommentFailed object:_commentModel];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadCommentCanceled:) name:kLeafLoadCommentCanceled object:_commentModel];
+    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+    [defaultCenter addObserver:self
+                      selector:@selector(loadCommentSuccess:)
+                          name:kLeafLoadCommentSuccess
+                        object:_commentModel];
+    
+    [defaultCenter addObserver:self
+                      selector:@selector(loadCommentFailed:)
+                          name:kLeafLoadCommentFailed
+                        object:_commentModel];
+    [defaultCenter addObserver:self
+                      selector:@selector(loadCommentCanceled:)
+                          name:kLeafLoadCommentCanceled
+                        object:_commentModel];
 }
 
 - (void)loadData:(NSString *)articleId
