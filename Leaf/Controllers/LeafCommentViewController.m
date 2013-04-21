@@ -19,6 +19,13 @@
 
 @implementation LeafCommentViewController
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [_commentModel release], _commentModel = nil;
+    [super dealloc];
+}
+
 
 #pragma mark - LeafCommentModel Notification Stuff
 
@@ -26,7 +33,17 @@
 {
     LeafCommentModel *model = (LeafCommentModel *)notification.object;
     if (model) {
+        NSArray *array = model.dataArray;
+        if (array.count > 0) {
+            LeafCommentData *data = (LeafCommentData *)[array objectAtIndex:0];
+            UILabel *comment = [[UILabel alloc] initWithText:data.comment font:kLeafFont13 textColor:[UIColor blackColor] andOrigin:CGPointMake(10.0f, 20.0f)];
+            [self.view addSubview:comment];
+            [comment release];
+        }
         
+        for (LeafCommentData *data in array){
+            NSLog(@"%@ %@: %@", data.time, data.name, data.comment);
+        }
     }
 }
 
@@ -63,6 +80,9 @@
                       selector:@selector(loadCommentCanceled:)
                           name:kLeafLoadCommentCanceled
                         object:_commentModel];
+    
+    [self enablePanLeftGestureWithDismissBlock:NULL];
+    
 }
 
 - (void)loadData:(NSString *)articleId

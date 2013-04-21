@@ -21,12 +21,14 @@
     NSString *_url;
     LeafURLConnection *_connection;
     NSString *_videoUrl;
+    NSString *_articleId;
     NSString *_articleTitle;
 
 }
 
 @property (nonatomic, retain) NSString *videoUrl;
 @property (nonatomic, retain) NSString *url;
+@property (nonatomic, retain) NSString *articleId;
 @property (nonatomic, retain) NSString *articleTitle;
 
 - (id)initWithURL:(NSString *)url andTitle:(NSString *)title;

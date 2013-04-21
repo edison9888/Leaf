@@ -317,6 +317,7 @@
         NSString *url = [NSString stringWithFormat:kArticleUrl, data.articleId];
         NSString *title = data.title;
         LeafContentViewController *vc = [[LeafContentViewController alloc] initWithURL:url andTitle:title];
+        vc.articleId = data.articleId;
         vc.view.frame = self.view.bounds;
         [self presentViewController:vc option:LeafAnimationOptionHorizontal completion:^{
             [self blockDDMenuControllerGesture:YES];

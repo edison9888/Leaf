@@ -5,7 +5,7 @@
 //  Created by roger on 13-4-7.
 //  Copyright (c) 2013年 Mobimtech. All rights reserved.
 //
-
+#import <CommonCrypto/CommonDigest.h>
 #import "LeafContentViewController.h"
 #import "LeafNavigationBar.h"
 #import "LeafHelper.h"
@@ -14,7 +14,8 @@
 #import "LeafConfig.h"
 #import "LeafPhotoViewController.h"
 #import "LeafWebViewController.h"
-#import <CommonCrypto/CommonDigest.h>
+#import "LeafCommentViewController.h"
+
 
 @interface LeafContentViewController ()
 
@@ -28,9 +29,11 @@
 @synthesize videoUrl = _videoUrl;
 @synthesize url = _url;
 @synthesize urls = _urls;
+@synthesize articleId = _articleId;
 @synthesize articleTitle = _articleTitle;
 - (void)dealloc
 {
+    [_articleId release], _articleId = nil;
     [_articleTitle release], _articleTitle = nil;
     [_url release], _url = nil;
     [_videoUrl release], _videoUrl = nil;
@@ -148,6 +151,14 @@
 - (void)shareClicked:(id)sender
 {
    // [[self sinaweibo] logOut];
+    LeafCommentViewController *vc = [[LeafCommentViewController alloc] init];
+    [self presentViewController:vc
+                         option:LeafAnimationOptionHorizontal
+                     completion:^(void){
+                         [vc loadData:_articleId];
+                     }];
+    [vc release];
+    return;
     CGPoint currentOffset = _content.scrollView.contentOffset;
     
     CGFloat totalHeight = _content.scrollView.contentSize.height;
