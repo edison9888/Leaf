@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface LeafCommentViewController : LeafBaseViewController <UITableViewDataSource, UITableViewDelegate>
+
 - (void)loadData:(NSString *)articleId;
+- (void)cancel;
+
 @end

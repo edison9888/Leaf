@@ -18,26 +18,45 @@
 @interface LeafBaseViewController ()
 
 @property (nonatomic, copy) LeafBlock dismissBlock;
-@property (nonatomic, copy) LeafBlock coveredBlock;
+@property (nonatomic, copy) LeafBlock willCoverBlock;
+
 
 @end
 
 @implementation LeafBaseViewController
 
 @synthesize parentController = _parentController;
+@synthesize childController = _childController;
 
 @synthesize hasMask = _hasMask;
 @synthesize shouldBlockGesture = _shouldBlockGesture;
 @synthesize dismissBlock = _dismissBlock;
+@synthesize willCoverBlock = _willCoverBlock;
 @synthesize coveredBlock = _coveredBlock;
+@synthesize childDismissBlock = _childDismissBlock;
+
 
 - (void)dealloc
 {
     NSLog(@"LeafBaseViewController dealloc!");
     [_dismissBlock release], _dismissBlock = nil;
+    [_willCoverBlock release], _willCoverBlock = nil;
     [_coveredBlock release], _coveredBlock = nil;
+    [_childDismissBlock release], _childDismissBlock = nil;
     _parentController = nil;
+    _childController = nil;
     [super dealloc];
+}
+
+- (id)init
+{
+    if (self = [super init]) {
+        _shouldBlockGesture = NO;
+        _canShowLeft = NO;
+        _canShowRight = NO;
+
+    }
+    return self;
 }
 
 - (void)viewDidLoad
@@ -59,9 +78,6 @@
     _mask = mask;
     _mask.backgroundColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.6f];
     [mask release];
-    
-    _shouldBlockGesture = NO;
-     
 }
 
 - (void)didReceiveMemoryWarning
@@ -75,6 +91,15 @@
 {
     DDMenuController *menuController = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).menuController;
     menuController.shouldBlockGesture = block;
+}
+
+- (void)pushController:(LeafBaseViewController *)controller
+{
+    [[LeafStack sharedInstance] push:controller];
+    controller.parentController = self;
+    [controller.view addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:NULL];
+    [controller addObserver:self forKeyPath:@"hasMask" options:NSKeyValueObservingOptionNew context:NULL];
+    _childController = controller;
 }
 
 #pragma mark -
@@ -109,19 +134,36 @@
 #pragma mark -
 #pragma mark - Pan Gesture Stuff
 
-- (void)enablePanLeftGestureWithDismissBlock:(LeafBlock)block
+- (void)enablePanRightGestureWithDismissBlock:(LeafBlock)block
 {
-    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
-    pan.delegate = self;
-    [self.view addGestureRecognizer:pan];
-    [pan release];
-    
+    if (!_canShowRight) {
+        UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
+        pan.delegate = self;
+        [self.view addGestureRecognizer:pan];
+        [pan release];
+    }
+    _canShowLeft = YES;
     self.dismissBlock = block;
+}
+
+- (void)enablePanLeftGestureWithWillCoverBlock:(LeafBlock)willCoverBlock coveredBlock:(LeafBlock)coveredBlock andDismissBlock:(LeafBlock)dismissBlock
+{
+    if (!_canShowLeft) {
+        UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
+        pan.delegate = self;
+        [self.view addGestureRecognizer:pan];
+        [pan release];
+    }
+
+    _canShowRight = YES;
+    self.willCoverBlock = willCoverBlock;
+    self.coveredBlock = coveredBlock;
+    self.childDismissBlock = dismissBlock;
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-    return !_shouldBlockGesture;
+    return (!_shouldBlockGesture)||_canShowLeft||_canShowRight;
 }
 
 - (void)pan:(UIPanGestureRecognizer *)gesture
@@ -133,8 +175,12 @@
         
         if([gesture velocityInView:self.view.superview].x > 0) {
             _panDirection = LeafPanDirectionRight;
-        } else {
+        }
+        else {
             _panDirection = LeafPanDirectionLeft;
+            if (_canShowRight && _willCoverBlock) {
+                _willCoverBlock();
+            }
         }
         
     }
@@ -153,24 +199,50 @@
         
         if(frame.origin.x > 0)
         {
-            if (_state == LeafPanStateNone) {
+            if (_state == LeafPanStateNone && _panDirection == LeafPanDirectionRight) {
                 _state = LeafPanStateShowingLeft;
             }
             if (_state == LeafPanStateShowingLeft) {
                 self.view.frame = frame;
             }
         }
+        else if(_canShowRight)
+        {
+            if (_state == LeafPanStateNone && _panDirection == LeafPanDirectionLeft) {
+                _state = LeafPanStateShowingRight;
+            }
+            if (_state == LeafPanStateShowingRight) {
+                if (_childController) {
+                    CGRect childFrame = _childController.view.frame;
+                    childFrame.origin.x = 320.0f + translation.x;
+                    if (childFrame.origin.x < 0) {
+                        childFrame.origin.x = 0.0f;
+                    }
+                    _childController.view.frame = childFrame;
+                }
+            }
+
+        }
     }
     else if (gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateCancelled) {
         LeafPanCompletion  completion =  LeafPanCompletionNone;
         
-        if (_state == LeafPanStateShowingLeft && _panDirection == LeafPanDirectionRight) {
+        if (_canShowLeft && _state == LeafPanStateShowingLeft && _panDirection == LeafPanDirectionRight) {
             completion = LeafPanCompletionLeft;
         }
-        else if(_state == LeafPanStateShowingLeft && _panDirection == LeafPanDirectionLeft)
+        else if(_canShowLeft && _state == LeafPanStateShowingLeft && _panDirection == LeafPanDirectionLeft)
+        {
+            completion = LeafPanCompletionRoot;
+        }
+        else if(_canShowRight && _state == LeafPanStateShowingRight && _panDirection == LeafPanDirectionLeft)
+        {
+            completion = LeafPanCompletionRight;
+        }
+        else if(_canShowRight && _state == LeafPanStateShowingRight && _panDirection == LeafPanDirectionRight)
         {
             completion = LeafPanCompletionNone;
         }
+    
         
         if (completion == LeafPanCompletionLeft) {
             [self viewWillDisappear:YES];
@@ -196,7 +268,7 @@
                              }];
 
         }
-        else if(completion == LeafPanDirectionNone){
+        else if(completion == LeafPanCompletionRoot){
             if (self.view.frame.origin.x > 0) {
                 __block CGRect frame = self.view.frame;
                 [UIView animateWithDuration:0.3f
@@ -207,10 +279,56 @@
                                      self.view.frame = frame;
                                  }
                                  completion:^(BOOL finished) {
-                                     
+                                     _state = LeafPanStateNone;
                                  }];
             }
         }
+
+        else if(completion == LeafPanCompletionRight){
+            if (_childController) {
+                __block CGRect frame = _childController.view.frame;
+                [UIView animateWithDuration:0.3f
+                                      delay:0.0f
+                                    options:UIViewAnimationOptionCurveEaseOut
+                                 animations:^{
+                                     frame.origin.x = 0.0f;
+                                     _childController.view.frame = frame;
+                                 }
+                                 completion:^(BOOL finished) {
+                                     if (_coveredBlock) {
+                                         _coveredBlock();
+                                     }
+                                     _state = LeafPanStateNone;
+                                 }];
+
+            }
+        }
+        else if(_canShowRight && completion == LeafPanCompletionNone){
+            if (_childController) {
+                __block CGRect frame = _childController.view.frame;
+                [UIView animateWithDuration:0.3f
+                                      delay:0.0f
+                                    options:UIViewAnimationOptionCurveEaseOut
+                                 animations:^{
+                                     frame.origin.x = CGWidth(self.view.frame);
+                                     _childController.view.frame = frame;
+                                 }
+                                 completion:^(BOOL finished) {
+                                     if (_childDismissBlock) {
+                                         _childDismissBlock();
+                                     }
+                                     [_childController removeObserver:self forKeyPath:@"hasMask"];
+                                     [_childController.view removeObserver:self forKeyPath:@"frame"];
+                                     [_childController.view removeFromSuperview];
+                                     [_childController viewDidDisappear:YES];
+                                     [[LeafStack sharedInstance] pop:_childController];
+                                     _childController = nil;
+                                 }];
+                
+            }
+        }
+
+        
     }
 }
 

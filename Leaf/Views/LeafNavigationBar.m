@@ -95,7 +95,10 @@
             [_rightBtn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
             [_rightIcon setImage:[UIImage imageNamed:@"share"]];
             break;
-
+        case LeafNavigationItemStyleRefresh:
+            [_rightBtn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+            [_rightIcon setImage:[UIImage imageNamed:@"refresh"]];
+            break;
         default:
             break;
     }

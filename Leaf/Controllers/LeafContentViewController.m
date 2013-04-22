@@ -83,9 +83,28 @@
     _connection = nil;
     
     __block LeafContentViewController *contentViewController = self;
-    [self enablePanLeftGestureWithDismissBlock:^{
+    [self enablePanRightGestureWithDismissBlock:^{
         [contentViewController blockDDMenuControllerGesture:NO];
         [contentViewController cancelAll];
+    }];
+    
+    [self enablePanLeftGestureWithWillCoverBlock:^{
+        LeafCommentViewController *vc = [[LeafCommentViewController alloc] init];
+        CGRect frame = contentViewController.view.frame;
+        vc.view.frame = CGRectMake(CGWidth(frame), 0.0f, CGWidth(frame), CGHeight(frame));
+        [contentViewController.view addSubview:vc.view];
+        [contentViewController pushController:vc];
+        vc.hasMask = YES;
+        [vc loadData:contentViewController.articleId];
+        [vc release];
+    } coveredBlock:^{
+        /*LeafCommentViewController *controller = (LeafCommentViewController *)contentViewController.childController;
+        [controller loadData:_articleId];*/
+        
+    } andDismissBlock:^{
+        LeafCommentViewController *controller = (LeafCommentViewController *)contentViewController.childController;
+        controller.hasMask = NO;
+        [controller cancel];
     }];
     
     _urls = [[NSMutableArray alloc] init];
@@ -152,6 +171,7 @@
 {
    // [[self sinaweibo] logOut];
     LeafCommentViewController *vc = [[LeafCommentViewController alloc] init];
+    vc.view.frame = self.view.bounds;
     [self presentViewController:vc
                          option:LeafAnimationOptionHorizontal
                      completion:^(void){

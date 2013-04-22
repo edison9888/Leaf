@@ -24,6 +24,7 @@ typedef enum{
 
 typedef enum{
     LeafPanCompletionNone,
+    LeafPanCompletionRoot,
     LeafPanCompletionLeft,
     LeafPanCompletionRight
 } LeafPanCompletion;
@@ -45,13 +46,22 @@ typedef enum {
     LeafPanState _state;
     BOOL _shouldBlockGesture;
     LeafBaseViewController *_parentController;
+    BOOL _canShowLeft;
+    BOOL _canShowRight;
 }
 
+
+@property (nonatomic, copy) LeafBlock coveredBlock;
+@property (nonatomic, copy) LeafBlock childDismissBlock;
 @property (nonatomic, assign) BOOL hasMask;
 @property (nonatomic, assign) BOOL shouldBlockGesture;
 @property (nonatomic, assign) LeafBaseViewController *parentController;
+@property (nonatomic, assign) LeafBaseViewController *childController;
 
-- (void)enablePanLeftGestureWithDismissBlock:(LeafBlock)block;
+- (void)pushController:(LeafBaseViewController *)controller;
+
+- (void)enablePanLeftGestureWithWillCoverBlock:(LeafBlock)willCoverBlock coveredBlock:(LeafBlock)coveredBlock andDismissBlock:(LeafBlock)dismissBlock;
+- (void)enablePanRightGestureWithDismissBlock:(LeafBlock)block;
 - (void)blockDDMenuControllerGesture:(BOOL)block;
 
 - (void)presentViewController:(LeafBaseViewController *)controller option:(LeafAnimationOption)option completion:(LeafBlock)block;

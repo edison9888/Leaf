@@ -219,7 +219,7 @@
             
             if(_menuFlags.showingLeftView) {
                 _menuFlags.showingLeftView = NO;
-                [self.leftViewController.view removeFromSuperview];
+                //[self.leftViewController.view removeFromSuperview];
             }
             
             if (_menuFlags.canShowRight) {
