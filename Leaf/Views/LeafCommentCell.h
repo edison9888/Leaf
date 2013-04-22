@@ -10,4 +10,5 @@
 
 @interface LeafCommentCell : UIView
 + (CGFloat)heightForComment:(NSString *)comment;
+- (void) loadData:(NSDictionary *)info;
 @end

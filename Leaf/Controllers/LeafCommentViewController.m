@@ -10,9 +10,12 @@
 #import "LeafCommentModel.h"
 #import "LeafCommentCell.h"
 
+#define kLeafCommentCellTag 1001
+
 @interface LeafCommentViewController ()
 {
     LeafCommentModel *_commentModel;
+    UITableView *_table;
 }
 
 @end
@@ -23,6 +26,7 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_commentModel release], _commentModel = nil;
+    _table = nil;
     [super dealloc];
 }
 
@@ -33,17 +37,7 @@
 {
     LeafCommentModel *model = (LeafCommentModel *)notification.object;
     if (model) {
-        NSArray *array = model.dataArray;
-        if (array.count > 0) {
-            LeafCommentData *data = (LeafCommentData *)[array objectAtIndex:0];
-            UILabel *comment = [[UILabel alloc] initWithText:data.comment font:kLeafFont13 textColor:[UIColor blackColor] andOrigin:CGPointMake(10.0f, 20.0f)];
-            [self.view addSubview:comment];
-            [comment release];
-        }
-        
-        for (LeafCommentData *data in array){
-            NSLog(@"%@ %@: %@", data.time, data.name, data.comment);
-        }
+        [_table reloadData];
     }
 }
 
@@ -83,6 +77,17 @@
     
     [self enablePanLeftGestureWithDismissBlock:NULL];
     
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, CGRectGetHeight(self.view.frame))];
+    tableView.dataSource = self;
+    tableView.delegate = self;
+    [self.view addSubview:tableView];
+    _table = tableView;
+    _table.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [_table setAllowsSelection:NO];
+    [_table setBackgroundColor:kLeafBackgroundColor];
+
+    [tableView release];
+    
 }
 
 - (void)loadData:(NSString *)articleId
@@ -94,6 +99,57 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - 
+#pragma mark - UITableViewDataSource UITableViewDelegate 
+
+- (int) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return _commentModel.dataArray.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    int index = indexPath.row;
+    NSString *comment = @"";
+    if (index >= 0 && index < _commentModel.dataArray.count) {
+        LeafCommentData *data = [_commentModel.dataArray objectAtIndex:index];
+        comment = data.comment;
+    }
+    
+    return [LeafCommentCell heightForComment:comment];
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellId = @"LeafCommentCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    
+    if (!cell) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId] autorelease];
+        
+        LeafCommentCell *commentCell = [[LeafCommentCell alloc] init];
+        commentCell.tag = kLeafCommentCellTag;
+        [cell.contentView addSubview:commentCell];
+        [commentCell release];
+    }
+     LeafCommentCell *commentCell = (LeafCommentCell *)[cell.contentView viewWithTag:kLeafCommentCellTag];
+    LeafCommentData *data = [_commentModel.dataArray safeObjectAtIndex:indexPath.row];
+    
+    
+    if (data) {
+        NSString *name = data.name;
+        if (!data.name || [data.name isEqualToString:@""]) {
+            name = @"匿名";
+        }
+               
+        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:name, @"name", data.time, @"time", data.comment, @"comment", nil];
+        [commentCell loadData:dict];
+    }
+    
+    return cell;
 }
 
 @end

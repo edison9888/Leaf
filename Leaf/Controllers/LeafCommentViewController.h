@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LeafCommentViewController : LeafBaseViewController
+@interface LeafCommentViewController : LeafBaseViewController <UITableViewDataSource, UITableViewDelegate>
 - (void)loadData:(NSString *)articleId;
 @end
