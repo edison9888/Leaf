@@ -108,8 +108,9 @@
         offsetY += timeSize.height;
         [_theme setHidden:NO];
         if (data.theme && [data.theme hasPrefix:@"http://"] && 
-            (![[data.theme lowercaseString] hasSuffix:@".gif"])) {                       
-            [_theme setImageWithURL:[NSURL URLWithString:data.theme] 
+            (![[data.theme lowercaseString] hasSuffix:@".gif"])) {
+            NSString *url = [data.theme stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+            [_theme setImageWithURL:[NSURL URLWithString:url]
                    placeholderImage:[UIImage imageNamed:@"placeholder"] 
                             success:^(UIImage *image) {
                                 CGFloat originX = 0.0f;
@@ -141,7 +142,9 @@
                                     [_theme setImage:image];
                                 }
                             } 
-                            failure:NULL];
+                            failure:^(NSError *error){
+                                [_theme setImage:[UIImage imageNamed:@"placeholder"]];
+                            }];
         }
         else{
             [_theme setImage:[UIImage imageNamed:@"placeholder"]];
