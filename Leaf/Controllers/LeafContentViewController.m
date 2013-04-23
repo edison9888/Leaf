@@ -406,7 +406,7 @@
 {
     if (navigationType == UIWebViewNavigationTypeLinkClicked) {
         NSLog(@"UIWebViewNavigationTypeLinkClicked");
-        NSString *url = [[request URL] absoluteString];
+        NSString *url = [[[request URL] absoluteString] stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
         NSString *doc = [[request mainDocumentURL] absoluteString];
         NSString *extension = [[url pathExtension] lowercaseString];
         NSLog(@"url: %@,\n doc: %@\n extension: %@", url, doc, extension);
@@ -472,8 +472,9 @@
     for (TFHppleElement *element in elements) {
         NSString *link = [element objectForKey:@"src"];
         NSString *ext = [[link lowercaseString] pathExtension];
-        if (ext && ![ext isEqualToString:@"gif"]) {
-            [_urls addObject:link];
+        if ([self isSupportedExtension:ext]) {
+            NSString *url = [link stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+            [_urls addObject:url];
         }
     }
     
