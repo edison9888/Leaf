@@ -80,7 +80,7 @@
         return;
     }
     NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:NULL];
-    
+    [_dataArray removeAllObjects];
     for (NSDictionary *dict in array) {
         LeafCommentData *data = [[LeafCommentData alloc] init];
         data.name = [dict stringForKey:@"name"];

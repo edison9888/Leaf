@@ -123,14 +123,11 @@
     _mainWebView.scalesPageToFit = YES;
     _mainWebView.delegate = self;
     [self.view addSubview:_mainWebView];
-    
-    [self blockDDMenuControllerGesture:YES];
 }
 
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    [self blockDDMenuControllerGesture:NO];
     [super viewDidDisappear:animated];
 }
 
