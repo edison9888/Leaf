@@ -10,6 +10,7 @@
 
 
 #define kLeafCommentFont [UIFont fontWithName:@"FZLTHK--GBK1-0" size:13.0f]
+#define kLeafCommentDateFont [UIFont fontWithName:@"FZLTHK--GBK1-0" size:11.0f]
 #define kLeafCommentDefaultHeight 20.0f
 #define kLeafCommentDefaultWidth 160.0f
 #define kLeafCommentWidth 290.0f
@@ -92,7 +93,7 @@
         [name release];
         
         UILabel *time = [[UILabel alloc] initWithFrame:CGRectZero];
-        time.font = kLeafCommentFont;
+        time.font = kLeafCommentDateFont;
         time.backgroundColor = [UIColor clearColor];
         _time = time;
         _time.textColor = KLeafCommentDateColor;
