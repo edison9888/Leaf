@@ -98,7 +98,6 @@
     } coveredBlock:NULL
     andDismissBlock:^{
         LeafCommentViewController *controller = (LeafCommentViewController *)contentViewController.childController;
-        controller.hasMask = NO;
         [controller cancel];
     }];
     

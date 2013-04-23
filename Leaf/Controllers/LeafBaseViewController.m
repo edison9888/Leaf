@@ -97,10 +97,10 @@
 {
     [[LeafStack sharedInstance] push:controller];
     controller.parentController = self;
+    self.childController = controller;
     [self.view addSubview:controller.view];
     [controller.view addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:NULL];
     [controller addObserver:self forKeyPath:@"hasMask" options:NSKeyValueObservingOptionNew context:NULL];
-    _childController = controller;
 }
 
 #pragma mark -
@@ -260,6 +260,7 @@
                                      _dismissBlock();
                                  }
                                  self.hasMask = NO;
+                                 self.parentController.childController = nil;
                                  [self removeObserver:self.parentController forKeyPath:@"hasMask"];
                                  [self.view removeObserver:self.parentController forKeyPath:@"frame"];
                                  [self.view removeFromSuperview];
@@ -318,12 +319,14 @@
                                      if (_childDismissBlock) {
                                          _childDismissBlock();
                                      }
+                                     _childController.hasMask = NO;
                                      [_childController removeObserver:self forKeyPath:@"hasMask"];
                                      [_childController.view removeObserver:self forKeyPath:@"frame"];
                                      [_childController.view removeFromSuperview];
                                      [_childController viewDidDisappear:YES];
                                      [[LeafStack sharedInstance] pop:_childController];
                                      _childController = nil;
+                                     _state = LeafPanStateNone;
                                  }];
                 
             }
@@ -345,6 +348,7 @@
         return;
     }
     [[LeafStack sharedInstance] push:controller];
+    self.childController = controller;
     controller.parentController = self;
     [controller.view addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:NULL];
     [controller addObserver:self forKeyPath:@"hasMask" options:NSKeyValueObservingOptionNew context:NULL];
@@ -414,6 +418,7 @@
                                 block(); 
                              }
                              self.hasMask = NO;
+                             self.parentController.childController = nil;
                              [self removeObserver:self.parentController forKeyPath:@"hasMask"];
                              [self.view removeObserver:self.parentController forKeyPath:@"frame"];
                              [self.view removeFromSuperview];
@@ -434,6 +439,7 @@
                                  block();
                              }
                              self.hasMask = NO;
+                             self.parentController.childController = nil;
                              [self removeObserver:self.parentController forKeyPath:@"hasMask"];
                              [self.view removeObserver:self.parentController forKeyPath:@"frame"];
                              [self.view removeFromSuperview];
