@@ -97,6 +97,7 @@
 {
     [[LeafStack sharedInstance] push:controller];
     controller.parentController = self;
+    [self.view addSubview:controller.view];
     [controller.view addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:NULL];
     [controller addObserver:self forKeyPath:@"hasMask" options:NSKeyValueObservingOptionNew context:NULL];
     _childController = controller;
@@ -163,7 +164,7 @@
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-    return (!_shouldBlockGesture)||_canShowLeft||_canShowRight;
+    return (!_shouldBlockGesture);
 }
 
 - (void)pan:(UIPanGestureRecognizer *)gesture
@@ -197,7 +198,7 @@
         CGRect frame = self.view.frame;
         frame.origin.x = _panOriginX + translation.x;
         
-        if(frame.origin.x > 0)
+        if(frame.origin.x > 0 && _canShowLeft)
         {
             if (_state == LeafPanStateNone && _panDirection == LeafPanDirectionRight) {
                 _state = LeafPanStateShowingLeft;

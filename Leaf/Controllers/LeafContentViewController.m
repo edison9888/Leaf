@@ -64,14 +64,7 @@
     [bar addRightItemWithStyle:LeafNavigationItemStyleShare target:self action:@selector(shareClicked:)];
     [_container addSubview:bar];
     [bar release];
-    
-    
-    
-    LeafLoadingView *loading = [[LeafLoadingView alloc] initWithFrame:CGRectMake(0.0f, CGHeight(self.view.frame), CGWidth(self.view.frame), 30.0f)];
-    _loading = loading;
-    [_container addSubview:_loading];
-    [loading release];
-    
+        
     UIWebView *content = [[UIWebView alloc] initWithFrame:CGRectMake(0.0f, 44.0f, CGWidth(self.view.frame), CGHeight(self.view.frame) - 44.0f)];
     content.backgroundColor = [UIColor clearColor];
     content.opaque = NO;
@@ -81,6 +74,12 @@
     [_container addSubview:content];
     [content release];
     _connection = nil;
+    
+    LeafLoadingView *loading = [[LeafLoadingView alloc] initWithFrame:CGRectMake(0.0f, CGHeight(self.view.frame), CGWidth(self.view.frame), 30.0f)];
+    _loading = loading;
+    [_container addSubview:_loading];
+    [loading release];
+    _loading.hidden = YES;
     
     __block LeafContentViewController *contentViewController = self;
     [self enablePanRightGestureWithDismissBlock:^{
@@ -92,23 +91,19 @@
         LeafCommentViewController *vc = [[LeafCommentViewController alloc] init];
         CGRect frame = contentViewController.view.frame;
         vc.view.frame = CGRectMake(CGWidth(frame), 0.0f, CGWidth(frame), CGHeight(frame));
-        [contentViewController.view addSubview:vc.view];
         [contentViewController pushController:vc];
         vc.hasMask = YES;
         [vc loadData:contentViewController.articleId];
         [vc release];
-    } coveredBlock:^{
-        /*LeafCommentViewController *controller = (LeafCommentViewController *)contentViewController.childController;
-        [controller loadData:_articleId];*/
-        
-    } andDismissBlock:^{
+    } coveredBlock:NULL
+    andDismissBlock:^{
         LeafCommentViewController *controller = (LeafCommentViewController *)contentViewController.childController;
         controller.hasMask = NO;
         [controller cancel];
     }];
     
     _urls = [[NSMutableArray alloc] init];
-    //[NSSet setWithObjects:@"png", @"jpg", @"jpeg", @"bmp", @"tif", @"tiff", nil];
+   
 }
 
 - (void)didReceiveMemoryWarning
@@ -269,7 +264,7 @@
 - (void)showLeafLoadingView
 {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    
+    _loading.hidden = NO;
     CGPoint center = _loading.center;
     center.y = (CGHeight(self.view.frame) - CGHeight(_loading.frame)/2.0f);
     
@@ -298,6 +293,7 @@
                      }
                      completion:^(BOOL finished) {
                          [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                         _loading.hidden = YES;
                      }];
     
 }
