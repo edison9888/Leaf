@@ -27,9 +27,10 @@
     _leftBtn = leftBtn;
     _leftBtn.frame = CGRectMake(0.0f, 0.0f, kLeafMenuLeftBtnWidth, kLeafMenuLeftBtnHeight);
         
-    UIImageView *logo = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 44.0f, 44.0f)];
+    UIImageView *logo = [[UIImageView alloc] initWithImage:image];
+    logo.center = CGPointMake(CGRectGetMidX(_leftBtn.frame), CGRectGetMidY(_leftBtn.frame));
     [_leftBtn addSubview:logo];
-    logo.image = image;
+    
     CGPoint center = CGPointMake(CGWidth(leftBtn.frame)/2.0f, CGHeight(leftBtn.frame)/2.0f);
     logo.center = center;
     [self addSubview:leftBtn];

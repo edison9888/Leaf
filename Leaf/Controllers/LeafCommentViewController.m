@@ -235,7 +235,11 @@
         if (!data.name || [data.name isEqualToString:@""]) {
             name = @"匿名";
         }
-               
+        /*
+        NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding (kCFStringEncodingGB_18030_2000);
+        NSData *commentData = [data.comment dataUsingEncoding:enc];
+        NSString *comment = [[NSString alloc] initWithData:commentData encoding:enc];
+        */
         NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:name, @"name", data.time, @"time", data.comment, @"comment", nil];
         [commentCell loadData:dict];
     }

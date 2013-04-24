@@ -10,14 +10,14 @@
 #import "LeafPhotoView.h"
 #import "LeafBottomBar.h"
 #import "LeafHelper.h"
-#import "LeafPhotoProgressBar.h"
+#import "LeafProgressBar.h"
 
 #define kLeafBottomProgressBarH 2.0f
 
 @interface LeafPhotoViewController ()
 {
     UIScrollView *_scrollView;
-    LeafPhotoProgressBar *_progressBar;
+    LeafProgressBar *_progressBar;
     int _cur;
     LeafPhotoView *_photoView;
 }
@@ -105,7 +105,7 @@
     [bottom addTarget:self action:@selector(returnClicked:)];
     [bottom release];
     
-    LeafPhotoProgressBar *progressBar = [[LeafPhotoProgressBar alloc] initWithFrame:CGRectMake(0.0f, CGHeight(self.view.frame) - kLeafBottomProgressBarH, CGWidth(self.view.frame), kLeafBottomProgressBarH)];
+    LeafProgressBar *progressBar = [[LeafProgressBar alloc] initWithFrame:CGRectMake(0.0f, CGHeight(self.view.frame) - kLeafBottomProgressBarH, CGWidth(self.view.frame), kLeafBottomProgressBarH)];
     [_container addSubview:progressBar];
     _progressBar = progressBar;
     [progressBar release];

@@ -1,23 +1,23 @@
 //
-//  LeafPhotoProgressBar
+//  LeafProgressBar
 //  Leaf
 //
 //  Created by roger on 13-4-7.
 //  Copyright (c) 2013年 Mobimtech. All rights reserved.
 //
 
-#import "LeafPhotoProgressBar.h"
+#import "LeafProgressBar.h"
 #import "LeafHelper.h"
 
 #define kLeafBlueProgressColor [UIColor colorWithRed:CGColorConvert(39.0f) green:CGColorConvert(149.0f) blue:CGColorConvert(228.0f) alpha:1.0f]
 
-@interface LeafPhotoProgressBar ()
+@interface LeafProgressBar ()
 {
     UIView *_progress;
 }
 @end
 
-@implementation LeafPhotoProgressBar
+@implementation LeafProgressBar
 
 - (void)dealloc
 {

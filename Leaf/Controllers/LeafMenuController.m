@@ -64,10 +64,10 @@
     self.view.backgroundColor = kLeafBackgroundColor;
     
     CGFloat offsetY = kLeafMenuItemBeginY;    
-    NSArray *titleArray = [NSArray arrayWithObjects:@"最近新闻", @"已下载", nil];
-    NSArray *imageArray = [NSArray arrayWithObjects:@"menu_latest", @"menu_saved", nil];
-    NSArray *colorArray = [NSArray arrayWithObjects:kLeafMenuMidGreen, kLeafMenuBlue, nil];
-    NSArray *hlArray = [NSArray arrayWithObjects:kLeafMenuMidDarkGreen, kLeafMenuDarkBlue, nil];
+    NSArray *titleArray = [NSArray arrayWithObjects:@"最近新闻", @"已离线", @"马上离线", nil];
+    NSArray *imageArray = [NSArray arrayWithObjects:@"menu_latest", @"menu_saved", @"menu_download", nil];
+    NSArray *colorArray = [NSArray arrayWithObjects:kLeafMenuMidGreen, kLeafMenuBlue, kLeafMenuGreen, nil];
+    NSArray *hlArray = [NSArray arrayWithObjects:kLeafMenuMidDarkGreen, kLeafMenuDarkBlue, kLeafMenuDarkGreen, nil];
     
     for (int i = 0; i < titleArray.count; i++) {
         LeafMenuItem *item = [[LeafMenuItem alloc] initWithFrame:CGRectMake(0.0f, offsetY, kLeafMenuItemSize.width, kLeafMenuItemSize.height)];

@@ -1,5 +1,5 @@
 //
-//  LeafPhotoProgressBar
+//  LeafProgressBar
 //  Leaf
 //
 //  Created by roger on 13-4-7.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LeafPhotoProgressBar : UIView
+@interface LeafProgressBar : UIView
 
 // [0, 1]
 - (void)setProgress:(float)progress;

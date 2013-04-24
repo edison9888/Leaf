@@ -12,7 +12,7 @@
 #import "LeafURLConnection.h"
 #import "LeafBaseViewController.h"
 
-@class LeafNavigationBar, ASINetworkQueue;
+@class LeafNavigationBar;
 @interface LeafMainViewController : LeafBaseViewController<UITableViewDelegate, UITableViewDataSource, EGORefreshTableHeaderDelegate, EGOLoadMoreTableFooterDelegate, LeafURLConnectionDelegate>
 {
     
@@ -24,9 +24,6 @@
     BOOL _reloading;
     EGORefreshTableHeaderView *_headerView;
     EGOLoadMoreTableFooterView *_footerView;
-    int _count;
 }
-
-- (void)downloadNews;
 
 @end

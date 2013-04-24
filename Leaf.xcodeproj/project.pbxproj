@@ -22,8 +22,10 @@
 		DB61AF1216B26F96006EC642 /* LeafNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61AF1116B26F96006EC642 /* LeafNavigationBar.m */; };
 		DB61AF3816B27812006EC642 /* LeafCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61AF3316B27812006EC642 /* LeafCategory.m */; };
 		DB61AF3916B27812006EC642 /* UILabel+LeafHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61AF3716B27812006EC642 /* UILabel+LeafHelper.m */; };
-		DB61B7531711501C00838477 /* LeafPhotoProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61B7521711501C00838477 /* LeafPhotoProgressBar.m */; };
+		DB61B7531711501C00838477 /* LeafProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61B7521711501C00838477 /* LeafProgressBar.m */; };
 		DB61B75A17125EC200838477 /* LeafStack.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61B75917125EC200838477 /* LeafStack.m */; };
+		DB6F05C01727A7DB00139ADB /* LeafOfflineModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6F05BF1727A7DB00139ADB /* LeafOfflineModel.m */; };
+		DB6F05C31727CF8400139ADB /* LeafOfflineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6F05C21727CF8400139ADB /* LeafOfflineViewController.m */; };
 		DB70FD9616BA320800FD1A8E /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = DB70FD9416BA320700FD1A8E /* back.png */; };
 		DB70FD9716BA320800FD1A8E /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB70FD9516BA320800FD1A8E /* back@2x.png */; };
 		DB70FDA416BA582900FD1A8E /* page.html in Resources */ = {isa = PBXBuildFile; fileRef = DB70FDA316BA582800FD1A8E /* page.html */; };
@@ -38,8 +40,8 @@
 		DB9AEC89170B190F005EA0E6 /* home_icon_download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB9AEC81170B190C005EA0E6 /* home_icon_download@2x.png */; };
 		DB9AEC8A170B190F005EA0E6 /* menu_latest@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB9AEC82170B190D005EA0E6 /* menu_latest@2x.png */; };
 		DB9AEC8B170B190F005EA0E6 /* menu_saved@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB9AEC83170B190D005EA0E6 /* menu_saved@2x.png */; };
-		DB9AEC8C170B190F005EA0E6 /* offline_download.png in Resources */ = {isa = PBXBuildFile; fileRef = DB9AEC84170B190D005EA0E6 /* offline_download.png */; };
-		DB9AEC8D170B190F005EA0E6 /* offline_download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB9AEC85170B190E005EA0E6 /* offline_download@2x.png */; };
+		DB9AEC8C170B190F005EA0E6 /* menu_download.png in Resources */ = {isa = PBXBuildFile; fileRef = DB9AEC84170B190D005EA0E6 /* menu_download.png */; };
+		DB9AEC8D170B190F005EA0E6 /* menu_download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB9AEC85170B190E005EA0E6 /* menu_download@2x.png */; };
 		DB9FDE621709350D002E4052 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DB9FDE481709350D002E4052 /* ASIAuthenticationDialog.m */; };
 		DB9FDE631709350D002E4052 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = DB9FDE4B1709350D002E4052 /* ASIDataCompressor.m */; };
 		DB9FDE641709350D002E4052 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = DB9FDE4D1709350D002E4052 /* ASIDataDecompressor.m */; };
@@ -147,11 +149,15 @@
 		DB61AF3516B27812006EC642 /* LeafMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafMacros.h; sourceTree = "<group>"; };
 		DB61AF3616B27812006EC642 /* UILabel+LeafHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+LeafHelper.h"; sourceTree = "<group>"; };
 		DB61AF3716B27812006EC642 /* UILabel+LeafHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+LeafHelper.m"; sourceTree = "<group>"; };
-		DB61B7511711501C00838477 /* LeafPhotoProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafPhotoProgressBar.h; path = Views/LeafPhotoProgressBar.h; sourceTree = "<group>"; };
-		DB61B7521711501C00838477 /* LeafPhotoProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafPhotoProgressBar.m; path = Views/LeafPhotoProgressBar.m; sourceTree = "<group>"; };
+		DB61B7511711501C00838477 /* LeafProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafProgressBar.h; path = Views/LeafProgressBar.h; sourceTree = "<group>"; };
+		DB61B7521711501C00838477 /* LeafProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafProgressBar.m; path = Views/LeafProgressBar.m; sourceTree = "<group>"; };
 		DB61B75717125DB900838477 /* Singleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
 		DB61B75817125EC100838477 /* LeafStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafStack.h; sourceTree = "<group>"; };
 		DB61B75917125EC200838477 /* LeafStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeafStack.m; sourceTree = "<group>"; };
+		DB6F05BE1727A7DB00139ADB /* LeafOfflineModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafOfflineModel.h; sourceTree = "<group>"; };
+		DB6F05BF1727A7DB00139ADB /* LeafOfflineModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeafOfflineModel.m; sourceTree = "<group>"; };
+		DB6F05C11727CF8400139ADB /* LeafOfflineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafOfflineViewController.h; path = Controllers/LeafOfflineViewController.h; sourceTree = "<group>"; };
+		DB6F05C21727CF8400139ADB /* LeafOfflineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafOfflineViewController.m; path = Controllers/LeafOfflineViewController.m; sourceTree = "<group>"; };
 		DB70FD9416BA320700FD1A8E /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		DB70FD9516BA320800FD1A8E /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
 		DB70FDA316BA582800FD1A8E /* page.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = page.html; sourceTree = "<group>"; };
@@ -166,8 +172,8 @@
 		DB9AEC81170B190C005EA0E6 /* home_icon_download@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_icon_download@2x.png"; sourceTree = "<group>"; };
 		DB9AEC82170B190D005EA0E6 /* menu_latest@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_latest@2x.png"; sourceTree = "<group>"; };
 		DB9AEC83170B190D005EA0E6 /* menu_saved@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_saved@2x.png"; sourceTree = "<group>"; };
-		DB9AEC84170B190D005EA0E6 /* offline_download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = offline_download.png; sourceTree = "<group>"; };
-		DB9AEC85170B190E005EA0E6 /* offline_download@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "offline_download@2x.png"; sourceTree = "<group>"; };
+		DB9AEC84170B190D005EA0E6 /* menu_download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_download.png; sourceTree = "<group>"; };
+		DB9AEC85170B190E005EA0E6 /* menu_download@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_download@2x.png"; sourceTree = "<group>"; };
 		DB9FDE471709350D002E4052 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		DB9FDE481709350D002E4052 /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		DB9FDE491709350D002E4052 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -420,6 +426,8 @@
 				DBA818151711B90E008D4864 /* LeafContentViewController.m */,
 				DBBF469C172130B90083A924 /* LeafCommentViewController.h */,
 				DBBF469D172130BA0083A924 /* LeafCommentViewController.m */,
+				DB6F05C11727CF8400139ADB /* LeafOfflineViewController.h */,
+				DB6F05C21727CF8400139ADB /* LeafOfflineViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -443,8 +451,8 @@
 				DBE67FB2170BFFC100685DD2 /* LeafPhotoView.m */,
 				DBE67FBC170C180800685DD2 /* LeafBottomBar.h */,
 				DBE67FBD170C180800685DD2 /* LeafBottomBar.m */,
-				DB61B7511711501C00838477 /* LeafPhotoProgressBar.h */,
-				DB61B7521711501C00838477 /* LeafPhotoProgressBar.m */,
+				DB61B7511711501C00838477 /* LeafProgressBar.h */,
+				DB61B7521711501C00838477 /* LeafProgressBar.m */,
 				DBBF469217211E9C0083A924 /* LeafCommentCell.h */,
 				DBBF469317211E9C0083A924 /* LeafCommentCell.m */,
 			);
@@ -562,6 +570,8 @@
 			children = (
 				DBBF4699172125A30083A924 /* LeafCommentModel.h */,
 				DBBF469A172125A30083A924 /* LeafCommentModel.m */,
+				DB6F05BE1727A7DB00139ADB /* LeafOfflineModel.h */,
+				DB6F05BF1727A7DB00139ADB /* LeafOfflineModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -615,8 +625,8 @@
 				DB9AEC81170B190C005EA0E6 /* home_icon_download@2x.png */,
 				DB9AEC82170B190D005EA0E6 /* menu_latest@2x.png */,
 				DB9AEC83170B190D005EA0E6 /* menu_saved@2x.png */,
-				DB9AEC84170B190D005EA0E6 /* offline_download.png */,
-				DB9AEC85170B190E005EA0E6 /* offline_download@2x.png */,
+				DB9AEC84170B190D005EA0E6 /* menu_download.png */,
+				DB9AEC85170B190E005EA0E6 /* menu_download@2x.png */,
 				DB70FD9416BA320700FD1A8E /* back.png */,
 				DB70FD9516BA320800FD1A8E /* back@2x.png */,
 				DB8593EB16B81012009773F1 /* close.png */,
@@ -802,8 +812,8 @@
 				DB9AEC89170B190F005EA0E6 /* home_icon_download@2x.png in Resources */,
 				DB9AEC8A170B190F005EA0E6 /* menu_latest@2x.png in Resources */,
 				DB9AEC8B170B190F005EA0E6 /* menu_saved@2x.png in Resources */,
-				DB9AEC8C170B190F005EA0E6 /* offline_download.png in Resources */,
-				DB9AEC8D170B190F005EA0E6 /* offline_download@2x.png in Resources */,
+				DB9AEC8C170B190F005EA0E6 /* menu_download.png in Resources */,
+				DB9AEC8D170B190F005EA0E6 /* menu_download@2x.png in Resources */,
 				DBE67FB8170C17E200685DD2 /* photo_return.png in Resources */,
 				DBE67FB9170C17E200685DD2 /* photo_return@2x.png in Resources */,
 				DBE67FBA170C17E200685DD2 /* photo_transmit.png in Resources */,
@@ -866,7 +876,7 @@
 				DBE67FB3170BFFC100685DD2 /* LeafPhotoView.m in Sources */,
 				DBE67FBE170C180800685DD2 /* LeafBottomBar.m in Sources */,
 				DBE67FC3170C1B9500685DD2 /* LeafPhotoViewController.m in Sources */,
-				DB61B7531711501C00838477 /* LeafPhotoProgressBar.m in Sources */,
+				DB61B7531711501C00838477 /* LeafProgressBar.m in Sources */,
 				DBA818131711AA9F008D4864 /* LeafBaseViewController.m in Sources */,
 				DBA818161711B90E008D4864 /* LeafContentViewController.m in Sources */,
 				DB61B75A17125EC200838477 /* LeafStack.m in Sources */,
@@ -878,6 +888,8 @@
 				DBBF469417211E9C0083A924 /* LeafCommentCell.m in Sources */,
 				DBBF469B172125A30083A924 /* LeafCommentModel.m in Sources */,
 				DBBF469E172130BA0083A924 /* LeafCommentViewController.m in Sources */,
+				DB6F05C01727A7DB00139ADB /* LeafOfflineModel.m in Sources */,
+				DB6F05C31727CF8400139ADB /* LeafOfflineViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
