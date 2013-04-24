@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LeafMenuController : UIViewController
+typedef enum {
+    LeafMenuItemTypeLatestNews = 0,
+    LeafMenuItemTypeSaved,
+    LeafMenuItemTypeDownloadNow
+}LeafMenuItemType;
 
+@interface LeafMenuController : UIViewController
 
 
 @end

@@ -11,6 +11,10 @@
 #import "LeafConfig.h"
 #import "LeafMenuItem.h"
 
+#import "DDMenuController.h"
+#import "LeafMainViewController.h"
+#import "LeafOfflineViewController.h"
+
 #define kLeafMenuItemSize CGSizeMake(240.0f, 60.0f)
 #define kLeafMenuItemBeginY 20.0f
 
@@ -26,15 +30,17 @@
 #define kLeafMenuGreen [UIColor colorWithRed:CGColorConvert(111.0f) green:CGColorConvert(202.0f) blue:CGColorConvert(43.0f) alpha:1.0f]
 #define kLeafMenuDarkGreen [UIColor colorWithRed:CGColorConvert(74.0f) green:CGColorConvert(135.0f) blue:CGColorConvert(38.0f) alpha:1.0f]
 
+
+@interface LeafMenuController ()
+{
+    @private
+    DDMenuController *_menuController;
+    LeafMainViewController *_mainController;
+}
+@end
+
 @implementation LeafMenuController
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
 
 - (void)imageModeChanged:(id)sender
 {
@@ -49,9 +55,36 @@
     }
 }
 
+
 - (void)menuItemClicked:(id)sender
 {
-    
+    UIButton *menuItem = (UIButton *)sender;
+    switch (menuItem.superview.tag) {
+        case LeafMenuItemTypeLatestNews:
+            [_menuController setRootController:_mainController animated:YES];
+            break;
+        case LeafMenuItemTypeSaved:
+        {
+            LeafOfflineViewController *controller = [[LeafOfflineViewController alloc] init];
+            controller.downloadAtOnce = NO;
+            [_menuController setRootController:controller animated:YES];
+            [controller release];
+            
+        }
+
+            break;
+        case LeafMenuItemTypeDownloadNow:
+            {
+                LeafOfflineViewController *controller = [[LeafOfflineViewController alloc] init];
+                controller.downloadAtOnce = YES;
+                [_menuController setRootController:controller animated:YES];
+                [controller release];
+                
+            }
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - View lifecycle
@@ -105,6 +138,10 @@
     [sw release];
     [self.view addSubview:imageModeConfigPanel];
     [imageModeConfigPanel release];*/
+    
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    _menuController = delegate.menuController;
+    _mainController = delegate.mainController;
     
 }
 

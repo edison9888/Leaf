@@ -140,6 +140,7 @@
     
     
     CGSize statusSize = [status sizeWithFont:_hudFont constrainedToSize:CGSizeMake(CGRectGetWidth(_hudBackground.frame), 16.0f)];
+    _status.font = _hudFont;
     _status.frame = CGRectMake((CGRectGetWidth(_hudBackground.frame) - statusSize.width)/2.0f, CGRectGetMaxY(_logo.frame) + 10.0f, statusSize.width, statusSize.height);
     [_status setText:status];
 }
