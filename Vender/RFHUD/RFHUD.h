@@ -21,16 +21,16 @@ typedef void (^RFHUDBlock) (void);
 @interface RFHUD : UIView
 {
     UIFont *_hudFont;
-    RFHUDBlock _cancelBlock;
+    RFHUDBlock _dismissBlock;
 }
 
 @property (nonatomic, retain) UIFont *hudFont;
-@property (nonatomic, copy) RFHUDBlock cancelBlock;
+@property (nonatomic, copy) RFHUDBlock dismissBlock;
 
 
 - (void)setHUDType:(RFHUDType)type andStatus:(NSString *)status;
 
 - (void)show;
 - (void)dismissAfterDelay:(CGFloat)delay;
-
+- (void)close;   // dismiss loading hud
 @end

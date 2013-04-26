@@ -22,16 +22,16 @@
     LeafOfflineModel *_model;
     RFHUD *_hud;
 }
-
+@property (nonatomic, assign) RFHUD *hud;
 @property (nonatomic, assign, readonly) LeafProgressBar *progressBar;
 
 - (void)showDownloadView;
-- (void)dismissDownloadView;
 
 @end
 
 
 @implementation LeafOfflineViewController
+@synthesize hud = _hud;
 @synthesize progressBar = _progressBar;
 @synthesize downloadAtOnce = _downloadAtOnce;
 
@@ -56,17 +56,14 @@
     [hud setHUDType:RFHUDTypeLoading andStatus:@"正在离线"];
     
     __block LeafOfflineViewController *controller = self;
-    hud.cancelBlock = ^(void){
+    hud.dismissBlock = ^(void){
         controller.progressBar.hidden = YES;
+        controller.hud = nil;
     };
     [hud show];
     _hud = hud;
     [hud release];
-}
-
-- (void)dismissDownloadView
-{
-    [_hud dismissAfterDelay:0.0f];
+    _progressBar.hidden = NO;
 }
 
 
@@ -75,7 +72,20 @@
 
 - (void)leafOfflineFinished:(NSNotification *)notification
 {
-    [self dismissDownloadView];
+    __block LeafOfflineViewController *controller = self;
+    if (_hud) {
+        _hud.dismissBlock = ^(void){
+            controller.progressBar.hidden = YES;
+            controller.hud = nil;
+            UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+            RFHUD *hud = [[RFHUD alloc] initWithFrame:window.bounds];
+            [hud setHUDType:RFHUDTypeSuccess andStatus:@"完成离线"];
+            [hud show];
+            [hud release];
+        };
+        [_hud close];
+    }
+    
 }
 
 - (void)leafOfflineUpdateProgress:(NSNotification *)notification
@@ -115,8 +125,8 @@
 {
     [super viewDidAppear:animated];
     if (_downloadAtOnce) {
-        [_model downloadNews:YES];
         [self showDownloadView];
+        [_model downloadNews:YES];
     }
 }
 

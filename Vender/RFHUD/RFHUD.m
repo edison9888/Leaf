@@ -29,13 +29,13 @@
 
 @implementation RFHUD
 @synthesize hudFont = _hudFont;
-@synthesize cancelBlock = _cancelBlock;
+@synthesize dismissBlock = _dismissBlock;
 
 - (void)dealloc
 {
     NSLog(@"hud dealloc.");
     [_hudFont release], _hudFont = nil;
-    [_cancelBlock release], _cancelBlock = nil;
+    [_dismissBlock release], _dismissBlock = nil;
     
     [super dealloc];
 }
@@ -70,7 +70,7 @@
         UIButton *cancel = [UIButton buttonWithType:UIButtonTypeCustom];
         [cancel setImage:[UIImage imageNamed:@"RFHUD.bundle/activity_close"] forState:UIControlStateNormal];
         cancel.frame = CGRectMake(0.0f, 2.0f, 35.0f, 36.0f);
-        [cancel addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
+        [cancel addTarget:self action:@selector(close:) forControlEvents:UIControlEventTouchUpInside];
         cancel.hidden = YES;
         _cancel = cancel;
         [_hud addSubview:cancel];
@@ -106,11 +106,12 @@
 
 - (void)close
 {
-    NSLog(@"close");
-    if (_cancelBlock) {
-        _cancelBlock();
-    }
-    
+    _complete = YES;
+}
+
+
+- (void)close:(id)sender
+{
     _complete = YES;
 }
 
@@ -164,6 +165,10 @@
                              [_activity stopAnimating];
                          }
                          [entireView removeFromSuperview];
+                         
+                         if (_dismissBlock) {
+                             _dismissBlock();
+                         }
                      }];
     
     

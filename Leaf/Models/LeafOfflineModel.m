@@ -72,8 +72,8 @@
 	[[ASIDownloadCache sharedCache] setShouldRespectCacheControlHeaders:NO];
     [request startSynchronous];
     NSError *error = [request error];
-    if (!error) {
-        NSData *data = [request responseData];
+    if (!error && [request downloadDestinationPath]) {
+        NSData *data = [NSData dataWithContentsOfFile:[request downloadDestinationPath]];
         if (!data) {
             NSLog(@"data is nil");
             [[NSNotificationCenter defaultCenter] postNotificationName:kLeafOfflineFailed object:self];
@@ -118,6 +118,9 @@
     _progress = (float)_count/(float)kLeafOfflineTotal;
 
 	[[NSNotificationCenter defaultCenter] postNotificationName:kLeafOfflineUpdateProgress object:self];
+    if (_count >= kLeafOfflineTotal) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLeafOfflineFinished object:self];
+    }
 }
 
 - (void)webPageFetchSucceeded:(ASIHTTPRequest *)theRequest
