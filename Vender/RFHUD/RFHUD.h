@@ -16,23 +16,16 @@ typedef enum {
     RFHUDTypeWaiting
 }RFHUDType;
 
-
-typedef enum {
-    RFHUDCompletionTypeNone = 0,
-    RFHUDCompletionTypeCancel,
-    RFHUDCompletionTypeChangeStatus
-}RFHUDCompletionType;
-
 typedef void (^RFHUDBlock) (void);
 
 @interface RFHUD : UIView
 {
     UIFont *_hudFont;
-    RFHUDBlock _dismissBlock;
+    RFHUDBlock _cancelBlock;
 }
 
 @property (nonatomic, retain) UIFont *hudFont;
-@property (nonatomic, copy) RFHUDBlock dismissBlock;
+@property (nonatomic, copy) RFHUDBlock cancelBlock;
 
 
 - (void)setHUDType:(RFHUDType)type andStatus:(NSString *)status;

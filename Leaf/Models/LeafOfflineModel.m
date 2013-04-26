@@ -56,7 +56,6 @@
 {
     
     NSString *url = [NSString stringWithFormat:kDownloadNewsListURL, kLeafOfflineTotal];
-    NSLog(@"url: %@", url);
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
     if (clearFirst) {
         NSString *path = [request downloadDestinationPath];
@@ -73,8 +72,8 @@
 	[[ASIDownloadCache sharedCache] setShouldRespectCacheControlHeaders:NO];
     [request startSynchronous];
     NSError *error = [request error];
-    if (!error && [request downloadDestinationPath]) {
-        NSData *data = [NSData dataWithContentsOfFile:[request downloadDestinationPath]];
+    if (!error) {
+        NSData *data = [request responseData];
         if (!data) {
             NSLog(@"data is nil");
             [[NSNotificationCenter defaultCenter] postNotificationName:kLeafOfflineFailed object:self];
@@ -116,7 +115,7 @@
 - (void)webPageFetchFailed:(ASIHTTPRequest *)theRequest
 {
     _count++;
-    _progress = (float)(_count/kLeafOfflineTotal);
+    _progress = (float)_count/(float)kLeafOfflineTotal;
 
 	[[NSNotificationCenter defaultCenter] postNotificationName:kLeafOfflineUpdateProgress object:self];
 }
