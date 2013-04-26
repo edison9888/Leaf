@@ -22,17 +22,18 @@
     LeafOfflineModel *_model;
     RFHUD *_hud;
 }
-
+@property (nonatomic, assign) RFHUD *hud;
 @property (nonatomic, assign, readonly) LeafProgressBar *progressBar;
 
 - (void)showDownloadView;
-- (void)dismissDownloadView;
+- (void)dismissHUDAfterDelay:(float)delay;
 
 @end
 
 
 @implementation LeafOfflineViewController
 @synthesize progressBar = _progressBar;
+@synthesize hud = _hud;
 @synthesize downloadAtOnce = _downloadAtOnce;
 
 - (void)dealloc
@@ -56,17 +57,21 @@
     [hud setHUDType:RFHUDTypeLoading andStatus:@"正在离线"];
     
     __block LeafOfflineViewController *controller = self;
-    hud.cancelBlock = ^(void){
+    hud.dismissBlock = ^(void){
         controller.progressBar.hidden = YES;
+        controller.hud = nil;
     };
     [hud show];
     _hud = hud;
     [hud release];
+    _progressBar.hidden = NO;
 }
 
-- (void)dismissDownloadView
+- (void)dismissHUDAfterDelay:(float)delay
 {
-    [_hud dismissAfterDelay:0.0f];
+    if (_hud) {
+        [_hud dismissAfterDelay:delay];
+    }
 }
 
 
@@ -75,17 +80,20 @@
 
 - (void)leafOfflineFinished:(NSNotification *)notification
 {
-    [self dismissDownloadView];
+    [_hud setHUDType:RFHUDTypeSuccess andStatus:@"已完成离线"];
+    [self dismissHUDAfterDelay:2.0f];
 }
 
 - (void)leafOfflineUpdateProgress:(NSNotification *)notification
 {
+    NSLog(@"progress: %f", _model.progress);
     [_progressBar setProgress:_model.progress];
 }
 
 - (void)leafOfflineFailed:(NSNotification *)notification
 {
     [_hud setHUDType:RFHUDTypeError andStatus:@"Network Error"];
+    [self dismissHUDAfterDelay:2.0f];
 }
 
 

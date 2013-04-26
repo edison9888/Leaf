@@ -10,6 +10,7 @@
 
 #define kRFHUDDismissAfterDelay 1.0f
 #define kRFHUDYScale 0.325
+
 @interface RFHUD ()
 {
     @private
@@ -20,7 +21,7 @@
     UIButton *_cancel;
     UIView *_mask;
     RFHUDType _type;
-    BOOL _complete;
+    RFHUDCompletionType _complete;
     UIActivityIndicatorView *_activity;
 }
 
@@ -29,13 +30,14 @@
 
 @implementation RFHUD
 @synthesize hudFont = _hudFont;
-@synthesize cancelBlock = _cancelBlock;
+@synthesize dismissBlock = _dismissBlock;
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     NSLog(@"hud dealloc.");
     [_hudFont release], _hudFont = nil;
-    [_cancelBlock release], _cancelBlock = nil;
+    [_dismissBlock release], _dismissBlock = nil;
     
     [super dealloc];
 }
@@ -100,22 +102,23 @@
         [_hudBackground addSubview:_activity];
         [activity release];
         
+        _type = RFHUDTypeNone;
+        _complete = RFHUDCompletionTypeNone;
     }
     return self;
 }
 
 - (void)close
 {
-    NSLog(@"close");
-    if (_cancelBlock) {
-        _cancelBlock();
-    }
-    
-    _complete = YES;
+    _complete = RFHUDCompletionTypeCancel;
 }
 
 - (void)setHUDType:(RFHUDType)type andStatus:(NSString *)status
 {
+    if (_type != RFHUDTypeNone) {
+        // change status
+        _complete = RFHUDCompletionTypeChangeStatus;
+    }
     _type = type;
     switch (type) {
            case RFHUDTypeLoading:
@@ -124,9 +127,11 @@
             break;
         case RFHUDTypeSuccess:
             [_logo setImage:[UIImage imageNamed:@"RFHUD.bundle/activity_logo_success"]];
+            _cancel.hidden = YES;
             break;
         case RFHUDTypeError:
             [_logo setImage:[UIImage imageNamed:@"RFHUD.bundle/activity_logo_error"]];
+            _cancel.hidden = YES;
             break;
         case RFHUDTypeWaiting:
             _logo.hidden = YES;
@@ -160,6 +165,9 @@
                          _mask.alpha = 0.0;
                      }
                      completion:^(BOOL finished) {
+                         if (_dismissBlock) {
+                             _dismissBlock();
+                         }
                          if (!_activity.hidden) {
                              [_activity stopAnimating];
                          }
@@ -181,11 +189,14 @@
                          logo.transform = transform;
                     }
                     completion:^(BOOL finished) {
-                        if (!_complete) {
+                        if (_complete == RFHUDCompletionTypeNone) {
                             [entireView rotateLogo];
                         }
-                        else{
+                        else if (_complete == RFHUDCompletionTypeCancel){
                             [entireView dismissAfterDelay:0.0f];
+                        }
+                        else if (_complete == RFHUDCompletionTypeChangeStatus){
+                            logo.transform = CGAffineTransformIdentity;
                         }
                         
                     }];
@@ -208,11 +219,7 @@
                      }
                      completion:^(BOOL finished) {
                          if (_type == RFHUDTypeLoading) {
-                             _complete = NO;
                              [entireView rotateLogo];
-                         }
-                         else if(_type != RFHUDTypeWaiting){
-                             [entireView dismissAfterDelay:kRFHUDDismissAfterDelay];
                          }
                     }];
     
