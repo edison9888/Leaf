@@ -16,11 +16,13 @@
 @class DDMenuController;
 @class SinaWeibo;
 @class LeafMainViewController;
+@class LeafMenuController;
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 {
     SinaWeibo *_weibo;
     DDMenuController *_menuController;
     LeafMainViewController *_mainController;
+    LeafMenuController *_leftController;
 }
 
 @property (strong, nonatomic) UIWindow *window;

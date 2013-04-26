@@ -27,6 +27,7 @@
     [_weibo release]; _weibo = nil;
     [_menuController release], _menuController = nil;
     [_mainController release], _mainController = nil;
+    [_leftController release], _leftController = nil;
     [super dealloc];
 }
 
@@ -36,14 +37,15 @@
     
     LeafMainViewController *mainController = [[LeafMainViewController alloc] init];
     self.mainController = mainController;
-    LeafMenuController *leftController = [[LeafMenuController alloc] init];
+    _leftController = [[LeafMenuController alloc] init];
     DDMenuController *rootController = [[DDMenuController alloc] initWithRootViewController:mainController];
-    rootController.leftViewController = leftController;
     self.menuController = rootController;
+    rootController.leftViewController = _leftController;
+    
     self.window.rootViewController = rootController;
 
     [mainController release];
-    [leftController release];
+    
     [rootController release];
     
     self.window.backgroundColor = [UIColor whiteColor];

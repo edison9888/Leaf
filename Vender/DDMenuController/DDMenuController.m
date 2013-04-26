@@ -206,10 +206,10 @@
             if (_menuFlags.canShowLeft) {
                 
                 _menuFlags.showingLeftView = YES;
-                CGRect frame = self.view.bounds;
-				frame.size.width = kMenuFullWidth;
-                self.leftViewController.view.frame = frame;
-                [self.view insertSubview:self.leftViewController.view atIndex:0];
+//                CGRect frame = self.view.bounds;
+//				frame.size.width = kMenuFullWidth;
+//                self.leftViewController.view.frame = frame;
+//                [self.view insertSubview:self.leftViewController.view atIndex:0];
                 
             } else {
                 frame.origin.x = 0.0f; // ignore right view if it's not set
@@ -520,9 +520,9 @@
         
     } completion:^(BOOL finished) {
         
-        if (finished && _left && _left.view.superview) {
-            [_left.view removeFromSuperview];
-        }
+//        if (finished && _left && _left.view.superview) {
+//            [_left.view removeFromSuperview];
+//        }
         
         if (finished && _right && _right.view.superview) {
             [_right.view removeFromSuperview];
@@ -559,7 +559,7 @@
 	CGRect frame = self.view.bounds;
 	frame.size.width = kMenuFullWidth;
     view.frame = frame;
-    [self.view insertSubview:view atIndex:0];
+    //[self.view insertSubview:view atIndex:0];
     [self.leftViewController viewWillAppear:animated];
     
     frame = _root.view.frame;
@@ -642,6 +642,12 @@
 
 - (void)setLeftViewController:(UIViewController *)leftController {
     _left = leftController;
+    UIView *view = _left.view;
+	CGRect frame = self.view.bounds;
+	frame.size.width = kMenuFullWidth;
+    view.frame = frame;
+    [self.view insertSubview:view atIndex:0];
+
     _menuFlags.canShowLeft = (_left!=nil);
     [self resetNavButtons];
 }
