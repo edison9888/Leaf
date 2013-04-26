@@ -13,7 +13,12 @@
 #define kLeafOfflineFailed         @"LeafOfflineFailed"
 
 @interface LeafOfflineModel : NSObject
+{
+    float _progress;
+}
 
-- (void)downloadNews;
+@property (nonatomic, assign) float progress;
+
+- (void)downloadNews:(BOOL)clearFirst;
 
 @end

@@ -19,6 +19,7 @@
 {
     @private
     LeafProgressBar *_progressBar;
+    LeafOfflineModel *_model;
     RFHUD *_hud;
 }
 
@@ -38,6 +39,7 @@
 {
     _progressBar = nil;
     _hud = nil;
+    [_model release], _model = nil;
     [super dealloc];
 }
 
@@ -67,6 +69,26 @@
     [_hud dismissAfterDelay:0.0f];
 }
 
+
+#pragma mark - 
+#pragma mark - LeafOfflineModel Notification Handel
+
+- (void)leafOfflineFinished:(NSNotification *)notification
+{
+    [self dismissDownloadView];
+}
+
+- (void)leafOfflineUpdateProgress:(NSNotification *)notification
+{
+    [_progressBar setProgress:_model.progress];
+}
+
+- (void)leafOfflineFailed:(NSNotification *)notification
+{
+    [_hud setHUDType:RFHUDTypeError andStatus:@"Network Error"];
+}
+
+
 #pragma mark -
 #pragma mark - ViewController Lifecycle
 
@@ -74,6 +96,14 @@
 {
     [super viewDidLoad];
 	
+    _model = [[LeafOfflineModel alloc] init];
+    
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter addObserver:self selector:@selector(leafOfflineFinished:) name:kLeafOfflineFinished object:_model];
+    [notificationCenter addObserver:self selector:@selector(leafOfflineUpdateProgress:) name:kLeafOfflineUpdateProgress object:_model];
+    [notificationCenter addObserver:self selector:@selector(leafOfflineFailed:) name:kLeafOfflineFailed object:_model];
+    
+    
     LeafProgressBar *progressBar = [[LeafProgressBar alloc] initWithFrame:CGRectMake(0.0f, CGRectGetHeight(_container.frame) - kLeafOfflineProgressBarH, CGRectGetWidth(_container.frame), kLeafOfflineProgressBarH)];
     [_container addSubview:progressBar];
     _progressBar = progressBar;
@@ -85,6 +115,7 @@
 {
     [super viewDidAppear:animated];
     if (_downloadAtOnce) {
+        [_model downloadNews:YES];
         [self showDownloadView];
     }
 }
