@@ -6,14 +6,21 @@
 //  Copyright (c) 2013年 Mobimtech. All rights reserved.
 //
 
+#import "DDMenuController.h"
 #import "RFHUD.h"
 
 #import "LeafOfflineViewController.h"
 #import "LeafOfflineModel.h"
 #import "LeafProgressBar.h"
-
+#import "LeafNewsData.h"
+#import "LeafNavigationBar.h"
+#import "LeafNewsItem.h"
+#import "LeafContentViewController.h"
 
 #define kLeafOfflineProgressBarH 2.0f
+#define kArticleUrl  @"http://www.cnbeta.com/api/getNewsContent2.php?articleId=%@"
+#define kLeafNewsItemTag 1001
+
 
 @interface LeafOfflineViewController ()
 {
@@ -21,6 +28,8 @@
     LeafProgressBar *_progressBar;
     LeafOfflineModel *_model;
     RFHUD *_hud;
+    UITableView *_table;
+    NSMutableArray *_leaves;
 }
 @property (nonatomic, assign) RFHUD *hud;
 @property (nonatomic, assign, readonly) LeafProgressBar *progressBar;
@@ -39,6 +48,8 @@
 {
     _progressBar = nil;
     _hud = nil;
+    _table = nil;
+    _leaves = nil;
     [_model release], _model = nil;
     [super dealloc];
 }
@@ -63,6 +74,7 @@
     [hud show];
     _hud = hud;
     [hud release];
+    [_progressBar setProgress:0.0f];
     _progressBar.hidden = NO;
 }
 
@@ -85,7 +97,10 @@
         };
         [_hud close];
     }
-    
+    if (_model.array) {
+        _leaves = _model.array;
+        [_table reloadData];
+    }
 }
 
 - (void)leafOfflineUpdateProgress:(NSNotification *)notification
@@ -95,7 +110,15 @@
 
 - (void)leafOfflineFailed:(NSNotification *)notification
 {
-    [_hud setHUDType:RFHUDTypeError andStatus:@"Network Error"];
+    //[_hud setHUDType:RFHUDTypeError andStatus:@"Network Error"];
+}
+
+
+#pragma mark - 
+- (void)menuItemClicked:(id)sender
+{
+    DDMenuController *menuController = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).menuController;
+    [menuController showLeftController:YES];
 }
 
 
@@ -113,6 +136,22 @@
     [notificationCenter addObserver:self selector:@selector(leafOfflineUpdateProgress:) name:kLeafOfflineUpdateProgress object:_model];
     [notificationCenter addObserver:self selector:@selector(leafOfflineFailed:) name:kLeafOfflineFailed object:_model];
     
+    LeafNavigationBar *bar = [[LeafNavigationBar alloc] init];
+    [bar setTitle:@"离线新闻"];
+    [bar addLeftItemWithStyle:LeafNavigationItemStyleMenu target:self action:@selector(menuItemClicked:)];
+    [_container addSubview:bar];
+    [bar release];
+
+    
+    UITableView *table = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 44.0f, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - 44.0f) style:UITableViewStylePlain];
+    table.dataSource = self;
+    table.delegate = self;
+    [table setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [table setAllowsSelection:YES];
+    table.backgroundColor = kLeafBackgroundColor;
+    _table = table;
+    [_container addSubview:table];
+    [table release];
     
     LeafProgressBar *progressBar = [[LeafProgressBar alloc] initWithFrame:CGRectMake(0.0f, CGRectGetHeight(_container.frame) - kLeafOfflineProgressBarH, CGRectGetWidth(_container.frame), kLeafOfflineProgressBarH)];
     [_container addSubview:progressBar];
@@ -128,6 +167,10 @@
         [self showDownloadView];
         [_model downloadNews:YES];
     }
+    else {
+        [_model downloadNews:NO];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -135,5 +178,74 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+
+#pragma mark -
+#pragma mark - UITableViewDataSource and UITableViewDelegate Methods
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // full mode
+    return 92.0f;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (_leaves) {
+        return _leaves.count;
+    }
+    return 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (!_leaves || indexPath.row < 0 || indexPath.row >= _leaves.count) {
+        NSLog(@"error: tableview out of bounds");
+        return nil;
+    }
+    static NSString *identifier = @"Leaf";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!cell) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier] autorelease];
+        UIView *backColor = [[UIView alloc] initWithFrame:cell.frame];
+        backColor.backgroundColor = [UIColor colorWithRed:CGColorConvert(217.0f) green:CGColorConvert(217.0f) blue:CGColorConvert(216.0f) alpha:0.8f];
+        cell.selectedBackgroundView = backColor;
+        [backColor release];
+        LeafNewsItem *item = [[LeafNewsItem alloc] init];
+        item.tag = kLeafNewsItemTag;
+        [cell.contentView addSubview:item];
+        [item release];
+    }
+    LeafNewsData *data = [_leaves objectAtIndex:indexPath.row];
+    LeafNewsItem *leafItem = (LeafNewsItem *)[cell.contentView viewWithTag:kLeafNewsItemTag];
+    [leafItem loadData:data withStyle:LeafItemStyleFull];
+    
+    return cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (!_leaves || indexPath.row < 0 || indexPath.row >= _leaves.count) {
+        NSLog(@"error: tableview out of bounds");
+        return;
+    }
+    LeafNewsData *data = [_leaves safeObjectAtIndex:indexPath.row];
+    if (data) {
+        NSString *url = [NSString stringWithFormat:kArticleUrl, data.articleId];
+        NSString *title = data.title;
+        LeafContentViewController *vc = [[LeafContentViewController alloc] initWithURL:url andTitle:title];
+        vc.articleId = data.articleId;
+        vc.view.frame = self.view.bounds;
+        [self presentViewController:vc option:LeafAnimationOptionHorizontal completion:^{
+            [self blockDDMenuControllerGesture:YES];
+            [vc GET];
+        }];
+        [vc release];
+        NSLog(@"after vc release.");
+    }
+}
+
 
 @end

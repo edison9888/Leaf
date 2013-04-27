@@ -15,9 +15,11 @@
 @interface LeafOfflineModel : NSObject
 {
     float _progress;
+    NSMutableArray *_array;
 }
 
 @property (nonatomic, assign) float progress;
+@property (nonatomic, retain) NSMutableArray *array;
 
 - (void)downloadNews:(BOOL)clearFirst;
 

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LeafOfflineViewController : LeafBaseViewController
+@interface LeafOfflineViewController : LeafBaseViewController <UITableViewDataSource, UITableViewDelegate>
 {
     BOOL _downloadAtOnce;
 }

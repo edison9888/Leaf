@@ -12,6 +12,7 @@
 #import "ASINetworkQueue.h"
 #import "ASIWebPageRequest.h"
 #import "ASIDownloadCache.h"
+#import "LeafNewsData.h"
 
 #define kLeafOfflineTotal   50
 #define kDownloadNewsListURL @"http://www.cnbeta.com/api/getNewsList.php?limit=%d"
@@ -26,6 +27,55 @@
 
 @implementation LeafOfflineModel
 @synthesize progress = _progress;
+@synthesize array = _array;
+
+- (void)dealloc
+{
+    [_array release], _array = nil;
+    [super dealloc];
+}
+
+
+- (id)init
+{
+    if (self = [super init]) {
+        _array = [[NSMutableArray alloc] init];
+        _progress = 0.0f;
+    }
+    
+    return self;
+}
+
+#pragma mark - JSON Serialization
+
+- (void)JSONforData:(NSData *)data
+{
+    if (!data) {
+        NSLog(@"data is nil.");
+        return;
+    }
+    
+    [_array removeAllObjects];
+    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+    if (array) {
+        for (int i = 0; i<array.count; i++) {
+            NSDictionary *dict = [array objectAtIndex:i];
+            
+            if (dict) {
+                LeafNewsData *leaf = [[LeafNewsData alloc] init];
+                leaf.theme = [dict stringForKey:@"theme"];
+                leaf.pubTime = [dict stringForKey:@"pubtime"];
+                leaf.title = [dict stringForKey:@"title"];
+                leaf.cmtNum = [dict stringForKey:@"cmtnum"];
+                leaf.articleId = [dict stringForKey:@"ArticleID"];
+                [_array addObject:leaf];
+                [leaf release];
+            }
+        }
+    }
+
+    
+}
 
 #pragma mark -
 #pragma mark - Download The Latest 50 News
@@ -56,12 +106,26 @@
 {
     
     NSString *url = [NSString stringWithFormat:kDownloadNewsListURL, kLeafOfflineTotal];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
+
     if (clearFirst) {
-        NSString *path = [request downloadDestinationPath];
+        NSString *path = [[ASIDownloadCache sharedCache] pathToCachedResponseDataForURL:[NSURL URLWithString:url]];
         [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
     }
+    else{
+        NSString *path = [[ASIDownloadCache sharedCache] pathToCachedResponseDataForURL:[NSURL URLWithString:url]];
+        NSData *data = [NSData dataWithContentsOfFile:path];
+        if (data) {
+            [self JSONforData:data];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kLeafOfflineFinished object:self];
+        }
+        else
+        { // empty, download now?
+            
+        }
+        return;
+    }
     
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
     [request setDownloadCache:[ASIDownloadCache sharedCache]];
 	[request setCachePolicy:ASIOnlyLoadIfNotCachedCachePolicy];
     
@@ -79,6 +143,7 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:kLeafOfflineFailed object:self];
             return;
         }
+        [self JSONforData:data];
         NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         if (array) {
             for (int i = 0; i<array.count; i++) {
