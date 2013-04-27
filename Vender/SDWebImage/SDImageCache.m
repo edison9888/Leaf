@@ -10,7 +10,7 @@
 #import "SDWebImageDecoder.h"
 #import <CommonCrypto/CommonDigest.h>
 #import "SDWebImageDecoder.h"
-#import "ASIDownloadCache.h"
+//#import "ASIDownloadCache.h"
 
 static NSInteger cacheMaxCacheAge = 60*60*24*7; // 1 week
 
@@ -30,7 +30,7 @@ static SDImageCache *instance;
         // Init the disk cache
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
         diskCachePath = SDWIReturnRetained([[[paths objectAtIndex:0] stringByAppendingPathComponent:@"LeafCache"] stringByAppendingPathComponent:@"SessionStore"]);
-        _lock = ((ASIDownloadCache *)[ASIDownloadCache sharedCache]).accessLock;
+        //_lock = ((ASIDownloadCache *)[ASIDownloadCache sharedCache]).accessLock;
         if (![[NSFileManager defaultManager] fileExistsAtPath:diskCachePath])
         {
             [[NSFileManager defaultManager] createDirectoryAtPath:diskCachePath
@@ -114,7 +114,7 @@ static SDImageCache *instance;
 
 - (void)storeKeyWithDataToDisk:(NSArray *)keyAndData
 {
-    [_lock lock];
+    //[_lock lock];
     // Can't use defaultManager another thread
     NSFileManager *fileManager = [[NSFileManager alloc] init];
 
@@ -144,7 +144,7 @@ static SDImageCache *instance;
     }
 
     SDWIRelease(fileManager);
-    [_lock unlock];
+    //[_lock unlock];
 }
 
 - (void)notifyDelegate:(NSDictionary *)arguments
@@ -174,12 +174,17 @@ static SDImageCache *instance;
 
 - (void)queryDiskCacheOperation:(NSDictionary *)arguments
 {
-    [_lock lock];
+   // [_lock lock];
     NSString *key = [arguments objectForKey:@"key"];
     NSMutableDictionary *mutableArguments = SDWIReturnAutoreleased([arguments mutableCopy]);
-
-    UIImage *image = SDScaledImageForPath(key, [NSData dataWithContentsOfFile:[self cachePathForKey:key]]);
-
+    
+    UIImage *image = nil;
+    NSString *path = [diskCachePath stringByAppendingPathComponent:key];
+    image = SDScaledImageForPath(key, [NSData dataWithContentsOfFile:path]);
+    if (!image) {
+        image = SDScaledImageForPath(key, [NSData dataWithContentsOfFile:[self cachePathForKey:key]]);
+    }
+    
     if (image)
     {
         UIImage *decodedImage = [UIImage decodedImageWithImage:image];
@@ -192,7 +197,7 @@ static SDImageCache *instance;
     }
 
     [self performSelectorOnMainThread:@selector(notifyDelegate:) withObject:mutableArguments waitUntilDone:NO];
-    [_lock unlock];
+    //[_lock unlock];
 }
 
 #pragma mark ImageCache
@@ -318,9 +323,9 @@ static SDImageCache *instance;
 
     if (fromDisk)
     {
-        [_lock lock];
+        //[_lock lock];
         [[NSFileManager defaultManager] removeItemAtPath:[self cachePathForKey:key] error:nil];
-        [_lock unlock];
+        //[_lock unlock];
     }
 }
 
@@ -332,19 +337,19 @@ static SDImageCache *instance;
 
 - (void)clearDisk
 {
-    [_lock lock];
+    //[_lock lock];
     [cacheInQueue cancelAllOperations];
     [[NSFileManager defaultManager] removeItemAtPath:diskCachePath error:nil];
     [[NSFileManager defaultManager] createDirectoryAtPath:diskCachePath
                               withIntermediateDirectories:YES
                                                attributes:nil
                                                     error:NULL];
-    [_lock unlock];
+    //[_lock unlock];
 }
 
 - (void)cleanDisk
 {
-    [_lock lock];
+    //[_lock lock];
     NSDate *expirationDate = [NSDate dateWithTimeIntervalSinceNow:-cacheMaxCacheAge];
     NSDirectoryEnumerator *fileEnumerator = [[NSFileManager defaultManager] enumeratorAtPath:diskCachePath];
     for (NSString *fileName in fileEnumerator)
@@ -356,12 +361,12 @@ static SDImageCache *instance;
             [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
         }
     }
-    [_lock unlock];
+    //[_lock unlock];
 }
 
 -(int)getSize
 {
-    [_lock lock];
+   // [_lock lock];
     int size = 0;
     NSDirectoryEnumerator *fileEnumerator = [[NSFileManager defaultManager] enumeratorAtPath:diskCachePath];
     for (NSString *fileName in fileEnumerator)
@@ -370,20 +375,20 @@ static SDImageCache *instance;
         NSDictionary *attrs = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil];
         size += [attrs fileSize];
     }
-    [_lock unlock];
+    //[_lock unlock];
     return size;
 }
 
 - (int)getDiskCount
 {
-    [_lock lock];
+    //[_lock lock];
     int count = 0;
     NSDirectoryEnumerator *fileEnumerator = [[NSFileManager defaultManager] enumeratorAtPath:diskCachePath];
     for (NSString *fileName in fileEnumerator)
     {
         count += 1;
     }
-    [_lock unlock];
+    //[_lock unlock];
     return count;
 }
 

@@ -15,13 +15,15 @@
 #import "LeafPhotoViewController.h"
 #import "LeafWebViewController.h"
 #import "LeafCommentViewController.h"
-
+#import "ASIDownloadCache.h"
 
 @interface LeafContentViewController ()
 
 @property (nonatomic, retain) NSMutableArray *urls;
 
 - (void)cancelAll;
+
+- (void)handleData:(NSData *)data;
 
 @end
 
@@ -299,6 +301,15 @@
 
 - (void)GET
 {
+    NSString *path = [[ASIDownloadCache sharedCache] pathToCachedResponseDataForURL:[NSURL URLWithString:_url]];
+    if (path) {
+        NSData *data = [NSData dataWithContentsOfFile:path];
+        if (data) {
+            [self handleData:data];
+            return;
+        }
+    }
+    
     [self showLeafLoadingView];
     if (!_connection) {
         _connection = [[LeafURLConnection alloc] init];
@@ -452,11 +463,7 @@
 }
 
 
-
-#pragma mark -
-#pragma LeafUrlConnectionDelegate Methods
-
-- (void)didFinishLoadingData:(NSMutableData *)data
+- (void)handleData:(NSData *)data
 {
     NSString *page = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSString *html = [self injectLeafCSS:page];
@@ -492,8 +499,17 @@
     }
     //NSLog(@"html: %@", html);
     
-    [_content loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] resourcePath] isDirectory:YES]];
+    [_content loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[ASIDownloadCache sharedCache] pathForSessionDurationCacheStoragePolicy] isDirectory:YES]];
     [doc release];
+}
+
+
+#pragma mark -
+#pragma LeafUrlConnectionDelegate Methods
+
+- (void)didFinishLoadingData:(NSMutableData *)data
+{
+    [self handleData:data];
 }
 
 - (void)didFailWithError:(NSError *)error

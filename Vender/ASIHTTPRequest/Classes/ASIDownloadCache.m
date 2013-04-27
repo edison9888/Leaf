@@ -61,12 +61,26 @@ static NSArray *fileExtensionsToHandleAsHTML = nil;
 	[super dealloc];
 }
 
+
 - (NSString *)storagePath
 {
 	[[self accessLock] lock];
 	NSString *p = [[storagePath retain] autorelease];
 	[[self accessLock] unlock];
 	return p;
+}
+
+- (NSString *)pathForSessionDurationCacheStoragePolicy
+{
+  	[[self accessLock] lock];
+	if (![self storagePath]) {
+		[[self accessLock] unlock];
+		return nil;
+	}
+    
+	NSString *path = [[self storagePath] stringByAppendingPathComponent:sessionCacheFolder];
+    
+    return path;
 }
 
 
