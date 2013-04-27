@@ -68,13 +68,14 @@
     return size;
 }
 
-+ (CGFloat)widthForString:(NSString *)text
+
++ (CGFloat)widthForString:(NSString *)text withFont:(UIFont *)font
 {
     if (!text) {
         return kLeafCommentDefaultWidth;
     }
     
-    CGSize size = [text sizeWithFont:kLeafCommentFont constrainedToSize:kLeafCommentHeadMaxSize];
+    CGSize size = [text sizeWithFont:font constrainedToSize:kLeafCommentHeadMaxSize];
     return size.width;
 }
 
@@ -128,11 +129,11 @@
     NSString *comment = [info stringForKey:@"comment"];
     
     CGFloat width = 0.0f;
-    width = [LeafCommentCell widthForString:name];
+    width = [LeafCommentCell widthForString:name withFont:kLeafCommentFont];
     [_name setText:name];
     [_name setFrame:CGRectMake(0.0f, 0.0f, width, kLeafCommentHeadHeight)];
     
-    width = [LeafCommentCell widthForString:time];
+    width = [LeafCommentCell widthForString:time withFont:kLeafCommentDateFont];
     [_time setText:time];
     [_time setFrame:CGRectMake(320.0f - 2 * kLeafCommentHeadMarginX - width, 0.0f, width, kLeafCommentHeadHeight)];
     
