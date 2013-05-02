@@ -172,7 +172,7 @@
         }
         
         NSString *log = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"offline-data: %@", log);
+        //NSLog(@"offline-data: %@", log);
         [log release];
         
         [self JSONforData:data];

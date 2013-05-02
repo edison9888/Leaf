@@ -12,7 +12,7 @@
 #import "SDWebImageDecoder.h"
 //#import "ASIDownloadCache.h"
 
-static NSInteger cacheMaxCacheAge = 60*60*24*7; // 1 week
+static NSInteger cacheMaxCacheAge = 60*60*24*3; // 3 days
 
 static SDImageCache *instance;
 
@@ -54,7 +54,7 @@ static SDImageCache *instance;
 
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(cleanDisk)
-                                                     name:UIApplicationWillTerminateNotification
+                                                     name:UIApplicationDidEnterBackgroundNotification
                                                    object:nil];
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_4_0

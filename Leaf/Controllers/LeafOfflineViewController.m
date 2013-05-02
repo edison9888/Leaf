@@ -111,6 +111,7 @@
         _leaves = _model.array;
         [_table reloadData];
     }
+    NSLog(@"finished offline");
 }
 
 - (void)leafOfflineUpdateProgress:(NSNotification *)notification
@@ -188,6 +189,7 @@
     if (_downloadAtOnce) {
         [self showDownloadView];
         [_model downloadNews:YES];
+        NSLog(@"begin offline.");
     }
     else {
         [_model downloadNews:NO];
