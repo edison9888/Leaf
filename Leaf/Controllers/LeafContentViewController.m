@@ -33,6 +33,8 @@
 @synthesize urls = _urls;
 @synthesize articleId = _articleId;
 @synthesize articleTitle = _articleTitle;
+
+
 - (void)dealloc
 {
     [_articleId release], _articleId = nil;
@@ -236,7 +238,6 @@
                                    newImage, @"pic", nil]
                        httpMethod:@"POST"
                          delegate:self];
-        [self showLeafLoadingView];
     }
     else
     {
@@ -262,9 +263,12 @@
 #pragma mark -
 #pragma mark - Loading Content
 
-- (void)showLeafLoadingView
+- (void)showLeafLoadingView:(BOOL)showIndicator
 {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    if (showIndicator) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    }
+    
     _loading.hidden = NO;
     CGPoint center = _loading.center;
     center.y = (CGHeight(self.view.frame) - CGHeight(_loading.frame)/2.0f);
@@ -301,16 +305,17 @@
 
 - (void)GET
 {
+    
     NSString *path = [[ASIDownloadCache sharedCache] pathToCachedResponseDataForURL:[NSURL URLWithString:_url]];
     if (path) {
         NSData *data = [NSData dataWithContentsOfFile:path];
         if (data) {
+            [self showLeafLoadingView:NO];
             [self handleData:data];
             return;
         }
     }
-    
-    [self showLeafLoadingView];
+    [self showLeafLoadingView:YES];
     if (!_connection) {
         _connection = [[LeafURLConnection alloc] init];
         _connection.delegate = self;
@@ -423,6 +428,12 @@
         NSLog(@"url: %@,\n doc: %@\n extension: %@", url, doc, extension);
         if ([self isSupportedExtension:extension]) {
             int index = [_urls indexOfObject:url];
+            
+            if (index == NSNotFound) {
+                NSString *cachedPath = [[ASIDownloadCache sharedCache] pathToCachedResponseDataForURL:[NSURL URLWithString:url]];
+                index = [_urls indexOfObject:cachedPath];
+            }
+            
             index = index != NSNotFound? index:0;
             LeafPhotoViewController *vc = [[LeafPhotoViewController alloc] initWithURLs:_urls];
             [vc setCurIndex:index];
@@ -497,7 +508,7 @@
     if (config.simple) {
         html = [self purgeImageLinks:html];
     }
-    //NSLog(@"html: %@", html);
+    NSLog(@"html: %@", html);
     
     [_content loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[ASIDownloadCache sharedCache] pathForSessionDurationCacheStoragePolicy] isDirectory:YES]];
     [doc release];
