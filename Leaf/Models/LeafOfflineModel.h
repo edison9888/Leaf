@@ -22,5 +22,6 @@
 @property (nonatomic, retain) NSMutableArray *array;
 
 - (void)downloadNews:(BOOL)clearFirst;
+- (void)cancel;
 
 @end

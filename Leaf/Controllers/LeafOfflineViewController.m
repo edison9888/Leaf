@@ -35,6 +35,7 @@
 @property (nonatomic, assign, readonly) LeafProgressBar *progressBar;
 
 - (void)showDownloadView;
+- (void)cancel;
 
 @end
 
@@ -54,6 +55,13 @@
     [super dealloc];
 }
 
+- (void)cancel
+{
+    if (_model) {
+        [_model cancel];
+    }
+}
+
 #pragma mark -
 #pragma mark - Offline Download View Stuff
 
@@ -68,8 +76,10 @@
     
     __block LeafOfflineViewController *controller = self;
     hud.dismissBlock = ^(void){
+        
         controller.progressBar.hidden = YES;
         controller.hud = nil;
+        [controller cancel];
     };
     [hud show];
     _hud = hud;
@@ -110,7 +120,19 @@
 
 - (void)leafOfflineFailed:(NSNotification *)notification
 {
-    //[_hud setHUDType:RFHUDTypeError andStatus:@"Network Error"];
+    __block LeafOfflineViewController *controller = self;
+    if (_hud) {
+        _hud.dismissBlock = ^(void){
+            controller.progressBar.hidden = YES;
+            controller.hud = nil;
+            UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+            RFHUD *hud = [[RFHUD alloc] initWithFrame:window.bounds];
+            [hud setHUDType:RFHUDTypeError andStatus:@"离线失败"];
+            [hud show];
+            [hud release];
+        };
+        [_hud close];
+    }
 }
 
 

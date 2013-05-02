@@ -46,6 +46,13 @@
     return self;
 }
 
+- (void)cancel
+{
+    for (ASIHTTPRequest *request in ASIHTTPRequest.sharedQueue.operations){
+        [request clearDelegatesAndCancel];
+    }
+}
+
 #pragma mark - JSON Serialization
 
 - (void)JSONforData:(NSData *)data
@@ -87,7 +94,7 @@
 	[request setDidFailSelector:@selector(webPageFetchFailed:)];
 	[request setDidFinishSelector:@selector(webPageFetchSucceeded:)];
 	[request setDelegate:self];
-	[request setDownloadProgressDelegate:self];
+	
 	[request setUrlReplacementMode:ASIReplaceExternalResourcesWithLocalURLs];
 	
 	// It is strongly recommended that you set both a downloadCache and a downloadDestinationPath for all ASIWebPageRequests
@@ -102,9 +109,10 @@
     [request startAsynchronous];
 }
 
-- (void)downloadNewsInfo:(BOOL)clearFirst
+- (void)downloadNewsInfo:(NSNumber *)flag
 {
-    
+    BOOL clearFirst = [flag boolValue];
+    [ASIHTTPRequest setShouldUpdateNetworkActivityIndicator:NO];
     NSString *url = [NSString stringWithFormat:kDownloadNewsListURL, kLeafOfflineTotal];
 
     if (clearFirst) {
@@ -120,21 +128,40 @@
         }
         else
         { // empty, download now?
-            
+            NSLog(@"offline data is empty.");
         }
         return;
     }
     
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
+    [request setDidFailSelector:@selector(newsInfoFetchFailed:)];
+	[request setDidFinishSelector:@selector(newsInfoFetchSucceeded:)];
+    [request setDelegate:self];
+	
     [request setDownloadCache:[ASIDownloadCache sharedCache]];
 	[request setCachePolicy:ASIOnlyLoadIfNotCachedCachePolicy];
     
-	// This is actually the most efficient way to set a download path for ASIWebPageRequest, as it writes to the cache directly
+
+	
     [request setCacheStoragePolicy:ASICacheForSessionDurationCacheStoragePolicy];
 	[request setDownloadDestinationPath:[[ASIDownloadCache sharedCache] pathToStoreCachedResponseDataForRequest:request]];
 	
 	[[ASIDownloadCache sharedCache] setShouldRespectCacheControlHeaders:NO];
-    [request startSynchronous];
+    [request startAsynchronous];
+}
+
+
+- (void)downloadNews:(BOOL)clearFirst
+{
+    _count = 0;
+    [self performSelectorInBackground:@selector(downloadNewsInfo:) withObject:[NSNumber numberWithBool:clearFirst]];
+}
+
+#pragma mark - 
+#pragma mark - ASIHTTPRequest Delegate Methods
+
+- (void)newsInfoFetchSucceeded:(ASIHTTPRequest *)request
+{
     NSError *error = [request error];
     if (!error && [request downloadDestinationPath]) {
         NSData *data = [NSData dataWithContentsOfFile:[request downloadDestinationPath]];
@@ -143,18 +170,19 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:kLeafOfflineFailed object:self];
             return;
         }
+        
+        NSString *log = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"offline-data: %@", log);
+        [log release];
+        
         [self JSONforData:data];
-        NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        if (array) {
-            for (int i = 0; i<array.count; i++) {
-                NSDictionary *dict = [array objectAtIndex:i];
-                
-                if (dict) {
-                    NSString *articleId = [dict stringForKey:@"ArticleID"];
-                    if (articleId && ![articleId isEqualToString:@""]) {
-                        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kArticleUrl, articleId]];
-                        [self fetchURL:url];
-                    }
+        
+        if (_array) {
+            for (LeafNewsData *leaf in _array) {
+                NSString *articleId = leaf.articleId;
+                if (articleId && ![articleId isEqualToString:@""]) {
+                    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kArticleUrl, articleId]];
+                    [self fetchURL:url];
                 }
             }
         }
@@ -163,18 +191,14 @@
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kLeafOfflineFailed object:self];
     }
+
 }
 
-- (void)downloadNews:(BOOL)clearFirst
+
+- (void)newsInfoFetchFailed:(ASIHTTPRequest *)theRequest
 {
-    _count = 0;
-    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[self methodSignatureForSelector:@selector(downloadNewsInfo:)]];
-    [invocation setTarget:self];
-    [invocation setSelector:@selector(downloadNewsInfo:)];
-    [invocation setArgument:&clearFirst atIndex:2];
-    [invocation performSelectorInBackground:@selector(invoke) withObject:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kLeafOfflineFailed object:self];
 }
-
 
 
 - (void)webPageFetchFailed:(ASIHTTPRequest *)theRequest
@@ -190,14 +214,6 @@
 
 - (void)webPageFetchSucceeded:(ASIHTTPRequest *)theRequest
 {
-    /*
-	NSURL *baseURL;
-	// If we're using ASIReplaceExternalResourcesWithLocalURLs, we must set the baseURL to point to our locally cached file
-    baseURL = [NSURL fileURLWithPath:[theRequest downloadDestinationPath]];
-    
-	if ([theRequest downloadDestinationPath]) {
-		NSString *response = [NSString stringWithContentsOfFile:[theRequest downloadDestinationPath] encoding:[theRequest responseEncoding] error:nil];
-    }*/
     _count++;
     _progress = (float)_count/(float)kLeafOfflineTotal;
     [[NSNotificationCenter defaultCenter] postNotificationName:kLeafOfflineUpdateProgress object:self];
