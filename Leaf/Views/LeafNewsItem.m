@@ -87,6 +87,38 @@
     return self;
 }
 
+- (void)scaleImage:(UIImage *)image
+{
+    CGFloat originX = 0.0f;
+    CGFloat originY = 0.0f;
+    CGFloat width = 0.0f;
+    CGFloat height = 0.0f;
+    CGFloat scaleFactor = 1.0f;
+    if (CGWidth(image) > CGWidth(_theme.frame) && CGHeight(image) > CGHeight(_theme.frame)) {
+        if (CGWidth(image) > CGHeight(image)) {
+            scaleFactor = CGHeight(image)/CGHeight(_theme.frame);
+            width = scaleFactor * CGWidth(_theme.frame);
+            height = CGHeight(image);
+            originX = (CGWidth(image) - width)/2.0f;
+        }
+        else
+        {
+            scaleFactor = CGWidth(image)/CGWidth(_theme.frame);
+            width = CGWidth(image);
+            height = scaleFactor * CGHeight(_theme.frame);
+            originY = (CGHeight(image) - height)/2.0f;
+        }
+        CGRect cropRect = CGRectMake(originX, originY , width, height);
+        
+        CGImageRef imageRef = CGImageCreateWithImageInRect(image.CGImage, cropRect);
+        [_theme setImage:[UIImage imageWithCGImage:imageRef scale:[[UIScreen mainScreen] scale] orientation:UIImageOrientationUp]];
+        CGImageRelease(imageRef);
+    }
+    else{
+        [_theme setImage:image];
+    }
+}
+
 - (void)loadData:(LeafNewsData *)data withStyle:(LeafItemStyle)style
 {
     if (!data) {
@@ -110,40 +142,14 @@
         if (data.theme && [data.theme hasPrefix:@"http://"] && 
             (![[data.theme lowercaseString] hasSuffix:@".gif"])) {
             NSString *url = [data.theme stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+            __block UIImageView *theme = _theme;
             [_theme setImageWithURL:[NSURL URLWithString:url]
                    placeholderImage:[UIImage imageNamed:@"placeholder"] 
                             success:^(UIImage *image) {
-                                CGFloat originX = 0.0f;
-                                CGFloat originY = 0.0f;
-                                CGFloat width = 0.0f;
-                                CGFloat height = 0.0f;
-                                CGFloat scaleFactor = 1.0f;
-                                if (CGWidth(image) > CGWidth(_theme.frame) && CGHeight(image) > CGHeight(_theme.frame)) {
-                                    if (CGWidth(image) > CGHeight(image)) {
-                                        scaleFactor = CGHeight(image)/CGHeight(_theme.frame);
-                                        width = scaleFactor * CGWidth(_theme.frame);
-                                        height = CGHeight(image);
-                                        originX = (CGWidth(image) - width)/2.0f;                                        
-                                    }
-                                    else
-                                    {
-                                        scaleFactor = CGWidth(image)/CGWidth(_theme.frame);
-                                        width = CGWidth(image);
-                                        height = scaleFactor * CGHeight(_theme.frame);
-                                        originY = (CGHeight(image) - height)/2.0f;
-                                    }
-                                    CGRect cropRect = CGRectMake(originX, originY , width, height);
-                                    
-                                    CGImageRef imageRef = CGImageCreateWithImageInRect(image.CGImage, cropRect);
-                                    [_theme setImage:[UIImage imageWithCGImage:imageRef scale:[[UIScreen mainScreen] scale] orientation:UIImageOrientationUp]]; 
-                                    CGImageRelease(imageRef);
-                                }                                
-                                else{
-                                    [_theme setImage:image];
-                                }
+                                [self scaleImage:image];
                             } 
                             failure:^(NSError *error){
-                                [_theme setImage:[UIImage imageNamed:@"placeholder"]];
+                                [theme setImage:[UIImage imageNamed:@"placeholder"]];
                             }];
         }
         else{
@@ -172,8 +178,6 @@
         [_content setFrame:CGRectMake(originX, originY, size.width, offsetY)];
             
     }
-    
-    
     
     [_box setText:data.cmtNum];
 }
