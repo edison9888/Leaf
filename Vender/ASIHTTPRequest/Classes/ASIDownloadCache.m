@@ -79,7 +79,7 @@ static NSArray *fileExtensionsToHandleAsHTML = nil;
 	}
     
 	NSString *path = [[self storagePath] stringByAppendingPathComponent:sessionCacheFolder];
-    
+    [[self accessLock] unlock];
     return path;
 }
 
