@@ -173,13 +173,10 @@
 #pragma mark -
 #pragma mark - UITextViewDelegate Methods
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+- (void)textViewDidChange:(UITextView *)textView
 {
-    NSLog(@"textView text: %@", textView.text);
-    NSLog(@"replacementText: %@", text);
     
-    
-    int value = kLeafMaxWeiboLen - textView.text.length - range.length;
+    int value = kLeafMaxWeiboLen - textView.text.length;
     if (value < 0) {
         _remainLabel.textColor = [UIColor redColor];
         [_confirmBtn setEnabled:NO];
@@ -190,7 +187,6 @@
         [_confirmBtn setEnabled:YES];
     }
     _remainLabel.text = [NSString stringWithFormat:@"%d", value];
-    return YES;
 }
 
 
