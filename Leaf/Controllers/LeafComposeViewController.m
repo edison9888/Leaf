@@ -6,6 +6,7 @@
 //  Copyright (c) 2013年 Mobimtech. All rights reserved.
 //
 
+#import "RFHUD.h"
 #import "LeafComposeViewController.h"
 
 #define kLeafMaxWeiboLen 140
@@ -16,11 +17,24 @@
     UIImageView *_shareImageView;
     UITextView *_statusTextView;
     UILabel *_remainLabel;
+    RFHUD *_hud;
+    SinaWeiboRequest *_request;
+    UIImage *_shareImage;
 }
+
+@property (nonatomic, assign) RFHUD *hud;
+@property (nonatomic, retain) SinaWeiboRequest *request;
+@property (nonatomic, retain) UIImage *shareImage;
+
+- (void)share;
+- (void)cancel;
+
 @end
 
 @implementation LeafComposeViewController
-
+@synthesize hud = _hud;
+@synthesize request = _request;
+@synthesize shareImage = _shareImage;
 
 - (void)dealloc
 {
@@ -28,7 +42,9 @@
     _shareImageView = nil;
     _statusTextView = nil;
     _remainLabel = nil;
-    
+    _hud = nil;
+    [_request release], _request = nil;
+    [_shareImage release], _shareImage = nil;
     [super dealloc];
 }
 
@@ -40,13 +56,30 @@
 {
     [_statusTextView resignFirstResponder];
     [self dismissViewControllerWithOption:LeafAnimationOptionVertical
-                               completion:^{
-        _parentController.shouldBlockGesture = NO;
-    }];
+                               completion:NULL];
 }
 
 - (void)confirmClicked:(id)sender
 {
+    
+    SinaWeibo *sinaweibo = [self sinaweibo];
+    if ([sinaweibo isAuthValid]) {
+        __block LeafComposeViewController *controller = self;
+        
+        RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
+        [hud setHudFont:kLeafFont15];
+        [hud setHUDType:RFHUDTypeLoading andStatus:@"正在发送"];
+        hud.dismissBlock = ^(void){
+            [controller cancel];
+        };
+        _hud = hud;
+        [hud show];
+        [hud release];
+        [self share];
+    }
+    else {
+        [sinaweibo logIn];
+    }
     
 }
 
@@ -74,27 +107,34 @@
     _remainLabel.text = [NSString stringWithFormat:@"%d", remainLen];
 }
 
-- (void)setShareImage:(UIImage *)image
+- (void)setImage:(UIImage *)image
 {
+    self.shareImage = image;
     UIImage *scaledImage = [self scaleImage:image];
     _shareImageView.image = scaledImage;
 }
 
-/*
-- (void)share:(UIImage *)image
+
+- (void)share
 {
     SinaWeibo *sinaweibo = [self sinaweibo];
-    if (sinaweibo.isAuthValid) {
-        NSString *status = [NSString stringWithFormat:@"%@ -- (来自 Leaf)", _articleTitle];
-        [sinaweibo requestWithURL:@"statuses/upload.json"
+    
+    NSString *status = _statusTextView.text;
+    self.request = [sinaweibo requestWithURL:@"statuses/upload.json"
                            params:[NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    status, @"status",
-                                   image, @"pic", nil]
+                                   _shareImage, @"pic", nil]
                        httpMethod:@"POST"
                          delegate:self];
 }
-*/
 
+
+- (void)cancel
+{
+    if (_request) {
+        [_request disconnect];
+    }
+}
 
 #pragma mark -
 
@@ -170,6 +210,15 @@
 }
 
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    NSLog(@"LeafComposeViewController viewDidDisappear");
+    [super viewDidDisappear:animated];
+    
+    [self cancel];
+}
+
+
 #pragma mark -
 #pragma mark - UITextViewDelegate Methods
 
@@ -188,6 +237,41 @@
     }
     _remainLabel.text = [NSString stringWithFormat:@"%d", value];
 }
+
+
+#pragma mark -
+#pragma mark - SinaWeiboRequestDelegate Methods
+
+- (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
+{
+    _hud.dismissBlock = ^(void){
+        RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
+        [hud setHudFont:kLeafFont15];
+        [hud setHUDType:RFHUDTypeError andStatus:@"分享失败"];
+        [hud show];
+        [hud release];
+    };
+    [_hud dismissAfterDelay:0.0f];
+}
+
+- (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
+{
+    __block LeafComposeViewController *controller = self;
+ 
+    _hud.dismissBlock = ^(void){
+        RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
+        [hud setHudFont:kLeafFont15];
+        [hud setHUDType:RFHUDTypeSuccess andStatus:@"分享成功"];
+        [hud setDismissBlock:^(void){
+            [controller dismissViewControllerWithOption:LeafAnimationOptionVertical completion:NULL];
+        }];
+        [hud show];
+        [hud release];
+    };
+    [_hud dismissAfterDelay:0.0f];
+}
+
+
 
 
 @end

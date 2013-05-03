@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LeafComposeViewController : LeafBaseViewController <UITextViewDelegate>
+@interface LeafComposeViewController : LeafBaseViewController <UITextViewDelegate, SinaWeiboRequestDelegate>
 
 - (void)setStatus:(NSString *)status;
-- (void)setShareImage:(UIImage *)image;
+- (void)setImage:(UIImage *)image;
 
 @end

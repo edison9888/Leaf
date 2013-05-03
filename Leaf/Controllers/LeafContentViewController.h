@@ -12,7 +12,7 @@
 
 
 @class LeafLoadingView;
-@interface LeafContentViewController : LeafBaseViewController  <UIWebViewDelegate, LeafURLConnectionDelegate, SinaWeiboRequestDelegate>
+@interface LeafContentViewController : LeafBaseViewController  <UIWebViewDelegate, LeafURLConnectionDelegate>
 
 {
     @private

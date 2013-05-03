@@ -143,7 +143,7 @@
     LeafComposeViewController *vc = [[LeafComposeViewController alloc] init];
     vc.view.frame = self.view.bounds;
     [vc setStatus:status];
-    [vc setShareImage:image];
+    [vc setImage:image];
     [self presentViewController:vc option:LeafAnimationOptionVertical completion:^{
         self.shouldBlockGesture = YES;
     }];
@@ -255,15 +255,21 @@
 
 - (void)shareClicked:(id)sender
 {
+    SinaWeibo *sinaweibo = [self sinaweibo];
+    if ([sinaweibo isAuthValid]) {
+        RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
+        _hud = hud;
+        [hud setHudFont:kLeafFont15];
+        [hud setHUDType:RFHUDTypeWaiting andStatus:@"正在生成长微博"];
+        [hud show];
+        [hud release];
+        
+        [self performSelectorInBackground:@selector(createWeibo) withObject:nil];
+    }
+    else{
+        [sinaweibo logIn];
+    }
     
-    RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
-    _hud = hud;
-    [hud setHudFont:kLeafFont15];
-    [hud setHUDType:RFHUDTypeWaiting andStatus:@"正在生成长微博"];
-    [hud show];
-    [hud release];
-    
-    [self performSelectorInBackground:@selector(createWeibo) withObject:nil];
     
 }
 
@@ -545,22 +551,6 @@
 
 - (void)connectionDidCancel
 {
-    [self hideLeafLoadingView];
-}
-
-
-#pragma mark -
-#pragma mark - SinaWeiboRequestDelegate Methods
-
-- (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
-{
-    NSLog(@"Error: failed");
-    [self hideLeafLoadingView];
-}
-
-- (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
-{
-    NSLog(@"Success: post is ok.");
     [self hideLeafLoadingView];
 }
 
