@@ -8,14 +8,29 @@
 
 #import "LeafComposeViewController.h"
 
+#define kLeafMaxWeiboLen 140
+
 @interface LeafComposeViewController ()
 {
+    UIButton *_confirmBtn;
     UIImageView *_shareImageView;
-    UITextView *_textView;
+    UITextView *_statusTextView;
+    UILabel *_remainLabel;
 }
 @end
 
 @implementation LeafComposeViewController
+
+
+- (void)dealloc
+{
+    _confirmBtn = nil;
+    _shareImageView = nil;
+    _statusTextView = nil;
+    _remainLabel = nil;
+    
+    [super dealloc];
+}
 
 
 #pragma mark -
@@ -23,7 +38,7 @@
 
 - (void)cancelClicked:(id)sender
 {
-    [_textView resignFirstResponder];
+    [_statusTextView resignFirstResponder];
     [self dismissViewControllerWithOption:LeafAnimationOptionVertical
                                completion:^{
         _parentController.shouldBlockGesture = NO;
@@ -48,9 +63,15 @@
 
 - (void)setStatus:(NSString *)status
 {
-    [_textView setText:status];
+    if(!status){
+        NSLog(@"status is nil.");
+        return;
+    }
+    [_statusTextView setText:status];
     NSRange range = NSMakeRange(0, 0);
-    _textView.selectedRange =range;
+    _statusTextView.selectedRange =range;
+    int remainLen = kLeafMaxWeiboLen - status.length;
+    _remainLabel.text = [NSString stringWithFormat:@"%d", remainLen];
 }
 
 - (void)setShareImage:(UIImage *)image
@@ -74,6 +95,9 @@
 }
 */
 
+
+#pragma mark -
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -87,6 +111,7 @@
     shareView.userInteractionEnabled = YES;
     [self.view addSubview:shareView];
     
+    
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [cancelBtn setFrame:CGRectMake(12.0f, 18.0f, 16.0f, 16.0f)];
     [cancelBtn setImage:[UIImage imageNamed:@"share_cancel"] forState:UIControlStateNormal];
@@ -98,6 +123,7 @@
     [confirmBtn setImage:[UIImage imageNamed:@"share_ok"] forState:UIControlStateNormal];
     [confirmBtn addTarget:self action:@selector(confirmClicked:) forControlEvents:UIControlEventTouchUpInside];
     [shareView addSubview:confirmBtn];
+    _confirmBtn = confirmBtn;
     
     UIImageView *shareBg = [[UIImageView alloc] initWithFrame:CGRectMake(14.0f, 48.0f, 284.0f, 81.0f)];
     [shareBg setImage:[UIImage imageNamed:@"share_content_background"]];
@@ -113,11 +139,11 @@
     textView.scrollEnabled = YES;
     textView.showsVerticalScrollIndicator = YES;
     textView.userInteractionEnabled = YES;
-    _textView = textView;
-    [shareBg addSubview:_textView];
+    _statusTextView = textView;
+    [shareBg addSubview:textView];
     [textView release];
     
-    UIImageView *shareImageView = [[UIImageView alloc] initWithFrame:CGRectMake(218.0f, 0.0f, 60.0f, 60.0f)];
+    UIImageView *shareImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(shareBg.bounds) - 60.0f, 0.0f, 60.0f, 60.0f)];
     _shareImageView = shareImageView;
     [shareBg addSubview:shareImageView];
     [shareImageView release];
@@ -127,12 +153,45 @@
     [_shareImageView addSubview:shareClip];
     [shareClip release];
     
+    UILabel *remainLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_shareImageView.frame), CGRectGetMaxY(_shareImageView.frame), 60.0f, 20.0f)];
+    _remainLabel = remainLabel;
+    _remainLabel.textAlignment = UITextAlignmentCenter;
+    _remainLabel.backgroundColor = [UIColor clearColor];
+    _remainLabel.font = kLeafFont15;
+    _remainLabel.textColor = [UIColor blackColor];
+    [shareBg addSubview:remainLabel];
+    [remainLabel release];
+
+    
     [shareBg release];
     [shareView release];
     
-    [_textView becomeFirstResponder];
+    [_statusTextView becomeFirstResponder];
 }
 
+
+#pragma mark -
+#pragma mark - UITextViewDelegate Methods
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    NSLog(@"textView text: %@", textView.text);
+    NSLog(@"replacementText: %@", text);
+    
+    
+    int value = kLeafMaxWeiboLen - textView.text.length - range.length;
+    if (value < 0) {
+        _remainLabel.textColor = [UIColor redColor];
+        [_confirmBtn setEnabled:NO];
+    }
+    else
+    {
+        _remainLabel.textColor = [UIColor blackColor];
+        [_confirmBtn setEnabled:YES];
+    }
+    _remainLabel.text = [NSString stringWithFormat:@"%d", value];
+    return YES;
+}
 
 
 @end
