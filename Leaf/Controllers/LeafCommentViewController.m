@@ -54,9 +54,8 @@
 - (void)loadCommentFailed:(NSNotification *)notification
 {
     [self hideLeafLoadingView];
-    
-    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-    RFHUD *hud = [[RFHUD alloc] initWithFrame:window.bounds];
+     
+    RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
     [hud setHUDType:RFHUDTypeError andStatus:@"评论加载失败"];
     [hud show];
     [hud release];

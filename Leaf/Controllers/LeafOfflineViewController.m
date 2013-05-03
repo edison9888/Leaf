@@ -99,8 +99,7 @@
         _hud.dismissBlock = ^(void){
             controller.progressBar.hidden = YES;
             controller.hud = nil;
-            UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-            RFHUD *hud = [[RFHUD alloc] initWithFrame:window.bounds];
+            RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
             [hud setHUDType:RFHUDTypeSuccess andStatus:@"完成离线"];
             [hud show];
             [hud release];
@@ -126,8 +125,7 @@
         _hud.dismissBlock = ^(void){
             controller.progressBar.hidden = YES;
             controller.hud = nil;
-            UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-            RFHUD *hud = [[RFHUD alloc] initWithFrame:window.bounds];
+            RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
             [hud setHUDType:RFHUDTypeError andStatus:@"离线失败"];
             [hud show];
             [hud release];

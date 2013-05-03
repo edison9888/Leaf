@@ -61,9 +61,7 @@
 - (void)returnClicked:(id)sender
 {
     [self dismissViewControllerWithOption:LeafAnimationOptionVertical
-                               completion:^void{
-                                   self.parentController.shouldBlockGesture = NO;
-                               }];
+                               completion:NULL];
 }
 
 

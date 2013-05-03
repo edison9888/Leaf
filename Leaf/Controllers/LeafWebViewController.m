@@ -65,9 +65,7 @@
 {
     [_mainWebView stopLoading];
     [self dismissViewControllerWithOption:LeafAnimationOptionVertical
-                               completion:^(void){
-                                   self.parentController.shouldBlockGesture = NO;
-                               }];
+                               completion:NULL];
 }
 
 #pragma mark - View lifecycle
