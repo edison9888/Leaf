@@ -36,6 +36,12 @@
 		DB8593E216B6C475009773F1 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB8593E116B6C475009773F1 /* icon@2x.png */; };
 		DB8593ED16B81012009773F1 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = DB8593EB16B81012009773F1 /* close.png */; };
 		DB8593EE16B81012009773F1 /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB8593EC16B81012009773F1 /* close@2x.png */; };
+		DB87A84317338045002AE0D6 /* LeafComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB87A84217338045002AE0D6 /* LeafComposeViewController.m */; };
+		DB87A84917338365002AE0D6 /* share_cancel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB87A84417338365002AE0D6 /* share_cancel@2x.png */; };
+		DB87A84A17338365002AE0D6 /* share_clip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB87A84517338365002AE0D6 /* share_clip@2x.png */; };
+		DB87A84B17338365002AE0D6 /* share_content_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB87A84617338365002AE0D6 /* share_content_background@2x.png */; };
+		DB87A84C17338365002AE0D6 /* share_ok@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB87A84717338365002AE0D6 /* share_ok@2x.png */; };
+		DB87A84D17338365002AE0D6 /* share_pic_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB87A84817338365002AE0D6 /* share_pic_background@2x.png */; };
 		DB9AEC88170B190F005EA0E6 /* home_icon_download.png in Resources */ = {isa = PBXBuildFile; fileRef = DB9AEC80170B190C005EA0E6 /* home_icon_download.png */; };
 		DB9AEC89170B190F005EA0E6 /* home_icon_download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB9AEC81170B190C005EA0E6 /* home_icon_download@2x.png */; };
 		DB9AEC8A170B190F005EA0E6 /* menu_latest@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB9AEC82170B190D005EA0E6 /* menu_latest@2x.png */; };
@@ -168,6 +174,13 @@
 		DB8593E116B6C475009773F1 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		DB8593EB16B81012009773F1 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
 		DB8593EC16B81012009773F1 /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
+		DB87A84117338045002AE0D6 /* LeafComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafComposeViewController.h; path = Controllers/LeafComposeViewController.h; sourceTree = "<group>"; };
+		DB87A84217338045002AE0D6 /* LeafComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafComposeViewController.m; path = Controllers/LeafComposeViewController.m; sourceTree = "<group>"; };
+		DB87A84417338365002AE0D6 /* share_cancel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_cancel@2x.png"; sourceTree = "<group>"; };
+		DB87A84517338365002AE0D6 /* share_clip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_clip@2x.png"; sourceTree = "<group>"; };
+		DB87A84617338365002AE0D6 /* share_content_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_content_background@2x.png"; sourceTree = "<group>"; };
+		DB87A84717338365002AE0D6 /* share_ok@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_ok@2x.png"; sourceTree = "<group>"; };
+		DB87A84817338365002AE0D6 /* share_pic_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_pic_background@2x.png"; sourceTree = "<group>"; };
 		DB9AEC80170B190C005EA0E6 /* home_icon_download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_icon_download.png; sourceTree = "<group>"; };
 		DB9AEC81170B190C005EA0E6 /* home_icon_download@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_icon_download@2x.png"; sourceTree = "<group>"; };
 		DB9AEC82170B190D005EA0E6 /* menu_latest@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_latest@2x.png"; sourceTree = "<group>"; };
@@ -428,6 +441,8 @@
 				DBBF469D172130BA0083A924 /* LeafCommentViewController.m */,
 				DB6F05C11727CF8400139ADB /* LeafOfflineViewController.h */,
 				DB6F05C21727CF8400139ADB /* LeafOfflineViewController.m */,
+				DB87A84117338045002AE0D6 /* LeafComposeViewController.h */,
+				DB87A84217338045002AE0D6 /* LeafComposeViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -618,6 +633,11 @@
 				DBBF468F172114DB0083A924 /* comment_line@2x.png */,
 				DBE67FBF170C181B00685DD2 /* bottom_bg.png */,
 				DBE67FB4170C17E200685DD2 /* photo_return.png */,
+				DB87A84417338365002AE0D6 /* share_cancel@2x.png */,
+				DB87A84517338365002AE0D6 /* share_clip@2x.png */,
+				DB87A84617338365002AE0D6 /* share_content_background@2x.png */,
+				DB87A84717338365002AE0D6 /* share_ok@2x.png */,
+				DB87A84817338365002AE0D6 /* share_pic_background@2x.png */,
 				DBE67FB5170C17E200685DD2 /* photo_return@2x.png */,
 				DBE67FB6170C17E200685DD2 /* photo_transmit.png */,
 				DBE67FB7170C17E200685DD2 /* photo_transmit@2x.png */,
@@ -826,6 +846,11 @@
 				DBFFECB4171F928D00DCEC94 /* RFHUD.bundle in Resources */,
 				DBBF4690172114DB0083A924 /* comment_line.png in Resources */,
 				DBBF4691172114DB0083A924 /* comment_line@2x.png in Resources */,
+				DB87A84917338365002AE0D6 /* share_cancel@2x.png in Resources */,
+				DB87A84A17338365002AE0D6 /* share_clip@2x.png in Resources */,
+				DB87A84B17338365002AE0D6 /* share_content_background@2x.png in Resources */,
+				DB87A84C17338365002AE0D6 /* share_ok@2x.png in Resources */,
+				DB87A84D17338365002AE0D6 /* share_pic_background@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -890,6 +915,7 @@
 				DBBF469E172130BA0083A924 /* LeafCommentViewController.m in Sources */,
 				DB6F05C01727A7DB00139ADB /* LeafOfflineModel.m in Sources */,
 				DB6F05C31727CF8400139ADB /* LeafOfflineViewController.m in Sources */,
+				DB87A84317338045002AE0D6 /* LeafComposeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

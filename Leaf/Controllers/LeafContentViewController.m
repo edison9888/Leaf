@@ -6,6 +6,10 @@
 //  Copyright (c) 2013年 Mobimtech. All rights reserved.
 //
 #import <CommonCrypto/CommonDigest.h>
+
+#import "ASIDownloadCache.h"
+#import "RFHUD.h"
+
 #import "LeafContentViewController.h"
 #import "LeafNavigationBar.h"
 #import "LeafHelper.h"
@@ -15,9 +19,13 @@
 #import "LeafPhotoViewController.h"
 #import "LeafWebViewController.h"
 #import "LeafCommentViewController.h"
-#import "ASIDownloadCache.h"
+#import "LeafComposeViewController.h"
+
 
 @interface LeafContentViewController ()
+{
+    RFHUD *_hud;
+}
 
 @property (nonatomic, retain) NSMutableArray *urls;
 
@@ -26,8 +34,6 @@
 - (void)handleData:(NSData *)data;
 
 - (NSString *)fileNameForKey:(NSString *)key;
-
-
 
 @end
 
@@ -78,6 +84,7 @@
     content.opaque = NO;
     content.delegate = self;
     content.scrollView.bounces = NO;
+    content.dataDetectorTypes = UIDataDetectorTypeNone;
     _content = content;
     [_container addSubview:content];
     [content release];
@@ -119,12 +126,78 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - 
+#pragma mark - Utils
+
 - (void)cancelAll
 {
     [_connection cancel];
     _connection.delegate = nil;
     [_content stopLoading];
     _content.delegate = nil;
+}
+
+- (void)presentComposeController:(UIImage *)image
+{
+    NSString *status = [NSString stringWithFormat:@" //%@ -- (来自 Leaf)", _articleTitle];
+    LeafComposeViewController *vc = [[LeafComposeViewController alloc] init];
+    vc.view.frame = self.view.bounds;
+    [vc setStatus:status];
+    [vc setShareImage:image];
+    [self presentViewController:vc option:LeafAnimationOptionVertical completion:^{
+        self.shouldBlockGesture = YES;
+    }];
+    [vc release];
+
+}
+
+- (UIImage *)convertWebViewToImage
+{
+    CGPoint currentOffset = _content.scrollView.contentOffset;
+    
+    CGFloat totalHeight = _content.scrollView.contentSize.height;
+    CGFloat offsetY = 0.0f;
+    NSMutableArray *images = [[NSMutableArray alloc] init];
+    
+    while (offsetY < (totalHeight - 10.0f)) {
+        UIGraphicsBeginImageContext(_content.frame.size);
+        
+        [_content.scrollView setContentOffset:CGPointMake(0.0f, offsetY)];
+        [_content.layer renderInContext:UIGraphicsGetCurrentContext()];
+        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        [images addObject:image];
+        offsetY += image.size.height;
+    }
+    
+    UIGraphicsBeginImageContext(_content.scrollView.contentSize);
+    offsetY = 0.0f;
+    
+    for (UIImage *image in  images) {
+        [image drawAtPoint:CGPointMake(0.0f, offsetY)];
+        offsetY += image.size.height;
+    }
+    UIImage *fullImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    [images release];
+    
+    NSData *imageData = UIImageJPEGRepresentation(fullImage, 0.5);
+        
+    UIImage *newImage = [UIImage imageWithData:imageData];
+    [_content.scrollView setContentOffset:currentOffset];
+    
+    return newImage;
+}
+
+
+- (void)createWeibo
+{
+    UIImage *image = [self convertWebViewToImage];
+    __block LeafContentViewController *controller = self;
+    _hud.dismissBlock = ^(void){
+        [controller presentComposeController:image];
+    };
+    [_hud dismissAfterDelay:0.0f];
 }
 
 - (BOOL)isSupportedExtension:(NSString *)extension
@@ -182,90 +255,16 @@
 
 - (void)shareClicked:(id)sender
 {
-   // [[self sinaweibo] logOut];
-    LeafCommentViewController *vc = [[LeafCommentViewController alloc] init];
-    vc.view.frame = self.view.bounds;
-    [self presentViewController:vc
-                         option:LeafAnimationOptionHorizontal
-                     completion:^(void){
-                         [vc loadData:_articleId];
-                     }];
-    [vc release];
-    return;
-    CGPoint currentOffset = _content.scrollView.contentOffset;
     
-    CGFloat totalHeight = _content.scrollView.contentSize.height;
-    CGFloat offsetY = 0.0f;
-    NSMutableArray *images = [[NSMutableArray alloc] init];
+    RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
+    _hud = hud;
+    [hud setHudFont:kLeafFont15];
+    [hud setHUDType:RFHUDTypeWaiting andStatus:@"正在生成长微博"];
+    [hud show];
+    [hud release];
     
-    while (offsetY < (totalHeight - 10.0f)) {
-        /*if ([UIScreen instancesRespondToSelector:@selector(scale)] &&
-            [[UIScreen mainScreen] scale] == 2.0f) {
-            UIGraphicsBeginImageContextWithOptions(_content.frame.size, NO, 2.0f);
-        }
-        else
-        {
-            UIGraphicsBeginImageContext(_content.frame.size);
-        }*/
-        UIGraphicsBeginImageContext(_content.frame.size);
-        
-        [_content.scrollView setContentOffset:CGPointMake(0.0f, offsetY)];
-        [_content.layer renderInContext:UIGraphicsGetCurrentContext()];
-        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        [images addObject:image];
-        offsetY += image.size.height;
-    }
+    [self performSelectorInBackground:@selector(createWeibo) withObject:nil];
     
-    /*if ([UIScreen instancesRespondToSelector:@selector(scale)] &&
-        [[UIScreen mainScreen] scale] == 2.0f) {
-        UIGraphicsBeginImageContextWithOptions(_content.scrollView.contentSize, NO, 2.0f);
-    }
-    else
-    {
-        UIGraphicsBeginImageContext(_content.scrollView.contentSize);
-    }*/
-    UIGraphicsBeginImageContext(_content.scrollView.contentSize);
-    offsetY = 0.0f;
-    
-    for (UIImage *image in  images) {
-        [image drawAtPoint:CGPointMake(0.0f, offsetY)];
-        offsetY += image.size.height;
-    }
-    UIImage *fullImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    [images release];
-    
-    NSData *imageData = UIImageJPEGRepresentation(fullImage, 0.5);
-    NSString *path = [self cachePathForKey:[NSString stringWithFormat:@"%@.jpg",_url]];
-    [self saveFile:imageData atPath:path];
-    return;
-    UIImage *newImage = [UIImage imageWithData:imageData];
-    
-    [_content.scrollView setContentOffset:currentOffset];
-    
-    SinaWeibo *sinaweibo = [self sinaweibo];
-    if (sinaweibo.isAuthValid) {
-        NSString *status = [NSString stringWithFormat:@"%@ -- (来自 Leaf)", _articleTitle];
-        [sinaweibo requestWithURL:@"statuses/upload.json"
-                           params:[NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   status, @"status",
-                                   newImage, @"pic", nil]
-                       httpMethod:@"POST"
-                         delegate:self];
-    }
-    else
-    {
-        [sinaweibo logIn];
-    }
-    
-    //    LeafPhotoViewController *photoController = [[LeafPhotoViewController alloc] init];
-    //    __block LeafPhotoViewController *controller = photoController;
-    //    [self presentViewController:photoController option:LeafAnimationOptionVertical
-    //                     completion:^(void){
-    //                         [controller setImage:fullImage];
-    //                     }];
-    //    [photoController release];
 }
 
 - (void)safariClicked:(id)sender

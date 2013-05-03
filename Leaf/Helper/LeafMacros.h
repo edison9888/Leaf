@@ -8,7 +8,7 @@
 #define NSLogRect(rect)                 NSLog(@"Rect: %@", NSStringFromCGRect(rect))
 #define NSLogSize(size)                 NSLog(@"%@", NSStringFromCGSize(size))
 #define NSLogPoint(point)               NSLog(@"%@", NSStringFromCGPoint(point))
-
+#define kLeafWindowRect  [[UIApplication sharedApplication] keyWindow].bounds
 
 // Color stuff
 #define CGColorConvert(value)           value/255.0f
