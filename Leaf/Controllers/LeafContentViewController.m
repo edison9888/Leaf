@@ -509,6 +509,7 @@
             NSString *url = [link stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
             [_urls addObject:url];
         }
+        NSLog(@"img src: %@", link);
     }
     
     NSArray *videoUrls = [doc searchWithXPathQuery:@"//video"];
@@ -523,7 +524,7 @@
     if (config.simple) {
         html = [self purgeImageLinks:html];
     }
-    NSLog(@"html: %@", html);
+    //NSLog(@"html: %@", html);
     
     [_content loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[ASIDownloadCache sharedCache] pathForSessionDurationCacheStoragePolicy] isDirectory:YES]];
     [doc release];
