@@ -80,12 +80,11 @@
     [mask release];
 }
 
-- (void)didReceiveMemoryWarning
+- (void) viewDidDisappear:(BOOL)animated
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [super viewDidDisappear:animated];
+    _parentController.shouldBlockGesture = NO;
 }
-
 
 - (void)blockDDMenuControllerGesture:(BOOL)block
 {
