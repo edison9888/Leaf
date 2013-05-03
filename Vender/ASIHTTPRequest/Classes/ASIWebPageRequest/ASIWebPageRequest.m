@@ -495,7 +495,8 @@ static NSMutableArray *requestsUsingXMLParser = nil;
 - (void)addURLToFetch:(NSString *)newURL
 {
 	// Get rid of any surrounding whitespace
-	newURL = [newURL stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    newURL = [newURL stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    //newURL = [newURL stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	// Don't attempt to fetch data URIs
 	if ([newURL length] > 4) {
 		if (![[[newURL substringToIndex:5] lowercaseString] isEqualToString:@"data:"]) {
@@ -677,6 +678,7 @@ static NSMutableArray *requestsUsingXMLParser = nil;
 
 - (NSString *)contentForExternalURL:(NSString *)theURL
 {
+    theURL = [theURL stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
 	if ([self urlReplacementMode] == ASIReplaceExternalResourcesWithLocalURLs) {
 		NSString *resourcePath = [[resourceList objectForKey:theURL] objectForKey:@"DataPath"];
 		return [self relativePathTo:resourcePath fromPath:[self downloadDestinationPath]];
