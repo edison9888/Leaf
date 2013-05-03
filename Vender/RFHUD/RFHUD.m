@@ -198,8 +198,10 @@
 
 - (void)show
 {
-    UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+    NSArray *array = [[UIApplication sharedApplication] windows];
+    UIWindow *keyWindow = (UIWindow *)[array lastObject];
     [keyWindow addSubview:self];
+    //[keyWindow bringSubviewToFront:self];
     __block CGRect frame = _hud.frame;
     RFHUD *entireView = self;
         
