@@ -197,7 +197,7 @@
     _hud.dismissBlock = ^(void){
         [controller presentComposeController:image];
     };
-    [_hud dismissAfterDelay:0.0f];
+    [_hud dismiss];
 }
 
 - (BOOL)isSupportedExtension:(NSString *)extension
