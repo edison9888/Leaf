@@ -43,6 +43,7 @@ typedef enum {
     LeafPanDirection _panDirection;
     CGPoint _panVelocity;
     CGFloat _panOriginX;
+    CGFloat _panEndX;
     LeafPanState _state;
     BOOL _shouldBlockGesture;
     LeafBaseViewController *_parentController;

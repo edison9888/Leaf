@@ -14,6 +14,7 @@
 #define kScaleFactor 0.02f
 #define kAlphaFactor 0.1f
 #define kLeafEpisnon 0.5f
+#define kLeafOffsetX 30.0f
 
 @interface LeafBaseViewController ()
 
@@ -196,7 +197,7 @@
         CGPoint translation = [gesture translationInView:self.view.superview];
         CGRect frame = self.view.frame;
         frame.origin.x = _panOriginX + translation.x;
-        
+
         if(frame.origin.x > 0 && _canShowLeft)
         {
             if (_state == LeafPanStateNone && _panDirection == LeafPanDirectionRight) {
@@ -204,6 +205,7 @@
             }
             if (_state == LeafPanStateShowingLeft) {
                 self.view.frame = frame;
+                _panEndX = frame.origin.x;
             }
         }
         else if(_canShowRight)
@@ -227,13 +229,14 @@
     else if (gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateCancelled) {
         LeafPanCompletion  completion =  LeafPanCompletionNone;
         
-        if (_canShowLeft && _state == LeafPanStateShowingLeft && _panDirection == LeafPanDirectionRight) {
-            completion = LeafPanCompletionLeft;
-        }
-        else if(_canShowLeft && _state == LeafPanStateShowingLeft && _panDirection == LeafPanDirectionLeft)
+        if(_canShowLeft && _state == LeafPanStateShowingLeft && (_panEndX < kLeafOffsetX || _panDirection == LeafPanDirectionLeft))
         {
             completion = LeafPanCompletionRoot;
         }
+        else if (_canShowLeft && _state == LeafPanStateShowingLeft && _panDirection == LeafPanDirectionRight) {
+            completion = LeafPanCompletionLeft;
+        }
+       
         else if(_canShowRight && _state == LeafPanStateShowingRight && _panDirection == LeafPanDirectionLeft)
         {
             completion = LeafPanCompletionRight;
