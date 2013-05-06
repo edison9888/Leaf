@@ -104,7 +104,7 @@
 	// This is actually the most efficient way to set a download path for ASIWebPageRequest, as it writes to the cache directly
     [request setCacheStoragePolicy:ASICacheForSessionDurationCacheStoragePolicy];
 	[request setDownloadDestinationPath:[[ASIDownloadCache sharedCache] pathToStoreCachedResponseDataForRequest:request]];
-	
+	[request setShouldIgnoreExternalResourceErrors:YES];
 	[[ASIDownloadCache sharedCache] setShouldRespectCacheControlHeaders:NO];
     [request startAsynchronous];
 }
