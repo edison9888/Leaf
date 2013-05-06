@@ -325,7 +325,7 @@
 
 - (void)GET
 {
-    
+    NSLog(@"article url: %@", _url);
     NSString *path = [[ASIDownloadCache sharedCache] pathToCachedResponseDataForURL:[NSURL URLWithString:_url]];
     if (path) {
         NSData *data = [NSData dataWithContentsOfFile:path];
