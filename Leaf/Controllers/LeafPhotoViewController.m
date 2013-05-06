@@ -6,6 +6,8 @@
 //  Copyright (c) 2013年 Mobimtech. All rights reserved.
 //
 
+#import "RFHUD.h"
+
 #import "LeafPhotoViewController.h"
 #import "LeafPhotoView.h"
 #import "LeafBottomBar.h"
@@ -20,6 +22,7 @@
     LeafProgressBar *_progressBar;
     int _cur;
     LeafPhotoView *_photoView;
+    RFHUD *_hud;
 }
 
 @property (nonatomic, retain) NSArray *urls;
@@ -34,6 +37,7 @@
 @synthesize photoViews = _photoViews;
 - (void)dealloc
 {
+    _hud = nil;
     [_urls release], _urls = nil;
     [_photoViews release], _photoViews = nil;
     _scrollView = nil;
@@ -58,10 +62,72 @@
 
 #pragma mark - 
 
+- (void) image:(UIImage *) image didFinishSavingWithError:(NSError *) error contextInfo:(void *) contextInfo
+{
+    if (error) {
+        if (_hud) {
+            _hud.dismissBlock = ^(void){
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NULL message:@"您未授权Leaf访问照片, 请进入系统设置\u2192隐私\u2192照片内开启授权" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                [alert show];
+                [alert release];
+            };
+            [_hud dismiss];
+            _hud = nil;
+        }
+        
+    }
+    else {
+        if (_hud) {
+            _hud.dismissBlock = ^(void){
+                RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
+                [hud setHudFont:kLeafFont15];
+                [hud setHUDType:RFHUDTypeSuccess andStatus:@"保存成功"];
+                [hud show];
+                [hud release];
+            };
+            [_hud dismiss];
+            _hud = nil;
+        }
+    }
+}
+
+- (void)save
+{
+    LeafPhotoView *photoView = ((LeafPhotoView *)[_photoViews safeObjectAtIndex:_cur]);
+    if (photoView) {
+        UIImage *image = photoView.imageView.image;
+        UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+    }
+    else{
+        if (_hud) {
+            _hud.dismissBlock = ^(void){
+                RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
+                [hud setHudFont:kLeafFont15];
+                [hud setHUDType:RFHUDTypeError andStatus:@"保存失败"];
+                [hud show];
+                [hud release];
+            };
+            [_hud dismiss];
+            _hud = nil;
+        }
+    }
+}
+
 - (void)returnClicked:(id)sender
 {
     [self dismissViewControllerWithOption:LeafAnimationOptionVertical
                                completion:NULL];
+}
+
+- (void)saveClicked:(id)sender
+{
+    RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
+    [hud setHudFont:kLeafFont15];
+    [hud setHUDType:RFHUDTypeWaiting andStatus:@"正在保存"];
+    _hud = hud;
+    [hud show];
+    [hud release];
+    [self performSelectorInBackground:@selector(save) withObject:nil];
 }
 
 
@@ -100,8 +166,11 @@
     
     LeafBottomBar *bottom = [[LeafBottomBar alloc] initWithFrame:CGRectMake(0.0f, CGHeight(self.view.frame) - 40.0f - kLeafBottomProgressBarH, CGWidth(self.view.frame), 40.0f)];
     [_container addSubview:bottom];
-    [bottom addTarget:self action:@selector(returnClicked:)];
+    [bottom addLeftTarget:self action:@selector(returnClicked:)];
+    [bottom addRightTarget:self action:@selector(saveClicked:)];
     [bottom release];
+    
+    
     
     LeafProgressBar *progressBar = [[LeafProgressBar alloc] initWithFrame:CGRectMake(0.0f, CGHeight(self.view.frame) - kLeafBottomProgressBarH, CGWidth(self.view.frame), kLeafBottomProgressBarH)];
     [_container addSubview:progressBar];
