@@ -174,6 +174,11 @@
     
 }
 
+- (void)dismiss
+{
+    [self dismissAfterDelay:0.0f];
+}
+
 - (void)rotateLogo
 {
     __block RFHUD *entireView = self;
