@@ -12,8 +12,10 @@
 {
     @private
     UIButton *_returnBtn;
+    UIButton *_saveBtn;
 }
 
-- (void)addTarget:(id)target action:(SEL)action;
+- (void)addLeftTarget:(id)target action:(SEL)action;
+- (void)addRightTarget:(id)target action:(SEL)action;
 
 @end

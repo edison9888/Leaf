@@ -42,6 +42,8 @@
 		DB87A84B17338365002AE0D6 /* share_content_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB87A84617338365002AE0D6 /* share_content_background@2x.png */; };
 		DB87A84C17338365002AE0D6 /* share_ok@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB87A84717338365002AE0D6 /* share_ok@2x.png */; };
 		DB87A84D17338365002AE0D6 /* share_pic_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB87A84817338365002AE0D6 /* share_pic_background@2x.png */; };
+		DB91551F17378F0E00F07AEC /* photo_save.png in Resources */ = {isa = PBXBuildFile; fileRef = DB91551D17378F0900F07AEC /* photo_save.png */; };
+		DB91552017378F0E00F07AEC /* photo_save@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB91551E17378F0B00F07AEC /* photo_save@2x.png */; };
 		DB9AEC88170B190F005EA0E6 /* home_icon_download.png in Resources */ = {isa = PBXBuildFile; fileRef = DB9AEC80170B190C005EA0E6 /* home_icon_download.png */; };
 		DB9AEC89170B190F005EA0E6 /* home_icon_download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB9AEC81170B190C005EA0E6 /* home_icon_download@2x.png */; };
 		DB9AEC8A170B190F005EA0E6 /* menu_latest@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB9AEC82170B190D005EA0E6 /* menu_latest@2x.png */; };
@@ -181,6 +183,8 @@
 		DB87A84617338365002AE0D6 /* share_content_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_content_background@2x.png"; sourceTree = "<group>"; };
 		DB87A84717338365002AE0D6 /* share_ok@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_ok@2x.png"; sourceTree = "<group>"; };
 		DB87A84817338365002AE0D6 /* share_pic_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_pic_background@2x.png"; sourceTree = "<group>"; };
+		DB91551D17378F0900F07AEC /* photo_save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo_save.png; sourceTree = "<group>"; };
+		DB91551E17378F0B00F07AEC /* photo_save@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo_save@2x.png"; sourceTree = "<group>"; };
 		DB9AEC80170B190C005EA0E6 /* home_icon_download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_icon_download.png; sourceTree = "<group>"; };
 		DB9AEC81170B190C005EA0E6 /* home_icon_download@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_icon_download@2x.png"; sourceTree = "<group>"; };
 		DB9AEC82170B190D005EA0E6 /* menu_latest@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_latest@2x.png"; sourceTree = "<group>"; };
@@ -632,14 +636,16 @@
 				DBBF468E172114DB0083A924 /* comment_line.png */,
 				DBBF468F172114DB0083A924 /* comment_line@2x.png */,
 				DBE67FBF170C181B00685DD2 /* bottom_bg.png */,
-				DBE67FB4170C17E200685DD2 /* photo_return.png */,
 				DB87A84417338365002AE0D6 /* share_cancel@2x.png */,
 				DB87A84517338365002AE0D6 /* share_clip@2x.png */,
 				DB87A84617338365002AE0D6 /* share_content_background@2x.png */,
 				DB87A84717338365002AE0D6 /* share_ok@2x.png */,
 				DB87A84817338365002AE0D6 /* share_pic_background@2x.png */,
+				DBE67FB4170C17E200685DD2 /* photo_return.png */,
 				DBE67FB5170C17E200685DD2 /* photo_return@2x.png */,
 				DBE67FB6170C17E200685DD2 /* photo_transmit.png */,
+				DB91551D17378F0900F07AEC /* photo_save.png */,
+				DB91551E17378F0B00F07AEC /* photo_save@2x.png */,
 				DBE67FB7170C17E200685DD2 /* photo_transmit@2x.png */,
 				DB9AEC80170B190C005EA0E6 /* home_icon_download.png */,
 				DB9AEC81170B190C005EA0E6 /* home_icon_download@2x.png */,
@@ -851,6 +857,8 @@
 				DB87A84B17338365002AE0D6 /* share_content_background@2x.png in Resources */,
 				DB87A84C17338365002AE0D6 /* share_ok@2x.png in Resources */,
 				DB87A84D17338365002AE0D6 /* share_pic_background@2x.png in Resources */,
+				DB91551F17378F0E00F07AEC /* photo_save.png in Resources */,
+				DB91552017378F0E00F07AEC /* photo_save@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

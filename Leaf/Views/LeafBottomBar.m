@@ -8,6 +8,11 @@
 
 #import "LeafBottomBar.h"
 
+#define kLeafBottomBtnMarginTop 5.0f
+#define kLeafBottomBtnMarginLeft 15.0f
+#define kLeafBottomBtnMarginRight 15.0f
+
+
 @implementation LeafBottomBar
 
 - (id)initWithFrame:(CGRect)frame
@@ -22,17 +27,29 @@
         UIImage *retImg = [UIImage imageNamed:@"photo_return"];
         UIButton *photoRetBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [photoRetBtn setImage:retImg forState:UIControlStateNormal];
-        photoRetBtn.frame = CGRectMake(0.0f, 0.0f, retImg.size.width, retImg.size.height);;
+        photoRetBtn.frame = CGRectMake(kLeafBottomBtnMarginLeft, kLeafBottomBtnMarginTop, retImg.size.width, retImg.size.height);;
         _returnBtn = photoRetBtn;
         [bg addSubview:photoRetBtn];
+        
+        UIImage *saveImg = [UIImage imageNamed:@"photo_save"];
+        UIButton *photoSaveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [photoSaveBtn setImage:saveImg forState:UIControlStateNormal];
+        photoSaveBtn.frame = CGRectMake(CGRectGetWidth(self.frame) - kLeafBottomBtnMarginRight - saveImg.size.width, kLeafBottomBtnMarginTop, saveImg.size.width, saveImg.size.height);
+        _saveBtn = photoSaveBtn;
+        [bg addSubview:photoSaveBtn];
         [bg release];
     }
     return self;
 }
 
-- (void)addTarget:(id)target action:(SEL)action
+- (void)addLeftTarget:(id)target action:(SEL)action
 {
     [_returnBtn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)addRightTarget:(id)target action:(SEL)action
+{
+    [_saveBtn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
 }
 
 @end
