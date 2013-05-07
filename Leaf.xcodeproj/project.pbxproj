@@ -77,7 +77,6 @@
 		DBD825A316B6204F00EC4439 /* LeafURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD825A016B6204F00EC4439 /* LeafURLConnection.m */; };
 		DBD825AA16B6211800EC4439 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBD825A916B6211800EC4439 /* QuartzCore.framework */; };
 		DBD825B016B6244900EC4439 /* LeafNewsData.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD825AF16B6244900EC4439 /* LeafNewsData.m */; };
-		DBD825B416B6285E00EC4439 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD825B316B6285E00EC4439 /* MBProgressHUD.m */; };
 		DBD825BA16B628C500EC4439 /* EGOLoadMoreTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD825B816B628C500EC4439 /* EGOLoadMoreTableFooterView.m */; };
 		DBD825BD16B6295E00EC4439 /* LeafCommentBox.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD825BC16B6295E00EC4439 /* LeafCommentBox.m */; };
 		DBD825DA16B644D600EC4439 /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = DBD825C716B644D600EC4439 /* blackArrow.png */; };
@@ -241,8 +240,6 @@
 		DBD825A916B6211800EC4439 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		DBD825AE16B6244900EC4439 /* LeafNewsData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafNewsData.h; sourceTree = "<group>"; };
 		DBD825AF16B6244900EC4439 /* LeafNewsData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeafNewsData.m; sourceTree = "<group>"; };
-		DBD825B216B6285E00EC4439 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
-		DBD825B316B6285E00EC4439 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		DBD825B816B628C500EC4439 /* EGOLoadMoreTableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EGOLoadMoreTableFooterView.m; path = Views/EGOLoadMoreTableFooterView.m; sourceTree = "<group>"; };
 		DBD825B916B628C500EC4439 /* EGOLoadMoreTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EGOLoadMoreTableFooterView.h; path = Views/EGOLoadMoreTableFooterView.h; sourceTree = "<group>"; };
 		DBD825BB16B6295E00EC4439 /* LeafCommentBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafCommentBox.h; path = Views/LeafCommentBox.h; sourceTree = "<group>"; };
@@ -484,7 +481,6 @@
 				DB4E547B16D3195700CBF9EB /* DDMenuController */,
 				DBD825EF16B65E1200EC4439 /* SDWebImage */,
 				DBD8259916B6203C00EC4439 /* RefreshTableHeaderView */,
-				DBD825B116B6285E00EC4439 /* MBProgressHUD */,
 				DBF7135217165A5800FF0894 /* WeiboSDK */,
 				DBFFECB0171F928D00DCEC94 /* RFHUD */,
 			);
@@ -615,16 +611,6 @@
 				DB61B75917125EC200838477 /* LeafStack.m */,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		DBD825B116B6285E00EC4439 /* MBProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				DBD825B216B6285E00EC4439 /* MBProgressHUD.h */,
-				DBD825B316B6285E00EC4439 /* MBProgressHUD.m */,
-			);
-			name = MBProgressHUD;
-			path = Vender/MBProgressHUD;
 			sourceTree = "<group>";
 		};
 		DBD825C616B644D600EC4439 /* Images */ = {
@@ -873,7 +859,6 @@
 				DBD8259C16B6203C00EC4439 /* EGORefreshTableHeaderView.m in Sources */,
 				DBD825A316B6204F00EC4439 /* LeafURLConnection.m in Sources */,
 				DBD825B016B6244900EC4439 /* LeafNewsData.m in Sources */,
-				DBD825B416B6285E00EC4439 /* MBProgressHUD.m in Sources */,
 				DBD825BA16B628C500EC4439 /* EGOLoadMoreTableFooterView.m in Sources */,
 				DBD825BD16B6295E00EC4439 /* LeafCommentBox.m in Sources */,
 				DBD825EE16B6590700EC4439 /* LeafNewsItem.m in Sources */,
