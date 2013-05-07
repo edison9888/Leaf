@@ -13,6 +13,8 @@
 		DB41071516E86D8E00DE7DB7 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DB41071416E86D8E00DE7DB7 /* libxml2.2.dylib */; };
 		DB49CAC5170582E0004F3C7B /* LeafMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DB49CAC4170582DF004F3C7B /* LeafMenuItem.m */; };
 		DB4E547E16D3199C00CBF9EB /* DDMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB4E547C16D3199C00CBF9EB /* DDMenuController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		DB5269A01738B1BA004E9FE2 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = DB52699E1738B1BA004E9FE2 /* Default.png */; };
+		DB5269A11738B1BA004E9FE2 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB52699F1738B1BA004E9FE2 /* Default@2x.png */; };
 		DB61AECC16B2589D006EC642 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB61AECB16B2589D006EC642 /* UIKit.framework */; };
 		DB61AECE16B2589D006EC642 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB61AECD16B2589D006EC642 /* Foundation.framework */; };
 		DB61AED016B2589D006EC642 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB61AECF16B2589D006EC642 /* CoreGraphics.framework */; };
@@ -137,6 +139,8 @@
 		DB49CAC4170582DF004F3C7B /* LeafMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafMenuItem.m; path = Views/LeafMenuItem.m; sourceTree = "<group>"; };
 		DB4E547C16D3199C00CBF9EB /* DDMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDMenuController.m; path = Vender/DDMenuController/DDMenuController.m; sourceTree = "<group>"; };
 		DB4E547D16D3199C00CBF9EB /* DDMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDMenuController.h; path = Vender/DDMenuController/DDMenuController.h; sourceTree = "<group>"; };
+		DB52699E1738B1BA004E9FE2 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		DB52699F1738B1BA004E9FE2 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		DB61AEC716B2589D006EC642 /* Leaf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Leaf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB61AECB16B2589D006EC642 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DB61AECD16B2589D006EC642 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -361,6 +365,8 @@
 			children = (
 				DB8593E116B6C475009773F1 /* icon@2x.png */,
 				DB8593DF16B6C46C009773F1 /* icon.png */,
+				DB52699E1738B1BA004E9FE2 /* Default.png */,
+				DB52699F1738B1BA004E9FE2 /* Default@2x.png */,
 				DB8593D016B55EAD009773F1 /* Default-568h@2x.png */,
 				DB61AF0816B26DA3006EC642 /* Vender */,
 				DB61AED116B2589D006EC642 /* Leaf */,
@@ -841,6 +847,8 @@
 				DB87A84D17338365002AE0D6 /* share_pic_background@2x.png in Resources */,
 				DB91551F17378F0E00F07AEC /* photo_save.png in Resources */,
 				DB91552017378F0E00F07AEC /* photo_save@2x.png in Resources */,
+				DB5269A01738B1BA004E9FE2 /* Default.png in Resources */,
+				DB5269A11738B1BA004E9FE2 /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
