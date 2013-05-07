@@ -114,7 +114,6 @@
 		DBE67FC0170C181B00685DD2 /* bottom_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = DBE67FBF170C181B00685DD2 /* bottom_bg.png */; };
 		DBE67FC3170C1B9500685DD2 /* LeafPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE67FC2170C1B9500685DD2 /* LeafPhotoViewController.m */; };
 		DBECD52D16BA9EA000C4AE31 /* LeafLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBECD52C16BA9EA000C4AE31 /* LeafLoadingView.m */; };
-		DBECD53316BAC32200C4AE31 /* leaf.css in Resources */ = {isa = PBXBuildFile; fileRef = DBECD53216BAC32200C4AE31 /* leaf.css */; };
 		DBF7136217165A5800FF0894 /* SinaWeibo.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DBF7135717165A5800FF0894 /* SinaWeibo.bundle */; };
 		DBF7136317165A5800FF0894 /* SinaWeibo.m in Sources */ = {isa = PBXBuildFile; fileRef = DBF7135917165A5800FF0894 /* SinaWeibo.m */; };
 		DBF7136417165A5800FF0894 /* SinaWeiboAuthorizeView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBF7135B17165A5800FF0894 /* SinaWeiboAuthorizeView.m */; };
@@ -298,7 +297,6 @@
 		DBE67FC2170C1B9500685DD2 /* LeafPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafPhotoViewController.m; path = Controllers/LeafPhotoViewController.m; sourceTree = "<group>"; };
 		DBECD52B16BA9EA000C4AE31 /* LeafLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafLoadingView.h; path = Views/LeafLoadingView.h; sourceTree = "<group>"; };
 		DBECD52C16BA9EA000C4AE31 /* LeafLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafLoadingView.m; path = Views/LeafLoadingView.m; sourceTree = "<group>"; };
-		DBECD53216BAC32200C4AE31 /* leaf.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = leaf.css; sourceTree = "<group>"; };
 		DBF7135717165A5800FF0894 /* SinaWeibo.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SinaWeibo.bundle; sourceTree = "<group>"; };
 		DBF7135817165A5800FF0894 /* SinaWeibo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeibo.h; sourceTree = "<group>"; };
 		DBF7135917165A5800FF0894 /* SinaWeibo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeibo.m; sourceTree = "<group>"; };
@@ -497,7 +495,6 @@
 			isa = PBXGroup;
 			children = (
 				DB70FDA316BA582800FD1A8E /* page.html */,
-				DBECD53216BAC32200C4AE31 /* leaf.css */,
 				DBF713661716631200FF0894 /* Bundles */,
 				DBD825C616B644D600EC4439 /* Images */,
 				DBD825D716B644D600EC4439 /* Fonts */,
@@ -833,7 +830,6 @@
 				DB70FD9616BA320800FD1A8E /* back.png in Resources */,
 				DB70FD9716BA320800FD1A8E /* back@2x.png in Resources */,
 				DB70FDA416BA582900FD1A8E /* page.html in Resources */,
-				DBECD53316BAC32200C4AE31 /* leaf.css in Resources */,
 				DB9AEC88170B190F005EA0E6 /* home_icon_download.png in Resources */,
 				DB9AEC89170B190F005EA0E6 /* home_icon_download@2x.png in Resources */,
 				DB9AEC8A170B190F005EA0E6 /* menu_latest@2x.png in Resources */,

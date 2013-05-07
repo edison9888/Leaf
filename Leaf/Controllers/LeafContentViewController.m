@@ -21,6 +21,42 @@
 #import "LeafCommentViewController.h"
 #import "LeafComposeViewController.h"
 
+#define kLeafContentCSS @"body { \
+background:#ECEAE2 !important; \
+    font-weight:normal !important; \
+    word-wrap:break-word !important; \
+} \
+span { \
+    font-family:FZLanTingHei-R-GBK !important; \
+    font-size:12pt !important; \
+    font-weight: normal !important; \
+} \
+h2 { \
+    font-family:FZLanTingHei-R-GBK !important; \
+    font-weight: normal !important; \
+    font-size:15pt !important; \
+    text-align:left !important; \
+} \
+b { \
+    font-family:FZLanTingHei-R-GBK !important; \
+    font-weight: normal !important; \
+} \
+strong { \
+    font-family:FZLanTingHei-R-GBK !important; \
+    font-weight: normal !important; \
+} \
+a { \
+    color:#4a8711 !important; \
+} \
+video { \
+    max-width:285px !important; \
+    height:auto !important; \
+} \
+iframe { \
+    max-width:285px !important; \
+    height:auto !important; \
+}" 
+
 
 @interface LeafContentViewController ()
 {
@@ -370,9 +406,7 @@
         NSString *subTail = [original substringFromIndex:location];
         html = [[NSMutableString alloc] init];
         [html safeAppendString:subHead];
-        NSString *leafCSSPath = [[NSBundle mainBundle] pathForResource:@"leaf" ofType:@"css"];
-        NSString *leafCSS = [NSString stringWithContentsOfFile:leafCSSPath encoding:NSUTF8StringEncoding error:nil];
-        [html safeAppendString:leafCSS];
+        [html safeAppendString:kLeafContentCSS];
         [html safeAppendString:subTail];
         return [html autorelease];
     }
