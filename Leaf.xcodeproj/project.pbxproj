@@ -16,6 +16,14 @@
 		DB4B317B1738E291008D7173 /* menu_setting.png in Resources */ = {isa = PBXBuildFile; fileRef = DB4B31781738E291008D7173 /* menu_setting.png */; };
 		DB4B317E1738E2F7008D7173 /* menu_saved.png in Resources */ = {isa = PBXBuildFile; fileRef = DB4B317D1738E2F7008D7173 /* menu_saved.png */; };
 		DB4B31801738E31B008D7173 /* menu_latest.png in Resources */ = {isa = PBXBuildFile; fileRef = DB4B317F1738E31B008D7173 /* menu_latest.png */; };
+		DB4B31871738F47D008D7173 /* settingcell_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = DB4B31811738F47D008D7173 /* settingcell_arrow.png */; };
+		DB4B31881738F47D008D7173 /* settingcell_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB4B31821738F47D008D7173 /* settingcell_arrow@2x.png */; };
+		DB4B31891738F47D008D7173 /* settingcell_bg_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = DB4B31831738F47D008D7173 /* settingcell_bg_selected.png */; };
+		DB4B318A1738F47D008D7173 /* settingcell_bg_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB4B31841738F47D008D7173 /* settingcell_bg_selected@2x.png */; };
+		DB4B318B1738F47D008D7173 /* settingcell_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = DB4B31851738F47D008D7173 /* settingcell_bg.png */; };
+		DB4B318C1738F47D008D7173 /* settingcell_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB4B31861738F47D008D7173 /* settingcell_bg@2x.png */; };
+		DB4B318F1738F4B9008D7173 /* LeafSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB4B318E1738F4B9008D7173 /* LeafSettingsViewController.m */; };
+		DB4B31911738FF11008D7173 /* open_source.html in Resources */ = {isa = PBXBuildFile; fileRef = DB4B31901738FF11008D7173 /* open_source.html */; };
 		DB4E547E16D3199C00CBF9EB /* DDMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB4E547C16D3199C00CBF9EB /* DDMenuController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		DB5269A01738B1BA004E9FE2 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = DB52699E1738B1BA004E9FE2 /* Default.png */; };
 		DB5269A11738B1BA004E9FE2 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB52699F1738B1BA004E9FE2 /* Default@2x.png */; };
@@ -145,6 +153,15 @@
 		DB4B31781738E291008D7173 /* menu_setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_setting.png; sourceTree = "<group>"; };
 		DB4B317D1738E2F7008D7173 /* menu_saved.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_saved.png; sourceTree = "<group>"; };
 		DB4B317F1738E31B008D7173 /* menu_latest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_latest.png; sourceTree = "<group>"; };
+		DB4B31811738F47D008D7173 /* settingcell_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingcell_arrow.png; sourceTree = "<group>"; };
+		DB4B31821738F47D008D7173 /* settingcell_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingcell_arrow@2x.png"; sourceTree = "<group>"; };
+		DB4B31831738F47D008D7173 /* settingcell_bg_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingcell_bg_selected.png; sourceTree = "<group>"; };
+		DB4B31841738F47D008D7173 /* settingcell_bg_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingcell_bg_selected@2x.png"; sourceTree = "<group>"; };
+		DB4B31851738F47D008D7173 /* settingcell_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingcell_bg.png; sourceTree = "<group>"; };
+		DB4B31861738F47D008D7173 /* settingcell_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingcell_bg@2x.png"; sourceTree = "<group>"; };
+		DB4B318D1738F4B9008D7173 /* LeafSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafSettingsViewController.h; path = Controllers/LeafSettingsViewController.h; sourceTree = "<group>"; };
+		DB4B318E1738F4B9008D7173 /* LeafSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafSettingsViewController.m; path = Controllers/LeafSettingsViewController.m; sourceTree = "<group>"; };
+		DB4B31901738FF11008D7173 /* open_source.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = open_source.html; sourceTree = "<group>"; };
 		DB4E547C16D3199C00CBF9EB /* DDMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDMenuController.m; path = Vender/DDMenuController/DDMenuController.m; sourceTree = "<group>"; };
 		DB4E547D16D3199C00CBF9EB /* DDMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDMenuController.h; path = Vender/DDMenuController/DDMenuController.h; sourceTree = "<group>"; };
 		DB52699E1738B1BA004E9FE2 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -456,6 +473,8 @@
 				DB6F05C21727CF8400139ADB /* LeafOfflineViewController.m */,
 				DB87A84117338045002AE0D6 /* LeafComposeViewController.h */,
 				DB87A84217338045002AE0D6 /* LeafComposeViewController.m */,
+				DB4B318D1738F4B9008D7173 /* LeafSettingsViewController.h */,
+				DB4B318E1738F4B9008D7173 /* LeafSettingsViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -504,6 +523,7 @@
 		DB61AF1316B2721B006EC642 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DB4B31901738FF11008D7173 /* open_source.html */,
 				DB70FDA316BA582800FD1A8E /* page.html */,
 				DBF713661716631200FF0894 /* Bundles */,
 				DBD825C616B644D600EC4439 /* Images */,
@@ -630,6 +650,12 @@
 		DBD825C616B644D600EC4439 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				DB4B31811738F47D008D7173 /* settingcell_arrow.png */,
+				DB4B31821738F47D008D7173 /* settingcell_arrow@2x.png */,
+				DB4B31831738F47D008D7173 /* settingcell_bg_selected.png */,
+				DB4B31841738F47D008D7173 /* settingcell_bg_selected@2x.png */,
+				DB4B31851738F47D008D7173 /* settingcell_bg.png */,
+				DB4B31861738F47D008D7173 /* settingcell_bg@2x.png */,
 				DBBF468E172114DB0083A924 /* comment_line.png */,
 				DBBF468F172114DB0083A924 /* comment_line@2x.png */,
 				DBE67FBF170C181B00685DD2 /* bottom_bg.png */,
@@ -865,6 +891,13 @@
 				DB4B317B1738E291008D7173 /* menu_setting.png in Resources */,
 				DB4B317E1738E2F7008D7173 /* menu_saved.png in Resources */,
 				DB4B31801738E31B008D7173 /* menu_latest.png in Resources */,
+				DB4B31871738F47D008D7173 /* settingcell_arrow.png in Resources */,
+				DB4B31881738F47D008D7173 /* settingcell_arrow@2x.png in Resources */,
+				DB4B31891738F47D008D7173 /* settingcell_bg_selected.png in Resources */,
+				DB4B318A1738F47D008D7173 /* settingcell_bg_selected@2x.png in Resources */,
+				DB4B318B1738F47D008D7173 /* settingcell_bg.png in Resources */,
+				DB4B318C1738F47D008D7173 /* settingcell_bg@2x.png in Resources */,
+				DB4B31911738FF11008D7173 /* open_source.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -929,6 +962,7 @@
 				DB6F05C01727A7DB00139ADB /* LeafOfflineModel.m in Sources */,
 				DB6F05C31727CF8400139ADB /* LeafOfflineViewController.m in Sources */,
 				DB87A84317338045002AE0D6 /* LeafComposeViewController.m in Sources */,
+				DB4B318F1738F4B9008D7173 /* LeafSettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
