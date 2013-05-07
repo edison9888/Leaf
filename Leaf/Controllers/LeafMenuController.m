@@ -18,14 +18,15 @@
 #define kLeafMenuItemSize CGSizeMake(240.0f, 60.0f)
 #define kLeafMenuItemBeginY 20.0f
 
-#define kLeafMenuItemNewslistColor [UIColor colorWithRed:CGColorConvert(220.0f) green:CGColorConvert(169.0f) blue:CGColorConvert(119.0f) alpha:1.0f] 
-#define kLeafMenuItemDownloadedListColor [UIColor colorWithRed:CGColorConvert(100.0f) green:CGColorConvert(222.0f) blue:CGColorConvert(100.0f) alpha:1.0f]
-
-#define kLeafMenuMidGreen  [UIColor colorWithRed:CGColorConvert(89.0) green:CGColorConvert(132.0) blue:CGColorConvert(122.0f) alpha:1.0f]
+#define kLeafMenuMidGreen  [UIColor colorWithRed:CGColorConvert(89.0f) green:CGColorConvert(132.0f) blue:CGColorConvert(122.0f) alpha:1.0f]
 #define kLeafMenuMidDarkGreen  [UIColor colorWithRed:CGColorConvert(62.0f) green:CGColorConvert(89.0f) blue:CGColorConvert(83.0f) alpha:1.0f]
 
-#define kLeafMenuBlue [UIColor colorWithRed:CGColorConvert(0.0f) green:CGColorConvert(174.0f) blue:CGColorConvert(192.0) alpha:1.0f]
-#define kLeafMenuDarkBlue [UIColor colorWithRed:CGColorConvert(0.0f) green:CGColorConvert(115.0) blue:CGColorConvert(126.0) alpha:1.0f]
+#define kLeafMenuBlue [UIColor colorWithRed:CGColorConvert(0.0f) green:CGColorConvert(174.0f) blue:CGColorConvert(192.0f) alpha:1.0f]
+#define kLeafMenuDarkBlue [UIColor colorWithRed:CGColorConvert(0.0f) green:CGColorConvert(115.0f) blue:CGColorConvert(126.0f) alpha:1.0f]
+
+#define kLeafMenuPurple [UIColor colorWithRed:CGColorConvert(81.0f) green:CGColorConvert(56.0f) blue:CGColorConvert(88.0f) alpha:1.0f]
+#define kLeafMenuDarkPurple [UIColor colorWithRed:CGColorConvert(52.0f) green:CGColorConvert(36.0f) blue:CGColorConvert(55.0f) alpha:1.0f]
+
 
 #define kLeafMenuGreen [UIColor colorWithRed:CGColorConvert(111.0f) green:CGColorConvert(202.0f) blue:CGColorConvert(43.0f) alpha:1.0f]
 #define kLeafMenuDarkGreen [UIColor colorWithRed:CGColorConvert(74.0f) green:CGColorConvert(135.0f) blue:CGColorConvert(38.0f) alpha:1.0f]
@@ -97,10 +98,10 @@
     self.view.backgroundColor = kLeafBackgroundColor;
     
     CGFloat offsetY = kLeafMenuItemBeginY;    
-    NSArray *titleArray = [NSArray arrayWithObjects:@"最近新闻", @"已离线", @"马上离线", nil];
-    NSArray *imageArray = [NSArray arrayWithObjects:@"menu_latest", @"menu_saved", @"menu_download", nil];
-    NSArray *colorArray = [NSArray arrayWithObjects:kLeafMenuMidGreen, kLeafMenuBlue, kLeafMenuGreen, nil];
-    NSArray *hlArray = [NSArray arrayWithObjects:kLeafMenuMidDarkGreen, kLeafMenuDarkBlue, kLeafMenuDarkGreen, nil];
+    NSArray *titleArray = [NSArray arrayWithObjects:@"最近新闻", @"已离线", @"马上离线", @"设置", nil];
+    NSArray *imageArray = [NSArray arrayWithObjects:@"menu_latest", @"menu_saved", @"menu_download", @"menu_setting", nil];
+    NSArray *colorArray = [NSArray arrayWithObjects:kLeafMenuMidGreen, kLeafMenuBlue, kLeafMenuPurple, kLeafMenuGreen, nil];
+    NSArray *hlArray = [NSArray arrayWithObjects:kLeafMenuMidDarkGreen, kLeafMenuDarkBlue, kLeafMenuDarkPurple, kLeafMenuDarkGreen, nil];
     
     for (int i = 0; i < titleArray.count; i++) {
         LeafMenuItem *item = [[LeafMenuItem alloc] initWithFrame:CGRectMake(0.0f, offsetY, kLeafMenuItemSize.width, kLeafMenuItemSize.height)];

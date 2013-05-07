@@ -11,7 +11,8 @@
 typedef enum {
     LeafMenuItemTypeLatestNews = 0,
     LeafMenuItemTypeSaved,
-    LeafMenuItemTypeDownloadNow
+    LeafMenuItemTypeDownloadNow,
+    LeafMenuItemTypeSetteings
 }LeafMenuItemType;
 
 @interface LeafMenuController : UIViewController
