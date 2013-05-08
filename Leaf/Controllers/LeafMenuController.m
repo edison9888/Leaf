@@ -14,6 +14,7 @@
 #import "DDMenuController.h"
 #import "LeafMainViewController.h"
 #import "LeafOfflineViewController.h"
+#import "LeafSettingsViewController.h"
 
 #define kLeafMenuItemSize CGSizeMake(240.0f, 60.0f)
 #define kLeafMenuItemBeginY 20.0f
@@ -81,6 +82,13 @@
                 [_menuController setRootController:controller animated:YES];
                 [controller release];
                 
+            }
+            break;
+        case LeafMenuItemTypeSetteings:
+            {
+                LeafSettingsViewController *controller = [[LeafSettingsViewController alloc] init];
+                [_menuController setRootController:controller animated:YES];
+                [controller release];
             }
             break;
         default:

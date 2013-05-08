@@ -127,6 +127,7 @@
 		DBE67FC0170C181B00685DD2 /* bottom_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = DBE67FBF170C181B00685DD2 /* bottom_bg.png */; };
 		DBE67FC3170C1B9500685DD2 /* LeafPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE67FC2170C1B9500685DD2 /* LeafPhotoViewController.m */; };
 		DBECD52D16BA9EA000C4AE31 /* LeafLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBECD52C16BA9EA000C4AE31 /* LeafLoadingView.m */; };
+		DBF45F681739E82E00DEAE7D /* LeafSettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBF45F671739E82E00DEAE7D /* LeafSettingCell.m */; };
 		DBF7136217165A5800FF0894 /* SinaWeibo.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DBF7135717165A5800FF0894 /* SinaWeibo.bundle */; };
 		DBF7136317165A5800FF0894 /* SinaWeibo.m in Sources */ = {isa = PBXBuildFile; fileRef = DBF7135917165A5800FF0894 /* SinaWeibo.m */; };
 		DBF7136417165A5800FF0894 /* SinaWeiboAuthorizeView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBF7135B17165A5800FF0894 /* SinaWeiboAuthorizeView.m */; };
@@ -323,6 +324,8 @@
 		DBE67FC2170C1B9500685DD2 /* LeafPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafPhotoViewController.m; path = Controllers/LeafPhotoViewController.m; sourceTree = "<group>"; };
 		DBECD52B16BA9EA000C4AE31 /* LeafLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafLoadingView.h; path = Views/LeafLoadingView.h; sourceTree = "<group>"; };
 		DBECD52C16BA9EA000C4AE31 /* LeafLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafLoadingView.m; path = Views/LeafLoadingView.m; sourceTree = "<group>"; };
+		DBF45F661739E82E00DEAE7D /* LeafSettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafSettingCell.h; path = Views/LeafSettingCell.h; sourceTree = "<group>"; };
+		DBF45F671739E82E00DEAE7D /* LeafSettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafSettingCell.m; path = Views/LeafSettingCell.m; sourceTree = "<group>"; };
 		DBF7135717165A5800FF0894 /* SinaWeibo.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SinaWeibo.bundle; sourceTree = "<group>"; };
 		DBF7135817165A5800FF0894 /* SinaWeibo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeibo.h; sourceTree = "<group>"; };
 		DBF7135917165A5800FF0894 /* SinaWeibo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeibo.m; sourceTree = "<group>"; };
@@ -502,6 +505,8 @@
 				DB61B7521711501C00838477 /* LeafProgressBar.m */,
 				DBBF469217211E9C0083A924 /* LeafCommentCell.h */,
 				DBBF469317211E9C0083A924 /* LeafCommentCell.m */,
+				DBF45F661739E82E00DEAE7D /* LeafSettingCell.h */,
+				DBF45F671739E82E00DEAE7D /* LeafSettingCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -963,6 +968,7 @@
 				DB6F05C31727CF8400139ADB /* LeafOfflineViewController.m in Sources */,
 				DB87A84317338045002AE0D6 /* LeafComposeViewController.m in Sources */,
 				DB4B318F1738F4B9008D7173 /* LeafSettingsViewController.m in Sources */,
+				DBF45F681739E82E00DEAE7D /* LeafSettingCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
