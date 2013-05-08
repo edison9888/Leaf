@@ -74,26 +74,13 @@ static LeafConfig *_instance;
 {
     _simple = simple;
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    if (_simple) {
-        [ud setValue:__INT(1) forKey:kSimpleMode];
-    }
-    else
-    {
-        [ud setValue:__INT(0) forKey:kSimpleMode];
-    }
+    [ud setBool:_simple forKey:kSimpleMode];
 }
 
 - (void)refreshConfig
 {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    int simpleCode = [ud integerForKey:kSimpleMode];
-    if (simpleCode == 0) {
-        _simple = NO;
-    }
-    else
-    {
-        _simple = YES;
-    }
+    _simple = [ud boolForKey:kSimpleMode];
 }
 
 - (id)init
