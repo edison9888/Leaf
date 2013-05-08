@@ -10,13 +10,14 @@
 
 @interface LeafSettingCell : UIView
 {
+    BOOL _simple;
     BOOL _hasArrow;
 }
 
+@property (nonatomic, assign) BOOL simple;
 @property (nonatomic, assign) BOOL hasArrow;
 
-- (id)initWithTitle:(NSString *)text;
-
+- (void)setTitle:(NSString *)text;
 - (void)setOrigin:(CGPoint)point;
 - (void)addTarget:(id)target action:(SEL)action;
 

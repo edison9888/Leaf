@@ -22,6 +22,8 @@
 
 @implementation LeafSettingCell
 @synthesize hasArrow = _hasArrow;
+@synthesize simple = _simple;
+
 
 - (void)dealloc
 {
@@ -31,39 +33,6 @@
     [super dealloc];
 }
 
-- (id)initWithTitle:(NSString *)text
-{
-    self = [super init];
-    if (self) {
-        UIImage *bg = [UIImage imageNamed:@"settingcell_bg"];
-        UIImage *bg_selected = [UIImage imageNamed:@"settingcell_bg_selected"];
-        _item = [UIButton buttonWithType:UIButtonTypeCustom];
-        CGRect frame = CGRectMake(0.0f, 0.0f, kLeafSettingCellSize.width, kLeafSettingCellSize.height);
-        self.frame = frame;
-        _item.frame = frame;
-        [_item setBackgroundImage:bg forState:UIControlStateNormal];
-        [_item setBackgroundImage:bg_selected forState:UIControlStateHighlighted];
-        //_item
-        [self addSubview:_item];
-        
-        CGSize size = [text sizeWithFont:kLeafFont15 constrainedToSize:kLeafSettingCellSize];
-        
-        UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, size.width, size.height)];
-        title.font = kLeafFont15;
-        title.textColor = [UIColor blackColor];
-        title.backgroundColor = [UIColor clearColor];
-        title.text = text;
-        
-        CGPoint center = CGPointMake(size.width/2.0f + kLeafSettingCellTitleMarginLeft, kLeafSettingCellSize.height/2.0f);
-        title.center = center;
-        [_item addSubview:title];
-        [title release];
-        
-        self.hasArrow = NO;
-    }
-    return self;
-}
-
 - (void)setOrigin:(CGPoint)point
 {
     CGRect frame = self.frame;
@@ -71,9 +40,47 @@
     self.frame = frame;
 }
 
+- (void)setTitle:(NSString *)text
+{
+    CGSize size = [text sizeWithFont:kLeafFont15 constrainedToSize:kLeafSettingCellSize];
+    
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, size.width, size.height)];
+    title.font = kLeafFont15;
+    title.textColor = [UIColor blackColor];
+    title.backgroundColor = [UIColor clearColor];
+    title.text = text;
+    
+    CGPoint center = CGPointMake(size.width/2.0f + kLeafSettingCellTitleMarginLeft, kLeafSettingCellSize.height/2.0f);
+    title.center = center;
+    [self addSubview:title];
+    [title release];
+}
+
+- (void)setSimple:(BOOL)simple
+{
+    _simple = simple;
+    if (_simple) {
+        UIImageView *bg = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kLeafSettingCellSize.width, kLeafSettingCellSize.height)];
+        [bg setImage:[UIImage imageNamed:@"settingcell_bg"]];
+        [self addSubview:bg];
+        [bg release];
+    }
+}
+
 - (void)addTarget:(id)target action:(SEL)action
 {
+    UIImage *bg = [UIImage imageNamed:@"settingcell_bg"];
+    UIImage *bg_selected = [UIImage imageNamed:@"settingcell_bg_selected"];
+    _item = [UIButton buttonWithType:UIButtonTypeCustom];
+    CGRect frame = CGRectMake(0.0f, 0.0f, kLeafSettingCellSize.width, kLeafSettingCellSize.height);
+    self.frame = frame;
+    _item.frame = frame;
+    [_item setBackgroundImage:bg forState:UIControlStateNormal];
+    [_item setBackgroundImage:bg_selected forState:UIControlStateHighlighted];
+    
+    [self addSubview:_item];
     [_item addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    self.hasArrow = YES;
 }
 
 
