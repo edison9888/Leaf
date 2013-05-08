@@ -17,7 +17,7 @@
 
 // Number 
 #define __INT(v) [NSNumber numberWithInt:v]
-
+#define __BOOL(v) [NSNumber numberWithBool:v]
 // Fonts
 #define kLeafFont10     [UIFont fontWithName:@"FZLTHK--GBK1-0" size:10.0f]
 #define kLeafFont13     [UIFont fontWithName:@"FZLTHK--GBK1-0" size:13.0f]
