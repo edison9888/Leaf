@@ -107,7 +107,7 @@
 
 - (void)setTitle:(NSString *)title
 {
-    UILabel *label = [[UILabel alloc] initWithText:title font:kLeafFont13 textColor:[UIColor blackColor] andOrigin:CGPointMake(0.0f, 0.0f) constrainedToSize:CGSizeMake(220.0f, 40.0f)];
+    UILabel *label = [[UILabel alloc] initWithText:title font:kLeafFont19 textColor:[UIColor blackColor] andOrigin:CGPointMake(0.0f, 0.0f) constrainedToSize:CGSizeMake(220.0f, 40.0f)];
     label.center = CGPointMake(CGWidth(self.frame)/2.0f, CGHeight(self.frame)/2.0f);
     [self addSubview:label];
     [label release];

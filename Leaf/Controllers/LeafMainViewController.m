@@ -91,7 +91,7 @@
     [super viewDidLoad];
         
     LeafNavigationBar *bar = [[LeafNavigationBar alloc] init];
-    [bar setTitle:@"cnbeta.com"];
+    [bar setTitle:@"最近新闻"];
     [bar addLeftItemWithStyle:LeafNavigationItemStyleMenu target:self action:@selector(menuItemClicked:)];
     _bar = bar;
     [_container addSubview:bar];
