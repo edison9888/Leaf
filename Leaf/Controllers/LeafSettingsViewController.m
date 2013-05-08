@@ -23,6 +23,12 @@
 #pragma mark -
 #pragma mark - Handle Cell Events
 
+- (void)menuItemClicked:(id)sender
+{
+    DDMenuController *menuController = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).menuController;
+    [menuController showLeftController:YES];
+}
+
 - (void)accountSettingsClicked
 {
 

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SinaWeibo.h"
+#import "DDMenuController.h"
 
 typedef void (^LeafBlock)(void);
 
@@ -35,7 +36,6 @@ typedef enum {
     LeafPanStateShowingRight
 } LeafPanState;
 
-@class DDMenuController;
 @interface LeafBaseViewController : UIViewController <UIGestureRecognizerDelegate, SinaWeiboDelegate>
 {
     UIView *_container;
