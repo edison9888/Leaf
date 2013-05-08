@@ -53,6 +53,7 @@
     CGPoint center = CGPointMake(size.width/2.0f + kLeafSettingCellTitleMarginLeft, kLeafSettingCellSize.height/2.0f);
     title.center = center;
     [self addSubview:title];
+    [title setUserInteractionEnabled:NO];
     [title release];
 }
 
@@ -62,6 +63,7 @@
     if (_simple) {
         UIImageView *bg = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kLeafSettingCellSize.width, kLeafSettingCellSize.height)];
         [bg setImage:[UIImage imageNamed:@"settingcell_bg"]];
+        [bg setUserInteractionEnabled:YES];
         [self addSubview:bg];
         [bg release];
     }
