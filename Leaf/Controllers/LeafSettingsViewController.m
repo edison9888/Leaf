@@ -6,18 +6,41 @@
 //  Copyright (c) 2013年 Mobimtech. All rights reserved.
 //
 
+#import "SDImageCache.h"
+#import "RFHUD.h"
+
 #import "LeafSettingsViewController.h"
 #import "LeafNavigationBar.h"
 #import "LeafSettingCell.h"
 #import "LeafConfig.h"
 
 #define kLeafSettingCellMarginLeft 0.0f
+#define kLeafSettingCellSize CGSizeMake(320.0f, 49.0f)
 
 @interface LeafSettingsViewController ()
+{
+    UILabel *_diskCacheSizeLabel;
+    LeafSettingCell *_clean;
+}
+
+@property (nonatomic, assign) UILabel *diskCacheSizeLabel;
+
+- (int)cacheSize;
+- (void)clearDisk;
 
 @end
 
 @implementation LeafSettingsViewController
+@synthesize diskCacheSizeLabel = _diskCacheSizeLabel;
+
+
+- (void)dealloc
+{
+    _diskCacheSizeLabel = nil;
+    _clean = nil;
+    
+    [super dealloc];
+}
 
 
 #pragma mark -
@@ -31,7 +54,7 @@
 
 - (void)accountSettingsClicked
 {
-
+    
 }
 
 - (void)switchValueChanged:(id)sender
@@ -45,10 +68,57 @@
 
 - (void)cleanClicked
 {
-    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                    message:@"离线的文章也将被清除哦，确定要清除缓存吗？"
+                                                   delegate:self
+                                          cancelButtonTitle:@"取消"
+                                          otherButtonTitles:@"确定", nil];
+    [alert show];
+    [alert release];
 }
 
-#pragma mark - 
+#pragma SDImageCache Wrapper
+
+- (int)cacheSize
+{
+   int size =  [[SDImageCache sharedImageCache] getSize]; //Byte
+   return size/1024.0f/1024.0f; // MB
+}
+
+- (void)clearDisk
+{
+    NSLog(@"begin clean");
+    [[SDImageCache sharedImageCache] clearDisk];
+    NSLog(@"clean complete");
+}
+
+- (void)refreshCacheSizeLabel:(NSString *)text
+{
+    if (_diskCacheSizeLabel) {
+        CGSize size = [text sizeWithFont:kLeafFont15 constrainedToSize:kLeafSettingCellSize];
+        _diskCacheSizeLabel.text = text;
+        CGRect frame = CGRectMake(kLeafSettingCellSize.width - size.width - 24.0f, (kLeafSettingCellSize.height - size.height)/2.0f , size.width, size.height);
+        _diskCacheSizeLabel.frame = frame;
+    }
+
+}
+
+- (void)getCacheSize
+{
+    NSString *text;
+    int size = [self cacheSize];
+    if (size <= 0) {
+        text = @"0MB";
+    }
+    else
+    {
+        text = [NSString stringWithFormat:@"%dMB", size];
+    }
+    [self refreshCacheSizeLabel:text];
+    [_clean setUserInteractionEnabled:YES];
+}
+
+#pragma mark -
 #pragma mark - ViewController Lifecycle
 
 - (void)viewDidLoad
@@ -100,12 +170,31 @@
     
     LeafSettingCell *clean = [[LeafSettingCell alloc] init];
     [clean addTarget:self action:@selector(cleanClicked)];
-    [clean setTitle:@"清理缓冲"];
+    [clean setTitle:@"清除缓冲"];
     [clean setImage:[UIImage imageNamed:@"clean_more"]];
     [clean setOrigin:CGPointMake(kLeafSettingCellMarginLeft, offsetY)];
     [_container addSubview:clean];
+    _clean = clean;
+    
+    UILabel *label = [[UILabel alloc] init];
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor grayColor];
+    label.font = kLeafFont15;
+    
+    CGRect frame = label.frame;
+    frame.origin.x = CGRectGetWidth(clean.frame) - CGRectGetWidth(frame) - 24.0f;
+    frame.origin.y = (CGRectGetHeight(clean.frame) - CGRectGetHeight(frame))/2.0f;
+    label.frame = frame;
+    _diskCacheSizeLabel = label;
+    [clean addSubview:label];
+    [label release];
     [clean release];
+    [_clean setUserInteractionEnabled:NO];
+    
+    [self performSelectorInBackground:@selector(getCacheSize) withObject:nil];
+    
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -113,4 +202,25 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+
+#pragma mark -
+#pragma mark - UIAlertViewDelegate Method
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) { // confirm, clean disk cache
+        __block LeafSettingsViewController *controller = self;
+        RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
+        [hud setHudFont:kLeafFont15];
+        [hud setHUDType:RFHUDTypeWaiting andStatus:@"正在清理缓冲"];
+        hud.dismissBlock = ^(void){
+            controller.diskCacheSizeLabel.text = @"0MB";
+        };
+        [hud show];
+        [hud dismissAfterDelay:3.0f];
+        [hud release];
+        [self performSelectorInBackground:@selector(clearDisk) withObject:nil];
+    }
+}
 @end
