@@ -339,7 +339,9 @@ static SDImageCache *instance;
 {
     //[_lock lock];
     [cacheInQueue cancelAllOperations];
-    [[NSFileManager defaultManager] removeItemAtPath:diskCachePath error:nil];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *path = [paths objectAtIndex:0];
+    [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
     [[NSFileManager defaultManager] createDirectoryAtPath:diskCachePath
                               withIntermediateDirectories:YES
                                                attributes:nil
