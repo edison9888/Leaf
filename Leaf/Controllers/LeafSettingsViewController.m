@@ -62,6 +62,7 @@
     LeafSettingCell *accountSettings = [[LeafSettingCell alloc] init];
     [accountSettings addTarget:self action:@selector(accountSettingsClicked)];
     [accountSettings setTitle:@"账号设置"];
+    [accountSettings setImage:[UIImage imageNamed:@"weibo_more"]];
     [accountSettings setOrigin:CGPointMake(kLeafSettingCellMarginLeft, offsetY)];
     [self.view addSubview:accountSettings];
     offsetY = CGRectGetMaxY(accountSettings.frame) + 20.0f;
@@ -71,6 +72,7 @@
     LeafSettingCell *blank = [[LeafSettingCell alloc] init];
     blank.simple = YES;
     [blank setTitle:@"2G/3G为无图模式"];
+    [blank setImage:[UIImage imageNamed:@"image_load_more"]];
     [blank setOrigin:CGPointMake(kLeafSettingCellMarginLeft, offsetY)];
     [blank setUserInteractionEnabled:YES];
     [_container addSubview:blank];

@@ -9,7 +9,8 @@
 #import "LeafSettingCell.h"
 
 #define kLeafSettingCellSize CGSizeMake(320.0f, 49.0f)
-#define kLeafSettingCellTitleMarginLeft 30.0f
+#define kLeafSettingCellLogoMarginLeft 24.0f
+#define kLeafSettingCellTitleMarginLeft 56.0f
 #define kLeafSettingCellArrowMarginRight 32.0f
 @interface LeafSettingCell ()
 {
@@ -55,6 +56,17 @@
     [self addSubview:title];
     [title setUserInteractionEnabled:NO];
     [title release];
+}
+
+- (void)setImage:(UIImage *)image
+{
+    UIImageView *logo = [[UIImageView alloc] initWithImage:image];
+    CGRect frame = logo.bounds;
+    frame.origin.x = kLeafSettingCellLogoMarginLeft;
+    frame.origin.y = (kLeafSettingCellSize.height - image.size.height)/2.0f;
+    logo.frame = frame;
+    [self addSubview:logo];
+    [logo release];
 }
 
 - (void)setSimple:(BOOL)simple

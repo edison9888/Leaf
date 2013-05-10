@@ -18,6 +18,7 @@
 @property (nonatomic, assign) BOOL hasArrow;
 
 - (void)setTitle:(NSString *)text;
+- (void)setImage:(UIImage *)image;
 - (void)setOrigin:(CGPoint)point;
 - (void)addTarget:(id)target action:(SEL)action;
 
