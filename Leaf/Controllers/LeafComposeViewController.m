@@ -195,7 +195,7 @@
     
     UILabel *remainLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_shareImageView.frame), CGRectGetMaxY(_shareImageView.frame), 60.0f, 20.0f)];
     _remainLabel = remainLabel;
-    _remainLabel.textAlignment = UITextAlignmentCenter;
+    _remainLabel.textAlignment = NSTextAlignmentCenter;
     _remainLabel.backgroundColor = [UIColor clearColor];
     _remainLabel.font = kLeafFont15;
     _remainLabel.textColor = [UIColor blackColor];
