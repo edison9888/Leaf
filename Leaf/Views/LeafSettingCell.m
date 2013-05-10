@@ -36,8 +36,7 @@
 
 - (void)setOrigin:(CGPoint)point
 {
-    CGRect frame = self.frame;
-    frame.origin = point;
+    CGRect frame = CGRectMake(point.x, point.y, kLeafSettingCellSize.width, kLeafSettingCellSize.height);
     self.frame = frame;
 }
 
@@ -94,7 +93,6 @@
     
     [self addSubview:_item];
     [_item addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-    self.hasArrow = YES;
 }
 
 
