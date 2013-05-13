@@ -27,3 +27,10 @@
 #define kLeafBoldFont18 [UIFont fontWithName:@"FZLTZHK--GBK1-0" size:18.0f]
 #define kLeafBoldFont16 [UIFont fontWithName:@"FZLTZHK--GBK1-0" size:16.0f]
 #define kLeafBoldFont13 [UIFont fontWithName:@"FZLTZHK--GBK1-0" size:13.0f]
+
+
+// URL Stuff
+
+#define kNewsListURL @"http://www.cnbeta.com/api/getNewsList.php?limit=20"
+#define kMoreNewsURL @"http://www.cnbeta.com/api/getNewsList.php?fromArticleId=%@&limit=10"
+#define kArticleUrl  @"http://www.cnbeta.com/api/getNewsContent2.php?articleId=%@"

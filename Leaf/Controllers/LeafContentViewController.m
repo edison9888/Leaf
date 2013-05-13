@@ -8,13 +8,14 @@
 #import <CommonCrypto/CommonDigest.h>
 
 #import "ASIDownloadCache.h"
+#import "TFHpple.h"
 #import "RFHUD.h"
 
 #import "LeafContentViewController.h"
 #import "LeafNavigationBar.h"
 #import "LeafHelper.h"
+#import "LeafNewsData.h"
 #import "LeafLoadingView.h"
-#import "TFHpple.h"
 #import "LeafConfig.h"
 #import "LeafPhotoViewController.h"
 #import "LeafWebViewController.h"
@@ -78,14 +79,12 @@ iframe { \
 @synthesize videoUrl = _videoUrl;
 @synthesize url = _url;
 @synthesize urls = _urls;
-@synthesize articleId = _articleId;
-@synthesize articleTitle = _articleTitle;
+@synthesize data = _data;
 
 
 - (void)dealloc
 {
-    [_articleId release], _articleId = nil;
-    [_articleTitle release], _articleTitle = nil;
+    [_data release], _data = nil;
     [_url release], _url = nil;
     [_videoUrl release], _videoUrl = nil;
     [_urls release], _urls = nil;
@@ -96,12 +95,11 @@ iframe { \
     [super dealloc];
 }
 
-- (id)initWithURL:(NSString *)url andTitle:(NSString *)title
+- (id)initWithLeafData:(LeafNewsData *)data
 {
     
     if (self = [super init]) {
-        self.url = url;
-        self.articleTitle = title;
+        self.url = [NSString stringWithFormat:kArticleUrl, data.articleId];
     }
     return self;
 }
@@ -112,7 +110,8 @@ iframe { \
 	
     LeafNavigationBar *bar = [[LeafNavigationBar alloc] init];
     [bar addLeftItemWithStyle:LeafNavigationItemStyleBack target:self action:@selector(backClicked:)];
-    [bar addRightItemWithStyle:LeafNavigationItemStyleShare target:self action:@selector(shareClicked:)];
+    [bar addRightItemWithStyle:LeafNavigationItemStyleShare middle:YES target:self action:@selector(shareClicked:)];
+    [bar addCommentBox:@"16" target:self action:@selector(commentBoxClicked)];
     [_container addSubview:bar];
     [bar release];
         
@@ -145,7 +144,7 @@ iframe { \
         vc.view.frame = CGRectMake(CGWidth(frame), 0.0f, CGWidth(frame), CGHeight(frame));
         [contentViewController pushController:vc];
         vc.hasMask = YES;
-        [vc loadData:contentViewController.articleId];
+        [vc loadData:contentViewController.data.articleId];
         [vc release];
     } coveredBlock:NULL
     andDismissBlock:^{
@@ -176,7 +175,7 @@ iframe { \
 
 - (void)presentComposeController:(UIImage *)image
 {
-    NSString *status = [NSString stringWithFormat:@" //%@ -- (来自 Leaf)", _articleTitle];
+    NSString *status = [NSString stringWithFormat:@" //%@ -- (来自 Leaf)", _data.title];
     LeafComposeViewController *vc = [[LeafComposeViewController alloc] init];
     vc.view.frame = self.view.bounds;
     [vc setStatus:status];
@@ -313,6 +312,18 @@ iframe { \
     }
     
     
+}
+
+- (void)commentBoxClicked
+{
+    LeafCommentViewController *vc = [[LeafCommentViewController alloc] init];
+    CGRect frame = self.view.frame;
+    vc.view.frame = CGRectMake(CGWidth(frame), 0.0f, CGWidth(frame), CGHeight(frame));
+    [self presentViewController:vc option:LeafAnimationOptionHorizontal completion:^{
+            vc.hasMask = YES;
+            [vc loadData:_data.articleId];
+            [vc release];
+        }];
 }
 
 - (void)safariClicked:(id)sender

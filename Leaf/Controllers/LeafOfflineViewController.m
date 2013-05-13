@@ -18,7 +18,6 @@
 #import "LeafContentViewController.h"
 
 #define kLeafOfflineProgressBarH 2.0f
-#define kArticleUrl  @"http://www.cnbeta.com/api/getNewsContent2.php?articleId=%@"
 #define kLeafNewsItemTag 1001
 
 
@@ -255,10 +254,7 @@
     }
     LeafNewsData *data = [_leaves safeObjectAtIndex:indexPath.row];
     if (data) {
-        NSString *url = [NSString stringWithFormat:kArticleUrl, data.articleId];
-        NSString *title = data.title;
-        LeafContentViewController *vc = [[LeafContentViewController alloc] initWithURL:url andTitle:title];
-        vc.articleId = data.articleId;
+        LeafContentViewController *vc = [[LeafContentViewController alloc] initWithLeafData:data];
         vc.view.frame = self.view.bounds;
         [self presentViewController:vc option:LeafAnimationOptionHorizontal completion:^{
             [self blockDDMenuControllerGesture:YES];

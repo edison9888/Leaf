@@ -11,7 +11,7 @@
 
 
 
-@class LeafLoadingView;
+@class LeafLoadingView, LeafNewsData;
 @interface LeafContentViewController : LeafBaseViewController  <UIWebViewDelegate, LeafURLConnectionDelegate>
 
 {
@@ -21,17 +21,14 @@
     NSString *_url;
     LeafURLConnection *_connection;
     NSString *_videoUrl;
-    NSString *_articleId;
-    NSString *_articleTitle;
-
+    LeafNewsData *_data;
 }
 
 @property (nonatomic, retain) NSString *videoUrl;
 @property (nonatomic, retain) NSString *url;
-@property (nonatomic, retain) NSString *articleId;
-@property (nonatomic, retain) NSString *articleTitle;
+@property (nonatomic, retain) LeafNewsData *data;
 
-- (id)initWithURL:(NSString *)url andTitle:(NSString *)title;
+- (id)initWithLeafData:(LeafNewsData *)data;
 - (void)GET;
 
 @end
