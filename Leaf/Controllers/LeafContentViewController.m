@@ -20,6 +20,7 @@
 #import "LeafWebViewController.h"
 #import "LeafCommentViewController.h"
 #import "LeafComposeViewController.h"
+#import "GCDHelper.h"
 
 #define kLeafContentCSS @"body { \
 background:#ECEAE2 !important; \
@@ -196,14 +197,17 @@ iframe { \
     NSMutableArray *images = [[NSMutableArray alloc] init];
     
     while (offsetY < (totalHeight - 10.0f)) {
-        UIGraphicsBeginImageContext(_content.frame.size);
-        
-        [_content.scrollView setContentOffset:CGPointMake(0.0f, offsetY)];
-        [_content.layer renderInContext:UIGraphicsGetCurrentContext()];
-        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        [images addObject:image];
-        offsetY += image.size.height;
+        @autoreleasepool {
+            UIGraphicsBeginImageContext(_content.frame.size);
+            
+            [_content.scrollView setContentOffset:CGPointMake(0.0f, offsetY)];
+            [_content.layer renderInContext:UIGraphicsGetCurrentContext()];
+            UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            [images addObject:image];
+            offsetY += image.size.height;
+
+        }
     }
     
     UIGraphicsBeginImageContext(_content.scrollView.contentSize);
@@ -217,24 +221,12 @@ iframe { \
     UIGraphicsEndImageContext();
     [images release];
     
-    NSData *imageData = UIImageJPEGRepresentation(fullImage, 0.5);
-        
-    UIImage *newImage = [UIImage imageWithData:imageData];
     [_content.scrollView setContentOffset:currentOffset];
-    
-    return newImage;
+    return fullImage;
 }
 
 
-- (void)createWeibo
-{
-    UIImage *image = [self convertWebViewToImage];
-    __block LeafContentViewController *controller = self;
-    _hud.dismissBlock = ^(void){
-        [controller presentComposeController:image];
-    };
-    [_hud dismiss];
-}
+
 
 - (BOOL)isSupportedExtension:(NSString *)extension
 {
@@ -293,6 +285,7 @@ iframe { \
 {
     SinaWeibo *sinaweibo = [self sinaweibo];
     if ([sinaweibo isAuthValid]) {
+        __block UIImage *image = [[self convertWebViewToImage] retain];
         RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
         _hud = hud;
         [hud setHudFont:kLeafFont15];
@@ -300,7 +293,20 @@ iframe { \
         [hud show];
         [hud release];
         
-        [self performSelectorInBackground:@selector(createWeibo) withObject:nil];
+        __block UIImage *newImage;
+        __block LeafContentViewController *controller = self;
+        [GCDHelper dispatchBlock:^{
+                            NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+                            newImage = [[UIImage alloc] initWithData:imageData];
+                            [image release];
+                        }
+                        complete:^{
+                            _hud.dismissBlock = ^(void){
+                                [controller presentComposeController:newImage];
+                                [newImage release];
+                            };
+                            [_hud dismissAfterDelay:1.5f];
+                        }];
     }
     else{
         [sinaweibo logIn];
