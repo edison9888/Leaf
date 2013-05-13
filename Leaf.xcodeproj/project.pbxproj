@@ -90,6 +90,7 @@
 		DB9FDE6F17093527002E4052 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB9FDE6E17093527002E4052 /* SystemConfiguration.framework */; };
 		DB9FDE711709352F002E4052 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DB9FDE701709352F002E4052 /* libz.dylib */; };
 		DB9FDE7317093548002E4052 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB9FDE7217093548002E4052 /* CFNetwork.framework */; };
+		DBA1C34D1740B16B00F3EF58 /* GCDHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA1C34C1740B16B00F3EF58 /* GCDHelper.m */; };
 		DBA818131711AA9F008D4864 /* LeafBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA818121711AA9F008D4864 /* LeafBaseViewController.m */; };
 		DBA818161711B90E008D4864 /* LeafContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA818151711B90E008D4864 /* LeafContentViewController.m */; };
 		DBADCD8A16F84CCA00065CB5 /* LeafMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBADCD8416F84CCA00065CB5 /* LeafMenuController.m */; };
@@ -271,6 +272,8 @@
 		DB9FDE6E17093527002E4052 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		DB9FDE701709352F002E4052 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		DB9FDE7217093548002E4052 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		DBA1C34B1740B16B00F3EF58 /* GCDHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDHelper.h; sourceTree = "<group>"; };
+		DBA1C34C1740B16B00F3EF58 /* GCDHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDHelper.m; sourceTree = "<group>"; };
 		DBA818111711AA9F008D4864 /* LeafBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafBaseViewController.h; path = Controllers/LeafBaseViewController.h; sourceTree = "<group>"; };
 		DBA818121711AA9F008D4864 /* LeafBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafBaseViewController.m; path = Controllers/LeafBaseViewController.m; sourceTree = "<group>"; };
 		DBA818141711B90E008D4864 /* LeafContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafContentViewController.h; path = Controllers/LeafContentViewController.h; sourceTree = "<group>"; };
@@ -672,6 +675,8 @@
 				DBE3627716F0137200494A0C /* LeafConfig.m */,
 				DB61B75817125EC100838477 /* LeafStack.h */,
 				DB61B75917125EC200838477 /* LeafStack.m */,
+				DBA1C34B1740B16B00F3EF58 /* GCDHelper.h */,
+				DBA1C34C1740B16B00F3EF58 /* GCDHelper.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1017,6 +1022,7 @@
 				DB87A84317338045002AE0D6 /* LeafComposeViewController.m in Sources */,
 				DB4B318F1738F4B9008D7173 /* LeafSettingsViewController.m in Sources */,
 				DBF45F681739E82E00DEAE7D /* LeafSettingCell.m in Sources */,
+				DBA1C34D1740B16B00F3EF58 /* GCDHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
