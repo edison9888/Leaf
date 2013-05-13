@@ -8,6 +8,7 @@
 
 #import "LeafNavigationBar.h"
 #import "LeafHelper.h"
+#import "LeafCommentBox.h"
 
 @implementation LeafNavigationBar
 
@@ -67,23 +68,59 @@
     }
 }
 
-- (void)addRightItemWithStyle:(LeafNavigationItemStyle)style target:(id)target action:(SEL)action
+
+- (void) addRightItemWithStyle:(LeafNavigationItemStyle)style target:(id)target action:(SEL)action
+{
+    [self addRightItemWithStyle:style middle:NO target:target action:action];
+}
+
+
+- (void)addCommentBox:(NSString *)count target:(id)target action:(SEL)action
+{
+    LeafCommentBox *box = [[LeafCommentBox alloc] init];
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn  setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithRed:CGColorConvert(217.0f) green:CGColorConvert(217.0f) blue:CGColorConvert(216.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
+    [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    [btn addSubview:box];
+    CGSize btnSize = CGSizeMake(44.0f, 44.0f);
+    box.center = CGPointMake(btnSize.width/2.0f, btnSize.height/2.0f + 2.0f);
+    [box setText:count];
+    [box release];
+    [btn setFrame:CGRectMake(CGWidth(self.frame) - btnSize.width, 0.0f, btnSize.width, btnSize.height)];
+    [self addSubview:btn];
+}
+
+- (void)addRightItemWithStyle:(LeafNavigationItemStyle)style middle:(BOOL)middle target:(id)target action:(SEL)action
 {
     if (_rightBtn) {
         NSLog(@"rightBtn already exists.");
         return;
     }
     
-    UIImageView *rightIcon = [[UIImageView alloc] initWithFrame:CGRectMake(16.0f, 8.0f, 30.0f, 30.0f)];
+    UIImageView *rightIcon = [[UIImageView alloc] init];
     _rightIcon = rightIcon;        
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn addSubview:_rightIcon];
     [rightIcon release];
     _rightBtn = rightBtn;
     [_rightBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithRed:CGColorConvert(217.0f) green:CGColorConvert(217.0f) blue:CGColorConvert(216.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
-    //[UIImage imageWithColor:[UIColor colorWithRed:CGColorConvert(4.0f) green:CGColorConvert(135.0f) blue:CGColorConvert(220.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
-    CGFloat width = CGWidth(_rightIcon.frame) + 22.0f;
-    [rightBtn setFrame:CGRectMake(CGWidth(self.frame) - width, 0.0f, width, 44.0f)];
+    
+    CGFloat originX = 0.0f;
+    CGFloat width = 0.0f;
+    if (middle) {
+        [_rightIcon setFrame:CGRectMake(11.0f, 6.0f, 30.0f, 30.0f)];
+        width = CGWidth(_rightIcon.frame) + 12.0f;
+        originX = CGWidth(self.frame) - width - 44.0f;
+    }
+    else
+    {
+        [_rightIcon setFrame:CGRectMake(6.0f, 8.0f, 30.0f, 30.0f)];
+        width = CGWidth(_rightIcon.frame) + 22.0f;
+        originX = CGWidth(self.frame) - width;
+    }
+    
+    [rightBtn setFrame:CGRectMake(originX , 0.0f, width, 44.0f)];
     [self addSubview:_rightBtn];
     
     switch (style) {

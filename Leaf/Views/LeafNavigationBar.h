@@ -26,7 +26,13 @@ typedef enum
     UIButton *_rightBtn;
 }
 
+- (void) setTitle:(NSString *)title;
+
 - (void) addLeftItemWithStyle:(LeafNavigationItemStyle)style target:(id)target action:(SEL)action;
 - (void) addRightItemWithStyle:(LeafNavigationItemStyle)style target:(id)target action:(SEL)action;
-- (void) setTitle:(NSString *)title;
+- (void)addRightItemWithStyle:(LeafNavigationItemStyle)style middle:(BOOL)middle target:(id)target action:(SEL)action;
+
+
+- (void)addCommentBox:(NSString *)count target:(id)target action:(SEL)action;
+
 @end
