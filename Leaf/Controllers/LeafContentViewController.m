@@ -109,7 +109,7 @@ iframe { \
     LeafNavigationBar *bar = [[LeafNavigationBar alloc] init];
     [bar addLeftItemWithStyle:LeafNavigationItemStyleBack target:self action:@selector(backClicked:)];
     [bar addRightItemWithStyle:LeafNavigationItemStyleShare middle:YES target:self action:@selector(shareClicked:)];
-    [bar addCommentBox:@"16" target:self action:@selector(commentBoxClicked)];
+    [bar addCommentBox:_data.cmtNum target:self action:@selector(commentBoxClicked)];
     [_container addSubview:bar];
     [bar release];
         
