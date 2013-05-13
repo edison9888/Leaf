@@ -94,10 +94,9 @@
     }
     
     NSString *tmp = NSTemporaryDirectory();
-    NSLog(@"size: %d, tmp : %@", size, tmp);
     NSDictionary *attrs = [[NSFileManager defaultManager] attributesOfItemAtPath:tmp error:nil];
     size += [attrs fileSize];
-    NSLog(@"size: %d", size);
+    
     return size/1024.0f/1024.0f; // MB
 }
 
@@ -193,7 +192,7 @@
     
     LeafSettingCell *clean = [[LeafSettingCell alloc] init];
     [clean addTarget:self action:@selector(cleanClicked)];
-    [clean setTitle:@"清除缓冲"];
+    [clean setTitle:@"清除缓存"];
     [clean setImage:[UIImage imageNamed:@"clean_more"]];
     [clean setOrigin:CGPointMake(kLeafSettingCellMarginLeft, offsetY)];
     [_container addSubview:clean];
