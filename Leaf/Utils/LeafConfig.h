@@ -17,4 +17,6 @@
 
 + (id)sharedInstance;
 
+- (BOOL)showPicture;
+
 @end

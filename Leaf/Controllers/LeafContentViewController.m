@@ -305,7 +305,7 @@ iframe { \
                                 [controller presentComposeController:newImage];
                                 [newImage release];
                             };
-                            [_hud dismissAfterDelay:1.5f];
+                            [_hud dismissAfterDelay:1.0f];
                         }];
     }
     else{
@@ -566,7 +566,7 @@ iframe { \
     }
     
     LeafConfig *config = [LeafConfig sharedInstance];
-    if (config.simple) {
+    if (![config showPicture]) {
         html = [self purgeImageLinks:html];
     }
     //NSLog(@"html: %@", html);

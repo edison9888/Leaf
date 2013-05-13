@@ -8,6 +8,7 @@
 
 #import "LeafConfig.h"
 #import "LeafHelper.h"
+#import "Reachability.h"
 
 #define kSimpleMode @"SimpleMode"
 
@@ -69,6 +70,12 @@ static LeafConfig *_instance;
 
 #pragma mark - 
 #pragma mark - Leaf Config Stuff
+
+- (BOOL)showPicture
+{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    return !(([reachability currentReachabilityStatus] != ReachableViaWiFi)&&_simple);
+}
 
 - (void)setSimple:(BOOL)simple
 {
