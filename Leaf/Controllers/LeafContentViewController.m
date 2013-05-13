@@ -77,7 +77,6 @@ iframe { \
 
 @implementation LeafContentViewController
 @synthesize videoUrl = _videoUrl;
-@synthesize url = _url;
 @synthesize urls = _urls;
 @synthesize data = _data;
 
@@ -85,7 +84,7 @@ iframe { \
 - (void)dealloc
 {
     [_data release], _data = nil;
-    [_url release], _url = nil;
+   
     [_videoUrl release], _videoUrl = nil;
     [_urls release], _urls = nil;
     [_videoUrl release], _videoUrl = nil;
@@ -97,9 +96,8 @@ iframe { \
 
 - (id)initWithLeafData:(LeafNewsData *)data
 {
-    
     if (self = [super init]) {
-        self.url = [NSString stringWithFormat:kArticleUrl, data.articleId];
+        self.data = data;
     }
     return self;
 }
@@ -144,7 +142,7 @@ iframe { \
         vc.view.frame = CGRectMake(CGWidth(frame), 0.0f, CGWidth(frame), CGHeight(frame));
         [contentViewController pushController:vc];
         vc.hasMask = YES;
-        [vc loadData:contentViewController.data.articleId];
+        [vc loadData:_data.articleId];
         [vc release];
     } coveredBlock:NULL
     andDismissBlock:^{
@@ -328,7 +326,8 @@ iframe { \
 
 - (void)safariClicked:(id)sender
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_url]];
+    NSString *url = [NSString stringWithFormat:kArticleUrl, _data.articleId];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
 }
 
 
@@ -378,8 +377,9 @@ iframe { \
 
 - (void)GET
 {
-    NSLog(@"article url: %@", _url);
-    NSString *path = [[ASIDownloadCache sharedCache] pathToCachedResponseDataForURL:[NSURL URLWithString:_url]];
+    NSString *url = [NSString stringWithFormat:kArticleUrl, _data.articleId];
+    NSLog(@"article url: %@", url);
+    NSString *path = [[ASIDownloadCache sharedCache] pathToCachedResponseDataForURL:[NSURL URLWithString:url]];
     if (path) {
         NSData *data = [NSData dataWithContentsOfFile:path];
         if (data) {
@@ -393,8 +393,8 @@ iframe { \
         _connection = [[LeafURLConnection alloc] init];
         _connection.delegate = self;
     }
-    NSLog(@"article url: %@", _url);
-    [_connection GET:_url];
+    
+    [_connection GET:url];
     
 }
 

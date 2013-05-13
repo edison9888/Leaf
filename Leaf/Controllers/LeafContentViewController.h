@@ -18,14 +18,12 @@
     @private
     LeafLoadingView *_loading;
     UIWebView *_content;
-    NSString *_url;
     LeafURLConnection *_connection;
     NSString *_videoUrl;
     LeafNewsData *_data;
 }
 
 @property (nonatomic, retain) NSString *videoUrl;
-@property (nonatomic, retain) NSString *url;
 @property (nonatomic, retain) LeafNewsData *data;
 
 - (id)initWithLeafData:(LeafNewsData *)data;
