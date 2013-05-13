@@ -363,6 +363,14 @@ static SDImageCache *instance;
             [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
         }
     }
+    
+    NSString *tmp = NSTemporaryDirectory();
+    [[NSFileManager defaultManager] removeItemAtPath:tmp error:nil];
+    [[NSFileManager defaultManager] createDirectoryAtPath:tmp
+                              withIntermediateDirectories:YES
+                                               attributes:nil
+                                                    error:NULL];
+
     //[_lock unlock];
 }
 

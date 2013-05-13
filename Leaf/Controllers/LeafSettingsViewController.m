@@ -77,18 +77,41 @@
     [alert release];
 }
 
-#pragma SDImageCache Wrapper
+#pragma disk cache utils
 
 - (int)cacheSize
 {
-   int size =  [[SDImageCache sharedImageCache] getSize]; //Byte
-   return size/1024.0f/1024.0f; // MB
+    int size = 0;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *path= [paths objectAtIndex:0];
+    NSDirectoryEnumerator *fileEnumerator = [[NSFileManager defaultManager] enumeratorAtPath:path];
+    for (NSString *fileName in fileEnumerator)
+    {
+        NSString *filePath = [path stringByAppendingPathComponent:fileName];
+        NSDictionary *attrs = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil];
+        size += [attrs fileSize];
+        
+    }
+    
+    NSString *tmp = NSTemporaryDirectory();
+    NSLog(@"size: %d, tmp : %@", size, tmp);
+    NSDictionary *attrs = [[NSFileManager defaultManager] attributesOfItemAtPath:tmp error:nil];
+    size += [attrs fileSize];
+    NSLog(@"size: %d", size);
+    return size/1024.0f/1024.0f; // MB
 }
 
 - (void)clearDisk
 {
     NSLog(@"begin clean");
     [[SDImageCache sharedImageCache] clearDisk];
+    
+    NSString *tmp = NSTemporaryDirectory();
+    [[NSFileManager defaultManager] removeItemAtPath:tmp error:nil];
+    [[NSFileManager defaultManager] createDirectoryAtPath:tmp
+                              withIntermediateDirectories:YES
+                                               attributes:nil
+                                                    error:NULL];
     NSLog(@"clean complete");
 }
 
