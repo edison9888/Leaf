@@ -8,6 +8,7 @@
 #import <CommonCrypto/CommonDigest.h>
 
 #import "ASIDownloadCache.h"
+#import "SDImageCache.h"
 #import "TFHpple.h"
 #import "RFHUD.h"
 
@@ -72,6 +73,10 @@ iframe { \
 - (void)handleData:(NSData *)data;
 
 - (NSString *)fileNameForKey:(NSString *)key;
+
+- (NSArray *)convertWebViewToImages;
+
+- (UIImage *)createFullImage:(NSArray *)images;
 
 @end
 
@@ -178,6 +183,8 @@ iframe { \
     vc.view.frame = self.view.bounds;
     [vc setStatus:status];
     [vc setImage:image];
+    vc.articleUrl = [NSString stringWithFormat:kcnbetaUrl, _data.articleId];
+    vc.themeUrl = _data.theme;
     [self presentViewController:vc option:LeafAnimationOptionVertical completion:^{
         self.shouldBlockGesture = YES;
     }];
@@ -185,13 +192,13 @@ iframe { \
 
 }
 
-- (UIImage *)convertWebViewToImage
+- (NSArray *)convertWebViewToImages
 {
     CGPoint currentOffset = _content.scrollView.contentOffset;
     
     CGFloat totalHeight = _content.scrollView.contentSize.height;
     CGFloat offsetY = 0.0f;
-    NSMutableArray *images = [[NSMutableArray alloc] init];
+    NSMutableArray *images = [[[NSMutableArray alloc] init] autorelease];
     
     while (offsetY < (totalHeight - 10.0f)) {
         @autoreleasepool {
@@ -206,22 +213,27 @@ iframe { \
 
         }
     }
+    [_content.scrollView setContentOffset:currentOffset];
     
+    return images;
+}
+
+
+- (UIImage *)createFullImage:(NSArray *)images
+{
+    CGFloat offsetY = 0.0f;
     UIGraphicsBeginImageContext(_content.scrollView.contentSize);
-    offsetY = 0.0f;
     
     for (UIImage *image in  images) {
         [image drawAtPoint:CGPointMake(0.0f, offsetY)];
         offsetY += image.size.height;
     }
     UIImage *fullImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    [images release];
     
-    [_content.scrollView setContentOffset:currentOffset];
+    UIGraphicsEndImageContext();
+    
     return fullImage;
 }
-
 
 
 
@@ -282,7 +294,9 @@ iframe { \
 {
     SinaWeibo *sinaweibo = [self sinaweibo];
     if ([sinaweibo isAuthValid]) {
-        __block UIImage *image = [[self convertWebViewToImage] retain];
+        UIImage *image = [[SDImageCache sharedImageCache] imageFromKey:_data.theme];
+        [self presentComposeController:image];
+        /*__block NSArray *images = [[self convertWebViewToImages] retain];
         RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
         _hud = hud;
         [hud setHudFont:kLeafFont15];
@@ -293,9 +307,10 @@ iframe { \
         __block UIImage *newImage;
         __block LeafContentViewController *controller = self;
         [GCDHelper dispatchBlock:^{
+                            UIImage *image = [controller createFullImage:images];
                             NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
                             newImage = [[UIImage alloc] initWithData:imageData];
-                            [image release];
+                            [images release];
                         }
                         complete:^{
                             _hud.dismissBlock = ^(void){
@@ -304,6 +319,7 @@ iframe { \
                             };
                             [_hud dismissAfterDelay:1.0f];
                         }];
+         */
     }
     else{
         [sinaweibo logIn];

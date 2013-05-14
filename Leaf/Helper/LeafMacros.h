@@ -34,3 +34,4 @@
 #define kNewsListURL @"http://www.cnbeta.com/api/getNewsList.php?limit=20"
 #define kMoreNewsURL @"http://www.cnbeta.com/api/getNewsList.php?fromArticleId=%@&limit=10"
 #define kArticleUrl  @"http://www.cnbeta.com/api/getNewsContent2.php?articleId=%@"
+#define kcnbetaUrl @"http://www.cnbeta.com/articles/%@.htm"
