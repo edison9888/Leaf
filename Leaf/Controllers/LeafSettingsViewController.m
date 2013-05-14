@@ -77,6 +77,17 @@
     [alert release];
 }
 
+
+- (void)aboutClicked
+{
+    
+}
+
+- (void)opensourceClicked
+{
+
+}
+
 #pragma disk cache utils
 
 - (int)cacheSize
@@ -214,6 +225,29 @@
     [_clean setUserInteractionEnabled:NO];
     
     [self performSelectorInBackground:@selector(getCacheSize) withObject:nil];
+    
+    offsetY = CGRectGetMaxY(_clean.frame) + 20.0f;
+    
+    LeafSettingCell *about = [[LeafSettingCell alloc] init];
+    [about addTarget:self action:@selector(aboutClicked)];
+    about.hasArrow = YES;
+    [about setTitle:@"关于"];
+    [about setImage:[UIImage imageNamed:@"about_more"]];
+    [about setOrigin:CGPointMake(kLeafSettingCellMarginLeft, offsetY)];
+    [self.view addSubview:about];
+    offsetY = CGRectGetMaxY(about.frame) - 1.0f;
+    [about release];
+
+    LeafSettingCell *opensource = [[LeafSettingCell alloc] init];
+    [opensource addTarget:self action:@selector(opensourceClicked)];
+    opensource.hasArrow = YES;
+    [opensource setTitle:@"开源声明"];
+    [opensource setImage:[UIImage imageNamed:@"feedback_more"]];
+    [opensource setOrigin:CGPointMake(kLeafSettingCellMarginLeft, offsetY)];
+    [self.view addSubview:opensource];
+    offsetY = CGRectGetMaxY(opensource.frame) + 20.0f;
+    [opensource release];
+
     
 }
 
