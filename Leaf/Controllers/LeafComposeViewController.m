@@ -151,19 +151,26 @@
     shareView.userInteractionEnabled = YES;
     [self.view addSubview:shareView];
     
-    
+    UIImageView *cancelIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"share_cancel"]];
+    cancelIcon.center = CGPointMake(22.0f, 22.0f);
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [cancelBtn setFrame:CGRectMake(12.0f, 18.0f, 16.0f, 16.0f)];
-    [cancelBtn setImage:[UIImage imageNamed:@"share_cancel"] forState:UIControlStateNormal];
+    [cancelBtn setFrame:CGRectMake(0.0f, 2.0f, 44.0f, 44.0f)];
+    [cancelBtn setBackgroundImage:[UIImage imageWithColor:kLeafHighlightColor] forState:UIControlStateHighlighted];
     [cancelBtn addTarget:self action:@selector(cancelClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [cancelBtn addSubview:cancelIcon];
     [shareView addSubview:cancelBtn];
+    [cancelIcon release];
     
+    UIImageView *confirmIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"share_ok"]];
+    confirmIcon.center = CGPointMake(22.0f, 22.0f);
     UIButton *confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [confirmBtn setFrame:CGRectMake(282.0f, 16.0f, 21.0f, 17.0f)];
-    [confirmBtn setImage:[UIImage imageNamed:@"share_ok"] forState:UIControlStateNormal];
+    [confirmBtn setFrame:CGRectMake(268.0f, 2.0f, 44.0f, 44.0f)];
+    [confirmBtn setBackgroundImage:[UIImage imageWithColor:kLeafHighlightColor] forState:UIControlStateHighlighted];
     [confirmBtn addTarget:self action:@selector(confirmClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [confirmBtn addSubview:confirmIcon];
     [shareView addSubview:confirmBtn];
     _confirmBtn = confirmBtn;
+    [confirmIcon release];
     
     UIImageView *shareBg = [[UIImageView alloc] initWithFrame:CGRectMake(14.0f, 48.0f, 284.0f, 81.0f)];
     [shareBg setImage:[UIImage imageNamed:@"share_content_background"]];
