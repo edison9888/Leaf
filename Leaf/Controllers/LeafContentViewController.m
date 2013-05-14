@@ -517,12 +517,14 @@ iframe { \
             [vc release];
         }
         else {
-            LeafWebViewController *vc = [[LeafWebViewController alloc] initWithUrl:request.URL];
-            [self presentViewController:vc option:LeafAnimationOptionVertical
+            __block LeafWebViewController *controller = [[LeafWebViewController alloc] init];
+            [self presentViewController:controller option:LeafAnimationOptionVertical
                              completion:^(void){
                                  self.shouldBlockGesture = YES;
+                                 [controller loadURL:request.URL];
+                                 [controller release], controller = nil;
                              }];
-            [vc release];
+            
         }
         return NO;
     }

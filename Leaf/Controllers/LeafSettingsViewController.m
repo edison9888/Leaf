@@ -13,6 +13,7 @@
 #import "LeafNavigationBar.h"
 #import "LeafSettingCell.h"
 #import "LeafConfig.h"
+#import "LeafWebViewController.h"
 
 #define kLeafSettingCellMarginLeft 0.0f
 #define kLeafSettingCellSize CGSizeMake(320.0f, 49.0f)
@@ -85,7 +86,15 @@
 
 - (void)opensourceClicked
 {
-
+    NSString *pagePath = [[NSBundle mainBundle] pathForResource:@"open_source" ofType:@"html"];
+    NSString *page = [NSString stringWithContentsOfFile:pagePath encoding:NSUTF8StringEncoding error:nil];
+    __block LeafWebViewController *controller = [[LeafWebViewController alloc] init];
+    controller.view.frame = _container.frame;
+    [self presentViewController:controller option:LeafAnimationOptionVertical completion:^{
+        [controller loadContent:page];
+        [controller enablePanRightGestureWithDismissBlock:NULL];
+        [controller release], controller = nil;
+    }];
 }
 
 #pragma disk cache utils
@@ -172,7 +181,7 @@
     [accountSettings setTitle:@"账号设置"];
     [accountSettings setImage:[UIImage imageNamed:@"weibo_more"]];
     [accountSettings setOrigin:CGPointMake(kLeafSettingCellMarginLeft, offsetY)];
-    [self.view addSubview:accountSettings];
+    [_container addSubview:accountSettings];
     offsetY = CGRectGetMaxY(accountSettings.frame) + 20.0f;
     [accountSettings release];
     
@@ -234,7 +243,7 @@
     [about setTitle:@"关于"];
     [about setImage:[UIImage imageNamed:@"about_more"]];
     [about setOrigin:CGPointMake(kLeafSettingCellMarginLeft, offsetY)];
-    [self.view addSubview:about];
+    [_container addSubview:about];
     offsetY = CGRectGetMaxY(about.frame) - 1.0f;
     [about release];
 
@@ -244,7 +253,7 @@
     [opensource setTitle:@"开源声明"];
     [opensource setImage:[UIImage imageNamed:@"feedback_more"]];
     [opensource setOrigin:CGPointMake(kLeafSettingCellMarginLeft, offsetY)];
-    [self.view addSubview:opensource];
+    [_container addSubview:opensource];
     offsetY = CGRectGetMaxY(opensource.frame) + 20.0f;
     [opensource release];
 

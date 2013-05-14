@@ -11,34 +11,45 @@
 #define kOpenInSafari 0
 #define kCopyLink 1
 
+
+@interface LeafWebViewController ()
+{
+    NSURL *_url;
+}
+
+@property (nonatomic, retain) NSURL *url;
+@end
+
 @implementation LeafWebViewController
 @synthesize url = _url;
 
 - (void)dealloc
 {
     _mainWebView.delegate = nil;
-    [_url release], _url = nil;
     [_mainWebView release], _mainWebView = nil;
+    [_url release], _url = nil;
+    
     [super dealloc];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
 
-- (id)initWithUrl:(NSURL *)url
-{
-    if (self = [super init]) {
-        self.url = url;
-    }
-    return self;
-}
 
 - (void)updateToolBar
 {
     _goBackBtn.enabled = [_mainWebView canGoBack];
     _goForwardBtn.enabled = [_mainWebView canGoForward];
+}
+
+
+- (void)loadURL:(NSURL *)url
+{
+    self.url = url;
+    [_mainWebView loadRequest:[NSURLRequest requestWithURL:url]];
+}
+
+- (void)loadContent:(NSString *)content
+{
+    [_mainWebView loadHTMLString:content baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] resourcePath] isDirectory:YES]];
 }
 
 #pragma mark - ToolBar Events
@@ -117,8 +128,8 @@
     
     _mainWebView = [[UIWebView alloc] init];
     [_mainWebView setFrame:CGRectMake(0.0f, 44.0f, 320.0f, CGHeight(self.view.frame) - 44.0f)];
-    [_mainWebView loadRequest:[NSURLRequest requestWithURL:_url]];
     _mainWebView.scalesPageToFit = YES;
+    _mainWebView.dataDetectorTypes = UIDataDetectorTypeNone;
     _mainWebView.delegate = self;
     [self.view addSubview:_mainWebView];
 }

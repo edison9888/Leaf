@@ -11,13 +11,11 @@
 @interface LeafWebViewController : LeafBaseViewController <UIActionSheetDelegate, UIWebViewDelegate>
 {
     UIWebView *_mainWebView;
-    NSURL *_url;
     UIButton *_goBackBtn;
     UIButton *_goForwardBtn;
 }
 
-@property (nonatomic, retain) NSURL *url;
-
-- (id)initWithUrl:(NSURL *)url;
+- (void)loadURL:(NSURL *)url;
+- (void)loadContent:(NSString *)content;
 
 @end
