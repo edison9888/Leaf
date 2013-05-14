@@ -35,8 +35,6 @@
 @synthesize hud = _hud;
 @synthesize request = _request;
 @synthesize shareImage = _shareImage;
-@synthesize themeUrl = _themeUrl;
-@synthesize articleUrl = _articleUrl;
 
 - (void)dealloc
 {
@@ -47,8 +45,6 @@
     _hud = nil;
     [_request release], _request = nil;
     [_shareImage release], _shareImage = nil;
-    [_themeUrl release], _themeUrl = nil;
-    [_articleUrl release], _articleUrl = nil;
     [super dealloc];
 }
 
@@ -124,12 +120,10 @@
     SinaWeibo *sinaweibo = [self sinaweibo];
     
     NSString *status = _statusTextView.text;
-    status = [status stringByAppendingString:_articleUrl];
-    //@"statuses/upload_url_text.json"
-    self.request = [sinaweibo requestWithURL:@"statuses/update.json"
+    self.request = [sinaweibo requestWithURL:@"statuses/upload.json"
                            params:[NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    status, @"status",
-                                   nil]
+                                   _shareImage, @"pic", nil]
                        httpMethod:@"POST"
                          delegate:self];
 }
@@ -269,9 +263,6 @@
 
 - (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
 {
-    NSDictionary *dict = (NSDictionary *)result;
-    
-    NSLog(@"share weibo result: %@", [dict description]);
     __block LeafComposeViewController *controller = self;
  
     _hud.dismissBlock = ^(void){
