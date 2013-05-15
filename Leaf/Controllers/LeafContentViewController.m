@@ -288,7 +288,7 @@ iframe { \
         _hud = hud;
         [hud setHudFont:kLeafFont15];
         [hud setHUDType:RFHUDTypeWaiting andStatus:@"正在生成长微博"];
-        [hud show];
+        [hud showInKeyWindow];
         [hud release];
         
         __block UIImage *newImage;

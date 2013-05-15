@@ -322,7 +322,7 @@
         hud.dismissBlock = ^(void){
             controller.diskCacheSizeLabel.text = @"0MB";
         };
-        [hud show];
+        [hud showInKeyWindow];
         [hud dismissAfterDelay:3.0f];
         [hud release];
         [self performSelectorInBackground:@selector(clearDisk) withObject:nil];

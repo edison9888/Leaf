@@ -81,7 +81,7 @@
         controller.hud = nil;
         [controller cancel];
     };
-    [hud show];
+    [hud showInKeyWindow];
     _hud = hud;
     [hud release];
     [_progressBar setProgress:0.0f];
@@ -101,7 +101,7 @@
             controller.hud = nil;
             RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
             [hud setHUDType:RFHUDTypeSuccess andStatus:@"完成离线"];
-            [hud show];
+            [hud showInKeyWindow];
             [hud release];
         };
         [_hud close];
@@ -127,7 +127,7 @@
             controller.hud = nil;
             RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
             [hud setHUDType:RFHUDTypeError andStatus:@"离线失败"];
-            [hud show];
+            [hud showInKeyWindow];
             [hud release];
         };
         [_hud close];
