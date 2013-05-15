@@ -149,6 +149,7 @@
 - (void)dismissAfterDelay:(CGFloat)delay
 {
 
+    _complete = YES;
     RFHUD *entireView = self;
     __block CGRect frame = _hud.frame;
     

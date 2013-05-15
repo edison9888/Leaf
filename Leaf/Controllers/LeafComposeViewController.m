@@ -258,7 +258,7 @@
         [hud show];
         [hud release];
     };
-    [_hud dismiss];
+    [_hud close];
 }
 
 - (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
@@ -275,7 +275,7 @@
         [hud show];
         [hud release];
     };
-    [_hud dismiss];
+    [_hud close];
 }
 
 
