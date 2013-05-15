@@ -202,11 +202,19 @@
                     }];
 }
 
-- (void)show
+
+- (void)show:(BOOL)keyWindow
 {
-    NSArray *array = [[UIApplication sharedApplication] windows];
-    UIWindow *keyWindow = (UIWindow *)[array lastObject];
-    [keyWindow addSubview:self];
+    UIWindow *window = nil;
+        if (keyWindow) {
+        window = [[UIApplication sharedApplication] keyWindow];
+    }
+    else{
+        NSArray *array = [[UIApplication sharedApplication] windows];
+        window = [array lastObject];
+    }
+    
+    [window addSubview:self];
     //[keyWindow bringSubviewToFront:self];
     __block CGRect frame = _hud.frame;
     RFHUD *entireView = self;
@@ -231,5 +239,16 @@
     
 
 }
+
+- (void)showInKeyWindow
+{
+    [self show:YES];
+}
+
+- (void)show
+{
+    [self show:NO];
+}
+
 
 @end

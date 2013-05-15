@@ -31,6 +31,7 @@ typedef void (^RFHUDBlock) (void);
 - (void)setHUDType:(RFHUDType)type andStatus:(NSString *)status;
 
 - (void)show;
+- (void)showInKeyWindow;
 - (void)dismissAfterDelay:(CGFloat)delay;
 - (void)dismiss;
 - (void)close;   // dismiss loading hud
