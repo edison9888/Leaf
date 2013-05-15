@@ -22,6 +22,7 @@
 {
     UILabel *_diskCacheSizeLabel;
     LeafSettingCell *_clean;
+    UILabel *_login;
 }
 
 @property (nonatomic, assign) UILabel *diskCacheSizeLabel;
@@ -37,6 +38,8 @@
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    _login = nil;
     _diskCacheSizeLabel = nil;
     _clean = nil;
     
@@ -55,7 +58,20 @@
 
 - (void)accountSettingsClicked
 {
-    
+    SinaWeibo *weibo = [self sinaweibo];
+    if (weibo.isAuthValid) {
+        UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:@"退出后将无法使用分享功能"
+                                                            delegate:self
+                                                   cancelButtonTitle:@"取消"
+                                              destructiveButtonTitle:@"仍要退出"
+                                                   otherButtonTitles:nil];
+        [action showInView:_container];
+        [action release];
+    }
+    else
+    {
+        [weibo logIn];
+    }
 }
 
 - (void)switchValueChanged:(id)sender
@@ -160,6 +176,16 @@
     [_clean setUserInteractionEnabled:YES];
 }
 
+- (void)weiboDidLogin
+{
+    _login.text = @"已登录";
+}
+
+- (void)weiboDidLogout
+{
+    _login.text = @"未登陆";
+}
+
 #pragma mark -
 #pragma mark - ViewController Lifecycle
 
@@ -174,15 +200,26 @@
     [_container addSubview:bar];
     [bar release];
     
+    UILabel *login = [[UILabel alloc] initWithText:@"已登录" font:kLeafFont15 textColor:[UIColor blackColor] andOrigin:CGPointZero];
+    _login = login;
+    SinaWeibo *weibo = [self sinaweibo];
+    if (!weibo.isAuthValid) {
+        _login.text = @"未登陆";
+    }
+    
     CGFloat offsetY = 64.0f;
     LeafSettingCell *accountSettings = [[LeafSettingCell alloc] init];
     [accountSettings addTarget:self action:@selector(accountSettingsClicked)];
     accountSettings.hasArrow = YES;
-    [accountSettings setTitle:@"账号设置"];
+    [accountSettings setTitle:@"新浪微博"];
     [accountSettings setImage:[UIImage imageNamed:@"weibo_more"]];
     [accountSettings setOrigin:CGPointMake(kLeafSettingCellMarginLeft, offsetY)];
     [_container addSubview:accountSettings];
     offsetY = CGRectGetMaxY(accountSettings.frame) + 20.0f;
+    
+    _login.frame = CGRectMake(CGRectGetWidth(accountSettings.frame) - CGRectGetWidth(_login.frame) - 50.0f, (CGRectGetHeight(accountSettings.frame) - CGRectGetHeight(_login.frame))/2.0f, CGRectGetWidth(_login.frame), CGRectGetHeight(_login.frame));
+    [accountSettings addSubview:_login];
+    [login release];
     [accountSettings release];
     
     
@@ -256,8 +293,10 @@
     [_container addSubview:opensource];
     offsetY = CGRectGetMaxY(opensource.frame) + 20.0f;
     [opensource release];
-
     
+    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+    [defaultCenter addObserver:self selector:@selector(weiboDidLogin) name:kSinaWeiboDidLogin object:nil];
+    [defaultCenter addObserver:self selector:@selector(weiboDidLogout) name:kSinaWeiboDidLogout object:nil];
 }
 
 
@@ -278,7 +317,7 @@
         __block LeafSettingsViewController *controller = self;
         RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
         [hud setHudFont:kLeafFont15];
-        [hud setHUDType:RFHUDTypeWaiting andStatus:@"正在清理缓冲"];
+        [hud setHUDType:RFHUDTypeWaiting andStatus:@"正在清理缓存"];
         hud.dismissBlock = ^(void){
             controller.diskCacheSizeLabel.text = @"0MB";
         };
@@ -288,4 +327,18 @@
         [self performSelectorInBackground:@selector(clearDisk) withObject:nil];
     }
 }
+
+
+#pragma mark -
+#pragma mark - UIActionSheetDelegate Methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) { // logout
+        SinaWeibo *weibo = [self sinaweibo];
+        [weibo logOut];
+    }
+}
+
+
 @end

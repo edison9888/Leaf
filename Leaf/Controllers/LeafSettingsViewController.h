@@ -8,6 +8,6 @@
 
 #import "LeafBaseViewController.h"
 
-@interface LeafSettingsViewController : LeafBaseViewController
+@interface LeafSettingsViewController : LeafBaseViewController <UIActionSheetDelegate>
 
 @end
