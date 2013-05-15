@@ -46,6 +46,7 @@
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     _progressBar = nil;
     _hud = nil;
     _table = nil;
