@@ -63,6 +63,7 @@ iframe { \
 @interface LeafContentViewController ()
 {
     RFHUD *_hud;
+    BOOL _offline;
 }
 
 @property (nonatomic, retain) NSMutableArray *urls;
@@ -151,7 +152,7 @@ iframe { \
     }];
     
     _urls = [[NSMutableArray alloc] init];
-   
+    _offline = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -385,6 +386,7 @@ iframe { \
         if (data) {
             [self showLeafLoadingView:NO];
             [self handleData:data];
+            _offline = YES;
             return;
         }
     }
@@ -579,7 +581,7 @@ iframe { \
     }
     
     LeafConfig *config = [LeafConfig sharedInstance];
-    if (![config showPicture]) {
+    if (!_offline && config.simple) {
         html = [self purgeImageLinks:html];
     }
     //NSLog(@"html: %@", html);

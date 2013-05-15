@@ -238,7 +238,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     LeafConfig *config = [LeafConfig sharedInstance];
-    if (![config showPicture]) {
+    if ([config simple]) {
         return 80.0f;
     }
     // full mode        
@@ -272,7 +272,7 @@
     LeafNewsData *data = [_leaves objectAtIndex:indexPath.row];
     LeafNewsItem *leafItem = (LeafNewsItem *)[cell.contentView viewWithTag:kLeafNewsItemTag];
     LeafConfig *config = [LeafConfig sharedInstance];
-    if (![config showPicture]) {
+    if ([config simple]) {
         [leafItem loadData:data withStyle:LeafItemStyleSimple];
     }
     else{

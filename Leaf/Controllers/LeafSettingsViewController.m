@@ -201,6 +201,7 @@
     [bar release];
     
     UILabel *login = [[UILabel alloc] initWithText:@"已登录" font:kLeafFont15 textColor:[UIColor blackColor] andOrigin:CGPointZero];
+    login.userInteractionEnabled = NO;
     _login = login;
     SinaWeibo *weibo = [self sinaweibo];
     if (!weibo.isAuthValid) {
@@ -225,7 +226,7 @@
     
     LeafSettingCell *blank = [[LeafSettingCell alloc] init];
     blank.simple = YES;
-    [blank setTitle:@"2G/3G为无图模式"];
+    [blank setTitle:@"无图模式"];
     [blank setImage:[UIImage imageNamed:@"image_load_more"]];
     [blank setOrigin:CGPointMake(kLeafSettingCellMarginLeft, offsetY)];
     [_container addSubview:blank];
