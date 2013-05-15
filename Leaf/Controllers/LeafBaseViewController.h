@@ -10,6 +10,10 @@
 #import "SinaWeibo.h"
 #import "DDMenuController.h"
 
+#define kSinaWeiboDidLogin @"SinaWeiboDidLogin"
+#define kSinaWeiboDidLogout @"SinaWeiboDidLogout"
+
+
 typedef void (^LeafBlock)(void);
 
 typedef enum{

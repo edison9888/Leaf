@@ -451,63 +451,13 @@
     }
 }
 
-
 #pragma mark -
-#pragma mark - SinaWeibo Stuff
+#pragma mark - Getter for SinaWeibo Instance
 
 - (SinaWeibo *)sinaweibo
 {
     AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     return delegate.weibo;
 }
-
-- (void)removeAuthData
-{
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SinaWeiboAuthData"];
-}
-
-- (void)storeAuthData
-{
-    SinaWeibo *sinaweibo = [self sinaweibo];
-    
-    NSDictionary *authData = [NSDictionary dictionaryWithObjectsAndKeys:
-                              sinaweibo.accessToken, @"AccessTokenKey",
-                              sinaweibo.expirationDate, @"ExpirationDateKey",
-                              sinaweibo.userID, @"UserIDKey",
-                              sinaweibo.refreshToken, @"refresh_token", nil];
-    [[NSUserDefaults standardUserDefaults] setObject:authData forKey:@"SinaWeiboAuthData"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-#pragma mark -
-#pragma mark - SinaWeiboDelegate Methods
-
-- (void)sinaweiboDidLogIn:(SinaWeibo *)sinaweibo
-{
-    [self storeAuthData];
-}
-
-- (void)sinaweiboDidLogOut:(SinaWeibo *)sinaweibo
-{
-    [self removeAuthData];
-}
-
-- (void)sinaweiboLogInDidCancel:(SinaWeibo *)sinaweibo
-{
-    
-}
-
-- (void)sinaweibo:(SinaWeibo *)sinaweibo logInDidFailWithError:(NSError *)error
-{
-    
-}
-
-- (void)sinaweibo:(SinaWeibo *)sinaweibo accessTokenInvalidOrExpired:(NSError *)error
-{
-    [self removeAuthData];
-}
-
-
-
 
 @end
