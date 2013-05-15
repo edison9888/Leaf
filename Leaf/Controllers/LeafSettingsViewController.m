@@ -292,7 +292,7 @@
     [opensource setImage:[UIImage imageNamed:@"feedback_more"]];
     [opensource setOrigin:CGPointMake(kLeafSettingCellMarginLeft, offsetY)];
     [_container addSubview:opensource];
-    offsetY = CGRectGetMaxY(opensource.frame) + 20.0f;
+    //offsetY = CGRectGetMaxY(opensource.frame) + 20.0f;
     [opensource release];
     
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
