@@ -133,6 +133,8 @@
 		DBD8260516B65E1300EC4439 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD825FF16B65E1300EC4439 /* UIImageView+WebCache.m */; };
 		DBD8260716B6613900EC4439 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBD8260616B6613900EC4439 /* ImageIO.framework */; };
 		DBE3627816F0137200494A0C /* LeafConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE3627716F0137200494A0C /* LeafConfig.m */; };
+		DBE66E7B17451814002C34AC /* LeafStatusBarOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE66E7A17451814002C34AC /* LeafStatusBarOverlay.m */; };
+		DBE66E8317451A80002C34AC /* UIColor+MLPFlatColors.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE66E8217451A80002C34AC /* UIColor+MLPFlatColors.m */; };
 		DBE67FB3170BFFC100685DD2 /* LeafPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE67FB2170BFFC100685DD2 /* LeafPhotoView.m */; };
 		DBE67FB8170C17E200685DD2 /* photo_return.png in Resources */ = {isa = PBXBuildFile; fileRef = DBE67FB4170C17E200685DD2 /* photo_return.png */; };
 		DBE67FB9170C17E200685DD2 /* photo_return@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DBE67FB5170C17E200685DD2 /* photo_return@2x.png */; };
@@ -343,6 +345,10 @@
 		DBD8260616B6613900EC4439 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		DBE3627616F0137200494A0C /* LeafConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafConfig.h; sourceTree = "<group>"; };
 		DBE3627716F0137200494A0C /* LeafConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeafConfig.m; sourceTree = "<group>"; };
+		DBE66E7917451814002C34AC /* LeafStatusBarOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafStatusBarOverlay.h; path = Views/LeafStatusBarOverlay.h; sourceTree = "<group>"; };
+		DBE66E7A17451814002C34AC /* LeafStatusBarOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafStatusBarOverlay.m; path = Views/LeafStatusBarOverlay.m; sourceTree = "<group>"; };
+		DBE66E8117451A80002C34AC /* UIColor+MLPFlatColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MLPFlatColors.h"; sourceTree = "<group>"; };
+		DBE66E8217451A80002C34AC /* UIColor+MLPFlatColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MLPFlatColors.m"; sourceTree = "<group>"; };
 		DBE67FB1170BFFC100685DD2 /* LeafPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafPhotoView.h; path = Views/LeafPhotoView.h; sourceTree = "<group>"; };
 		DBE67FB2170BFFC100685DD2 /* LeafPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafPhotoView.m; path = Views/LeafPhotoView.m; sourceTree = "<group>"; };
 		DBE67FB4170C17E200685DD2 /* photo_return.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo_return.png; sourceTree = "<group>"; };
@@ -541,6 +547,8 @@
 				DBF45F671739E82E00DEAE7D /* LeafSettingCell.m */,
 				DBA4A30C1744836C00A526D2 /* LeafMenuBar.h */,
 				DBA4A30D1744836C00A526D2 /* LeafMenuBar.m */,
+				DBE66E7917451814002C34AC /* LeafStatusBarOverlay.h */,
+				DBE66E7A17451814002C34AC /* LeafStatusBarOverlay.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -548,6 +556,7 @@
 		DB61AF0816B26DA3006EC642 /* Vender */ = {
 			isa = PBXGroup;
 			children = (
+				DBE66E8017451A80002C34AC /* UIColor+MLPFlatColors */,
 				DB9FDE451709350D002E4052 /* ASIHTTPRequest */,
 				DB41070916E86BFF00DE7DB7 /* TFHpple */,
 				DB4E547B16D3195700CBF9EB /* DDMenuController */,
@@ -792,6 +801,16 @@
 			path = Vender/SDWebImage;
 			sourceTree = "<group>";
 		};
+		DBE66E8017451A80002C34AC /* UIColor+MLPFlatColors */ = {
+			isa = PBXGroup;
+			children = (
+				DBE66E8117451A80002C34AC /* UIColor+MLPFlatColors.h */,
+				DBE66E8217451A80002C34AC /* UIColor+MLPFlatColors.m */,
+			);
+			name = "UIColor+MLPFlatColors";
+			path = "Vender/UIColor+MLPFlatColors";
+			sourceTree = "<group>";
+		};
 		DBF7135217165A5800FF0894 /* WeiboSDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -1033,6 +1052,8 @@
 				DBF45F681739E82E00DEAE7D /* LeafSettingCell.m in Sources */,
 				DBA1C34D1740B16B00F3EF58 /* GCDHelper.m in Sources */,
 				DBA4A30E1744836C00A526D2 /* LeafMenuBar.m in Sources */,
+				DBE66E7B17451814002C34AC /* LeafStatusBarOverlay.m in Sources */,
+				DBE66E8317451A80002C34AC /* UIColor+MLPFlatColors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
