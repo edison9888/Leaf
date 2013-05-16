@@ -16,6 +16,23 @@ http://www.cnbeta.com/api/getTop10.php
 # hot comment
 http://www.cnbeta.com/api/getHMComment.php?limit=10
 
+http://www.cnbeta.com/validate1.php?244796552
+tid=0&sid=237508&valimg_main=7371&=&comment=encodeleaf&nowsubject=&nowpage=1&nowemail=cryrivers%40cnbeta.com
+
+踩：
+http://www.cnbeta.com/Ajax.vote.php?tid=7500298&against=1
+
+顶：
+http://www.cnbeta.com/Ajax.vote.php?tid=7500298&support=1
+
+举报
+http://www.cnbeta.com/Ajax.report.php?tid=7500298
+
+回复:
+验证码:
+http://www.cnbeta.com/validate1.php
+api: http://www.cnbeta.com/Ajax.comment.php?ver=new
+comment=%25C1%25BC%25D0%25C4__icnBeta%25D7%25CA%25D1%25B6&nowemail=&nowpage=1&nowsubject=&sid=237511&tid=7500306&valimg_main=6860
 
 # font
 normal: FZLTHK--GBK1-0 
