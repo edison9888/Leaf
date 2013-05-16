@@ -91,6 +91,8 @@
 		DB9FDE711709352F002E4052 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DB9FDE701709352F002E4052 /* libz.dylib */; };
 		DB9FDE7317093548002E4052 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB9FDE7217093548002E4052 /* CFNetwork.framework */; };
 		DBA1C34D1740B16B00F3EF58 /* GCDHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA1C34C1740B16B00F3EF58 /* GCDHelper.m */; };
+		DBA4A30E1744836C00A526D2 /* LeafMenuBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA4A30D1744836C00A526D2 /* LeafMenuBar.m */; };
+		DBA4A3151744AC7E00A526D2 /* menubar.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DBA4A3141744AC7E00A526D2 /* menubar.bundle */; };
 		DBA818131711AA9F008D4864 /* LeafBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA818121711AA9F008D4864 /* LeafBaseViewController.m */; };
 		DBA818161711B90E008D4864 /* LeafContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA818151711B90E008D4864 /* LeafContentViewController.m */; };
 		DBADCD8A16F84CCA00065CB5 /* LeafMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBADCD8416F84CCA00065CB5 /* LeafMenuController.m */; };
@@ -274,6 +276,9 @@
 		DB9FDE7217093548002E4052 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		DBA1C34B1740B16B00F3EF58 /* GCDHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDHelper.h; sourceTree = "<group>"; };
 		DBA1C34C1740B16B00F3EF58 /* GCDHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDHelper.m; sourceTree = "<group>"; };
+		DBA4A30C1744836C00A526D2 /* LeafMenuBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafMenuBar.h; path = Views/LeafMenuBar.h; sourceTree = "<group>"; };
+		DBA4A30D1744836C00A526D2 /* LeafMenuBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafMenuBar.m; path = Views/LeafMenuBar.m; sourceTree = "<group>"; };
+		DBA4A3141744AC7E00A526D2 /* menubar.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = menubar.bundle; sourceTree = "<group>"; };
 		DBA818111711AA9F008D4864 /* LeafBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafBaseViewController.h; path = Controllers/LeafBaseViewController.h; sourceTree = "<group>"; };
 		DBA818121711AA9F008D4864 /* LeafBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafBaseViewController.m; path = Controllers/LeafBaseViewController.m; sourceTree = "<group>"; };
 		DBA818141711B90E008D4864 /* LeafContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafContentViewController.h; path = Controllers/LeafContentViewController.h; sourceTree = "<group>"; };
@@ -534,6 +539,8 @@
 				DBBF469317211E9C0083A924 /* LeafCommentCell.m */,
 				DBF45F661739E82E00DEAE7D /* LeafSettingCell.h */,
 				DBF45F671739E82E00DEAE7D /* LeafSettingCell.m */,
+				DBA4A30C1744836C00A526D2 /* LeafMenuBar.h */,
+				DBA4A30D1744836C00A526D2 /* LeafMenuBar.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -812,6 +819,7 @@
 		DBF713661716631200FF0894 /* Bundles */ = {
 			isa = PBXGroup;
 			children = (
+				DBA4A3141744AC7E00A526D2 /* menubar.bundle */,
 				DBF713671716631200FF0894 /* LeafWebViewController.bundle */,
 			);
 			path = Bundles;
@@ -956,6 +964,7 @@
 				DB5819F7173CA15E001C220E /* rank_more@2x.png in Resources */,
 				DB5819F8173CA15E001C220E /* weibo_more.png in Resources */,
 				DB5819F9173CA15E001C220E /* weibo_more@2x.png in Resources */,
+				DBA4A3151744AC7E00A526D2 /* menubar.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1023,6 +1032,7 @@
 				DB4B318F1738F4B9008D7173 /* LeafSettingsViewController.m in Sources */,
 				DBF45F681739E82E00DEAE7D /* LeafSettingCell.m in Sources */,
 				DBA1C34D1740B16B00F3EF58 /* GCDHelper.m in Sources */,
+				DBA4A30E1744836C00A526D2 /* LeafMenuBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

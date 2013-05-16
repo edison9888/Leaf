@@ -6,12 +6,14 @@
 //  Copyright (c) 2013年 Mobimtech. All rights reserved.
 //
 
+#import "RFHUD.h"
+
 #import "LeafCommentViewController.h"
 #import "LeafCommentModel.h"
 #import "LeafCommentCell.h"
 #import "LeafNavigationBar.h"
 #import "LeafLoadingView.h"
-#import "RFHUD.h"
+#import "LeafMenuBar.h"
 
 #define kLeafCommentCellTag 1001
 
@@ -21,6 +23,7 @@
     LeafCommentModel *_commentModel;
     UITableView *_table;
     LeafLoadingView *_loading;
+    LeafMenuBar *_menuBar;
 }
 
 @property (nonatomic, retain) NSString *articleId;
@@ -35,7 +38,9 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_commentModel release], _commentModel = nil;
     [_articleId release], _articleId = nil;
+    [_menuBar release], _menuBar = nil;
     _table = nil;
+    
     [super dealloc];
 }
 
@@ -144,7 +149,6 @@
     [_container addSubview:tableView];
     _table = tableView;
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [_table setAllowsSelection:NO];
     [_table setBackgroundColor:kLeafBackgroundColor];
     [tableView release];
     
@@ -153,6 +157,10 @@
     [_container addSubview:_loading];
     [loading release];
 
+    _menuBar = [[LeafMenuBar alloc] initWithFrame:_container.bounds];
+    _menuBar.hidden = YES;
+    [_container addSubview:_menuBar];
+    
     _commentModel = [[LeafCommentModel alloc] init];
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
     [defaultCenter addObserver:self
@@ -219,7 +227,7 @@
     
     if (!cell) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId] autorelease];
-        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         LeafCommentCell *commentCell = [[LeafCommentCell alloc] init];
         commentCell.tag = kLeafCommentCellTag;
         [cell.contentView addSubview:commentCell];
@@ -234,16 +242,37 @@
         if (!data.name || [data.name isEqualToString:@""]) {
             name = @"匿名";
         }
-        /*
-        NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding (kCFStringEncodingGB_18030_2000);
-        NSData *commentData = [data.comment dataUsingEncoding:enc];
-        NSString *comment = [[NSString alloc] initWithData:commentData encoding:enc];
-        */
+
         NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:name, @"name", data.time, @"time", data.comment, @"comment", nil];
         [commentCell loadData:dict];
     }
     
     return cell;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGRect rectInTableView = [tableView rectForRowAtIndexPath:indexPath];
+    CGRect rectInSuperView = [tableView convertRect:rectInTableView toView:tableView.superview];
+    
+    CGFloat minY = CGRectGetMinY(rectInSuperView);
+    CGFloat offsetY = 0.0f;
+    if (minY > 80.0f) {
+        offsetY = minY - 80.0f;
+        _menuBar.type = LeafMenuBarArrowTypeDown;
+    }
+    else{
+        CGFloat maxY = CGRectGetMaxY(rectInSuperView);
+        offsetY = maxY - 11.0f;
+        _menuBar.type = LeafMenuBarArrowTypeUp;
+
+    }
+    
+    _menuBar.offsetY = offsetY;
+    [_menuBar show];
+
+}
+
+
 
 @end
