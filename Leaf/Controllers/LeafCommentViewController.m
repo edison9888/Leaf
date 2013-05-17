@@ -15,6 +15,7 @@
 #import "LeafLoadingView.h"
 #import "LeafMenuBar.h"
 #import "LeafStatusBarOverlay.h"
+#import "LeafReplyController.h"
 
 #define kLeafCommentCellTag 1001
 
@@ -249,7 +250,7 @@
             name = @"匿名";
         }
 
-        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:name, @"name", data.time, @"time", data.comment, @"comment", nil];
+        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:name, @"name", data.time, @"time", data.comment, @"comment", data.support, @"support", data.against, @"against", nil];
         [commentCell loadData:dict];
     }
     
@@ -284,13 +285,25 @@
 
 - (void)menuBar:(LeafMenuBar *)menubar didClickedItemWithType:(LeafMenuBarItemType)type
 {
-    switch (type) {
-        case LeafMenuBarItemTypeUp:
-            [_mr postMessage:@"谢谢您的参与" dismissAfterDelay:1.0f];
-            break;
-            
-        default:
-            break;
+    if (type == LeafMenuBarItemTypeUp) {
+        [_mr postMessage:@"谢谢您的参与!" dismissAfterDelay:1.0f];
+
+    }
+    else if(type == LeafMenuBarItemTypeDown){
+        [_mr postMessage:@"谢谢您的参与!" dismissAfterDelay:1.0f];
+
+    }
+    else if(type == LeafMenuBarItemTypeReply){
+        LeafReplyController *controller = [[LeafReplyController alloc] init];
+        [self presentViewController:controller
+                             option:LeafAnimationOptionVertical
+                         completion:^{
+                             self.shouldBlockGesture = YES;
+                             [controller release];
+                         }];
+    }
+    else if(type == LeafMenuBarItemTypeCopy){
+        [_mr postMessage:@"复制成功!" dismissAfterDelay:1.0f];
     }
 }
 

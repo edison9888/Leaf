@@ -141,6 +141,7 @@ iframe { \
         LeafCommentViewController *vc = [[LeafCommentViewController alloc] init];
         CGRect frame = contentViewController.view.frame;
         vc.view.frame = CGRectMake(CGWidth(frame), 0.0f, CGWidth(frame), CGHeight(frame));
+        contentViewController.shouldBlockGesture = YES;
         [contentViewController pushController:vc];
         vc.hasMask = YES;
         [vc loadData:_data.articleId];
@@ -318,11 +319,14 @@ iframe { \
     LeafCommentViewController *vc = [[LeafCommentViewController alloc] init];
     CGRect frame = self.view.frame;
     vc.view.frame = CGRectMake(CGWidth(frame), 0.0f, CGWidth(frame), CGHeight(frame));
-    [self presentViewController:vc option:LeafAnimationOptionHorizontal completion:^{
-            vc.hasMask = YES;
-            [vc loadData:_data.articleId];
-            [vc release];
-        }];
+    [self presentViewController:vc
+                         option:LeafAnimationOptionHorizontal
+                     completion:^{
+                         self.shouldBlockGesture = YES;
+                         vc.hasMask = YES;
+                         [vc loadData:_data.articleId];
+                         [vc release];
+                     }];
 }
 
 - (void)safariClicked:(id)sender

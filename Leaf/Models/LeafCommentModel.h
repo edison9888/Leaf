@@ -18,11 +18,17 @@
     NSString *_name;
     NSString *_time;
     NSString *_comment;
+    NSString *_tid;
+    NSString *_support;
+    NSString *_against;
 }
 
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSString *time;
 @property (nonatomic, retain) NSString *comment;
+@property (nonatomic, retain) NSString *tid;
+@property (nonatomic, retain) NSString *support;
+@property (nonatomic, retain) NSString *against;
 
 @end
 

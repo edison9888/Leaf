@@ -13,12 +13,18 @@
 @synthesize name = _name;
 @synthesize time = _time;
 @synthesize comment = _comment;
+@synthesize tid = _tid;
+@synthesize support = _support;
+@synthesize against = _against;
 
 - (void)dealloc
 {
     [_name release], _name = nil;
     [_time release], _time = nil;
     [_comment release], _comment = nil;
+    [_tid release], _tid = nil;
+    [_comment release], _comment = nil;
+    [_against release], _against = nil;
     
     [super dealloc];
 }
@@ -86,6 +92,9 @@
         data.name = [dict stringForKey:@"name"];
         data.comment = [dict stringForKey:@"comment"];
         data.time = [dict stringForKey:@"date"]; // TODO: friendly date formate
+        data.tid = [dict stringForKey:@"tid"];
+        data.support = [dict stringForKey:@"support"];
+        data.against = [dict stringForKey:@"against"];
         [_dataArray addObject:data];
         [data release];
     }
