@@ -9,9 +9,9 @@
 #import "LeafMenuBar.h"
 
 #define kLeafMenuBarFrame CGRectMake(20.0f, 0.0f, 280.0f, 91.0f)
-#define kLeafMenuBarItemMargin 2.0f
+#define kLeafMenuBarItemMargin 1.8f
 #define kLeafMenuBarContainerSize CGSizeMake(274.0f, 68.0f)
-#define kLeafMenuBarContainerMarinLeft 4.0f
+#define kLeafMenuBarContainerMarinLeft 3.0f
 #define kLeafMenuBarContainerMarinTopUp 15.0f
 #define kLeafMenuBarContainerMarinTopDown 4.0f
 
@@ -181,7 +181,9 @@
 {
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(x, 0.0f, 67.0f, 68.0f);
-    [btn setBackgroundImage:[UIImage imageNamed:@"menubar.bundle/menuitem_bg"] forState:UIControlStateHighlighted];
+    UIImage *itemBg = [UIImage imageNamed:@"menubar.bundle/menuitem_bg"];
+    UIImage *resizeableItemBg = [itemBg resizableImageWithCapInsets:UIEdgeInsetsMake(1.0f, 2.0f, 1.0f, 2.0f)];
+    [btn setBackgroundImage:resizeableItemBg forState:UIControlStateHighlighted];
     [btn addTarget:self action:@selector(menuItemClicked:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag = type;
     UIImageView *icon = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 27.0f, 26.0f)];
