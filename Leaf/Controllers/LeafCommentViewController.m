@@ -54,10 +54,16 @@
 - (void)loadCommentSuccess:(NSNotification *)notification
 {
     [self hideLeafLoadingView];
-    LeafCommentModel *model = (LeafCommentModel *)notification.object;
-    if (model) {
-        [_table reloadData];
-    }
+    
+    [_commentModel.dataArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        int i = [[(LeafCommentData *)obj1 support] intValue];
+        int j = [[(LeafCommentData *)obj2 support] intValue];
+        return [__INT(j) compare:__INT(i)];
+
+    }];
+    
+    [_table reloadData];
+    
 }
 
 - (void)loadCommentFailed:(NSNotification *)notification
