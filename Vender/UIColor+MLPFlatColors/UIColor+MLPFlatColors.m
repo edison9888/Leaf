@@ -171,7 +171,7 @@
         chosenColor += numberOfLightColors;
     }
     
-    UIColor *color;
+    UIColor *color = nil;
     switch (chosenColor) {
         case 0:
             color = [UIColor flatRedColor];

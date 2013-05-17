@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LeafStatusBarOverlay : UIView
-
+@interface LeafStatusBarOverlay : UIWindow
+- (void)postMessage:(NSString *)msg dismissAfterDelay:(int)delay;
 @end

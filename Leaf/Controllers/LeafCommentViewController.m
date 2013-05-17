@@ -14,6 +14,7 @@
 #import "LeafNavigationBar.h"
 #import "LeafLoadingView.h"
 #import "LeafMenuBar.h"
+#import "LeafStatusBarOverlay.h"
 
 #define kLeafCommentCellTag 1001
 
@@ -24,6 +25,7 @@
     UITableView *_table;
     LeafLoadingView *_loading;
     LeafMenuBar *_menuBar;
+    LeafStatusBarOverlay *_mr;
 }
 
 @property (nonatomic, retain) NSString *articleId;
@@ -39,6 +41,7 @@
     [_commentModel release], _commentModel = nil;
     [_articleId release], _articleId = nil;
     [_menuBar release], _menuBar = nil;
+    [_mr release], _mr = nil;
     _table = nil;
     
     [super dealloc];
@@ -159,7 +162,10 @@
 
     _menuBar = [[LeafMenuBar alloc] initWithFrame:_container.bounds];
     _menuBar.hidden = YES;
+    _menuBar.delegate = (NSObject<LeafMenuBarDelegate> *)self;
     [_container addSubview:_menuBar];
+    
+    _mr = [[LeafStatusBarOverlay alloc] init];
     
     _commentModel = [[LeafCommentModel alloc] init];
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
@@ -273,6 +279,19 @@
 
 }
 
+#pragma mark -
+#pragma mark - LeafMenuBarDelegate
 
+- (void)menuBar:(LeafMenuBar *)menubar didClickedItemWithType:(LeafMenuBarItemType)type
+{
+    switch (type) {
+        case LeafMenuBarItemTypeUp:
+            [_mr postMessage:@"谢谢您的参与" dismissAfterDelay:1.0f];
+            break;
+            
+        default:
+            break;
+    }
+}
 
 @end
