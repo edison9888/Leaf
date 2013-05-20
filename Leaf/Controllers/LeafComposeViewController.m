@@ -43,6 +43,7 @@
     _statusTextView = nil;
     _remainLabel = nil;
     _hud = nil;
+    _request.delegate = nil;
     [_request release], _request = nil;
     [_shareImage release], _shareImage = nil;
     [super dealloc];
@@ -251,12 +252,9 @@
 
 - (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
 {
+    __block LeafComposeViewController *controller = self;
     _hud.dismissBlock = ^(void){
-        RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
-        [hud setHudFont:kLeafFont15];
-        [hud setHUDType:RFHUDTypeError andStatus:@"分享失败"];
-        [hud show];
-        [hud release];
+        [controller postMessage:@"分享失败!" type:LeafStatusBarOverlayTypeError];
     };
     [_hud close];
 }
@@ -266,14 +264,8 @@
     __block LeafComposeViewController *controller = self;
  
     _hud.dismissBlock = ^(void){
-        RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
-        [hud setHudFont:kLeafFont15];
-        [hud setHUDType:RFHUDTypeSuccess andStatus:@"分享成功"];
-        [hud setDismissBlock:^(void){
-            [controller dismissViewControllerWithOption:LeafAnimationOptionVertical completion:NULL];
-        }];
-        [hud show];
-        [hud release];
+        [controller postMessage:@"分享成功!" type:LeafStatusBarOverlayTypeSuccess];
+        [controller dismissViewControllerWithOption:LeafAnimationOptionVertical completion:NULL];
     };
     [_hud close];
 }

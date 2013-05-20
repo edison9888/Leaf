@@ -8,8 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+
+typedef enum{
+    LeafStatusBarOverlayTypeInfo,
+    LeafStatusBarOverlayTypeSuccess,
+    LeafStatusBarOverlayTypeWarning,
+    LeafStatusBarOverlayTypeError
+} LeafStatusBarOverlayType;
+
 @interface LeafStatusBarOverlay : UIWindow
 
 + (LeafStatusBarOverlay *)sharedInstance;
-- (void)postMessage:(NSString *)msg dismissAfterDelay:(int)delay;
+- (void)postMessage:(NSString *)msg type:(LeafStatusBarOverlayType)type  dismissAfterDelay:(int)delay;
 @end

@@ -9,7 +9,6 @@
 #import "LeafBaseViewController.h"
 #import "LeafHelper.h"
 #import "LeafStack.h"
-#import "LeafStatusBarOverlay.h"
 
 #define kScaleFactor 0.02f
 #define kAlphaFactor 0.1f
@@ -466,13 +465,20 @@
 - (void)postMessage:(NSString *)msg
 {
     LeafStatusBarOverlay *overlay = [LeafStatusBarOverlay sharedInstance];
-    [overlay postMessage:msg dismissAfterDelay:1.0f];
+    [overlay postMessage:msg type:LeafStatusBarOverlayTypeInfo dismissAfterDelay:1.0f];
+
 }
 
-- (void)postMessage:(NSString *)msg dismissAfterDelay:(int)delay
+- (void)postMessage:(NSString *)msg type:(LeafStatusBarOverlayType)type
 {
     LeafStatusBarOverlay *overlay = [LeafStatusBarOverlay sharedInstance];
-    [overlay postMessage:msg dismissAfterDelay:delay];
+    [overlay postMessage:msg type:type dismissAfterDelay:1.0f];
+}
+
+- (void)postMessage:(NSString *)msg type:(LeafStatusBarOverlayType)type  dismissAfterDelay:(int)delay
+{
+    LeafStatusBarOverlay *overlay = [LeafStatusBarOverlay sharedInstance];
+    [overlay postMessage:msg type:type dismissAfterDelay:delay];
 }
 
 @end

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SinaWeibo.h"
 #import "DDMenuController.h"
+#import "LeafStatusBarOverlay.h"
 
 #define kSinaWeiboDidLogin @"SinaWeiboDidLogin"
 #define kSinaWeiboDidLogout @"SinaWeiboDidLogout"
@@ -75,6 +76,7 @@ typedef enum {
 - (SinaWeibo *)sinaweibo;
 
 - (void)postMessage:(NSString *)msg;
-- (void)postMessage:(NSString *)msg dismissAfterDelay:(int)delay;
+- (void)postMessage:(NSString *)msg type:(LeafStatusBarOverlayType)type;
+- (void)postMessage:(NSString *)msg type:(LeafStatusBarOverlayType)type dismissAfterDelay:(int)delay;
 
 @end

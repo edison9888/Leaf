@@ -45,12 +45,36 @@ SINGLETON_FOR_CLASS(LeafStatusBarOverlay);
     return self;
 }
 
-- (void)postMessage:(NSString *)msg dismissAfterDelay:(int)delay
+- (void)pickColorForType:(LeafStatusBarOverlayType)type
+{
+    _label.textColor = [UIColor flatWhiteColor];
+    
+    if (type == LeafStatusBarOverlayTypeSuccess) {
+        self.backgroundColor = [UIColor flatGreenColor];
+    }
+    
+    else if(type == LeafStatusBarOverlayTypeError){
+        self.backgroundColor = [UIColor flatRedColor];
+    }
+    else if(type == LeafStatusBarOverlayTypeWarning)
+    {
+        self.backgroundColor = [UIColor flatYellowColor];
+        _label.textColor = [UIColor flatBlackColor];
+    }
+    else {
+        self.backgroundColor = [UIColor flatBlueColor];
+    }
+}
+
+- (void)postMessage:(NSString *)msg type:(LeafStatusBarOverlayType)type dismissAfterDelay:(int)delay
 {
     if (!self.hidden) {
         NSLog(@"posting msg, try latter.");
         return;
     }
+    
+    [self pickColorForType:type];
+    
     self.frame = kLeafStatusBarOverlayBeforeAnimationFrame;
     self.hidden = NO;
     _label.text = msg;
