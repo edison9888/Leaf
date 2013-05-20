@@ -47,6 +47,10 @@ SINGLETON_FOR_CLASS(LeafStatusBarOverlay);
 
 - (void)postMessage:(NSString *)msg dismissAfterDelay:(int)delay
 {
+    if (!self.hidden) {
+        NSLog(@"posting msg, try latter.");
+        return;
+    }
     self.frame = kLeafStatusBarOverlayBeforeAnimationFrame;
     self.hidden = NO;
     _label.text = msg;
