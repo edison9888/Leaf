@@ -7,7 +7,6 @@
 //
 
 #import "SDImageCache.h"
-#import "RFHUD.h"
 
 #import "LeafSettingsViewController.h"
 #import "LeafNavigationBar.h"
@@ -312,19 +311,37 @@
 #pragma mark -
 #pragma mark - UIAlertViewDelegate Method
 
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) { // confirm, clean disk cache
         __block LeafSettingsViewController *controller = self;
-        RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
-        [hud setHudFont:kLeafFont15];
-        [hud setHUDType:RFHUDTypeWaiting andStatus:@"正在清理缓存"];
-        hud.dismissBlock = ^(void){
+        
+        
+        [self showHUD:RFHUDTypeWaiting status:@"正在清理缓存"];
+        [self setDismissBlockForHUD:^(void){
             controller.diskCacheSizeLabel.text = @"0MB";
-        };
-        [hud show];
-        [hud dismissAfterDelay:3.0f];
-        [hud release];
+        }];
+        
+        [self dismissHUDAfterDelay:3.0f];
+        
+        [self performSelectorInBackground:@selector(clearDisk) withObject:nil];
+    }
+
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    return;
+    if (buttonIndex == 1) { // confirm, clean disk cache
+        __block LeafSettingsViewController *controller = self;
+        
+        
+        [self showHUD:RFHUDTypeWaiting status:@"正在清理缓存"];
+        [self setDismissBlockForHUD:^(void){
+            controller.diskCacheSizeLabel.text = @"0MB";
+        }];
+        
+        [self dismissHUDAfterDelay:3.0f];
         [self performSelectorInBackground:@selector(clearDisk) withObject:nil];
     }
 }

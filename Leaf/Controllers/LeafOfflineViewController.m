@@ -7,7 +7,6 @@
 //
 
 #import "DDMenuController.h"
-#import "RFHUD.h"
 
 #import "LeafOfflineViewController.h"
 #import "LeafOfflineModel.h"
@@ -26,11 +25,11 @@
     @private
     LeafProgressBar *_progressBar;
     LeafOfflineModel *_model;
-    RFHUD *_hud;
+    
     UITableView *_table;
     NSMutableArray *_leaves;
 }
-@property (nonatomic, assign) RFHUD *hud;
+
 @property (nonatomic, assign, readonly) LeafProgressBar *progressBar;
 
 - (void)showDownloadView;
@@ -40,18 +39,19 @@
 
 
 @implementation LeafOfflineViewController
-@synthesize hud = _hud;
 @synthesize progressBar = _progressBar;
 @synthesize downloadAtOnce = _downloadAtOnce;
 
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self cancel];
+    [_model release], _model = nil;
+
     _progressBar = nil;
-    _hud = nil;
     _table = nil;
     _leaves = nil;
-    [_model release], _model = nil;
+        
     [super dealloc];
 }
 
@@ -70,46 +70,41 @@
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
     CGRect frame = window.bounds;
     frame.size.height -= kLeafOfflineProgressBarH;
-    RFHUD *hud = [[RFHUD alloc] initWithFrame:frame];
-    [hud setHudFont:kLeafFont15];
-    [hud setHUDType:RFHUDTypeLoading andStatus:@"正在离线"];
-    
+    [self showHUD:RFHUDTypeLoading status:@"正在离线"];
     __block LeafOfflineViewController *controller = self;
-    hud.dismissBlock = ^(void){
-        
+    [self setDismissBlockForHUD:^(void){
         controller.progressBar.hidden = YES;
-        controller.hud = nil;
         [controller cancel];
-    };
-    [hud show];
-    _hud = hud;
-    [hud release];
+    }];
+    
     [_progressBar setProgress:0.0f];
     _progressBar.hidden = NO;
 }
 
+- (void)reload
+{
+    if (_model.array) {
+        _leaves = _model.array;
+        [_table reloadData];
+    }
+}
 
 #pragma mark - 
 #pragma mark - LeafOfflineModel Notification Handel
 
 - (void)leafOfflineFinished:(NSNotification *)notification
 {
-    __block LeafOfflineViewController *controller = self;
-    if (_hud) {
-        _hud.dismissBlock = ^(void){
+    if (![self isHUDHiden]) {
+        __block LeafOfflineViewController *controller = self;
+        [self setDismissBlockForHUD:^(void){
             controller.progressBar.hidden = YES;
-            controller.hud = nil;
-            RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
-            [hud setHUDType:RFHUDTypeSuccess andStatus:@"完成离线"];
-            [hud show];
-            [hud release];
-        };
-        [_hud close];
+            [controller postMessage:@"完成离线!" type:LeafStatusBarOverlayTypeSuccess];
+        }];
+        [self dismissHUD];
+
     }
-    if (_model.array) {
-        _leaves = _model.array;
-        [_table reloadData];
-    }
+    
+    [self reload];
     NSLog(@"finished offline");
 }
 
@@ -121,17 +116,12 @@
 - (void)leafOfflineFailed:(NSNotification *)notification
 {
     __block LeafOfflineViewController *controller = self;
-    if (_hud) {
-        _hud.dismissBlock = ^(void){
+    [self setDismissBlockForHUD:^(void){
             controller.progressBar.hidden = YES;
-            controller.hud = nil;
-            RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
-            [hud setHUDType:RFHUDTypeError andStatus:@"离线失败"];
-            [hud show];
-            [hud release];
-        };
-        [_hud close];
-    }
+            [controller postMessage:@"离线失败!" type:LeafStatusBarOverlayTypeError];
+    }];
+        
+    [self dismissHUD];
 }
 
 

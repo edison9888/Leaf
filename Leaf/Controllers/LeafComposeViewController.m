@@ -6,7 +6,6 @@
 //  Copyright (c) 2013年 Mobimtech. All rights reserved.
 //
 
-#import "RFHUD.h"
 #import "LeafComposeViewController.h"
 
 #define kLeafMaxWeiboLen 140
@@ -17,12 +16,11 @@
     UIImageView *_shareImageView;
     UITextView *_statusTextView;
     UILabel *_remainLabel;
-    RFHUD *_hud;
+    
     SinaWeiboRequest *_request;
     UIImage *_shareImage;
 }
 
-@property (nonatomic, assign) RFHUD *hud;
 @property (nonatomic, retain) SinaWeiboRequest *request;
 @property (nonatomic, retain) UIImage *shareImage;
 
@@ -32,7 +30,6 @@
 @end
 
 @implementation LeafComposeViewController
-@synthesize hud = _hud;
 @synthesize request = _request;
 @synthesize shareImage = _shareImage;
 
@@ -42,7 +39,6 @@
     _shareImageView = nil;
     _statusTextView = nil;
     _remainLabel = nil;
-    _hud = nil;
     _request.delegate = nil;
     [_request release], _request = nil;
     [_shareImage release], _shareImage = nil;
@@ -66,16 +62,10 @@
     SinaWeibo *sinaweibo = [self sinaweibo];
     if ([sinaweibo isAuthValid]) {
         __block LeafComposeViewController *controller = self;
-        
-        RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
-        [hud setHudFont:kLeafFont15];
-        [hud setHUDType:RFHUDTypeLoading andStatus:@"正在发送"];
-        hud.dismissBlock = ^(void){
+        [self setDismissBlockForHUD:^(void){
             [controller cancel];
-        };
-        _hud = hud;
-        [hud show];
-        [hud release];
+        }];
+        [self showHUD:RFHUDTypeLoading status:@"正在发送"];
         [self share];
     }
     else {
@@ -253,21 +243,21 @@
 - (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
 {
     __block LeafComposeViewController *controller = self;
-    _hud.dismissBlock = ^(void){
+    [self setDismissBlockForHUD: ^(void){
         [controller postMessage:@"分享失败!" type:LeafStatusBarOverlayTypeError];
-    };
-    [_hud close];
+    }];
+    [self dismissHUD];
 }
 
 - (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
 {
     __block LeafComposeViewController *controller = self;
  
-    _hud.dismissBlock = ^(void){
+    [self setDismissBlockForHUD:^(void){
         [controller postMessage:@"分享成功!" type:LeafStatusBarOverlayTypeSuccess];
         [controller dismissViewControllerWithOption:LeafAnimationOptionVertical completion:NULL];
-    };
-    [_hud close];
+    }];
+    [self dismissHUD];
 }
 
 

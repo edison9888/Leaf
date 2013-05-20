@@ -31,18 +31,60 @@
 @synthesize hudFont = _hudFont;
 @synthesize dismissBlock = _dismissBlock;
 
-- (void)dealloc
+static RFHUD *_instance;
+
++ (id)sharedInstance
 {
-    NSLog(@"hud dealloc.");
-    [_hudFont release], _hudFont = nil;
-    [_dismissBlock release], _dismissBlock = nil;
+    @synchronized(self){
+        if (!_instance) {
+            _instance = [[self alloc] init];
+        }
+    }
     
-    [super dealloc];
+    return _instance;
+}
+
++ (id)allocWithZone:(NSZone *)zone
+{
+    @synchronized(self){
+        if (!_instance) {
+            _instance = [super allocWithZone:zone];
+            return _instance;
+        }
+    }
+    return nil;
 }
 
 
-- (id)initWithFrame:(CGRect)frame
+- (id)copyWithZone:(NSZone *)zone
 {
+    return self;
+}
+
+
+- (id)retain
+{
+    return self;
+}
+
+- (NSUInteger)retainCount
+{
+    return UINT_MAX;  //denotes an object that cannot be released
+}
+
+- (oneway void)release
+{
+    //do nothing
+}
+
+- (id)autorelease
+{
+    return self;
+}
+
+- (id)init
+{
+    CGRect frame = [[UIApplication sharedApplication] keyWindow].bounds;
     self = [super initWithFrame:frame];
     if (self) {
         NSLog(@"HUD frame: %@", NSStringFromCGRect(frame));
@@ -118,6 +160,10 @@
 - (void)setHUDType:(RFHUDType)type andStatus:(NSString *)status
 {
     _type = type;
+    _cancel.hidden = YES;
+    _logo.transform = CGAffineTransformIdentity;
+    _logo.hidden = NO;
+    
     switch (type) {
            case RFHUDTypeLoading:
             [_logo setImage:[UIImage imageNamed:@"RFHUD.bundle/activity_logo_circle"]];
@@ -146,7 +192,7 @@
     [_status setText:status];
 }
 
-- (void)dismissAfterDelay:(CGFloat)delay
+- (void)dismissAfterDelay:(NSTimeInterval)delay
 {
 
     _complete = YES;
@@ -176,7 +222,12 @@
 
 - (void)dismiss
 {
-    [self dismissAfterDelay:0.0f];
+    if (_type == RFHUDTypeLoading) {
+        [self close];
+    }
+    else{
+        [self dismissAfterDelay:0.0f];
+    }
 }
 
 - (void)rotateLogo

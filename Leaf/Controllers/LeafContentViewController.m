@@ -9,7 +9,6 @@
 
 #import "ASIDownloadCache.h"
 #import "TFHpple.h"
-#import "RFHUD.h"
 
 #import "LeafContentViewController.h"
 #import "LeafNavigationBar.h"
@@ -62,7 +61,6 @@ iframe { \
 
 @interface LeafContentViewController ()
 {
-    RFHUD *_hud;
     BOOL _offline;
 }
 
@@ -92,6 +90,7 @@ iframe { \
     [_connection release], _connection = nil;
     _content = nil;
     _loading = nil;
+    
     [super dealloc];
 }
 
@@ -285,12 +284,7 @@ iframe { \
     SinaWeibo *sinaweibo = [self sinaweibo];
     if ([sinaweibo isAuthValid]) {
         __block UIImage *image = [[self convertWebViewToImage] retain];
-        RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
-        _hud = hud;
-        [hud setHudFont:kLeafFont15];
-        [hud setHUDType:RFHUDTypeWaiting andStatus:@"正在生成长微博"];
-        [hud show];
-        [hud release];
+        [self showHUD:RFHUDTypeWaiting status:@"正在生成长微博"];
         
         __block UIImage *newImage;
         __block LeafContentViewController *controller = self;
@@ -300,11 +294,11 @@ iframe { \
                             [image release];
                         }
                         complete:^{
-                            _hud.dismissBlock = ^(void){
+                            [self setDismissBlockForHUD:^(void){
                                 [controller presentComposeController:newImage];
                                 [newImage release];
-                            };
-                            [_hud dismissAfterDelay:1.0f];
+                            }];
+                            [self dismissHUD];
                         }];
     }
     else{

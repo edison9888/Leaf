@@ -6,8 +6,6 @@
 //  Copyright (c) 2013年 Mobimtech. All rights reserved.
 //
 
-#import "RFHUD.h"
-
 #import "LeafCommentViewController.h"
 #import "LeafCommentModel.h"
 #import "LeafCommentCell.h"
@@ -67,11 +65,7 @@
 - (void)loadCommentFailed:(NSNotification *)notification
 {
     [self hideLeafLoadingView];
-     
-    RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
-    [hud setHUDType:RFHUDTypeError andStatus:@"评论加载失败"];
-    [hud show];
-    [hud release];
+    [self postMessage:@"评论加载失败!" type:LeafStatusBarOverlayTypeError];
 }
 
 - (void)loadCommentCanceled:(NSNotification *)notification

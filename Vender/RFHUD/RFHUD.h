@@ -27,12 +27,13 @@ typedef void (^RFHUDBlock) (void);
 @property (nonatomic, retain) UIFont *hudFont;
 @property (nonatomic, copy) RFHUDBlock dismissBlock;
 
++ (RFHUD *)sharedInstance;
 
 - (void)setHUDType:(RFHUDType)type andStatus:(NSString *)status;
 
 - (void)show;
 - (void)showInFront;
-- (void)dismissAfterDelay:(CGFloat)delay;
+- (void)dismissAfterDelay:(NSTimeInterval)delay;
 - (void)dismiss;
 - (void)close;   // dismiss loading hud
 @end

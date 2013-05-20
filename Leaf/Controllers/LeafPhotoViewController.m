@@ -6,13 +6,12 @@
 //  Copyright (c) 2013年 Mobimtech. All rights reserved.
 //
 
-#import "RFHUD.h"
-
 #import "LeafPhotoViewController.h"
 #import "LeafPhotoView.h"
 #import "LeafBottomBar.h"
 #import "LeafHelper.h"
 #import "LeafProgressBar.h"
+#import "GCDHelper.h"
 
 #define kLeafBottomProgressBarH 2.0f
 
@@ -22,7 +21,6 @@
     LeafProgressBar *_progressBar;
     int _cur;
     LeafPhotoView *_photoView;
-    RFHUD *_hud;
 }
 
 @property (nonatomic, retain) NSArray *urls;
@@ -37,7 +35,6 @@
 @synthesize photoViews = _photoViews;
 - (void)dealloc
 {
-    _hud = nil;
     [_urls release], _urls = nil;
     [_photoViews release], _photoViews = nil;
     _scrollView = nil;
@@ -65,29 +62,23 @@
 - (void) image:(UIImage *) image didFinishSavingWithError:(NSError *) error contextInfo:(void *) contextInfo
 {
     if (error) {
-        if (_hud) {
-            _hud.dismissBlock = ^(void){
+        
+        [self setDismissBlockForHUD:^(void){
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NULL message:@"您未授权Leaf访问照片, 请进入系统设置\u2192隐私\u2192照片内开启授权" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
                 [alert show];
                 [alert release];
-            };
-            [_hud dismiss];
-            _hud = nil;
-        }
-        
+            }];
+        [self dismissHUD];
     }
     else {
-        if (_hud) {
-            _hud.dismissBlock = ^(void){
-                RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
-                [hud setHudFont:kLeafFont15];
-                [hud setHUDType:RFHUDTypeSuccess andStatus:@"保存成功"];
-                [hud show];
-                [hud release];
-            };
-            [_hud dismiss];
-            _hud = nil;
-        }
+        __block LeafPhotoViewController *controller = self;
+        
+        [self setDismissBlockForHUD:^(void){
+                [controller postMessage:@"保存成功!" type:LeafStatusBarOverlayTypeSuccess];
+        }];
+        
+        [self dismissHUD];
+        
     }
 }
 
@@ -99,17 +90,12 @@
         UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
     }
     else{
-        if (_hud) {
-            _hud.dismissBlock = ^(void){
-                RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
-                [hud setHudFont:kLeafFont15];
-                [hud setHUDType:RFHUDTypeError andStatus:@"保存失败"];
-                [hud show];
-                [hud release];
-            };
-            [_hud dismiss];
-            _hud = nil;
-        }
+        __block LeafPhotoViewController *controller = self;
+        
+            [self setDismissBlockForHUD:^(void){
+                [controller postMessage:@"保存失败!" type:LeafStatusBarOverlayTypeError];
+            }];
+        [self dismissHUD];
     }
 }
 
@@ -121,12 +107,7 @@
 
 - (void)saveClicked:(id)sender
 {
-    RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
-    [hud setHudFont:kLeafFont15];
-    [hud setHUDType:RFHUDTypeWaiting andStatus:@"正在保存"];
-    _hud = hud;
-    [hud show];
-    [hud release];
+    [self showHUD:RFHUDTypeWaiting status:@"正在保存"];
     [self performSelectorInBackground:@selector(save) withObject:nil];
 }
 

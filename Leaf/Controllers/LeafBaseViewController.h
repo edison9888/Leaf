@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+
 #import "SinaWeibo.h"
 #import "DDMenuController.h"
+#import "RFHUD.h"
+
 #import "LeafStatusBarOverlay.h"
 
 #define kSinaWeiboDidLogin @"SinaWeiboDidLogin"
@@ -79,4 +82,9 @@ typedef enum {
 - (void)postMessage:(NSString *)msg type:(LeafStatusBarOverlayType)type;
 - (void)postMessage:(NSString *)msg type:(LeafStatusBarOverlayType)type dismissAfterDelay:(int)delay;
 
+- (void)showHUD:(RFHUDType)type status:(NSString *)status;
+- (void)setDismissBlockForHUD:(RFHUDBlock)block;
+- (void)dismissHUD;
+- (void)dismissHUDAfterDelay:(NSTimeInterval)delay;
+- (BOOL)isHUDHiden;
 @end

@@ -481,4 +481,39 @@
     [overlay postMessage:msg type:type dismissAfterDelay:delay];
 }
 
+#pragma mark -
+#pragma mark - RFHUD
+
+- (void)showHUD:(RFHUDType)type status:(NSString *)status
+{
+    RFHUD *hud = [RFHUD sharedInstance];
+    [hud setHudFont:kLeafFont15];
+    [hud setHUDType:type andStatus:status];
+    [hud show];
+}
+
+- (void)setDismissBlockForHUD:(RFHUDBlock)block
+{
+    RFHUD *hud = [RFHUD sharedInstance];
+    hud.dismissBlock = block;
+}
+
+- (void)dismissHUD
+{
+    RFHUD *hud = [RFHUD sharedInstance];
+    [hud dismiss];
+}
+
+- (void)dismissHUDAfterDelay:(NSTimeInterval)delay
+{
+    RFHUD *hud = [RFHUD sharedInstance];
+    [hud dismissAfterDelay:delay];
+}
+
+- (BOOL)isHUDHiden
+{
+    RFHUD *hud = [RFHUD sharedInstance];
+    return hud.hidden;
+}
+
 @end
