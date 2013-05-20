@@ -9,7 +9,7 @@
 #import "LeafBaseViewController.h"
 #import "LeafHelper.h"
 #import "LeafStack.h"
-
+#import "LeafStatusBarOverlay.h"
 
 #define kScaleFactor 0.02f
 #define kAlphaFactor 0.1f
@@ -458,6 +458,21 @@
 {
     AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     return delegate.weibo;
+}
+
+#pragma mark -
+#pragma mark - LeafStatusBarOverlay
+
+- (void)postMessage:(NSString *)msg
+{
+    LeafStatusBarOverlay *overlay = [LeafStatusBarOverlay sharedInstance];
+    [overlay postMessage:msg dismissAfterDelay:1.0f];
+}
+
+- (void)postMessage:(NSString *)msg dismissAfterDelay:(int)delay
+{
+    LeafStatusBarOverlay *overlay = [LeafStatusBarOverlay sharedInstance];
+    [overlay postMessage:msg dismissAfterDelay:delay];
 }
 
 @end

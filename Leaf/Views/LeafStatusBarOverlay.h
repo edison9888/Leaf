@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface LeafStatusBarOverlay : UIWindow
+
++ (LeafStatusBarOverlay *)sharedInstance;
 - (void)postMessage:(NSString *)msg dismissAfterDelay:(int)delay;
 @end

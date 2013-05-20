@@ -14,7 +14,6 @@
 #import "LeafNavigationBar.h"
 #import "LeafLoadingView.h"
 #import "LeafMenuBar.h"
-#import "LeafStatusBarOverlay.h"
 #import "LeafReplyController.h"
 
 #define kLeafCommentCellTag 1001
@@ -26,7 +25,6 @@
     UITableView *_table;
     LeafLoadingView *_loading;
     LeafMenuBar *_menuBar;
-    LeafStatusBarOverlay *_mr;
 }
 
 @property (nonatomic, retain) NSString *articleId;
@@ -42,7 +40,7 @@
     [_commentModel release], _commentModel = nil;
     [_articleId release], _articleId = nil;
     [_menuBar release], _menuBar = nil;
-    [_mr release], _mr = nil;
+    
     _table = nil;
     
     [super dealloc];
@@ -172,9 +170,7 @@
     _menuBar.delegate = (NSObject<LeafMenuBarDelegate> *)self;
     [_container addSubview:_menuBar];
     
-    _mr = [[LeafStatusBarOverlay alloc] init];
-    
-    _commentModel = [[LeafCommentModel alloc] init];
+     _commentModel = [[LeafCommentModel alloc] init];
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
     [defaultCenter addObserver:self
                       selector:@selector(loadCommentSuccess:)
@@ -292,11 +288,11 @@
 - (void)menuBar:(LeafMenuBar *)menubar didClickedItemWithType:(LeafMenuBarItemType)type
 {
     if (type == LeafMenuBarItemTypeUp) {
-        [_mr postMessage:@"谢谢您的参与!" dismissAfterDelay:1.0f];
+        [self postMessage:@"谢谢您的参与!"];
 
     }
     else if(type == LeafMenuBarItemTypeDown){
-        [_mr postMessage:@"谢谢您的参与!" dismissAfterDelay:1.0f];
+        [self postMessage:@"谢谢您的参与!"];
 
     }
     else if(type == LeafMenuBarItemTypeReply){
@@ -309,7 +305,7 @@
                          }];
     }
     else if(type == LeafMenuBarItemTypeCopy){
-        [_mr postMessage:@"复制成功!" dismissAfterDelay:1.0f];
+        [self postMessage:@"复制成功!"];
     }
 }
 

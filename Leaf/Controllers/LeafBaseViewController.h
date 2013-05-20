@@ -71,5 +71,10 @@ typedef enum {
 
 - (void)presentViewController:(LeafBaseViewController *)controller option:(LeafAnimationOption)option completion:(LeafBlock)block;
 - (void)dismissViewControllerWithOption:(LeafAnimationOption)option completion:(LeafBlock)block;
+
 - (SinaWeibo *)sinaweibo;
+
+- (void)postMessage:(NSString *)msg;
+- (void)postMessage:(NSString *)msg dismissAfterDelay:(int)delay;
+
 @end

@@ -8,6 +8,7 @@
 
 #import "LeafStatusBarOverlay.h"
 #import "UIColor+MLPFlatColors.h"
+#import "Singleton.h"
 
 #define kLeafStatusBarOverlayBeforeAnimationFrame CGRectMake(0.0f, -20.0f, 320.0f, 20.0f)
 #define kLeafStatusBarOverlayAfterAnimationFrame CGRectMake(0.0f, 0.0f, 320.0f, 20.0f)
@@ -23,13 +24,7 @@
 
 @implementation LeafStatusBarOverlay
 
-- (void)dealloc
-{
-    _label = nil;
-    
-    [super dealloc];
-}
-
+SINGLETON_FOR_CLASS(LeafStatusBarOverlay);
 
 - (id)init
 {
