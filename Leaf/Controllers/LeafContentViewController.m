@@ -283,9 +283,8 @@ iframe { \
 {
     SinaWeibo *sinaweibo = [self sinaweibo];
     if ([sinaweibo isAuthValid]) {
+
         __block UIImage *image = [[self convertWebViewToImage] retain];
-        [self showHUD:RFHUDTypeWaiting status:@"正在生成长微博"];
-        
         __block UIImage *newImage;
         __block LeafContentViewController *controller = self;
         [GCDHelper dispatchBlock:^{
@@ -294,18 +293,13 @@ iframe { \
                             [image release];
                         }
                         complete:^{
-                            [self setDismissBlockForHUD:^(void){
-                                [controller presentComposeController:newImage];
-                                [newImage release];
-                            }];
-                            [self dismissHUD];
+                            [controller presentComposeController:newImage];
+                            [newImage release];
                         }];
     }
     else{
         [sinaweibo logIn];
     }
-    
-    
 }
 
 - (void)commentBoxClicked
