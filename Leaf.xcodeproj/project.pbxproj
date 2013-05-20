@@ -68,6 +68,7 @@
 		DB87A84B17338365002AE0D6 /* share_content_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB87A84617338365002AE0D6 /* share_content_background@2x.png */; };
 		DB87A84C17338365002AE0D6 /* share_ok@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB87A84717338365002AE0D6 /* share_ok@2x.png */; };
 		DB87A84D17338365002AE0D6 /* share_pic_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB87A84817338365002AE0D6 /* share_pic_background@2x.png */; };
+		DB8BC5D01749FD4F00E42CDF /* LeafHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8BC5CF1749FD4F00E42CDF /* LeafHTTPRequest.m */; };
 		DB91551F17378F0E00F07AEC /* photo_save.png in Resources */ = {isa = PBXBuildFile; fileRef = DB91551D17378F0900F07AEC /* photo_save.png */; };
 		DB91552017378F0E00F07AEC /* photo_save@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB91551E17378F0B00F07AEC /* photo_save@2x.png */; };
 		DB9AEC88170B190F005EA0E6 /* home_icon_download.png in Resources */ = {isa = PBXBuildFile; fileRef = DB9AEC80170B190C005EA0E6 /* home_icon_download.png */; };
@@ -245,6 +246,8 @@
 		DB87A84617338365002AE0D6 /* share_content_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_content_background@2x.png"; sourceTree = "<group>"; };
 		DB87A84717338365002AE0D6 /* share_ok@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_ok@2x.png"; sourceTree = "<group>"; };
 		DB87A84817338365002AE0D6 /* share_pic_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_pic_background@2x.png"; sourceTree = "<group>"; };
+		DB8BC5CE1749FD4E00E42CDF /* LeafHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafHTTPRequest.h; sourceTree = "<group>"; };
+		DB8BC5CF1749FD4F00E42CDF /* LeafHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeafHTTPRequest.m; sourceTree = "<group>"; };
 		DB91551D17378F0900F07AEC /* photo_save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo_save.png; sourceTree = "<group>"; };
 		DB91551E17378F0B00F07AEC /* photo_save@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo_save@2x.png"; sourceTree = "<group>"; };
 		DB9AEC80170B190C005EA0E6 /* home_icon_download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_icon_download.png; sourceTree = "<group>"; };
@@ -706,6 +709,8 @@
 				DB61B75917125EC200838477 /* LeafStack.m */,
 				DBA1C34B1740B16B00F3EF58 /* GCDHelper.h */,
 				DBA1C34C1740B16B00F3EF58 /* GCDHelper.m */,
+				DB8BC5CE1749FD4E00E42CDF /* LeafHTTPRequest.h */,
+				DB8BC5CF1749FD4F00E42CDF /* LeafHTTPRequest.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1076,6 +1081,7 @@
 				DBE66E7B17451814002C34AC /* LeafStatusBarOverlay.m in Sources */,
 				DBE66E8317451A80002C34AC /* UIColor+MLPFlatColors.m in Sources */,
 				DBCBE9061745DEF900BD37CF /* LeafReplyController.m in Sources */,
+				DB8BC5D01749FD4F00E42CDF /* LeafHTTPRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

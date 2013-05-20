@@ -9,5 +9,10 @@
 #import "LeafBaseViewController.h"
 
 @interface LeafReplyController : LeafBaseViewController
+{
+    NSString *_articleId;
+}
+
+@property (nonatomic, retain) NSString *articleId;
 
 @end

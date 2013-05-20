@@ -36,11 +36,13 @@
 {
     LeafURLConnection *_connection;
     NSMutableArray *_dataArray;
+    NSString *_referer;
 }
 
 @property (nonatomic, retain) NSMutableArray *dataArray;
-
+@property (nonatomic, retain) NSString *referer;
 - (void)load:(NSString *)articleId;
 - (void)cancel;
+- (void)support:(NSString *)tid;
 
 @end

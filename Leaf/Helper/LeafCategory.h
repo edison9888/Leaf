@@ -16,6 +16,8 @@
 
 - (NSString *)safeFormat;
 
+- (NSString *)stringByEncodeCharacterEntities;
+
 @end
 
 

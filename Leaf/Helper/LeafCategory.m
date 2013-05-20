@@ -45,6 +45,17 @@
     return numStr;
 }
 
+- (NSString *)stringByEncodeCharacterEntities
+{
+    NSMutableString *str = [[[NSMutableString alloc] init] autorelease];
+    for (int i = 0; i < self.length; i++) {
+        unichar ch = [self characterAtIndex:i];
+        [str appendFormat:@"&#%d;", ch];
+    }
+    return str;
+}
+
+
 @end
 
 

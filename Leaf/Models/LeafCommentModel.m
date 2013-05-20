@@ -5,9 +5,12 @@
 //  Created by roger on 13-4-19.
 //  Copyright (c) 2013年 Mobimtech. All rights reserved.
 //
+#import "ASIHTTPRequest.h"
 
 #import "LeafCommentModel.h"
 #define kLeafCommentURL @"http://www.cnbeta.com/api/getComment.php?article="
+#define kLeafSupportURL @"http://www.cnbeta.com/Ajax.vote.php?tid=%@&support=1"
+#define kLeafAgainstURL @"http://www.cnbeta.com/Ajax.vote.php?tid=%@&against=1"
 
 @implementation LeafCommentData
 @synthesize name = _name;
@@ -35,12 +38,14 @@
 
 @implementation LeafCommentModel
 @synthesize dataArray = _dataArray;
+@synthesize referer = _referer;
 
 - (void)dealloc
 {
     _connection.delegate = nil;
     [_connection release], _connection = nil;
     [_dataArray release], _dataArray = nil;
+    [_referer release], _referer = nil;
     
     [super dealloc];
 }
@@ -61,6 +66,7 @@
         NSLog(@"invalid article id!");
         return;
     }
+    self.referer = [NSString stringWithFormat:kCBArticle, articleId];
     NSString *url = [kLeafCommentURL stringByAppendingString:articleId];
     if (_connection) {
         [_connection GET:url];
@@ -75,6 +81,21 @@
     }
 }
 
+
+- (void)support:(NSString *)tid
+{
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kLeafSupportURL, tid]];
+    NSLog(@"url: %@", url.absoluteString);
+    //ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    //[request addRequestHeader:@"Referer" value:_referer];
+    //[request startAsynchronous];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"GET"];
+    [request addValue:_referer forHTTPHeaderField:@"Referer"];
+    NSURLConnection *connection = [NSURLConnection connectionWithRequest:request delegate:nil];
+    [connection start];
+}
 
 #pragma mark - LeafURLConnectionDelegate Methods
 

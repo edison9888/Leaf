@@ -7,16 +7,31 @@
 //
 
 #import "LeafReplyController.h"
+#import "ASIHTTPRequest.h"
+#import "UIImageView+WebCache.h"
+#import "SDImageCache.h"
+
+
+#define kLeafReplyHTTPBody @"tid=%@&sid=%@&valimg_main=%@&comment=%@&nowsubject=&nowpage=1&nowemail=cryrivers@cnbeta.com"
 
 @interface LeafReplyController ()
 {
     UIButton *_confirmBtn;
     UITextView *_statusTextView;
+    UIImageView *_valimg;
+    UITextField *_verify;
 }
 
 @end
 
 @implementation LeafReplyController
+@synthesize articleId = _articleId;
+
+- (void)dealloc
+{
+    [_articleId release], _articleId = nil;
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark - Event Handler
@@ -30,7 +45,13 @@
 
 - (void)confirmClicked:(id)sender
 {
-    
+    NSURL *url = [NSURL URLWithString:@"http://www.cnbeta.com/Ajax.comment.php?ver=new"];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    NSString *body = [NSString stringWithFormat:kLeafReplyHTTPBody, @"0", _articleId, _verify.text, [_statusTextView.text stringByEncodeCharacterEntities]];
+    [request setRequestMethod:@"POST"];
+    [request addRequestHeader:@"Content-Type" value:@"application/x-www-form-urlencoded; charset=utf-8"];
+    [request appendPostData:[[body urlEncode]  dataUsingEncoding:NSUTF8StringEncoding]];
+    [request startAsynchronous];
 }
 
 #pragma mark -
@@ -88,8 +109,22 @@
     [shareBg addSubview:textView];
     [textView release];
     
-    
-    
+    CGFloat offsetX = CGRectGetMinX(shareBg.frame);
+    CGFloat offsetY = CGRectGetMaxY(shareBg.frame) + 10.0f;
+    UIImageView *valimg = [[UIImageView alloc] initWithFrame:CGRectMake(offsetX, offsetY, 50, 25)];
+    [[SDImageCache sharedImageCache] removeImageForKey:@"http://www.cnbeta.com/validate1.php"];
+    [valimg setImageWithURL:[NSURL URLWithString:@"http://www.cnbeta.com/validate1.php"]];
+    [shareView addSubview:valimg];
+    offsetX = CGRectGetMaxX(valimg.frame) + 10.0f;
+    UITextField *verify = [[UITextField alloc] initWithFrame:CGRectMake(offsetX, offsetY, 50, 25)];
+    verify.delegate = (id<UITextFieldDelegate>)self;
+    verify.font = kLeafFont15;
+    verify.keyboardAppearance = UIKeyboardAppearanceDefault;
+    verify.keyboardType = UIKeyboardTypeNumberPad;
+    _verify = verify;
+    [shareView addSubview:verify];
+    [verify release];
+    [valimg release];
     [shareBg release];
     [shareView release];
     

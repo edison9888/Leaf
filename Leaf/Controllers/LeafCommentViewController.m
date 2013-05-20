@@ -23,6 +23,7 @@
     UITableView *_table;
     LeafLoadingView *_loading;
     LeafMenuBar *_menuBar;
+    int _curIndex;
 }
 
 @property (nonatomic, retain) NSString *articleId;
@@ -255,6 +256,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    _curIndex = indexPath.row;
     CGRect rectInTableView = [tableView rectForRowAtIndexPath:indexPath];
     CGRect rectInSuperView = [tableView convertRect:rectInTableView toView:tableView.superview];
     
@@ -281,9 +283,12 @@
 
 - (void)menuBar:(LeafMenuBar *)menubar didClickedItemWithType:(LeafMenuBarItemType)type
 {
+    LeafCommentData *data = [_commentModel.dataArray safeObjectAtIndex:_curIndex];
     if (type == LeafMenuBarItemTypeUp) {
         [self postMessage:@"谢谢您的参与!"];
-
+        if (data) {
+            [_commentModel support:data.tid];
+        }
     }
     else if(type == LeafMenuBarItemTypeDown){
         [self postMessage:@"谢谢您的参与!"];
@@ -291,6 +296,7 @@
     }
     else if(type == LeafMenuBarItemTypeReply){
         LeafReplyController *controller = [[LeafReplyController alloc] init];
+        controller.articleId = _articleId;
         [self presentViewController:controller
                              option:LeafAnimationOptionVertical
                          completion:^{
