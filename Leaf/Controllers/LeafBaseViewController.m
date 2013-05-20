@@ -344,7 +344,7 @@
 
 - (void)presentViewController:(LeafBaseViewController *)controller option:(LeafAnimationOption)option completion:(LeafBlock)block
 {
-    if (!controller) {
+    if (!controller || _childController) {
         NSLog(@"controller is nil.");
         return;
     }
