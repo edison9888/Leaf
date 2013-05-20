@@ -506,8 +506,7 @@
 
 - (void)dismissHUDAfterDelay:(NSTimeInterval)delay
 {
-    RFHUD *hud = [RFHUD sharedInstance];
-    [hud dismissAfterDelay:delay];
+   [self performSelector:@selector(dismissHUD) withObject:nil afterDelay:delay];
 }
 
 - (BOOL)isHUDHiden
