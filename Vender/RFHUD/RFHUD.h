@@ -18,7 +18,7 @@ typedef enum {
 
 typedef void (^RFHUDBlock) (void);
 
-@interface RFHUD : UIView
+@interface RFHUD : UIWindow
 {
     UIFont *_hudFont;
     RFHUDBlock _dismissBlock;
@@ -31,7 +31,7 @@ typedef void (^RFHUDBlock) (void);
 - (void)setHUDType:(RFHUDType)type andStatus:(NSString *)status;
 
 - (void)show;
-- (void)showInKeyWindow;
+- (void)showInFront;
 - (void)dismissAfterDelay:(CGFloat)delay;
 - (void)dismiss;
 - (void)close;   // dismiss loading hud

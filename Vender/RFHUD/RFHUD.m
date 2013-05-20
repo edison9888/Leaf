@@ -150,7 +150,6 @@
 {
 
     _complete = YES;
-    RFHUD *entireView = self;
     __block CGRect frame = _hud.frame;
     
     [UIView animateWithDuration:0.3
@@ -165,7 +164,7 @@
                          if (!_activity.hidden) {
                              [_activity stopAnimating];
                          }
-                         [entireView removeFromSuperview];
+                         self.hidden = YES;
                          
                          if (_dismissBlock) {
                              _dismissBlock();
@@ -182,7 +181,6 @@
 
 - (void)rotateLogo
 {
-    __block RFHUD *entireView = self;
     UIImageView *logo = _logo;
     [UIView animateWithDuration:0.28f
                           delay:0.0f
@@ -193,31 +191,29 @@
                     }
                     completion:^(BOOL finished) {
                         if (!_complete) {
-                            [entireView rotateLogo];
+                            [self rotateLogo];
                         }
                         else{
-                            [entireView dismissAfterDelay:0.0f];
+                            [self dismissAfterDelay:0.0f];
                         }
                         
                     }];
 }
 
 
-- (void)show:(BOOL)keyWindow
+- (void)show:(BOOL)front
 {
-    UIWindow *window = nil;
-        if (keyWindow) {
-        window = [[UIApplication sharedApplication] keyWindow];
+    self.hidden = NO;
+    if (!front) {
+        self.windowLevel = UIWindowLevelAlert - 1.0f;
     }
-    else{
-        NSArray *array = [[UIApplication sharedApplication] windows];
-        window = [array lastObject];
+    else
+    {
+        self.windowLevel = UIWindowLevelStatusBar + 1.0f;
     }
-    
-    [window addSubview:self];
-    //[keyWindow bringSubviewToFront:self];
+        
     __block CGRect frame = _hud.frame;
-    RFHUD *entireView = self;
+    RFHUD *rf = self;
         
     [UIView animateWithDuration:0.3
                           delay:0.0f
@@ -230,24 +226,24 @@
                      completion:^(BOOL finished) {
                          if (_type == RFHUDTypeLoading) {
                              _complete = NO;
-                             [entireView rotateLogo];
+                             [rf rotateLogo];
                          }
                          else if(_type != RFHUDTypeWaiting){
-                             [entireView dismissAfterDelay:kRFHUDDismissAfterDelay];
+                             [rf dismissAfterDelay:kRFHUDDismissAfterDelay];
                          }
                     }];
     
 
 }
 
-- (void)showInKeyWindow
-{
-    [self show:YES];
-}
-
 - (void)show
 {
     [self show:NO];
+}
+
+- (void)showInFront
+{
+    [self show:YES];
 }
 
 

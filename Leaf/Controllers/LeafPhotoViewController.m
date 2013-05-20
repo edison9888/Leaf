@@ -82,7 +82,7 @@
                 RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
                 [hud setHudFont:kLeafFont15];
                 [hud setHUDType:RFHUDTypeSuccess andStatus:@"保存成功"];
-                [hud showInKeyWindow];
+                [hud show];
                 [hud release];
             };
             [_hud dismiss];
@@ -104,7 +104,7 @@
                 RFHUD *hud = [[RFHUD alloc] initWithFrame:kLeafWindowRect];
                 [hud setHudFont:kLeafFont15];
                 [hud setHUDType:RFHUDTypeError andStatus:@"保存失败"];
-                [hud showInKeyWindow];
+                [hud show];
                 [hud release];
             };
             [_hud dismiss];
@@ -125,7 +125,7 @@
     [hud setHudFont:kLeafFont15];
     [hud setHUDType:RFHUDTypeWaiting andStatus:@"正在保存"];
     _hud = hud;
-    [hud showInKeyWindow];
+    [hud show];
     [hud release];
     [self performSelectorInBackground:@selector(save) withObject:nil];
 }
