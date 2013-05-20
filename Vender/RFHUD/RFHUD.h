@@ -35,5 +35,5 @@ typedef void (^RFHUDBlock) (void);
 - (void)showInFront;
 - (void)dismissAfterDelay:(NSTimeInterval)delay;
 - (void)dismiss;
-- (void)close;   // dismiss loading hud
+
 @end
