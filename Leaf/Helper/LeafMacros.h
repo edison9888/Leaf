@@ -36,3 +36,7 @@
 #define kMoreNewsURL @"http://www.cnbeta.com/api/getNewsList.php?fromArticleId=%@&limit=10"
 #define kArticleUrl  @"http://www.cnbeta.com/api/getNewsContent2.php?articleId=%@"
 #define kCBArticle @"http://www.cnbeta.com/articles/%@.htm"
+
+
+// ads
+#define kLeafAds @" -- (来自Leaf for iPhone)"

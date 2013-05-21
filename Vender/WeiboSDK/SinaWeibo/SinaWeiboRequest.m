@@ -295,8 +295,9 @@
         [escaped_value release];
     }
     NSString* query = [pairs componentsJoinedByString:@"&"];
-    
-    return [NSString stringWithFormat:@"%@%@%@", baseURL, queryPrefix, query];
+    NSString *result = [NSString stringWithFormat:@"%@%@%@", baseURL, queryPrefix, query];
+    NSLog(@"result: %@", result);
+    return result;
 }
 
 + (SinaWeiboRequest *)requestWithURL:(NSString *)url 

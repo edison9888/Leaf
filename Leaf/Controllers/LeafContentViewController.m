@@ -169,6 +169,24 @@ iframe { \
 #pragma mark - 
 #pragma mark - Utils
 
+- (NSString *)themeUrl
+{
+    if(!_data || !_data.theme){
+        return nil;
+    }
+    NSRange range = [_data.theme rangeOfString:@"http://"];
+    if (range.location == NSNotFound) {
+        NSString *url = [_urls safeObjectAtIndex:0];
+        if (url) {
+            return [url stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+        }
+        return nil;
+    }
+    else{
+        return [_data.theme stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    }
+}
+
 - (void)cancelAll
 {
     [_connection cancel];
@@ -177,13 +195,15 @@ iframe { \
     _content.delegate = nil;
 }
 
-- (void)presentComposeController:(UIImage *)image
+- (void)presentComposeController
 {
-    NSString *status = [NSString stringWithFormat:@" //%@ -- (来自 Leaf)", _data.title];
+    NSString *status = [NSString stringWithFormat:@" //%@", _data.title];
     LeafComposeViewController *vc = [[LeafComposeViewController alloc] init];
     vc.view.frame = self.view.bounds;
+    vc.url = [self themeUrl];
+    vc.articleURL = [NSString stringWithFormat:kCBArticle, _data.articleId];
     [vc setStatus:status];
-    [vc setImage:image];
+    
     [self presentViewController:vc option:LeafAnimationOptionVertical completion:^{
         self.shouldBlockGesture = YES;
     }];
@@ -289,18 +309,19 @@ iframe { \
     SinaWeibo *sinaweibo = [self sinaweibo];
     if ([sinaweibo isAuthValid]) {
 
-        __block UIImage *image = [[self convertWebViewToImage] retain];
-        __block UIImage *newImage;
-        __block LeafContentViewController *controller = self;
-        [GCDHelper dispatchBlock:^{
-                            NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
-                            newImage = [[UIImage alloc] initWithData:imageData];
-                            [image release];
-                        }
-                        complete:^{
-                            [controller presentComposeController:newImage];
-                            [newImage release];
-                        }];
+//        __block UIImage *image = [[self convertWebViewToImage] retain];
+//        __block UIImage *newImage;
+//        __block LeafContentViewController *controller = self;
+//        [GCDHelper dispatchBlock:^{
+//                            NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+//                            newImage = [[UIImage alloc] initWithData:imageData];
+//                            [image release];
+//                        }
+//                        complete:^{
+//                            [controller presentComposeController:newImage];
+//                            [newImage release];
+//                        }];
+        [self presentComposeController];
     }
     else{
         [sinaweibo logIn];

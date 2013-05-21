@@ -8,6 +8,7 @@
 
 #import "UIColor+MLPFlatColors.h"
 #import "LeafComposeViewController.h"
+#import "UIImageView+WebCache.h"
 
 #define kLeafMaxWeiboLen 140
 
@@ -33,6 +34,8 @@
 @implementation LeafComposeViewController
 @synthesize request = _request;
 @synthesize shareImage = _shareImage;
+@synthesize url = _url;
+@synthesize articleURL = _articleURL;
 
 - (void)dealloc
 {
@@ -43,6 +46,9 @@
     _request.delegate = nil;
     [_request release], _request = nil;
     [_shareImage release], _shareImage = nil;
+    [_url release], _url = nil;
+    [_articleURL release], _articleURL = nil;
+    
     [super dealloc];
 }
 
@@ -77,14 +83,38 @@
 
 #pragma mark - 
 
-- (UIImage *)scaleImage:(UIImage *)image
+- (void)scaleImage:(UIImage *)image
 {
-    CGRect cropRect = CGRectMake(0.0f, 0.0f , 320.0f, 320.0f);
-    CGImageRef imageRef = CGImageCreateWithImageInRect(image.CGImage, cropRect);
-    UIImage *result = [UIImage imageWithCGImage:imageRef scale:[[UIScreen mainScreen] scale] orientation:UIImageOrientationUp];
-    CGImageRelease(imageRef);
-    return result;
+    CGFloat originX = 0.0f;
+    CGFloat originY = 0.0f;
+    CGFloat width = 0.0f;
+    CGFloat height = 0.0f;
+    CGFloat scaleFactor = 1.0f;
+    if (CGWidth(image) > CGWidth(_shareImageView.frame) && CGHeight(image) > CGHeight(_shareImageView.frame)) {
+        if (CGWidth(image) > CGHeight(image)) {
+            scaleFactor = CGHeight(image)/CGHeight(_shareImageView.frame);
+            width = scaleFactor * CGWidth(_shareImageView.frame);
+            height = CGHeight(image);
+            originX = (CGWidth(image) - width)/2.0f;
+        }
+        else
+        {
+            scaleFactor = CGWidth(image)/CGWidth(_shareImageView.frame);
+            width = CGWidth(image);
+            height = scaleFactor * CGHeight(_shareImageView.frame);
+            originY = (CGHeight(image) - height)/2.0f;
+        }
+        CGRect cropRect = CGRectMake(originX, originY , width, height);
+        
+        CGImageRef imageRef = CGImageCreateWithImageInRect(image.CGImage, cropRect);
+        [_shareImageView setImage:[UIImage imageWithCGImage:imageRef scale:[[UIScreen mainScreen] scale] orientation:UIImageOrientationUp]];
+        CGImageRelease(imageRef);
+    }
+    else{
+        [_shareImageView setImage:image];
+    }
 }
+
 
 - (void)setStatus:(NSString *)status
 {
@@ -99,25 +129,45 @@
     _remainLabel.text = [NSString stringWithFormat:@"%d", remainLen];
 }
 
-- (void)setImage:(UIImage *)image
+- (void)setUrl:(NSString *)url
 {
-    self.shareImage = image;
-    UIImage *scaledImage = [self scaleImage:image];
-    _shareImageView.image = scaledImage;
+    if (!url) {
+        return;
+    }
+    [_url release];
+    _url = [url retain];
+    __block UIImageView *shareImageView = _shareImageView;
+    [shareImageView setImageWithURL:[NSURL URLWithString:url]
+           placeholderImage:[UIImage imageNamed:@"placeholder"]
+                    success:^(UIImage *image) {
+                        [self scaleImage:image];
+                    }
+                    failure:^(NSError *error){
+                        [shareImageView setImage:[UIImage imageNamed:@"placeholder"]];
+                    }];
 }
-
 
 - (void)share
 {
     SinaWeibo *sinaweibo = [self sinaweibo];
     
-    NSString *status = _statusTextView.text;
-    self.request = [sinaweibo requestWithURL:@"statuses/upload.json"
+    NSString *status = [_statusTextView.text stringByAppendingString:kLeafAds];
+    status = [status stringByAppendingString:_articleURL];
+    
+    /*self.request = [sinaweibo requestWithURL:@"statuses/upload.json"
                            params:[NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    status, @"status",
                                    _shareImage, @"pic", nil]
                        httpMethod:@"POST"
                          delegate:self];
+     */
+    
+    self.request = [sinaweibo requestWithURL:@"statuses/upload_url_text.json"
+                                       params:[NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                               status, @"status",
+                                               _url, @"url", nil]
+                                  httpMethod:@"POST"
+                                    delegate:self];
 }
 
 
@@ -205,6 +255,7 @@
     [shareBg release];
     [shareView release];
     
+    _url = nil;
     [_statusTextView becomeFirstResponder];
 }
 
@@ -224,7 +275,7 @@
 - (void)textViewDidChange:(UITextView *)textView
 {
     
-    int value = kLeafMaxWeiboLen - textView.text.length;
+    int value = kLeafMaxWeiboLen - textView.text.length - kLeafAds.length - _articleURL.length;
     if (value < 0) {
         _remainLabel.textColor = [UIColor redColor];
         [_confirmBtn setEnabled:NO];
@@ -252,6 +303,8 @@
 
 - (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
 {
+    NSString *response = [(NSDictionary *)result description];
+    NSLog(@"response: %@", response);
     __block LeafComposeViewController *controller = self;
  
     [self setDismissBlockForHUD:^(void){

@@ -9,8 +9,14 @@
 #import <UIKit/UIKit.h>
 
 @interface LeafComposeViewController : LeafBaseViewController <UITextViewDelegate, SinaWeiboRequestDelegate>
+{
+    NSString *_url;
+    NSString *_articleURL;
+}
 
+@property (nonatomic, retain) NSString *url;
+@property (nonatomic, retain) NSString *articleURL;
 - (void)setStatus:(NSString *)status;
-- (void)setImage:(UIImage *)image;
+
 
 @end
