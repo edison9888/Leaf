@@ -297,8 +297,9 @@
         [self presentViewController:vc option:LeafAnimationOptionHorizontal completion:^{
             [self blockDDMenuControllerGesture:YES];
             [vc GET];
+            [vc release];
         }];
-        [vc release];
+        
         NSLog(@"after vc release.");
     }
 }

@@ -148,7 +148,7 @@ iframe { \
         contentViewController.shouldBlockGesture = YES;
         [contentViewController pushController:vc];
         vc.hasMask = YES;
-        [vc loadData:_data.articleId];
+        [vc loadData:contentViewController.data.articleId];
         [vc release];
     } coveredBlock:NULL
     andDismissBlock:^{
