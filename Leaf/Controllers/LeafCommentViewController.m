@@ -10,7 +10,7 @@
 #import "LeafCommentViewController.h"
 #import "LeafCommentModel.h"
 #import "LeafCommentCell.h"
-#import "LeafNavigationBar.h"
+#import "LeafBottomBar.h"
 #import "LeafLoadingView.h"
 #import "LeafMenuBar.h"
 #import "LeafReplyController.h"
@@ -81,10 +81,8 @@
 
 - (void)showLeafLoadingView
 {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    
     CGPoint center = _loading.center;
-    center.y = (CGHeight(self.view.frame) - CGHeight(_loading.frame)/2.0f);
+    center.y = CGHeight(_loading.frame)/2.0;
     
     [UIView animateWithDuration:0.3f
                           delay:0.0f
@@ -92,9 +90,7 @@
                      animations:^{
                          _loading.center = center;
                      }
-                     completion:^(BOOL finished) {
-                         
-                     }];
+                     completion:NULL];
     
 }
 
@@ -102,39 +98,21 @@
 - (void)hideLeafLoadingView
 {
     CGPoint center = _loading.center;
-    center.y = CGHeight(self.view.frame) + CGHeight(_loading.frame)/2.0f;
+    center.y =  -CGHeight(_loading.frame)/2.0f;
     [UIView animateWithDuration:0.3f
                           delay:0.0f
                         options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
                          _loading.center = center;
                      }
-                     completion:^(BOOL finished) {
-                         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                     }];
-    
+                     completion:NULL];
 }
 
 
 #pragma mark -
+#pragma mark - Handle BottomBar Events
 
-- (void)commentBtnClicked
-{
-    LeafReplyController *controller = [[LeafReplyController alloc] init];
-    controller.articleId = _articleId;
-    [self presentViewController:controller
-                         option:LeafAnimationOptionVertical
-                     completion:^{
-                         self.shouldBlockGesture = YES;
-                    }];
-    [controller release];
-}
-
-
-#pragma mark -
-#pragma mark - Handle NavigationBar Events
-
-- (void)backClicked:(id)sender
+- (void)backClicked
 {
     [self dismissViewControllerWithOption:LeafAnimationOptionHorizontal
                                completion:^{
@@ -142,7 +120,20 @@
                                }];
 }
 
-- (void)refreshClicked:(id)sender
+- (void)commentClicked
+{
+    LeafReplyController *controller = [[LeafReplyController alloc] init];
+    controller.articleId = _articleId;
+    [self presentViewController:controller
+                         option:LeafAnimationOptionVertical
+                     completion:^{
+                         self.shouldBlockGesture = YES;
+                     }];
+    [controller release];
+}
+
+
+- (void)refreshClicked
 {
     [self loadData:_articleId];
 }
@@ -153,18 +144,23 @@
 {
     [super viewDidLoad];
 	
-    LeafNavigationBar *bar = [[LeafNavigationBar alloc] init];
-    [bar addLeftItemWithStyle:LeafNavigationItemStyleBack target:self action:@selector(backClicked:)];
-    [bar addRightItemWithStyle:LeafNavigationItemStyleRefresh target:self action:@selector(refreshClicked:)];
+    LeafBottomBar *bar = [[LeafBottomBar alloc] initWithFrame:CGRectMake(0.0f, CGRectGetHeight(_container.frame) - 40.0f, CGRectGetWidth(_container.frame), 40.0f)];
+    bar.leftItemType = LeafBottomBarItemTypeBack;
+    bar.midItemType = LeafBottomBarItemTypeWrite;
+    bar.rightItemType = LeafBottomBarItemTypeRefresh;
+    [bar addLeftTarget:self action:@selector(backClicked)];
+    [bar addMidTarget:self action:@selector(commentClicked)];
+    [bar addRightTarget:self action:@selector(refreshClicked)];
+    
     [_container addSubview:bar];
     [bar release];
-      
+    
     __block LeafCommentViewController *controller = self;
     [self enablePanRightGestureWithDismissBlock:^(void){
         [controller cancel];
     }];
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 44.0f, 320.0f, CGRectGetHeight(self.view.frame) - 44.0f - kLeafCommentBtnH - 2.0f)];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, CGRectGetHeight(_container.frame) - 40.0f)];
     tableView.dataSource = self;
     tableView.delegate = self;
     [_container addSubview:tableView];
@@ -172,16 +168,8 @@
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_table setBackgroundColor:kLeafBackgroundColor];
     [tableView release];
-    
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(15.0f, CGRectGetHeight(_container.frame) - kLeafCommentBtnH, 290.0f, kLeafCommentBtnH);
-    [btn setBackgroundImage:[UIImage imageNamed:@"comment_btn_normal"] forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(commentBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    [_container addSubview:btn];
-    
-    LeafLoadingView *loading = [[LeafLoadingView alloc] initWithFrame:CGRectMake(0.0f, CGHeight(self.view.frame), CGWidth(self.view.frame), 30.0f)];
+     
+    LeafLoadingView *loading = [[LeafLoadingView alloc] initWithFrame:CGRectMake(0.0f, -30.0f, CGWidth(self.view.frame), 30.0f)];
     _loading = loading;
     [_container addSubview:_loading];
     [loading release];
@@ -207,7 +195,6 @@
                           name:kLeafLoadCommentCanceled
                         object:_commentModel];
 
-    
 }
 
 - (void)loadData:(NSString *)articleId
@@ -221,12 +208,6 @@
 - (void)cancel
 {
     [_commentModel cancel];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - 

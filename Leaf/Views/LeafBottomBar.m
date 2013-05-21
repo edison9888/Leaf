@@ -50,7 +50,10 @@
     else if(type == LeafBottomBarItemTypeSave){
         imageName = @"bottom_icon_save";
     }
-    
+    else if(type == LeafBottomBarItemTypeRefresh){
+        imageName = @"bottom_icon_refresh";
+    }
+
     if (!imageName) {
         NSLog(@"invalid bottom bar item type.");
         return nil;

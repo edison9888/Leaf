@@ -14,7 +14,8 @@ typedef enum{
     LeafBottomBarItemTypeShare,
     LeafBottomBarItemTypeComment,
     LeafBottomBarItemTypeWrite,
-    LeafBottomBarItemTypeSave
+    LeafBottomBarItemTypeSave,
+    LeafBottomBarItemTypeRefresh
 } LeafBottomBarItemType;
 
 @interface LeafBottomBar : UIView
