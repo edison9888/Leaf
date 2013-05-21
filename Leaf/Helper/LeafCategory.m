@@ -50,7 +50,12 @@
     NSMutableString *str = [[[NSMutableString alloc] init] autorelease];
     for (int i = 0; i < self.length; i++) {
         unichar ch = [self characterAtIndex:i];
-        [str appendFormat:@"&#%d;", ch];
+        if(ch < 255){
+            [str appendFormat:@"%c", ch];
+        }
+        else {
+            [str appendFormat:@"%@%d%@",@"%26%23", ch, @"%3B"];
+        }
     }
     return str;
 }

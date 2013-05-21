@@ -14,6 +14,7 @@
 #import "LeafMenuBar.h"
 #import "LeafReplyController.h"
 
+#define kLeafCommentBtnH    28.0f
 #define kLeafCommentCellTag 1001
 
 @interface LeafCommentViewController ()
@@ -113,6 +114,22 @@
     
 }
 
+
+#pragma mark -
+
+- (void)commentBtnClicked
+{
+    LeafReplyController *controller = [[LeafReplyController alloc] init];
+    controller.articleId = _articleId;
+    [self presentViewController:controller
+                         option:LeafAnimationOptionVertical
+                     completion:^{
+                         self.shouldBlockGesture = YES;
+                    }];
+    [controller release];
+}
+
+
 #pragma mark -
 #pragma mark - Handle NavigationBar Events
 
@@ -146,7 +163,7 @@
         [controller cancel];
     }];
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 44.0f, 320.0f, CGRectGetHeight(self.view.frame) - 44.0f)];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 44.0f, 320.0f, CGRectGetHeight(self.view.frame) - 44.0f - kLeafCommentBtnH - 2.0f)];
     tableView.dataSource = self;
     tableView.delegate = self;
     [_container addSubview:tableView];
@@ -154,6 +171,14 @@
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_table setBackgroundColor:kLeafBackgroundColor];
     [tableView release];
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(15.0f, CGRectGetHeight(_container.frame) - kLeafCommentBtnH, 290.0f, kLeafCommentBtnH);
+    [btn setBackgroundImage:[UIImage imageNamed:@"comment_btn_normal"] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(commentBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    [_container addSubview:btn];
     
     LeafLoadingView *loading = [[LeafLoadingView alloc] initWithFrame:CGRectMake(0.0f, CGHeight(self.view.frame), CGWidth(self.view.frame), 30.0f)];
     _loading = loading;
@@ -284,14 +309,18 @@
 - (void)menuBar:(LeafMenuBar *)menubar didClickedItemWithType:(LeafMenuBarItemType)type
 {
     LeafCommentData *data = [_commentModel.dataArray safeObjectAtIndex:_curIndex];
+    if (!data) {
+        [self postMessage:@"数据错误， 请刷新再试！" type:LeafStatusBarOverlayTypeWarning];
+        return;
+    }
     if (type == LeafMenuBarItemTypeUp) {
         [self postMessage:@"谢谢您的参与!"];
-        if (data) {
-            [_commentModel support:data.tid];
-        }
+        [_commentModel support:data.tid];
     }
     else if(type == LeafMenuBarItemTypeDown){
         [self postMessage:@"谢谢您的参与!"];
+        [_commentModel against:data.tid];
+        
 
     }
     else if(type == LeafMenuBarItemTypeReply){
@@ -306,6 +335,8 @@
     }
     else if(type == LeafMenuBarItemTypeCopy){
         [self postMessage:@"复制成功!"];
+        UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
+        pasteBoard.string = data.comment;
     }
 }
 

@@ -5,11 +5,12 @@
 //  Created by roger on 13-5-17.
 //  Copyright (c) 2013年 Mobimtech. All rights reserved.
 //
-
-#import "LeafReplyController.h"
+#import "UIColor+MLPFlatColors.h"
 #import "ASIHTTPRequest.h"
 #import "UIImageView+WebCache.h"
 #import "SDImageCache.h"
+
+#import "LeafReplyController.h"
 
 
 #define kLeafReplyHTTPBody @"tid=%@&sid=%@&valimg_main=%@&comment=%@&nowsubject=&nowpage=1&nowemail=cryrivers@cnbeta.com"
@@ -20,16 +21,22 @@
     UITextView *_statusTextView;
     UIImageView *_valimg;
     UITextField *_verify;
+    ASIHTTPRequest *_request;
 }
+@property (nonatomic, retain) ASIHTTPRequest *request;
+- (void)refreshVerifyNumber;
 
 @end
 
 @implementation LeafReplyController
 @synthesize articleId = _articleId;
+@synthesize request = _request;
 
 - (void)dealloc
 {
     [_articleId release], _articleId = nil;
+    [_request clearDelegatesAndCancel];
+    [_request release], _request = nil;
     [super dealloc];
 }
 
@@ -45,14 +52,42 @@
 
 - (void)confirmClicked:(id)sender
 {
-    NSURL *url = [NSURL URLWithString:@"http://www.cnbeta.com/Ajax.comment.php?ver=new"];
+    __block LeafReplyController *controller = self;
+    [self setDismissBlockForHUD:^{
+        if (controller.request) {
+            [controller.request clearDelegatesAndCancel];
+        }
+    }];
+    [self showHUD:RFHUDTypeLoading status:@"正在发送评论"];
+    unsigned int randnum = arc4random();
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.cnbeta.com/Ajax.comment.php?ver=new&randnum=0.%d", randnum]];
+    NSLog(@"url: %@", url.absoluteString);
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    self.request = request;
     NSString *body = [NSString stringWithFormat:kLeafReplyHTTPBody, @"0", _articleId, _verify.text, [_statusTextView.text stringByEncodeCharacterEntities]];
     [request setRequestMethod:@"POST"];
     [request addRequestHeader:@"Content-Type" value:@"application/x-www-form-urlencoded; charset=utf-8"];
-    [request appendPostData:[[body urlEncode]  dataUsingEncoding:NSUTF8StringEncoding]];
+    request.delegate = self;
+    [request setDidFinishSelector:@selector(commentSuccess:)];
+    [request setDidFailSelector:@selector(commentFailed:)];
+    [request appendPostData:[body  dataUsingEncoding:NSUTF8StringEncoding]];
     [request startAsynchronous];
+    
+    NSLog(@"body: %@", body);
 }
+
+
+#pragma mark -
+#pragma mark - Utils
+
+- (void)refreshVerifyNumber
+{
+    NSString *verifyURL = @"http://www.cnbeta.com/validate1.php";
+    [[SDImageCache sharedImageCache] removeImageForKey:verifyURL];
+    [_valimg setImageWithURL:[NSURL URLWithString:verifyURL]];
+    _verify.text = @"";
+}
+
 
 #pragma mark -
 #pragma mark - Controller Lifecycle
@@ -65,7 +100,7 @@
     _container.hidden = YES;
     _mask.hidden = YES;
     
-    UIView *shareView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 70.0f, 320.0f, CGRectGetHeight(self.view.bounds) - 70.0f)];
+    UIView *shareView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 20.0f, 320.0f, CGRectGetHeight(self.view.bounds) - 70.0f)];
     shareView.backgroundColor = kLeafBackgroundColor;
     shareView.userInteractionEnabled = YES;
     [self.view addSubview:shareView];
@@ -111,25 +146,39 @@
     
     CGFloat offsetX = CGRectGetMinX(shareBg.frame);
     CGFloat offsetY = CGRectGetMaxY(shareBg.frame) + 10.0f;
-    UIImageView *valimg = [[UIImageView alloc] initWithFrame:CGRectMake(offsetX, offsetY, 50, 25)];
-    [[SDImageCache sharedImageCache] removeImageForKey:@"http://www.cnbeta.com/validate1.php"];
-    [valimg setImageWithURL:[NSURL URLWithString:@"http://www.cnbeta.com/validate1.php"]];
+    UIImageView *valimg = [[UIImageView alloc] initWithFrame:CGRectMake(offsetX, offsetY, 50, 22)];
+    _valimg = valimg;
     [shareView addSubview:valimg];
     offsetX = CGRectGetMaxX(valimg.frame) + 10.0f;
-    UITextField *verify = [[UITextField alloc] initWithFrame:CGRectMake(offsetX, offsetY, 50, 25)];
+    
+
+    UITextField *verify = [[UITextField alloc] initWithFrame:CGRectMake(offsetX, offsetY, 55, 24)];
+    verify.textAlignment = NSTextAlignmentLeft;
+    verify.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    verify.placeholder = @"验证码";
+    verify.borderStyle = UITextBorderStyleNone;
+    verify.layer.borderWidth = 1.0f;
+    verify.layer.borderColor = [UIColor flatDarkGrayColor].CGColor;
     verify.delegate = (id<UITextFieldDelegate>)self;
     verify.font = kLeafFont15;
     verify.keyboardAppearance = UIKeyboardAppearanceDefault;
     verify.keyboardType = UIKeyboardTypeNumberPad;
     _verify = verify;
     [shareView addSubview:verify];
+    
     [verify release];
     [valimg release];
     [shareBg release];
     [shareView release];
     
-    [_statusTextView becomeFirstResponder];
+    [self refreshVerifyNumber];
+}
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [_statusTextView becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -137,5 +186,47 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark -
+#pragma mark - ASIHTTPReqeust Delegate
+
+- (void)commentSuccess:(ASIHTTPRequest *)request
+{
+    [self dismissHUD];
+    NSString *response = [request responseString];
+   // NSLog(@"response: %@", response);
+    if (response && response.length>0) {
+        unichar ch = [response characterAtIndex:0];
+        NSLog(@"response: %d", ch);
+        if (ch == 49) { // wrong verify num
+            [self postMessage:@"验证码错误，请重试！" type:LeafStatusBarOverlayTypeError];
+            [self refreshVerifyNumber];
+        }
+        else if(ch == 53){ // success
+            [self postMessage:@"评论成功, 稍后生效!" type:LeafStatusBarOverlayTypeSuccess];
+            [self clearHUDBlock];
+            [self dismissViewControllerWithOption:LeafAnimationOptionVertical completion:NULL];
+        }
+        else
+        {
+            [self postMessage:@"评论失败，请重试！" type:LeafStatusBarOverlayTypeError];
+            [self refreshVerifyNumber];
+
+        }
+    }
+    else
+    {
+        [self postMessage:@"评论失败，请重试！" type:LeafStatusBarOverlayTypeError];
+        [self refreshVerifyNumber];
+        
+    }
+}
+
+- (void)commentFailed:(ASIHTTPRequest *)request
+{
+    [self postMessage:@"评论失败" type:LeafStatusBarOverlayTypeError];
+    [self dismissHUD];
+}
+
 
 @end

@@ -498,11 +498,19 @@
     hud.dismissBlock = block;
 }
 
+
+- (void)clearHUDBlock
+{
+    RFHUD *hud = [RFHUD sharedInstance];
+    hud.dismissBlock = NULL;
+}
+
 - (void)dismissHUD
 {
     RFHUD *hud = [RFHUD sharedInstance];
     [hud dismiss];
 }
+
 
 - (void)dismissHUDAfterDelay:(NSTimeInterval)delay
 {

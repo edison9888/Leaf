@@ -86,16 +86,41 @@
 {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kLeafSupportURL, tid]];
     NSLog(@"url: %@", url.absoluteString);
-    //ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    //[request addRequestHeader:@"Referer" value:_referer];
-    //[request startAsynchronous];
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"GET"];
-    [request addValue:_referer forHTTPHeaderField:@"Referer"];
-    NSURLConnection *connection = [NSURLConnection connectionWithRequest:request delegate:nil];
-    [connection start];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    [request addRequestHeader:@"Referer" value:_referer];
+    request.delegate = self;
+    [request setDidFinishSelector:@selector(requestDidFinish:)];
+    [request setDidFailSelector:@selector(requestDidFailed:)];
+    [request startAsynchronous];
 }
+
+- (void)against:(NSString *)tid
+{
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kLeafAgainstURL, tid]];
+    NSLog(@"url: %@", url.absoluteString);
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    [request addRequestHeader:@"Referer" value:_referer];
+    request.delegate = self;
+    [request setDidFinishSelector:@selector(requestDidFinish:)];
+    [request setDidFailSelector:@selector(requestDidFailed:)];
+    [request startAsynchronous];
+
+}
+
+#pragma mark - ASIHTTPRequest Delegate
+
+- (void)requestDidFinish:(ASIHTTPRequest *)request
+{
+    NSString *response = request.responseString;
+    NSLog(@"response: %@", response);
+    NSLog(@"status code: %d", request.responseStatusCode);
+}
+
+- (void)requestDidFailed:(ASIHTTPRequest *)request
+{
+    
+}
+
 
 #pragma mark - LeafURLConnectionDelegate Methods
 

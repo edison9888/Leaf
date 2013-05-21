@@ -84,6 +84,8 @@ typedef enum {
 
 - (void)showHUD:(RFHUDType)type status:(NSString *)status;
 - (void)setDismissBlockForHUD:(RFHUDBlock)block;
+- (void)clearHUDBlock;
+
 - (void)dismissHUD;
 - (void)dismissHUDAfterDelay:(NSTimeInterval)delay;
 - (BOOL)isHUDHiden;

@@ -44,5 +44,6 @@
 - (void)load:(NSString *)articleId;
 - (void)cancel;
 - (void)support:(NSString *)tid;
+- (void)against:(NSString *)tid;
 
 @end

@@ -149,6 +149,8 @@
 		DBE67FBE170C180800685DD2 /* LeafBottomBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE67FBD170C180800685DD2 /* LeafBottomBar.m */; };
 		DBE67FC0170C181B00685DD2 /* bottom_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = DBE67FBF170C181B00685DD2 /* bottom_bg.png */; };
 		DBE67FC3170C1B9500685DD2 /* LeafPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE67FC2170C1B9500685DD2 /* LeafPhotoViewController.m */; };
+		DBEBFDB2174B124200356587 /* comment_btn_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEBFDB0174B124200356587 /* comment_btn_normal@2x.png */; };
+		DBEBFDB3174B124200356587 /* comment_btn_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEBFDB1174B124200356587 /* comment_btn_normal.png */; };
 		DBECD52D16BA9EA000C4AE31 /* LeafLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBECD52C16BA9EA000C4AE31 /* LeafLoadingView.m */; };
 		DBF45F681739E82E00DEAE7D /* LeafSettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBF45F671739E82E00DEAE7D /* LeafSettingCell.m */; };
 		DBF7136217165A5800FF0894 /* SinaWeibo.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DBF7135717165A5800FF0894 /* SinaWeibo.bundle */; };
@@ -374,6 +376,8 @@
 		DBE67FBF170C181B00685DD2 /* bottom_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottom_bg.png; sourceTree = "<group>"; };
 		DBE67FC1170C1B9500685DD2 /* LeafPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafPhotoViewController.h; path = Controllers/LeafPhotoViewController.h; sourceTree = "<group>"; };
 		DBE67FC2170C1B9500685DD2 /* LeafPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafPhotoViewController.m; path = Controllers/LeafPhotoViewController.m; sourceTree = "<group>"; };
+		DBEBFDB0174B124200356587 /* comment_btn_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comment_btn_normal@2x.png"; sourceTree = "<group>"; };
+		DBEBFDB1174B124200356587 /* comment_btn_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comment_btn_normal.png; sourceTree = "<group>"; };
 		DBECD52B16BA9EA000C4AE31 /* LeafLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafLoadingView.h; path = Views/LeafLoadingView.h; sourceTree = "<group>"; };
 		DBECD52C16BA9EA000C4AE31 /* LeafLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafLoadingView.m; path = Views/LeafLoadingView.m; sourceTree = "<group>"; };
 		DBF45F661739E82E00DEAE7D /* LeafSettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafSettingCell.h; path = Views/LeafSettingCell.h; sourceTree = "<group>"; };
@@ -718,6 +722,8 @@
 		DBD825C616B644D600EC4439 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				DBEBFDB0174B124200356587 /* comment_btn_normal@2x.png */,
+				DBEBFDB1174B124200356587 /* comment_btn_normal.png */,
 				DBCBE90717461FCE00BD37CF /* like.png */,
 				DBCBE90817461FCE00BD37CF /* like@2x.png */,
 				DBCBE90917461FCE00BD37CF /* unlike.png */,
@@ -1010,6 +1016,8 @@
 				DBCBE90C17461FCE00BD37CF /* like@2x.png in Resources */,
 				DBCBE90D17461FCE00BD37CF /* unlike.png in Resources */,
 				DBCBE90E17461FCE00BD37CF /* unlike@2x.png in Resources */,
+				DBEBFDB2174B124200356587 /* comment_btn_normal@2x.png in Resources */,
+				DBEBFDB3174B124200356587 /* comment_btn_normal.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
