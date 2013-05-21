@@ -101,6 +101,8 @@
 		DBBF469417211E9C0083A924 /* LeafCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBBF469317211E9C0083A924 /* LeafCommentCell.m */; };
 		DBBF469B172125A30083A924 /* LeafCommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DBBF469A172125A30083A924 /* LeafCommentModel.m */; };
 		DBBF469E172130BA0083A924 /* LeafCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBBF469D172130BA0083A924 /* LeafCommentViewController.m */; };
+		DBC97355174BB1A100D53BAE /* share_default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DBC97353174BB1A100D53BAE /* share_default@2x.png */; };
+		DBC97356174BB1A100D53BAE /* share_default.png in Resources */ = {isa = PBXBuildFile; fileRef = DBC97354174BB1A100D53BAE /* share_default.png */; };
 		DBCBE9061745DEF900BD37CF /* LeafReplyController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBCBE9051745DEF900BD37CF /* LeafReplyController.m */; };
 		DBCBE90B17461FCE00BD37CF /* like.png in Resources */ = {isa = PBXBuildFile; fileRef = DBCBE90717461FCE00BD37CF /* like.png */; };
 		DBCBE90C17461FCE00BD37CF /* like@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DBCBE90817461FCE00BD37CF /* like@2x.png */; };
@@ -159,8 +161,6 @@
 		DBEBFDCB174B53A000356587 /* bottom_icon_save@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEBFDC9174B539F00356587 /* bottom_icon_save@2x.png */; };
 		DBEBFDCE174B613800356587 /* bottom_icon_refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEBFDCC174B613600356587 /* bottom_icon_refresh.png */; };
 		DBEBFDCF174B613800356587 /* bottom_icon_refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEBFDCD174B613700356587 /* bottom_icon_refresh@2x.png */; };
-		DBEBFDD2174B7CAD00356587 /* weibo_picture.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEBFDD0174B7CAB00356587 /* weibo_picture.png */; };
-		DBEBFDD3174B7CAD00356587 /* weibo_picture@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEBFDD1174B7CAC00356587 /* weibo_picture@2x.png */; };
 		DBECD52D16BA9EA000C4AE31 /* LeafLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBECD52C16BA9EA000C4AE31 /* LeafLoadingView.m */; };
 		DBF45F681739E82E00DEAE7D /* LeafSettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBF45F671739E82E00DEAE7D /* LeafSettingCell.m */; };
 		DBF7136217165A5800FF0894 /* SinaWeibo.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DBF7135717165A5800FF0894 /* SinaWeibo.bundle */; };
@@ -315,6 +315,8 @@
 		DBBF469A172125A30083A924 /* LeafCommentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeafCommentModel.m; sourceTree = "<group>"; };
 		DBBF469C172130B90083A924 /* LeafCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafCommentViewController.h; path = Controllers/LeafCommentViewController.h; sourceTree = "<group>"; };
 		DBBF469D172130BA0083A924 /* LeafCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafCommentViewController.m; path = Controllers/LeafCommentViewController.m; sourceTree = "<group>"; };
+		DBC97353174BB1A100D53BAE /* share_default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_default@2x.png"; sourceTree = "<group>"; };
+		DBC97354174BB1A100D53BAE /* share_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_default.png; sourceTree = "<group>"; };
 		DBCBE9041745DEF900BD37CF /* LeafReplyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafReplyController.h; path = Controllers/LeafReplyController.h; sourceTree = "<group>"; };
 		DBCBE9051745DEF900BD37CF /* LeafReplyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafReplyController.m; path = Controllers/LeafReplyController.m; sourceTree = "<group>"; };
 		DBCBE90717461FCE00BD37CF /* like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like.png; sourceTree = "<group>"; };
@@ -396,8 +398,6 @@
 		DBEBFDC9174B539F00356587 /* bottom_icon_save@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottom_icon_save@2x.png"; sourceTree = "<group>"; };
 		DBEBFDCC174B613600356587 /* bottom_icon_refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottom_icon_refresh.png; sourceTree = "<group>"; };
 		DBEBFDCD174B613700356587 /* bottom_icon_refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottom_icon_refresh@2x.png"; sourceTree = "<group>"; };
-		DBEBFDD0174B7CAB00356587 /* weibo_picture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weibo_picture.png; sourceTree = "<group>"; };
-		DBEBFDD1174B7CAC00356587 /* weibo_picture@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weibo_picture@2x.png"; sourceTree = "<group>"; };
 		DBECD52B16BA9EA000C4AE31 /* LeafLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafLoadingView.h; path = Views/LeafLoadingView.h; sourceTree = "<group>"; };
 		DBECD52C16BA9EA000C4AE31 /* LeafLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafLoadingView.m; path = Views/LeafLoadingView.m; sourceTree = "<group>"; };
 		DBF45F661739E82E00DEAE7D /* LeafSettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafSettingCell.h; path = Views/LeafSettingCell.h; sourceTree = "<group>"; };
@@ -742,8 +742,8 @@
 		DBD825C616B644D600EC4439 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				DBEBFDD0174B7CAB00356587 /* weibo_picture.png */,
-				DBEBFDD1174B7CAC00356587 /* weibo_picture@2x.png */,
+				DBC97353174BB1A100D53BAE /* share_default@2x.png */,
+				DBC97354174BB1A100D53BAE /* share_default.png */,
 				DBEBFDB0174B124200356587 /* comment_btn_normal@2x.png */,
 				DBEBFDB1174B124200356587 /* comment_btn_normal.png */,
 				DBCBE90717461FCE00BD37CF /* like.png */,
@@ -1056,8 +1056,8 @@
 				DBEBFDCB174B53A000356587 /* bottom_icon_save@2x.png in Resources */,
 				DBEBFDCE174B613800356587 /* bottom_icon_refresh.png in Resources */,
 				DBEBFDCF174B613800356587 /* bottom_icon_refresh@2x.png in Resources */,
-				DBEBFDD2174B7CAD00356587 /* weibo_picture.png in Resources */,
-				DBEBFDD3174B7CAD00356587 /* weibo_picture@2x.png in Resources */,
+				DBC97355174BB1A100D53BAE /* share_default@2x.png in Resources */,
+				DBC97356174BB1A100D53BAE /* share_default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
