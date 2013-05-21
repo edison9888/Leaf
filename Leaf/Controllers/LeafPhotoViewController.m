@@ -147,11 +147,11 @@
     
     LeafBottomBar *bottom = [[LeafBottomBar alloc] initWithFrame:CGRectMake(0.0f, CGHeight(self.view.frame) - 40.0f - kLeafBottomProgressBarH, CGWidth(self.view.frame), 40.0f)];
     [_container addSubview:bottom];
+    bottom.leftItemType = LeafBottomBarItemTypeReturn;
+    bottom.rightItemType = LeafBottomBarItemTypeSave;
     [bottom addLeftTarget:self action:@selector(returnClicked:)];
     [bottom addRightTarget:self action:@selector(saveClicked:)];
     [bottom release];
-    
-    
     
     LeafProgressBar *progressBar = [[LeafProgressBar alloc] initWithFrame:CGRectMake(0.0f, CGHeight(self.view.frame) - kLeafBottomProgressBarH, CGWidth(self.view.frame), kLeafBottomProgressBarH)];
     [_container addSubview:progressBar];

@@ -8,14 +8,29 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum{
+    LeafBottomBarItemTypeReturn,
+    LeafBottomBarItemTypeBack,
+    LeafBottomBarItemTypeShare,
+    LeafBottomBarItemTypeComment,
+    LeafBottomBarItemTypeWrite,
+    LeafBottomBarItemTypeSave
+} LeafBottomBarItemType;
+
 @interface LeafBottomBar : UIView
 {
     @private
-    UIButton *_returnBtn;
-    UIButton *_saveBtn;
+    UIButton *_leftBtn;
+    UIButton *_midBtn;
+    UIButton *_rightBtn;
 }
 
+@property (nonatomic, assign) LeafBottomBarItemType leftItemType;
+@property (nonatomic, assign) LeafBottomBarItemType midItemType;
+@property (nonatomic, assign) LeafBottomBarItemType rightItemType;
+
 - (void)addLeftTarget:(id)target action:(SEL)action;
+- (void)addMidTarget:(id)target action:(SEL)action;
 - (void)addRightTarget:(id)target action:(SEL)action;
 
 @end
