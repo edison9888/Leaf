@@ -6,6 +6,7 @@
 //  Copyright (c) 2013年 Mobimtech. All rights reserved.
 //
 
+#import "UIColor+MLPFlatColors.h"
 #import "LeafComposeViewController.h"
 
 #define kLeafMaxWeiboLen 140

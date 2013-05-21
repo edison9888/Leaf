@@ -6,6 +6,7 @@
 //  Copyright (c) 2013年 Mobimtech. All rights reserved.
 //
 
+#import "UIColor+MLPFlatColors.h"
 #import "LeafMenuController.h"
 #import "LeafHelper.h"
 #import "LeafConfig.h"

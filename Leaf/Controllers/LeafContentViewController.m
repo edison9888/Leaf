@@ -11,7 +11,7 @@
 #import "TFHpple.h"
 
 #import "LeafContentViewController.h"
-#import "LeafNavigationBar.h"
+#import "LeafBottomBar.h"
 #import "LeafHelper.h"
 #import "LeafNewsData.h"
 #import "LeafLoadingView.h"
@@ -23,7 +23,7 @@
 #import "GCDHelper.h"
 
 #define kLeafContentCSS @"body { \
-background:#ECEAE2 !important; \
+background:#ECF0F1 !important; \
     font-weight:normal !important; \
     word-wrap:break-word !important; \
 } \
@@ -106,14 +106,19 @@ iframe { \
 {
     [super viewDidLoad];
 	
-    LeafNavigationBar *bar = [[LeafNavigationBar alloc] init];
-    [bar addLeftItemWithStyle:LeafNavigationItemStyleBack target:self action:@selector(backClicked:)];
-    [bar addRightItemWithStyle:LeafNavigationItemStyleShare middle:YES target:self action:@selector(shareClicked:)];
-    [bar addCommentBox:_data.cmtNum target:self action:@selector(commentBoxClicked)];
-    [_container addSubview:bar];
-    [bar release];
-        
-    UIWebView *content = [[UIWebView alloc] initWithFrame:CGRectMake(0.0f, 44.0f, CGWidth(self.view.frame), CGHeight(self.view.frame) - 44.0f)];
+    LeafBottomBar *bottomBar = [[LeafBottomBar alloc] initWithFrame:CGRectMake(0.0f, CGRectGetHeight(_container.frame) - 40.0f, CGRectGetWidth(_container.frame), 40.0f)];
+    bottomBar.leftItemType = LeafBottomBarItemTypeBack;
+    bottomBar.midItemType = LeafBottomBarItemTypeComment;
+    bottomBar.rightItemType = LeafBottomBarItemTypeShare;
+    
+    [bottomBar addLeftTarget:self action:@selector(backClicked)];
+    [bottomBar addMidTarget:self action:@selector(commentClicked)];
+    [bottomBar addRightTarget:self action:@selector(shareClicked)];
+    
+    [_container addSubview:bottomBar];
+    [bottomBar release];
+    
+    UIWebView *content = [[UIWebView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGWidth(self.view.frame), CGHeight(self.view.frame) - 40.0f)];
     content.backgroundColor = [UIColor clearColor];
     content.opaque = NO;
     content.delegate = self;
@@ -124,7 +129,7 @@ iframe { \
     [content release];
     _connection = nil;
     
-    LeafLoadingView *loading = [[LeafLoadingView alloc] initWithFrame:CGRectMake(0.0f, CGHeight(self.view.frame), CGWidth(self.view.frame), 30.0f)];
+    LeafLoadingView *loading = [[LeafLoadingView alloc] initWithFrame:CGRectMake(0.0f, -30.0f, CGWidth(self.view.frame), 30.0f)];
     _loading = loading;
     [_container addSubview:_loading];
     [loading release];
@@ -270,7 +275,7 @@ iframe { \
 #pragma mark -
 #pragma mark - Handle Events
 
-- (void)backClicked:(id)sender
+- (void)backClicked
 {
     [self dismissViewControllerWithOption:LeafAnimationOptionHorizontal
                                completion:^(void){
@@ -279,7 +284,7 @@ iframe { \
                                }];
 }
 
-- (void)shareClicked:(id)sender
+- (void)shareClicked
 {
     SinaWeibo *sinaweibo = [self sinaweibo];
     if ([sinaweibo isAuthValid]) {
@@ -302,7 +307,7 @@ iframe { \
     }
 }
 
-- (void)commentBoxClicked
+- (void)commentClicked
 {
     LeafCommentViewController *vc = [[LeafCommentViewController alloc] init];
     CGRect frame = self.view.frame;
@@ -328,15 +333,11 @@ iframe { \
 #pragma mark -
 #pragma mark - Loading Content
 
-- (void)showLeafLoadingView:(BOOL)showIndicator
+- (void)showLeafLoadingView
 {
-    if (showIndicator) {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    }
-    
     _loading.hidden = NO;
     CGPoint center = _loading.center;
-    center.y = (CGHeight(self.view.frame) - CGHeight(_loading.frame)/2.0f);
+    center.y = CGHeight(_loading.frame)/2.0f;
     
     [UIView animateWithDuration:0.3f
                           delay:0.0f
@@ -354,7 +355,7 @@ iframe { \
 - (void)hideLeafLoadingView
 {
     CGPoint center = _loading.center;
-    center.y = CGHeight(self.view.frame) + CGHeight(_loading.frame)/2.0f;
+    center.y = -CGHeight(_loading.frame)/2.0f;
     [UIView animateWithDuration:0.3f
                           delay:0.0f
                         options:UIViewAnimationOptionCurveEaseIn
@@ -362,7 +363,6 @@ iframe { \
                          _loading.center = center;
                      }
                      completion:^(BOOL finished) {
-                         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                          _loading.hidden = YES;
                      }];
     
@@ -376,13 +376,13 @@ iframe { \
     if (path) {
         NSData *data = [NSData dataWithContentsOfFile:path];
         if (data) {
-            [self showLeafLoadingView:NO];
+            [self showLeafLoadingView];
             [self handleData:data];
             _offline = YES;
             return;
         }
     }
-    [self showLeafLoadingView:YES];
+    [self showLeafLoadingView];
     if (!_connection) {
         _connection = [[LeafURLConnection alloc] init];
         _connection.delegate = self;

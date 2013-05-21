@@ -16,7 +16,7 @@
 #import "LeafNewsData.h"
 #import "LeafContentViewController.h"
 #import "LeafPhotoViewController.h"
-
+#import "UIColor+MLPFlatColors.h"
 
 #define kLeafNewsItemTag 1001
 #define kScaleFactor 0.02f

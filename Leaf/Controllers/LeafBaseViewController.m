@@ -5,6 +5,7 @@
 //  Created by roger on 13-4-7.
 //  Copyright (c) 2013年 Mobimtech. All rights reserved.
 //
+#import "UIColor+MLPFlatColors.h"
 
 #import "LeafBaseViewController.h"
 #import "LeafHelper.h"

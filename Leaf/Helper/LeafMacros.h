@@ -12,7 +12,8 @@
 
 // Color stuff
 #define CGColorConvert(value)           value/255.0f
-#define kLeafBackgroundColor    [UIColor colorWithRed:CGColorConvert(236.0f) green:CGColorConvert(234.0f) blue:CGColorConvert(226.0f) alpha:1.0f]
+#define kLeafBackgroundColor    [UIColor flatWhiteColor]
+//[UIColor colorWithRed:CGColorConvert(236.0f) green:CGColorConvert(234.0f) blue:CGColorConvert(226.0f) alpha:1.0f]
 #define kLeafHighlightColor     [UIColor colorWithRed:CGColorConvert(217.0f) green:CGColorConvert(217.0f) blue:CGColorConvert(216.0f) alpha:0.8f]
 
 // Number 

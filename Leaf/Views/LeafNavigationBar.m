@@ -5,6 +5,7 @@
 //  Created by roger qian on 13-1-25.
 //  Copyright (c) 2013年 Mobimtech. All rights reserved.
 //
+#import "UIColor+MLPFlatColors.h"
 
 #import "LeafNavigationBar.h"
 #import "LeafHelper.h"
@@ -22,7 +23,7 @@
         [shadow release];       
     }
     
-    [self setBackgroundColor:[UIColor colorWithRed:CGColorConvert(236.0f) green:CGColorConvert(234.0f) blue:CGColorConvert(226.0f) alpha:1.0f]];    
+    [self setBackgroundColor:[UIColor flatWhiteColor]];
     return self;
 }
 
@@ -52,8 +53,8 @@
     [leftBtn addSubview:_leftIcon];
     [leftIcon release];
     _leftBtn = leftBtn;
-    [_leftBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithRed:CGColorConvert(217.0f) green:CGColorConvert(217.0f) blue:CGColorConvert(216.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
-    //[UIImage imageWithColor:[UIColor colorWithRed:CGColorConvert(4.0f) green:CGColorConvert(135.0f) blue:CGColorConvert(220.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
+    [_leftBtn setBackgroundImage:[UIImage imageWithColor:[UIColor flatDarkWhiteColor]]forState:UIControlStateHighlighted];
+   
     [leftBtn setFrame:CGRectMake(0.0f, 0.0f, CGWidth(_leftIcon.frame) + 22.0f, 44.0f)];
     [self addSubview:_leftBtn];
     switch (style) {
@@ -104,7 +105,7 @@
     [rightBtn addSubview:_rightIcon];
     [rightIcon release];
     _rightBtn = rightBtn;
-    [_rightBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithRed:CGColorConvert(217.0f) green:CGColorConvert(217.0f) blue:CGColorConvert(216.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
+    [_rightBtn setBackgroundImage:[UIImage imageWithColor:[UIColor flatDarkWhiteColor]] forState:UIControlStateHighlighted];
     
     CGFloat originX = 0.0f;
     CGFloat width = 0.0f;
@@ -144,7 +145,7 @@
 
 - (void)setTitle:(NSString *)title
 {
-    UILabel *label = [[UILabel alloc] initWithText:title font:kLeafFont19 textColor:[UIColor blackColor] andOrigin:CGPointMake(0.0f, 0.0f) constrainedToSize:CGSizeMake(220.0f, 40.0f)];
+    UILabel *label = [[UILabel alloc] initWithText:title font:kLeafFont19 textColor:[UIColor flatBlackColor] andOrigin:CGPointMake(0.0f, 0.0f) constrainedToSize:CGSizeMake(220.0f, 40.0f)];
     label.center = CGPointMake(CGWidth(self.frame)/2.0f, CGHeight(self.frame)/2.0f);
     [self addSubview:label];
     [label release];

@@ -5,6 +5,7 @@
 //  Created by roger on 13-4-19.
 //  Copyright (c) 2013年 Mobimtech. All rights reserved.
 //
+#import "UIColor+MLPFlatColors.h"
 
 #import "LeafCommentViewController.h"
 #import "LeafCommentModel.h"

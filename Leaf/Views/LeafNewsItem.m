@@ -12,6 +12,7 @@
 #import "LeafCommentBox.h"
 #import "LeafHelper.h"
 #import "UIImageView+WebCache.h"
+#import "UIColor+MLPFlatColors.h"
 
 #define kMaxLines       3
 #define kCellTitleFont  [UIFont fontWithName:@"FZLTHK--GBK1-0" size:15.0f]
