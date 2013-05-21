@@ -17,6 +17,6 @@
 @property (nonatomic, retain) NSString *url;
 @property (nonatomic, retain) NSString *articleURL;
 - (void)setStatus:(NSString *)status;
-
+- (void)loadURL:(NSString *)url;
 
 @end

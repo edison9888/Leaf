@@ -129,21 +129,26 @@
     _remainLabel.text = [NSString stringWithFormat:@"%d", remainLen];
 }
 
-- (void)setUrl:(NSString *)url
+- (void)loadURL:(NSString *)url
 {
     if (!url) {
         return;
     }
-    [_url release];
-    _url = [url retain];
+    self.url = url;
     __block UIImageView *shareImageView = _shareImageView;
     [shareImageView setImageWithURL:[NSURL URLWithString:url]
-           placeholderImage:[UIImage imageNamed:@"placeholder"]
+           placeholderImage:[UIImage imageNamed:@"share_default"]
                     success:^(UIImage *image) {
-                        [self scaleImage:image];
+                        if(image) {
+                            [self scaleImage:image];
+                        }
+                        else {
+                            [shareImageView setImage:[UIImage imageNamed:@"share_default"]];
+                        }
+
                     }
                     failure:^(NSError *error){
-                        [shareImageView setImage:[UIImage imageNamed:@"placeholder"]];
+                        [shareImageView setImage:[UIImage imageNamed:@"share_default"]];
                     }];
 }
 
@@ -161,6 +166,9 @@
                        httpMethod:@"POST"
                          delegate:self];
      */
+    if (_url == nil) {
+        self.url = @"http://www.cnbeta.com/images/cnlogo.gif";
+    }
     
     self.request = [sinaweibo requestWithURL:@"statuses/upload_url_text.json"
                                        params:[NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -233,6 +241,7 @@
     [textView release];
     
     UIImageView *shareImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(shareBg.bounds) - 60.0f, 0.0f, 60.0f, 60.0f)];
+    [shareImageView setImage:[UIImage imageNamed:@"share_default"]];
     _shareImageView = shareImageView;
     [shareBg addSubview:shareImageView];
     [shareImageView release];

@@ -200,15 +200,15 @@ iframe { \
     NSString *status = [NSString stringWithFormat:@" //%@", _data.title];
     LeafComposeViewController *vc = [[LeafComposeViewController alloc] init];
     vc.view.frame = self.view.bounds;
-    vc.url = [self themeUrl];
+    NSString *url = [self themeUrl];
     vc.articleURL = [NSString stringWithFormat:kCBArticle, _data.articleId];
     [vc setStatus:status];
     
     [self presentViewController:vc option:LeafAnimationOptionVertical completion:^{
         self.shouldBlockGesture = YES;
+        [vc loadURL:url];
+        [vc release];
     }];
-    [vc release];
-
 }
 
 - (UIImage *)convertWebViewToImage
