@@ -133,19 +133,24 @@
     }
     NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:NULL];
     [_dataArray removeAllObjects];
-    for (NSDictionary *dict in array) {
-        LeafCommentData *data = [[LeafCommentData alloc] init];
-        data.name = [dict stringForKey:@"name"];
-        data.comment = [dict stringForKey:@"comment"];
-        data.time = [dict stringForKey:@"date"]; // TODO: friendly date formate
-        data.tid = [dict stringForKey:@"tid"];
-        data.support = [dict stringForKey:@"support"];
-        data.against = [dict stringForKey:@"against"];
-        [_dataArray addObject:data];
-        [data release];
+    if (array) {
+        for (NSDictionary *dict in array) {
+            if (![dict isKindOfClass:[NSDictionary class]]) {
+                return;
+            }
+            LeafCommentData *data = [[LeafCommentData alloc] init];
+            data.name = [dict stringForKey:@"name"];
+            data.comment = [dict stringForKey:@"comment"];
+            data.time = [dict stringForKey:@"date"]; // TODO: friendly date formate
+            data.tid = [dict stringForKey:@"tid"];
+            data.support = [dict stringForKey:@"support"];
+            data.against = [dict stringForKey:@"against"];
+            [_dataArray addObject:data];
+            [data release];
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLeafLoadCommentSuccess object:self];
     }
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:kLeafLoadCommentSuccess object:self];
 }
 
 - (void)didFailWithError:(NSError *)error
