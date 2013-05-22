@@ -509,7 +509,12 @@
 - (void)dismissHUD
 {
     RFHUD *hud = [RFHUD sharedInstance];
-    [hud dismiss];
+    if ([hud didAppear]) {
+        [hud dismiss];
+    }
+    else {
+        [self dismissHUDAfterDelay:0.3f];
+    }
 }
 
 

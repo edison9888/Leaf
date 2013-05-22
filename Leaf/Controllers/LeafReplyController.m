@@ -196,7 +196,8 @@
 
 - (void)commentSuccess:(ASIHTTPRequest *)request
 {
-    [self dismissHUDAfterDelay:1.0f];
+    [self clearHUDBlock];
+    [self dismissHUD];
     NSString *response = [request responseString];
    // NSLog(@"response: %@", response);
     if (response && response.length>0) {
@@ -229,7 +230,8 @@
 - (void)commentFailed:(ASIHTTPRequest *)request
 {
     [self postMessage:@"评论失败" type:LeafStatusBarOverlayTypeError];
-    [self dismissHUDAfterDelay:1.0f];
+    [self clearHUDBlock];
+    [self dismissHUD];
 }
 
 

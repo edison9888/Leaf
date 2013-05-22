@@ -307,7 +307,7 @@
     [self setDismissBlockForHUD: ^(void){
         [controller postMessage:@"分享失败!" type:LeafStatusBarOverlayTypeError];
     }];
-    [self dismissHUDAfterDelay:1.0f];
+    [self dismissHUD];
 }
 
 - (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
@@ -320,7 +320,7 @@
         [controller postMessage:@"分享成功!" type:LeafStatusBarOverlayTypeSuccess];
         [controller dismissViewControllerWithOption:LeafAnimationOptionVertical completion:NULL];
     }];
-    [self dismissHUDAfterDelay:1.0f];
+    [self dismissHUD];
 }
 
 

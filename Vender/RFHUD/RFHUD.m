@@ -21,6 +21,7 @@
     UIView *_mask;
     RFHUDType _type;
     BOOL _complete;
+    BOOL _didAppear;
     UIActivityIndicatorView *_activity;
 }
 
@@ -255,6 +256,7 @@ static RFHUD *_instance;
 - (void)show:(BOOL)front
 {
     self.hidden = NO;
+    _didAppear = NO;
     if (!front) {
         self.windowLevel = UIWindowLevelAlert - 1.0f;
     }
@@ -282,6 +284,7 @@ static RFHUD *_instance;
                          else if(_type != RFHUDTypeWaiting){
                              [rf dismissAfterDelay:kRFHUDDismissAfterDelay];
                          }
+                         _didAppear = YES;
                     }];
     
 
@@ -297,5 +300,9 @@ static RFHUD *_instance;
     [self show:YES];
 }
 
+- (BOOL)didAppear
+{
+    return _didAppear;
+}
 
 @end

@@ -29,6 +29,8 @@ typedef void (^RFHUDBlock) (void);
 
 + (RFHUD *)sharedInstance;
 
+- (BOOL)didAppear;
+
 - (void)setHUDType:(RFHUDType)type andStatus:(NSString *)status;
 
 - (void)show;
