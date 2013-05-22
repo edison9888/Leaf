@@ -88,9 +88,9 @@
     NSLog(@"url: %@", url.absoluteString);
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     [request addRequestHeader:@"Referer" value:_referer];
-    request.delegate = self;
-    [request setDidFinishSelector:@selector(requestDidFinish:)];
-    [request setDidFailSelector:@selector(requestDidFailed:)];
+    //request.delegate = self;
+    //[request setDidFinishSelector:@selector(requestDidFinish:)];
+    //[request setDidFailSelector:@selector(requestDidFailed:)];
     [request startAsynchronous];
 }
 
