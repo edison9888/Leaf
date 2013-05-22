@@ -31,12 +31,14 @@
 @implementation LeafReplyController
 @synthesize articleId = _articleId;
 @synthesize request = _request;
+@synthesize tid = _tid;
 
 - (void)dealloc
 {
     [_articleId release], _articleId = nil;
     [_request clearDelegatesAndCancel];
     [_request release], _request = nil;
+    [_tid release], _tid = nil;
     [super dealloc];
 }
 
@@ -59,14 +61,16 @@
         }
     }];
     [self showHUD:RFHUDTypeLoading status:@"正在发送评论"];
-    unsigned int randnum = arc4random();
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.cnbeta.com/Ajax.comment.php?ver=new&randnum=0.%d", randnum]];
+    
+    NSURL *url = [NSURL URLWithString:@"http://www.cnbeta.com/Ajax.comment.php?ver=new"];
     NSLog(@"url: %@", url.absoluteString);
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     self.request = request;
-    NSString *body = [NSString stringWithFormat:kLeafReplyHTTPBody, @"0", _articleId, _verify.text, [_statusTextView.text stringByEncodeCharacterEntities]];
+    NSString *body = [NSString stringWithFormat:kLeafReplyHTTPBody, _tid, _articleId, _verify.text, [[_statusTextView.text stringByAppendingString:kLeafAds] stringByEncodeCharacterEntities]];
     [request setRequestMethod:@"POST"];
     [request addRequestHeader:@"Content-Type" value:@"application/x-www-form-urlencoded; charset=utf-8"];
+    NSString *referer = [NSString stringWithFormat:kCBArticle, _articleId];
+    [request addRequestHeader:@"Referer" value:referer];
     request.delegate = self;
     [request setDidFinishSelector:@selector(commentSuccess:)];
     [request setDidFailSelector:@selector(commentFailed:)];
@@ -170,7 +174,7 @@
     [valimg release];
     [shareBg release];
     [shareView release];
-    
+    self.tid = @"0";
     [self refreshVerifyNumber];
 }
 
@@ -192,7 +196,7 @@
 
 - (void)commentSuccess:(ASIHTTPRequest *)request
 {
-    [self dismissHUD];
+    [self dismissHUDAfterDelay:1.0f];
     NSString *response = [request responseString];
    // NSLog(@"response: %@", response);
     if (response && response.length>0) {
@@ -225,7 +229,7 @@
 - (void)commentFailed:(ASIHTTPRequest *)request
 {
     [self postMessage:@"评论失败" type:LeafStatusBarOverlayTypeError];
-    [self dismissHUD];
+    [self dismissHUDAfterDelay:1.0f];
 }
 
 

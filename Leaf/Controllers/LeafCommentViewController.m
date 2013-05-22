@@ -308,10 +308,12 @@
     else if(type == LeafMenuBarItemTypeReply){
         LeafReplyController *controller = [[LeafReplyController alloc] init];
         controller.articleId = _articleId;
+        
         [self presentViewController:controller
                              option:LeafAnimationOptionVertical
                          completion:^{
                              self.shouldBlockGesture = YES;
+                             controller.tid = data.tid;
                              [controller release];
                          }];
     }

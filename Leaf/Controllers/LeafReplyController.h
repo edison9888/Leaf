@@ -11,8 +11,9 @@
 @interface LeafReplyController : LeafBaseViewController
 {
     NSString *_articleId;
+    NSString *_tid;
 }
 
 @property (nonatomic, retain) NSString *articleId;
-
+@property (nonatomic, retain) NSString *tid;
 @end
