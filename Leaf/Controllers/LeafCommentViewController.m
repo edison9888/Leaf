@@ -69,7 +69,7 @@
 - (void)loadCommentEmpty:(NSNotification *)notification
 {
     [self hideLeafLoadingView];
-    [self postMessage:@"暂无评论!"];
+    [self postMessage:@"暂无评论!" type:LeafStatusBarOverlayTypeWarning];
 }
 
 - (void)loadCommentFailed:(NSNotification *)notification

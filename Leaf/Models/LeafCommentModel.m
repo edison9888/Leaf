@@ -134,7 +134,7 @@
     }
     NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:NULL];
     [_dataArray removeAllObjects];
-    if (array) {
+    if (array && array.count > 0) {
         for (NSDictionary *dict in array) {
             if (![dict isKindOfClass:[NSDictionary class]]) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:kLeafLoadCommentEmpty object:self];
@@ -152,6 +152,9 @@
         }
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kLeafLoadCommentSuccess object:self];
+    }
+    else {
+       [[NSNotificationCenter defaultCenter] postNotificationName:kLeafLoadCommentEmpty object:self];
     }
 }
 
