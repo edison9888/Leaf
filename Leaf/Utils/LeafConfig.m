@@ -11,9 +11,11 @@
 #import "Reachability.h"
 
 #define kSimpleMode @"SimpleMode"
+#define kOfflineState @"OfflineState"
 
 @implementation LeafConfig
 @synthesize simple = _simple;
+@synthesize offline = _offline;
 
 static LeafConfig *_instance;
 
@@ -84,10 +86,18 @@ static LeafConfig *_instance;
     [ud setBool:_simple forKey:kSimpleMode];
 }
 
+- (void)setOffline:(BOOL)offline
+{
+    _offline = offline;
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud setBool:offline forKey:kOfflineState];
+}
+
 - (void)refreshConfig
 {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     _simple = [ud boolForKey:kSimpleMode];
+    _offline = [ud boolForKey:kOfflineState];
 }
 
 - (id)init

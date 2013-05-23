@@ -124,12 +124,8 @@
         NSData *data = [NSData dataWithContentsOfFile:path];
         if (data) {
             [self JSONforData:data];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kLeafOfflineFinished object:self];
         }
-        else
-        { // empty, download now?
-            NSLog(@"offline data is empty.");
-        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLeafOfflineState object:self];
         return;
     }
     

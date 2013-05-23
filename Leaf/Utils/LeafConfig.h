@@ -11,12 +11,13 @@
 @interface LeafConfig : NSObject
 {
     BOOL _simple;
+    BOOL _offline;
 }
 
 @property (nonatomic, assign) BOOL simple;
+@property (nonatomic, assign) BOOL offline;
 
 + (id)sharedInstance;
-
 - (BOOL)showPicture;
 
 @end

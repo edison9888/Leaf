@@ -310,12 +310,16 @@
 
 #pragma mark -
 #pragma mark - UIAlertViewDelegate Method
-
+/*
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    return;
     if (buttonIndex == 1) { // confirm, clean disk cache
+       
+        LeafConfig *config = [LeafConfig sharedInstance];
+        config.offline = NO;
+
         __block LeafSettingsViewController *controller = self;
-        
         
         [self showHUD:RFHUDTypeWaiting status:@"正在清理缓存"];
         [self setDismissBlockForHUD:^(void){
@@ -327,15 +331,16 @@
         [self performSelectorInBackground:@selector(clearDisk) withObject:nil];
     }
 
-}
+}*/
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    return;
+    
     if (buttonIndex == 1) { // confirm, clean disk cache
+        LeafConfig *config = [LeafConfig sharedInstance];
+        config.offline = NO;
+
         __block LeafSettingsViewController *controller = self;
-        
-        
         [self showHUD:RFHUDTypeWaiting status:@"正在清理缓存"];
         [self setDismissBlockForHUD:^(void){
             controller.diskCacheSizeLabel.text = @"0MB";

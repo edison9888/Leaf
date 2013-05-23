@@ -16,6 +16,7 @@
 #import "LeafNavigationBar.h"
 #import "LeafNewsItem.h"
 #import "LeafContentViewController.h"
+#import "LeafConfig.h"
 
 #define kLeafOfflineProgressBarH 2.0f
 #define kLeafNewsItemTag 1001
@@ -28,6 +29,8 @@
     LeafOfflineModel *_model;
     
     UITableView *_table;
+    UIView *_empty;
+    
     NSMutableArray *_leaves;
 }
 
@@ -95,18 +98,33 @@
 
 - (void)leafOfflineFinished:(NSNotification *)notification
 {
+    
     if (![self isHUDHiden]) {
         __block LeafOfflineViewController *controller = self;
         [self setDismissBlockForHUD:^(void){
-            controller.progressBar.hidden = YES;
             [controller postMessage:@"完成离线!" type:LeafStatusBarOverlayTypeSuccess];
+            controller.progressBar.hidden = YES;
         }];
         [self dismissHUD];
 
     }
-    
+    _empty.hidden = YES;
+    LeafConfig *config = [LeafConfig sharedInstance];
+    config.offline = YES;
     [self reload];
     NSLog(@"finished offline");
+}
+
+- (void)leafOfflineState:(NSNotification *)notification
+{
+    LeafConfig *config = [LeafConfig sharedInstance];
+    if (!config.offline) {
+        [self postMessage:@"离线未完成!" type:LeafStatusBarOverlayTypeWarning];
+        _empty.hidden = NO;
+    }
+    else {
+        [self reload];
+    }
 }
 
 - (void)leafOfflineUpdateProgress:(NSNotification *)notification
@@ -134,6 +152,13 @@
 }
 
 
+- (void)tap:(UIGestureRecognizer *)recognizer
+{
+    [self showDownloadView];
+    [_model downloadNews:YES];
+}
+
+
 #pragma mark -
 #pragma mark - ViewController Lifecycle
 
@@ -145,6 +170,7 @@
     
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self selector:@selector(leafOfflineFinished:) name:kLeafOfflineFinished object:_model];
+    [notificationCenter addObserver:self selector:@selector(leafOfflineState:) name:kLeafOfflineState object:_model];
     [notificationCenter addObserver:self selector:@selector(leafOfflineUpdateProgress:) name:kLeafOfflineUpdateProgress object:_model];
     [notificationCenter addObserver:self selector:@selector(leafOfflineFailed:) name:kLeafOfflineFailed object:_model];
     
@@ -170,6 +196,30 @@
     _progressBar = progressBar;
     [progressBar release];
     _progressBar.hidden = YES;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
+    
+    UIView *empty = [[UIView alloc] initWithFrame:_container.bounds];
+    empty.backgroundColor = [UIColor clearColor];
+    empty.hidden = YES;
+    [empty addGestureRecognizer:tap];
+    [tap release];
+    
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 200.0f, 15.0f)];
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor flatBlackColor];
+    label.font = kLeafFont15;
+    label.textAlignment = NSTextAlignmentCenter;
+    label.text = @"点击屏幕,完成离线";
+    label.center = CGPointMake(CGRectGetWidth(empty.frame)/2.0f, CGRectGetHeight(empty.frame)/2.0f);
+    [empty addSubview:label];
+    _empty = empty;
+    [label release];
+    [_container addSubview:empty];
+    [empty release];
+    
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated

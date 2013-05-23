@@ -11,6 +11,7 @@
 #define kLeafOfflineFinished       @"LeafOfflineFinished"
 #define kLeafOfflineUpdateProgress @"LeafOfflineUpdateProgress"
 #define kLeafOfflineFailed         @"LeafOfflineFailed"
+#define kLeafOfflineState          @"LeafOfflineState"
 
 @interface LeafOfflineModel : NSObject
 {
