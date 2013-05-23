@@ -128,7 +128,7 @@
 {
     if (!data) {
         NSLog(@"LeafCommentData: data is nil.");
-        [[NSNotificationCenter defaultCenter] postNotificationName:kLeafLoadCommentFailed object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLeafLoadCommentEmpty object:self];
         return;
     }
     NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:NULL];
@@ -136,6 +136,7 @@
     if (array) {
         for (NSDictionary *dict in array) {
             if (![dict isKindOfClass:[NSDictionary class]]) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kLeafLoadCommentEmpty object:self];
                 return;
             }
             LeafCommentData *data = [[LeafCommentData alloc] init];

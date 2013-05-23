@@ -65,6 +65,13 @@
     
 }
 
+
+- (void)loadCommentEmpty:(NSNotification *)notification
+{
+    [self hideLeafLoadingView];
+    [self postMessage:@"暂无评论!"];
+}
+
 - (void)loadCommentFailed:(NSNotification *)notification
 {
     [self hideLeafLoadingView];
@@ -185,7 +192,11 @@
                       selector:@selector(loadCommentSuccess:)
                           name:kLeafLoadCommentSuccess
                         object:_commentModel];
-    
+    [defaultCenter addObserver:self
+                      selector:@selector(loadCommentEmpty:)
+                          name:kLeafLoadCommentEmpty
+                        object:_commentModel];
+
     [defaultCenter addObserver:self
                       selector:@selector(loadCommentFailed:)
                           name:kLeafLoadCommentFailed

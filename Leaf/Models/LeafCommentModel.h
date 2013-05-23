@@ -11,6 +11,7 @@
 
 #define kLeafLoadCommentSuccess @"LeafLoadCommentSuccess"
 #define kLeafLoadCommentFailed @"LeafLoadCommentFailed"
+#define kLeafLoadCommentEmpty @"LeafLoadCommentEmpty"
 #define kLeafLoadCommentCanceled @"LeafLoadCommentCanceled"
 
 @interface LeafCommentData : NSObject
