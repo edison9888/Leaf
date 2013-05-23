@@ -23,8 +23,11 @@
     UITextField *_verify;
     ASIHTTPRequest *_request;
 }
+
 @property (nonatomic, retain) ASIHTTPRequest *request;
+
 - (void)refreshVerifyNumber;
+- (BOOL)checkTextFields;
 
 @end
 
@@ -54,6 +57,11 @@
 
 - (void)confirmClicked:(id)sender
 {
+    if (![self checkTextFields]) {
+        NSLog(@"invalid text input.");
+        return;
+    }
+    
     __block LeafReplyController *controller = self;
     [self setDismissBlockForHUD:^{
         if (controller.request) {
@@ -92,6 +100,20 @@
     _verify.text = @"";
 }
 
+
+- (BOOL)checkTextFields
+{
+    if (_verify.text && _verify.text.length != 4) {
+        [self postMessage:@"请输入验证码!" type:LeafStatusBarOverlayTypeWarning];
+        return NO;
+    }
+    
+    if (_statusTextView.text && _statusTextView.text.length == 0) {
+        [self postMessage:@"评论不能为空!" type:LeafStatusBarOverlayTypeWarning];
+        return NO;
+    }
+    return YES;
+}
 
 #pragma mark -
 #pragma mark - Controller Lifecycle
@@ -135,7 +157,7 @@
     [shareBg setUserInteractionEnabled:YES];
     [shareView addSubview:shareBg];
     
-    UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(5.0f, 1.0f, 210, 79.0f)];
+    UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(5.0f, 1.0f, 278.0f, 79.0f)];
     textView.backgroundColor = [UIColor clearColor];
     textView.delegate = (id<UITextViewDelegate>)self;
     textView.font = kLeafFont15;

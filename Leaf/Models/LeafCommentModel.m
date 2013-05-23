@@ -64,6 +64,7 @@
 {
     if (!articleId) {
         NSLog(@"invalid article id!");
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLeafLoadCommentFailed object:self];
         return;
     }
     self.referer = [NSString stringWithFormat:kCBArticle, articleId];
