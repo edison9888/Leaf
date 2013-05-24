@@ -27,6 +27,9 @@ background:#ECF0F1 !important; \
     font-weight:normal !important; \
     word-wrap:break-word !important; \
 } \
+* {\
+    -webkit-tap-highlight-color:rgba(0,0,0,0);\
+}\
 span { \
     font-family:FZLanTingHei-R-GBK !important; \
     font-size:12pt !important; \
