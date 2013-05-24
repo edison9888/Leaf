@@ -287,6 +287,9 @@
     else{
         CGFloat maxY = CGRectGetMaxY(rectInSuperView);
         offsetY = maxY - 11.0f;
+        if (offsetY > CGRectGetHeight(_container.frame) - 88.0f) {
+            offsetY = CGRectGetHeight(_container.frame) - 88.0f;
+        }
         _menuBar.type = LeafMenuBarArrowTypeUp;
 
     }
