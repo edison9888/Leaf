@@ -557,6 +557,11 @@ iframe { \
     if (_videoUrl) {
         [_content stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.getElementsByTagName('video')[0].src = '%@'", _videoUrl]];
     }
+    CGSize contentSize = _content.scrollView.contentSize;
+    if (contentSize.width > CGRectGetWidth(_content.frame)) {
+        contentSize.width = CGRectGetWidth(_content.frame);
+        _content.scrollView.contentSize = contentSize;
+    }
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
