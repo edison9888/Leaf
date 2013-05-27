@@ -379,6 +379,7 @@
 - (void)didFailWithError:(NSError *)error
 {
     [self stopLoadingAnimation];
+    [self postMessage:@"请检查网络连接！" type:LeafStatusBarOverlayTypeError];
 }
 
 - (void)connectionDidCancel

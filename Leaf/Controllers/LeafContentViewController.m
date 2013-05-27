@@ -623,6 +623,7 @@ iframe { \
 - (void)didFailWithError:(NSError *)error
 {
     [self hideLeafLoadingView];
+    [self postMessage:@"请检查网络连接！" type:LeafStatusBarOverlayTypeError];
 }
 
 - (void)connectionDidCancel
