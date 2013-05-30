@@ -429,9 +429,9 @@ iframe { \
     }
     
     NSRange rangeStyle = [original rangeOfString:@"<style>"];
-    if (rangeStyle.length <= 0) {
+    if (rangeStyle.location == NSNotFound) {
         NSLog(@"original does not contain <style>");
-        return nil;
+        return original;
     }
     
     NSUInteger location = rangeStyle.location + rangeStyle.length;
