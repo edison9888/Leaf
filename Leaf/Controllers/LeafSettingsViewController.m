@@ -12,7 +12,7 @@
 #import "LeafNavigationBar.h"
 #import "LeafSettingCell.h"
 #import "LeafConfig.h"
-#import "LeafWebViewController.h"
+#import "LeafHtmlController.h"
 
 #define kLeafSettingCellMarginLeft 0.0f
 #define kLeafSettingCellSize CGSizeMake(320.0f, 49.0f)
@@ -103,9 +103,9 @@
 {
     NSString *pagePath = [[NSBundle mainBundle] pathForResource:@"open_source" ofType:@"html"];
     NSString *page = [NSString stringWithContentsOfFile:pagePath encoding:NSUTF8StringEncoding error:nil];
-    __block LeafWebViewController *controller = [[LeafWebViewController alloc] init];
+    __block LeafHtmlController *controller = [[LeafHtmlController alloc] init];
     controller.view.frame = _container.frame;
-    [self presentViewController:controller option:LeafAnimationOptionVertical completion:^{
+    [self presentViewController:controller option:LeafAnimationOptionHorizontal completion:^{
         [controller loadContent:page];
         [controller enablePanRightGestureWithDismissBlock:NULL];
         [controller release], controller = nil;

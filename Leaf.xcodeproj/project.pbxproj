@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB377D22175C8F7F00A3CEC7 /* LeafHtmlController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB377D21175C8F7F00A3CEC7 /* LeafHtmlController.m */; };
 		DB41071016E86BFF00DE7DB7 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = DB41070B16E86BFF00DE7DB7 /* TFHpple.m */; };
 		DB41071116E86BFF00DE7DB7 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = DB41070D16E86BFF00DE7DB7 /* TFHppleElement.m */; };
 		DB41071216E86BFF00DE7DB7 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = DB41070F16E86BFF00DE7DB7 /* XPathQuery.m */; };
@@ -176,6 +177,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DB377D20175C8F7F00A3CEC7 /* LeafHtmlController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafHtmlController.h; path = Controllers/LeafHtmlController.h; sourceTree = "<group>"; };
+		DB377D21175C8F7F00A3CEC7 /* LeafHtmlController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafHtmlController.m; path = Controllers/LeafHtmlController.m; sourceTree = "<group>"; };
 		DB41070A16E86BFF00DE7DB7 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
 		DB41070B16E86BFF00DE7DB7 /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
 		DB41070C16E86BFF00DE7DB7 /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
@@ -554,6 +557,8 @@
 				DB87A84217338045002AE0D6 /* LeafComposeViewController.m */,
 				DB4B318D1738F4B9008D7173 /* LeafSettingsViewController.h */,
 				DB4B318E1738F4B9008D7173 /* LeafSettingsViewController.m */,
+				DB377D20175C8F7F00A3CEC7 /* LeafHtmlController.h */,
+				DB377D21175C8F7F00A3CEC7 /* LeafHtmlController.m */,
 				DBCBE9041745DEF900BD37CF /* LeafReplyController.h */,
 				DBCBE9051745DEF900BD37CF /* LeafReplyController.m */,
 			);
@@ -1130,6 +1135,7 @@
 				DBE66E8317451A80002C34AC /* UIColor+MLPFlatColors.m in Sources */,
 				DBCBE9061745DEF900BD37CF /* LeafReplyController.m in Sources */,
 				DB8BC5D01749FD4F00E42CDF /* LeafHTTPRequest.m in Sources */,
+				DB377D22175C8F7F00A3CEC7 /* LeafHtmlController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
