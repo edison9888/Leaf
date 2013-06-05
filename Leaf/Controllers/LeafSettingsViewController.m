@@ -96,7 +96,15 @@
 
 - (void)aboutClicked
 {
-    
+    NSString *pagePath = [[NSBundle mainBundle] pathForResource:@"about" ofType:@"html"];
+    NSString *page = [NSString stringWithContentsOfFile:pagePath encoding:NSUTF8StringEncoding error:nil];
+    __block LeafHtmlController *controller = [[LeafHtmlController alloc] init];
+    controller.view.frame = _container.frame;
+    [self presentViewController:controller option:LeafAnimationOptionHorizontal completion:^{
+        [controller loadContent:page];
+        [controller enablePanRightGestureWithDismissBlock:NULL];
+        [controller release], controller = nil;
+    }];
 }
 
 - (void)opensourceClicked

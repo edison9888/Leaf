@@ -76,6 +76,7 @@
 		DB9AEC8B170B190F005EA0E6 /* menu_saved@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB9AEC83170B190D005EA0E6 /* menu_saved@2x.png */; };
 		DB9AEC8C170B190F005EA0E6 /* menu_download.png in Resources */ = {isa = PBXBuildFile; fileRef = DB9AEC84170B190D005EA0E6 /* menu_download.png */; };
 		DB9AEC8D170B190F005EA0E6 /* menu_download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB9AEC85170B190E005EA0E6 /* menu_download@2x.png */; };
+		DB9F79ED175F849A00BA34A8 /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = DB9F79EC175F849A00BA34A8 /* about.html */; };
 		DB9FDE621709350D002E4052 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = DB9FDE481709350D002E4052 /* ASIAuthenticationDialog.m */; };
 		DB9FDE631709350D002E4052 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = DB9FDE4B1709350D002E4052 /* ASIDataCompressor.m */; };
 		DB9FDE641709350D002E4052 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = DB9FDE4D1709350D002E4052 /* ASIDataDecompressor.m */; };
@@ -269,6 +270,7 @@
 		DB9AEC83170B190D005EA0E6 /* menu_saved@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_saved@2x.png"; sourceTree = "<group>"; };
 		DB9AEC84170B190D005EA0E6 /* menu_download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_download.png; sourceTree = "<group>"; };
 		DB9AEC85170B190E005EA0E6 /* menu_download@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_download@2x.png"; sourceTree = "<group>"; };
+		DB9F79EC175F849A00BA34A8 /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
 		DB9FDE471709350D002E4052 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		DB9FDE481709350D002E4052 /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		DB9FDE491709350D002E4052 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -616,6 +618,7 @@
 		DB61AF1316B2721B006EC642 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DB9F79EC175F849A00BA34A8 /* about.html */,
 				DB4B31901738FF11008D7173 /* open_source.html */,
 				DB70FDA316BA582800FD1A8E /* page.html */,
 				DBF713661716631200FF0894 /* Bundles */,
@@ -1063,6 +1066,7 @@
 				DBEBFDCF174B613800356587 /* bottom_icon_refresh@2x.png in Resources */,
 				DBC97355174BB1A100D53BAE /* share_default@2x.png in Resources */,
 				DBC97356174BB1A100D53BAE /* share_default.png in Resources */,
+				DB9F79ED175F849A00BA34A8 /* about.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
