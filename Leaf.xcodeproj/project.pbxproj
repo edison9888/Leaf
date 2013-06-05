@@ -1234,14 +1234,14 @@
 		DB61AEE116B2589D006EC642 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Jie Qian (PXRM6WVFC5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jie Qian (PXRM6WVFC5)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Leaf/Leaf-Prefix.pch";
 				INFOPLIST_FILE = "Leaf/Leaf-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "6324BFE2-54A0-4570-8F1D-B8D24004F626";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6324BFE2-54A0-4570-8F1D-B8D24004F626";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
