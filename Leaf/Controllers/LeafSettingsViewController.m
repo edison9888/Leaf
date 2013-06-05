@@ -112,6 +112,12 @@
     }];
 }
 
+- (void)rankClicked
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@",@"658210763"]]];
+    // id for test  @"642084603"
+}
+
 #pragma disk cache utils
 
 - (int)cacheSize
@@ -291,8 +297,20 @@
     [opensource setImage:[UIImage imageNamed:@"feedback_more"]];
     [opensource setOrigin:CGPointMake(kLeafSettingCellMarginLeft, offsetY)];
     [_container addSubview:opensource];
-    //offsetY = CGRectGetMaxY(opensource.frame) + 20.0f;
+    offsetY = CGRectGetMaxY(opensource.frame) - 1.0f;
     [opensource release];
+    
+    
+    LeafSettingCell *rank = [[LeafSettingCell alloc] init];
+    [rank addTarget:self action:@selector(rankClicked)];
+    rank.hasArrow = YES;
+    [rank setTitle:@"给我评分"];
+    [rank setImage:[UIImage imageNamed:@"rank_more"]];
+    [rank setOrigin:CGPointMake(kLeafSettingCellMarginLeft, offsetY)];
+    [_container addSubview:rank];
+    //offsetY = CGRectGetMaxY(rank.frame) + 20.0f;
+    [rank release];
+
     
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
     [defaultCenter addObserver:self selector:@selector(weiboDidLogin) name:kSinaWeiboDidLogin object:nil];
