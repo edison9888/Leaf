@@ -430,8 +430,9 @@ iframe { \
     
     NSRange rangeStyle = [original rangeOfString:@"<style>"];
     if (rangeStyle.location == NSNotFound) {
-        NSLog(@"original does not contain <style>");
-        return original;
+        html = [[NSMutableString alloc] init];
+        [html safeAppendString:original];
+        return [html autorelease];
     }
     
     NSUInteger location = rangeStyle.location + rangeStyle.length;
@@ -572,6 +573,10 @@ iframe { \
 
 - (void)handleData:(NSData *)data
 {
+    if (!data) {
+        [self postMessage:@"服务器维护中" type:LeafStatusBarOverlayTypeWarning];
+        return;
+    }
     NSString *page = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSString *html = [self injectLeafCSS:page];
     [page release];
