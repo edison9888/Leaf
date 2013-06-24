@@ -37,3 +37,9 @@ tid=0&sid=237987&valimg_main=5595&=&comment=%26%2320320%3B%26%2322909%3B%26%2365
 # font
 normal: FZLTHK--GBK1-0 
 bold: FZLTZHK--GBK1-0
+
+======================== New API ===========================================
+
+# Get Comment JSON
+http://www.cnbeta.com/comment.htm?op=info&page=1&sid=242247
+
