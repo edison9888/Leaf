@@ -85,20 +85,21 @@
 
 - (void)support:(NSString *)tid
 {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kLeafSupportURL, tid]];
+    NSURL *url = [NSURL URLWithString:@"http://www.cnbeta.com/comment.htm"];
     NSLog(@"url: %@", url.absoluteString);
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request addRequestHeader:@"Referer" value:_referer];
-    //request.delegate = self;
-    //[request setDidFinishSelector:@selector(requestDidFinish:)];
-    //[request setDidFailSelector:@selector(requestDidFailed:)];
+    [request setRequestMethod:@"POST"];
+    [request appendPostData:[@"op=support&YII_CSRF_TOKEN=f3600451275bb83727b58657a702fb7e8e8ab588&sid=242221&tid=7617914" dataUsingEncoding:NSUTF8StringEncoding]];
+    request.delegate = self;
+    [request setDidFinishSelector:@selector(requestDidFinish:)];
+    [request setDidFailSelector:@selector(requestDidFailed:)];
     [request startAsynchronous];
 }
 
 - (void)against:(NSString *)tid
 {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kLeafAgainstURL, tid]];
-    NSLog(@"url: %@", url.absoluteString);
+    NSURL *url = [NSURL URLWithString:@"http://www.cnbeta.com/comment.htm"];
+    //NSLog(@"url: %@", url.absoluteString);
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     [request addRequestHeader:@"Referer" value:_referer];
     //request.delegate = self;
@@ -119,7 +120,8 @@
 
 - (void)requestDidFailed:(ASIHTTPRequest *)request
 {
-    
+    NSLog(@"request failed.");
+    NSLog(@"header: %@", [[request responseHeaders] description]);
 }
 
 

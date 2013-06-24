@@ -43,3 +43,15 @@ bold: FZLTZHK--GBK1-0
 # Get Comment JSON
 http://www.cnbeta.com/comment.htm?op=info&page=1&sid=242247
 
+# 验证码
+http://www.cnbeta.com/captcha.htm?refresh=1&_=1372059813687
+http://www.cnbeta.com/captcha.htm?v=51c7f8a3d26f8
+
+# 顶
+http://www.cnbeta.com/comment.htm
+op=support&YII_CSRF_TOKEN=39b21937f7887ac7a2dcdf016c9c668b7133114a&sid=242221&tid=7617904
+
+＃ 踩
+http://www.cnbeta.com/comment.htm
+op=against&YII_CSRF_TOKEN=39b21937f7887ac7a2dcdf016c9c668b7133114a&sid=242221&tid=7617904
+需要和cookie协同工作

@@ -1,0 +1,21 @@
+ASIHTTPRequest *cookieRequest = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:@"http://www.cnbeta.com/articles/242263.htm"]];
+    [cookieRequest startSynchronous];
+    NSLog(@"cookie: %@", cookieRequest.responseCookies );
+    
+    
+    
+    NSHTTPCookie *cookie = [cookieRequest.responseCookies objectAtIndex:0];
+    NSString *yii_csrf_token = [cookie value];
+    
+    NSLog(@"yii_csrf_token: %@", yii_csrf_token);
+    
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:@"http://www.cnbeta.com/comment.htm"]];
+    request.delegate = self;
+    request.didFinishSelector = @selector(didFinishedPost:);
+    request.didFailSelector = @selector(didFailedPost:);
+    [request setPostValue:@"support" forKey:@"op"];
+    [request setPostValue:@"242247" forKey:@"sid"];
+    [request setPostValue:@"7618624" forKey:@"tid"];
+    [request setPostValue:yii_csrf_token forKey:@"YII_CSRF_TOKEN"];
+    
+    [request startAsynchronous];
