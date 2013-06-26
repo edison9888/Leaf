@@ -1,3 +1,12 @@
+
+NSDictionary *properties = [[[NSMutableDictionary alloc] init] autorelease];
+[properties setValue:[@"Test Value" encodedCookieValue] forKey:NSHTTPCookieValue];
+[properties setValue:@"ASIHTTPRequestTestCookie" forKey:NSHTTPCookieName];
+[properties setValue:@".allseeing-i.com" forKey:NSHTTPCookieDomain];
+[properties setValue:[NSDate dateWithTimeIntervalSinceNow:60*60] forKey:NSHTTPCookieExpires];
+[properties setValue:@"/asi-http-request/tests" forKey:NSHTTPCookiePath];
+NSHTTPCookie *cookie = [[[NSHTTPCookie alloc] initWithProperties:properties] autorelease];
+
 ASIHTTPRequest *cookieRequest = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:@"http://www.cnbeta.com/articles/242263.htm"]];
     [cookieRequest startSynchronous];
     NSLog(@"cookie: %@", cookieRequest.responseCookies );

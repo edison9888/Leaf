@@ -40,6 +40,11 @@ bold: FZLTZHK--GBK1-0
 
 ======================== New API ===========================================
 
+# Cookie
+(
+    "<NSHTTPCookie version:0 name:\"YII_CSRF_TOKEN\" value:\"f4d96d1e97ee80b9286cb2c7e5d804e9fa195c7a\" expiresDate:(null) created:2013-06-26 07:53:03 +0000 (3.93926e+08) sessionOnly:TRUE domain:\"www.cnbeta.com\" path:\"/\" isSecure:FALSE>"
+)
+
 # Get Comment JSON
 http://www.cnbeta.com/comment.htm?op=info&page=1&sid=242247
 

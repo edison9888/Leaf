@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB131D6B177AEF1F000BE0BB /* LeafCookieManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB131D6A177AEF1F000BE0BB /* LeafCookieManager.m */; };
 		DB377D22175C8F7F00A3CEC7 /* LeafHtmlController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB377D21175C8F7F00A3CEC7 /* LeafHtmlController.m */; };
 		DB41071016E86BFF00DE7DB7 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = DB41070B16E86BFF00DE7DB7 /* TFHpple.m */; };
 		DB41071116E86BFF00DE7DB7 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = DB41070D16E86BFF00DE7DB7 /* TFHppleElement.m */; };
@@ -178,6 +179,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DB131D69177AEF1F000BE0BB /* LeafCookieManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafCookieManager.h; sourceTree = "<group>"; };
+		DB131D6A177AEF1F000BE0BB /* LeafCookieManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeafCookieManager.m; sourceTree = "<group>"; };
 		DB377D20175C8F7F00A3CEC7 /* LeafHtmlController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafHtmlController.h; path = Controllers/LeafHtmlController.h; sourceTree = "<group>"; };
 		DB377D21175C8F7F00A3CEC7 /* LeafHtmlController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafHtmlController.m; path = Controllers/LeafHtmlController.m; sourceTree = "<group>"; };
 		DB41070A16E86BFF00DE7DB7 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
@@ -743,6 +746,8 @@
 				DBA1C34C1740B16B00F3EF58 /* GCDHelper.m */,
 				DB8BC5CE1749FD4E00E42CDF /* LeafHTTPRequest.h */,
 				DB8BC5CF1749FD4F00E42CDF /* LeafHTTPRequest.m */,
+				DB131D69177AEF1F000BE0BB /* LeafCookieManager.h */,
+				DB131D6A177AEF1F000BE0BB /* LeafCookieManager.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1140,6 +1145,7 @@
 				DBCBE9061745DEF900BD37CF /* LeafReplyController.m in Sources */,
 				DB8BC5D01749FD4F00E42CDF /* LeafHTTPRequest.m in Sources */,
 				DB377D22175C8F7F00A3CEC7 /* LeafHtmlController.m in Sources */,
+				DB131D6B177AEF1F000BE0BB /* LeafCookieManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
