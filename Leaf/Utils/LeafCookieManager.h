@@ -9,7 +9,15 @@
 #import <Foundation/Foundation.h>
 
 @interface LeafCookieManager : NSObject
+{
+    NSString *_token;
+}
+
+@property (nonatomic, retain) NSString *token;
 
 + (LeafCookieManager *)sharedInstance;
+
+- (NSHTTPCookie *)cookie;
+- (void)updateCookie;
 
 @end
