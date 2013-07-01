@@ -254,10 +254,15 @@
 + (CGFloat)heightForComment:(LeafCommentData *)data
 {
     CGFloat height = 0.0f;
-    height = [LeafCommentItem heightForComment:data.comment style:LeafCommentItemStyleCurrent];
+    
     if (data.parent) {
         LeafCommentData *parent = data.parent;
         height += [LeafCommentItem heightForComment:parent.comment style:LeafCommentItemStyleCurrent];
+        height += [LeafCommentItem heightForComment:data.comment style:LeafCommentItemStyleChild];
+    }
+    else
+    {
+        height = [LeafCommentItem heightForComment:data.comment style:LeafCommentItemStyleCurrent];
     }
     
     return height;
