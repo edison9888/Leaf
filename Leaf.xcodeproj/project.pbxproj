@@ -14,6 +14,7 @@
 		DB41071216E86BFF00DE7DB7 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = DB41070F16E86BFF00DE7DB7 /* XPathQuery.m */; };
 		DB41071516E86D8E00DE7DB7 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DB41071416E86D8E00DE7DB7 /* libxml2.2.dylib */; };
 		DB477A1017817A5800B6653A /* dot_border.png in Resources */ = {isa = PBXBuildFile; fileRef = DB477A0F17817A5800B6653A /* dot_border.png */; };
+		DB477A14178188B100B6653A /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB477A12178188B100B6653A /* libMobClickLibrary.a */; };
 		DB49CAC5170582E0004F3C7B /* LeafMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DB49CAC4170582DF004F3C7B /* LeafMenuItem.m */; };
 		DB4B317A1738E291008D7173 /* menu_setting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB4B31771738E291008D7173 /* menu_setting@2x.png */; };
 		DB4B317B1738E291008D7173 /* menu_setting.png in Resources */ = {isa = PBXBuildFile; fileRef = DB4B31781738E291008D7173 /* menu_setting.png */; };
@@ -193,6 +194,8 @@
 		DB41070F16E86BFF00DE7DB7 /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPathQuery.m; sourceTree = "<group>"; };
 		DB41071416E86D8E00DE7DB7 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		DB477A0F17817A5800B6653A /* dot_border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dot_border.png; sourceTree = "<group>"; };
+		DB477A12178188B100B6653A /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
+		DB477A13178188B100B6653A /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		DB49CAC3170582DE004F3C7B /* LeafMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafMenuItem.h; path = Views/LeafMenuItem.h; sourceTree = "<group>"; };
 		DB49CAC4170582DF004F3C7B /* LeafMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafMenuItem.m; path = Views/LeafMenuItem.m; sourceTree = "<group>"; };
 		DB4B31771738E291008D7173 /* menu_setting@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_setting@2x.png"; sourceTree = "<group>"; };
@@ -448,6 +451,7 @@
 				DB61AECC16B2589D006EC642 /* UIKit.framework in Frameworks */,
 				DB61AECE16B2589D006EC642 /* Foundation.framework in Frameworks */,
 				DB61AED016B2589D006EC642 /* CoreGraphics.framework in Frameworks */,
+				DB477A14178188B100B6653A /* libMobClickLibrary.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,6 +470,16 @@
 			);
 			name = TFHpple;
 			path = Vender/TFHpple;
+			sourceTree = "<group>";
+		};
+		DB477A11178188B100B6653A /* UMengSDK */ = {
+			isa = PBXGroup;
+			children = (
+				DB477A12178188B100B6653A /* libMobClickLibrary.a */,
+				DB477A13178188B100B6653A /* MobClick.h */,
+			);
+			name = UMengSDK;
+			path = Vender/UMengSDK;
 			sourceTree = "<group>";
 		};
 		DB4E547B16D3195700CBF9EB /* DDMenuController */ = {
@@ -611,6 +625,7 @@
 		DB61AF0816B26DA3006EC642 /* Vender */ = {
 			isa = PBXGroup;
 			children = (
+				DB477A11178188B100B6653A /* UMengSDK */,
 				DBE66E8017451A80002C34AC /* UIColor+MLPFlatColors */,
 				DB9FDE451709350D002E4052 /* ASIHTTPRequest */,
 				DB41070916E86BFF00DE7DB7 /* TFHpple */,
@@ -1240,6 +1255,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Leaf/Leaf-Prefix.pch";
 				INFOPLIST_FILE = "Leaf/Leaf-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Vender/UMengSDK\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1255,6 +1274,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Leaf/Leaf-Prefix.pch";
 				INFOPLIST_FILE = "Leaf/Leaf-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Vender/UMengSDK\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "6324BFE2-54A0-4570-8F1D-B8D24004F626";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6324BFE2-54A0-4570-8F1D-B8D24004F626";
