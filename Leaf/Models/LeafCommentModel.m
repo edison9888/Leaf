@@ -8,11 +8,15 @@
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
 
+#import "LeafCookieManager.h"
 #import "LeafCommentModel.h"
 
-#define kLeafCommentURL @"http://www.cnbeta.com/api/getComment.php?article="
+ // @"http://www.cnbeta.com/api/getComment.php?article=" // old api deprecated
+
+#define kLeafCommentURL @"http://www.cnbeta.com/comment.htm?op=info&page=1&sid="
 #define kLeafSupportURL @"http://www.cnbeta.com/Ajax.vote.php?tid=%@&support=1"
 #define kLeafAgainstURL @"http://www.cnbeta.com/Ajax.vote.php?tid=%@&against=1"
+#define kLeafVoteURL @"http://www.cnbeta.com/comment.htm"
 
 @implementation LeafCommentData
 @synthesize name = _name;
@@ -21,6 +25,7 @@
 @synthesize tid = _tid;
 @synthesize support = _support;
 @synthesize against = _against;
+@synthesize parent = _parent;
 
 - (void)dealloc
 {
@@ -30,6 +35,7 @@
     [_tid release], _tid = nil;
     [_comment release], _comment = nil;
     [_against release], _against = nil;
+    [_parent release], _parent = nil;
     
     [super dealloc];
 }
@@ -37,26 +43,35 @@
 @end
 
 
+@interface LeafCommentModel ()
+{
+    ASIHTTPRequest *_request;
+}
+
+@property (nonatomic, retain) ASIHTTPRequest *request;
+
+@end
+
 
 @implementation LeafCommentModel
 @synthesize dataArray = _dataArray;
 @synthesize articleId = _articleId;
+@synthesize request = _request;
 
 - (void)dealloc
 {
-    _connection.delegate = nil;
-    [_connection release], _connection = nil;
     [_dataArray release], _dataArray = nil;
     [_articleId release], _articleId = nil;
-    
+    if (_request) {
+        [_request clearDelegatesAndCancel];
+        [_request release], _request = nil;
+    }
     [super dealloc];
 }
 
 - (id)init
 {
     if (self = [super init]) {
-        _connection = [[LeafURLConnection alloc] init];
-        _connection.delegate = self;
         _dataArray = [[NSMutableArray alloc] init];
     }
     return  self;
@@ -69,83 +84,140 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kLeafLoadCommentFailed object:self];
         return;
     }
+    
     self.articleId = articleId;
     NSString *url = [kLeafCommentURL stringByAppendingString:articleId];
-    if (_connection) {
-        [_connection GET:url];
+
+    if (_request) {
+        [_request clearDelegatesAndCancel];
     }
+    self.request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
+    _request.delegate = self;
+    _request.didFinishSelector = @selector(commentDidFinish:);
+    _request.didFailSelector = @selector(commentDidFailed:);
+    [_request startAsynchronous];
 }
 
 - (void)cancel
 {
-    if (_connection) {
-        [_connection cancel];
-        _connection.delegate = nil;
+    if (_request) {
+        [_request clearDelegatesAndCancel];
     }
 }
 
 
-- (void)support:(NSString *)tid
+- (void)vote:(NSString *)op tid:(NSString *)tid
 {
-  /* NSURL *url = [NSURL URLWithString:@"http://www.cnbeta.com/comment.htm"];
-    NSLog(@"url: %@", url.absoluteString);
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    NSDictionary *properties = [[[NSMutableDictionary alloc] init] autorelease];
-    [properties setValue:@"f3600451275bb83727b58657a702fb7e8e8ab588" forKey:NSHTTPCookieValue];
-    [properties setValue:@"YII_CSRF_TOKEN" forKey:NSHTTPCookieName];
-    [properties setValue:@"www.cnbeta.com" forKey:NSHTTPCookieDomain];
-    //[properties setValue:[NSDate dateWithTimeIntervalSinceNow:60*60] forKey:NSHTTPCookie];
-    [properties setValue:@"/" forKey:NSHTTPCookiePath];
-    NSHTTPCookie *cookie = [[[NSHTTPCookie alloc] initWithProperties:properties] autorelease];
-    NSMutableArray *cookies = [NSMutableArray arrayWithObjects:cookie, nil];
-    [request setRequestMethod:@"PUT"];
-    [request appendPostData:[[@"op=support&YII_CSRF_TOKEN=f3600451275bb83727b58657a702fb7e8e8ab588&sid=242247&tid=7618624" urlEncode] dataUsingEncoding:NSUTF8StringEncoding]];
-    request.delegate = self;
-    [request setRequestCookies:cookies];
-    [request setUseCookiePersistence:NO];
-    [request setDidFinishSelector:@selector(requestDidFinish:)];
-    [request setDidFailSelector:@selector(requestDidFailed:)];
-    [request startAsynchronous];
-    */
-    NSDictionary *properties = [[[NSMutableDictionary alloc] init] autorelease];
-    [properties setValue:@"f3600451275bb83727b58657a702fb7e8e8ab588" forKey:NSHTTPCookieValue];
-    [properties setValue:@"YII_CSRF_TOKEN" forKey:NSHTTPCookieName];
-    [properties setValue:@"www.cnbeta.com" forKey:NSHTTPCookieDomain];
-    [properties setValue:@"/" forKey:NSHTTPCookiePath];
+    LeafCookieManager *manager = [LeafCookieManager sharedInstance];
     
-    NSHTTPCookie *cookie = [[[NSHTTPCookie alloc] initWithProperties:properties] autorelease];
+    NSHTTPCookie *cookie = [manager cookie];
+    if (!cookie) {
+        return;
+    }
+    
+    NSString *token = [manager token];
     NSMutableArray *cookies = [NSMutableArray arrayWithObjects:cookie, nil];
     
-    
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:@"http://www.cnbeta.com/comment.htm"]];
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:kLeafVoteURL]];
     [request setRequestCookies:cookies];
     [request setUseCookiePersistence:NO];
     request.delegate = self;
     request.didFinishSelector = @selector(requestDidFinish:);
     request.didFailSelector = @selector(requestDidFailed:);
-    [request setPostValue:@"support" forKey:@"op"];
+    [request setPostValue:op forKey:@"op"];
     [request setPostValue:_articleId forKey:@"sid"];
     [request setPostValue:tid forKey:@"tid"];
-    [request setPostValue:@"f3600451275bb83727b58657a702fb7e8e8ab588" forKey:@"YII_CSRF_TOKEN"];
+    [request setPostValue:token forKey:@"YII_CSRF_TOKEN"];
     
     [request startAsynchronous];
+}
 
+- (void)support:(NSString *)tid
+{
+    [self vote:@"support" tid:tid];
 }
 
 - (void)against:(NSString *)tid
 {
-    NSURL *url = [NSURL URLWithString:@"http://www.cnbeta.com/comment.htm"];
-    //NSLog(@"url: %@", url.absoluteString);
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    
-    //request.delegate = self;
-    //[request setDidFinishSelector:@selector(requestDidFinish:)];
-    //[request setDidFailSelector:@selector(requestDidFailed:)];
-    [request startAsynchronous];
+    [self vote:@"against" tid:tid];
+}
 
+
+- (LeafCommentData *)dataForDict:(NSDictionary *)dict
+{
+    if (!dict) {
+        return nil;
+    }
+    LeafCommentData *data = [[LeafCommentData alloc] init];
+    data.name = [dict stringForKey:@"name"];
+    data.comment = [dict stringForKey:@"comment"];
+    data.time = [dict stringForKey:@"date"]; // TODO: friendly date formate
+    data.tid = [dict stringForKey:@"tid"];
+    int score = [dict intForKey:@"score"];
+    int reason = [dict intForKey:@"reason"];
+    data.support = [NSString stringWithFormat:@"%d", score];
+    data.against = [NSString stringWithFormat:@"%d", reason];
+
+    return [data autorelease];
 }
 
 #pragma mark - ASIHTTPRequest Delegate
+
+- (void)commentDidFinish:(ASIHTTPRequest *)request
+{
+    if (!request.responseData) {
+        NSLog(@"comment response data is nil.");
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLeafLoadCommentFailed object:self];
+        return;
+    }
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.responseData options:NSJSONReadingMutableContainers error:NULL];
+    LeafCookieManager *manager = [LeafCookieManager sharedInstance];
+    if (dict) {
+        if(![manager cookie]) {
+            NSString *token = [dict stringForKey:@"token"];
+            if (token && ![token isEqualToString:@""]) {
+                [manager updateCookie:token];
+            }
+        }
+        
+        NSDictionary *result = [dict objectForKey:@"result"];
+        
+        if (result) {
+            
+            NSDictionary *cmntStore = [result objectForKey:@"cmntstore"];
+            if (cmntStore) {
+                NSArray *keys = [cmntStore allKeys];
+                
+                for (NSString *key  in keys) {
+                    NSDictionary *comment = [cmntStore objectForKey:key];
+                    if (comment) {
+                        LeafCommentData *data = [self dataForDict:comment];
+                        NSString *pid = [comment stringForKey:@"pid"];
+                        if (pid && ![pid isEqualToString:@""]) {
+                            NSDictionary *parent = [cmntStore objectForKey:pid];
+                            data.parent = [self dataForDict:parent];
+                        }
+                        [_dataArray addObject:data];
+                    }
+                }
+            }
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLeafLoadCommentSuccess object:self];
+    }
+    else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLeafLoadCommentEmpty object:self];
+    }
+    
+    
+}
+
+- (void)commentDidFailed:(ASIHTTPRequest *)request
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kLeafLoadCommentFailed object:self];
+}
+
+#pragma mark - ASIFormDataRequest Delegate
 
 - (void)requestDidFinish:(ASIHTTPRequest *)request
 {
@@ -159,6 +231,7 @@
     NSLog(@"request failed.");
     NSLog(@"header: %@", [[request responseHeaders] description]);
 }
+
 
 
 #pragma mark - LeafURLConnectionDelegate Methods

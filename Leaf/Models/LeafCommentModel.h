@@ -22,6 +22,7 @@
     NSString *_tid;
     NSString *_support;
     NSString *_against;
+    LeafCommentData *_parent;
 }
 
 @property (nonatomic, retain) NSString *name;
@@ -30,12 +31,11 @@
 @property (nonatomic, retain) NSString *tid;
 @property (nonatomic, retain) NSString *support;
 @property (nonatomic, retain) NSString *against;
-
+@property (nonatomic, retain) LeafCommentData *parent;
 @end
 
 @interface LeafCommentModel : NSObject <LeafURLConnectionDelegate>
 {
-    LeafURLConnection *_connection;
     NSMutableArray *_dataArray;
     NSString *_articleId;
 }

@@ -18,6 +18,6 @@
 + (LeafCookieManager *)sharedInstance;
 
 - (NSHTTPCookie *)cookie;
-- (void)updateCookie;
+- (void)updateCookie:(NSString *)token;
 
 @end

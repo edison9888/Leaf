@@ -10,7 +10,7 @@
 #import "ASIHTTPRequest.h"
 #import "GCDHelper.h"
 
-#define kArticleURL @"http://www.cnbeta.com/articles/242247.htm"
+#define kArticleURL @"http://www.cnbeta.com/articles/242636.htm"
 #define kYIICSRFTOKEN @"YII_CSRF_TOKEN"
 
 @implementation LeafCookieManager
@@ -43,21 +43,9 @@ SINGLETON_FOR_CLASS(LeafCookieManager);
 }
 
 
-- (void)updateCookie
+- (void)updateCookie:(NSString *)token
 {
-    __block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:kArticleURL]];
-    [GCDHelper dispatchBlock:^{
-        [request startSynchronous];
-        NSArray *cookies = request.responseCookies;
-        for (NSHTTPCookie *cookie in cookies) {
-            if ([cookie.name isEqualToString:kYIICSRFTOKEN]) {
-                self.token = cookie.value;
-            }
-        }
-
-    } complete:^{
-        
-    }];
+    self.token = token;
 }
 
 @end
