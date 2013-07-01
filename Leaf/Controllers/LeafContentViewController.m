@@ -23,13 +23,16 @@
 #import "GCDHelper.h"
 
 #define kLeafContentCSS @"body { \
-background:#ECF0F1 !important; \
+    background:#ECF0F1 !important; \
     font-weight:normal !important; \
     word-wrap:break-word !important; \
 } \
 * {\
     -webkit-tap-highlight-color:rgba(0,0,0,0);\
 }\
+p { \
+    line-height:18pt !important; \
+} \
 span { \
     font-family:FZLanTingHei-R-GBK !important; \
     font-size:12pt !important; \
