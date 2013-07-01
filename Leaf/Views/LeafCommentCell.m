@@ -14,42 +14,51 @@
 #define kLeafCommentDefaultHeight 20.0f
 #define kLeafCommentDefaultWidth 160.0f
 #define kLeafCommentWidth 290.0f
-#define kLeafCommentMaxSize CGSizeMake(kLeafCommentWidth, 320.0f)
-#define kLeafCommentHeadMaxSize CGSizeMake(kLeafCommentWidth, 15.0f)
+#define kLeafCommentMaxSize CGSizeMake(kLeafCommentWidth, 640.0f)
+#define kLeafCommentHeadMaxSize CGSizeMake(135.0f, 15.0f)
 #define kLeafCommentMarginTop 12.0f
 #define kLeafCommentMarginBottom 30.0f
 #define kLeafCommentMarginX 15.0f
+#define kLeafCommentChildMarginX 30.0f
 #define kLeafCommentHeadMarginY 12.0f
 #define kLeafCommentHeadMarginX 15.0f
 #define kLeafCommentHeadHeight 15.0f
 #define kLeafCommentMaxLines 22
+#define kLeafCommentChildWidth 270.0f
+#define kLeafCommentChildMaxSize CGSizeMake(kLeafCommentChildWidth, 640.0f)
+#define kLeafCommentChildHeadMaxSize CGSizeMake(kLeafCommentChildWidth, 15.0f)
+#define kLeafCommentSeparatorWidth 290.0f
+#define kLeafCommentChildSeparatorWidth 270.0f
 
 #define kLeafCommentNameColor      [UIColor colorWithRed:CGColorConvert(140.0f) green:CGColorConvert(196.0f) blue:CGColorConvert(216.0f) alpha:1.0f]
 #define KLeafCommentDateColor      [UIColor colorWithRed:CGColorConvert(140.0f) green:CGColorConvert(140.0f) blue:CGColorConvert(140.0f) alpha:1.0f]
 #define kLeafCommentContentColor      [UIColor colorWithRed:CGColorConvert(51.0f) green:CGColorConvert(51.0f) blue:CGColorConvert(51.0f) alpha:1.0f]
 
 
-@interface LeafCommentCell ()
+@interface LeafCommentItem ()
 {
-    @private
+@private
+    UIView *_head;
     UILabel *_name;
     UILabel *_time;
     UILabel *_comment;
-    UIImageView *_separator;
+    UIView *_separator;
     UIImageView *_like;
     UILabel *_support;
     UIImageView *_unlike;
     UILabel *_against;
+
 }
 
-+ (CGSize)sizeForString:(NSString *)text;
++ (CGSize)sizeForString:(NSString *)text style:(LeafCommentItemStyle)style;
 
 @end
 
-@implementation LeafCommentCell
+@implementation LeafCommentItem
 
 - (void)dealloc
 {
+    _head = nil;
     _name = nil;
     _time = nil;
     _comment = nil;
@@ -61,20 +70,27 @@
     [super dealloc];
 }
 
-+ (CGFloat)heightForComment:(NSString *)comment
++ (CGFloat)heightForComment:(NSString *)comment style:(LeafCommentItemStyle)style
 {
-    CGSize size = [self sizeForString:comment];
+    CGSize size = [self sizeForString:comment style:style];
     CGFloat textHeight = size.height;
     return (textHeight + kLeafCommentMarginTop + kLeafCommentMarginBottom + kLeafCommentHeadHeight + kLeafCommentHeadMarginY);
 }
 
-+ (CGSize)sizeForString:(NSString *)text
++ (CGSize)sizeForString:(NSString *)text style:(LeafCommentItemStyle)style
 {
+    CGSize size = CGSizeZero;
     if (!text) {
         return CGSizeZero;
     }
     
-    CGSize size = [text sizeWithFont:kLeafCommentFont constrainedToSize:kLeafCommentMaxSize];
+    if (style == LeafCommentItemStyleCurrent) {
+        size = [text sizeWithFont:kLeafCommentFont constrainedToSize:kLeafCommentMaxSize];
+    
+    } else {
+        size = [text sizeWithFont:kLeafCommentFont constrainedToSize:kLeafCommentChildMaxSize];
+    }
+    
     return size;
 }
 
@@ -95,6 +111,7 @@
     if (self) {
         UIView *head = [[UIView alloc] initWithFrame:CGRectMake(kLeafCommentHeadMarginX, kLeafCommentHeadMarginY,  320.0f - 2 * kLeafCommentHeadMarginX, kLeafCommentHeadHeight)];
         [self addSubview:head];
+        _head = head;
         UILabel *name = [[UILabel alloc] initWithFrame:CGRectZero];
         name.font = kLeafCommentFont;
         name.backgroundColor = [UIColor clearColor];
@@ -119,7 +136,7 @@
         _comment.textColor = kLeafCommentContentColor;
         [_comment setLineBreakMode:UILineBreakModeWordWrap];
         [_comment setNumberOfLines:kLeafCommentMaxLines];
-
+        
         [self addSubview:comment];
         [comment release];
         
@@ -152,7 +169,7 @@
         [self addSubview:against];
         [against release];
         
-        UIImageView *separator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"comment_line"]];
+        UIView *separator = [[UIView alloc] init];
         _separator = separator;
         [self addSubview:_separator];
         [separator release];
@@ -161,38 +178,138 @@
     return self;
 }
 
-- (void) loadData:(NSDictionary *)info
+- (void) loadData:(LeafCommentData *)data style:(LeafCommentItemStyle)style
 {
-    NSString *name = [info stringForKey:@"name"];
-    NSString *time = [info stringForKey:@"time"];
-    NSString *comment = [info stringForKey:@"comment"];
-    
+    NSString *name = data.name;
+    NSString *time = data.time;
+    NSString *comment = data.comment;
+    CGFloat marginX = 0.0f;
     CGFloat width = 0.0f;
-    width = [LeafCommentCell widthForString:name withFont:kLeafCommentFont];
+    
+    marginX = (style == LeafCommentItemStyleCurrent? kLeafCommentMarginX : kLeafCommentChildMarginX);
+    
+    CGRect headFrame = _head.frame;
+    headFrame.origin.x = marginX;
+    headFrame.size.width = (style == LeafCommentItemStyleCurrent? kLeafCommentWidth : kLeafCommentChildWidth);
+    _head.frame = headFrame;
+
+    width = [LeafCommentItem widthForString:name withFont:kLeafCommentFont];
     [_name setText:name];
     [_name setFrame:CGRectMake(0.0f, 0.0f, width, kLeafCommentHeadHeight)];
     
-    width = [LeafCommentCell widthForString:time withFont:kLeafCommentDateFont];
+    width = [LeafCommentItem widthForString:time withFont:kLeafCommentDateFont];
     [_time setText:time];
-    [_time setFrame:CGRectMake(320.0f - 2 * kLeafCommentHeadMarginX - width, 0.0f, width, kLeafCommentHeadHeight)];
+    [_time setFrame:CGRectMake(CGRectGetWidth(_head.frame) - kLeafCommentHeadMarginX - width, 0.0f, width, kLeafCommentHeadHeight)];
     
-    CGSize commentSize = [LeafCommentCell sizeForString:comment];
+    CGSize commentSize = [LeafCommentItem sizeForString:comment style:style];
     [_comment setText:comment];
-    [_comment setFrame:CGRectMake(kLeafCommentMarginX, kLeafCommentMarginTop + kLeafCommentHeadMarginY + kLeafCommentHeadHeight, commentSize.width, commentSize.height)];
-        
-    CGFloat height = [LeafCommentCell heightForComment:comment];
+    [_comment setFrame:CGRectMake(marginX, kLeafCommentMarginTop + kLeafCommentHeadMarginY + kLeafCommentHeadHeight, commentSize.width, commentSize.height)];
+    
+    CGFloat height = [LeafCommentItem heightForComment:comment style:style];
     [self setFrame:CGRectMake(0.0f, 0.0f, 320.0f, height)];
     
     _like.frame = CGRectMake(320.0f - 116.0f, height - 18.0f, 15.0f, 15.0f);
     _support.frame = CGRectMake(CGRectGetMaxX(_like.frame) + 3.0f, height - 15.0f, 39.0f, 13.0f);
-    _support.text = [info stringForKey:@"support"];
+    _support.text = data.support;
     
     
     _unlike.frame = CGRectMake(320.0f - 66.0f, height - 18.0f, 15.0f, 15.0f);
     _against.frame = CGRectMake(CGRectGetMaxX(_unlike.frame) + 3.0f, height - 15.0f, 39.0f, 13.0f);
-    _against.text = [info stringForKey:@"against"];
+    _against.text = data.against;
     
-    [_separator setFrame:CGRectMake(kLeafCommentMarginX, height - 1.0f, kLeafCommentWidth, 1.0f)];
+    CGFloat separatorWidth = (style == LeafCommentItemStyleCurrent? kLeafCommentSeparatorWidth : kLeafCommentChildSeparatorWidth);
+    [_separator setFrame:CGRectMake(marginX, height - 1.0f, separatorWidth, 1.0f)];
+    UIColor *backColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"dot_border"]];
+    _separator.backgroundColor = backColor;
+    
+    
+   
+}
+
+@end
+
+#pragma mark -
+#pragma mark - LeafCommentCell
+
+
+@interface LeafCommentCell ()
+{
+    LeafCommentItem *_current;
+    LeafCommentItem *_child;
+}
+
+
+@end
+    
+@implementation LeafCommentCell
+
+- (void)dealloc
+{
+    _current = nil;
+    _child = nil;
+    
+    [super dealloc];
+}
+
++ (CGFloat)heightForComment:(LeafCommentData *)data
+{
+    CGFloat height = 0.0f;
+    height = [LeafCommentItem heightForComment:data.comment style:LeafCommentItemStyleCurrent];
+    if (data.parent) {
+        LeafCommentData *parent = data.parent;
+        height += [LeafCommentItem heightForComment:parent.comment style:LeafCommentItemStyleCurrent];
+    }
+    
+    return height;
+}
+
+- (id)init
+{
+    if (self = [super init]) {
+        _current = [[LeafCommentItem alloc] init];
+        [self addSubview:_current];
+        _child = nil;
+    }
+    
+    return self;
+}
+
+- (void) loadData:(LeafCommentData *)data
+{
+    if (!data) {
+        NSLog(@"error: LeafCommentCell ==> data is nil.");
+        return;
+    }
+    
+    LeafCommentData *parent = data.parent;
+    
+    if (parent) {
+        [_current loadData:parent style:LeafCommentItemStyleCurrent];
+        
+        if (!_child) {
+            LeafCommentItem *child = [[LeafCommentItem alloc] init];
+            [self addSubview:child];
+            _child = child;
+            [child release];
+        }
+        [_child loadData:data style:LeafCommentItemStyleChild];
+        CGRect frame = _child.frame;
+        frame.origin.y = CGRectGetHeight(_current.frame);
+        _child.frame = frame;
+        
+        CGFloat height = CGRectGetHeight(_current.frame) + CGRectGetHeight(_child.frame);
+        self.frame = CGRectMake(0.0f, 0.0f, 320.0f, height);
+        return;
+    }
+    
+    if (_child) {
+        [_child removeFromSuperview];
+        _child = nil;
+    }
+    
+    [_current loadData:data style:LeafCommentItemStyleCurrent];
+    CGFloat height = CGRectGetHeight(_current.frame);
+    self.frame = CGRectMake(0.0f, 0.0f, 320.0f, height);
 }
 
 @end

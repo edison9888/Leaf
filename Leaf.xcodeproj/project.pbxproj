@@ -13,6 +13,7 @@
 		DB41071116E86BFF00DE7DB7 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = DB41070D16E86BFF00DE7DB7 /* TFHppleElement.m */; };
 		DB41071216E86BFF00DE7DB7 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = DB41070F16E86BFF00DE7DB7 /* XPathQuery.m */; };
 		DB41071516E86D8E00DE7DB7 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DB41071416E86D8E00DE7DB7 /* libxml2.2.dylib */; };
+		DB477A1017817A5800B6653A /* dot_border.png in Resources */ = {isa = PBXBuildFile; fileRef = DB477A0F17817A5800B6653A /* dot_border.png */; };
 		DB49CAC5170582E0004F3C7B /* LeafMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DB49CAC4170582DF004F3C7B /* LeafMenuItem.m */; };
 		DB4B317A1738E291008D7173 /* menu_setting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB4B31771738E291008D7173 /* menu_setting@2x.png */; };
 		DB4B317B1738E291008D7173 /* menu_setting.png in Resources */ = {isa = PBXBuildFile; fileRef = DB4B31781738E291008D7173 /* menu_setting.png */; };
@@ -52,6 +53,7 @@
 		DB61AF3916B27812006EC642 /* UILabel+LeafHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61AF3716B27812006EC642 /* UILabel+LeafHelper.m */; };
 		DB61B7531711501C00838477 /* LeafProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61B7521711501C00838477 /* LeafProgressBar.m */; };
 		DB61B75A17125EC200838477 /* LeafStack.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61B75917125EC200838477 /* LeafStack.m */; };
+		DB66EE7617816F11007D1FB6 /* LeafCommentData.m in Sources */ = {isa = PBXBuildFile; fileRef = DB66EE7517816F11007D1FB6 /* LeafCommentData.m */; };
 		DB6F05C01727A7DB00139ADB /* LeafOfflineModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6F05BF1727A7DB00139ADB /* LeafOfflineModel.m */; };
 		DB6F05C31727CF8400139ADB /* LeafOfflineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6F05C21727CF8400139ADB /* LeafOfflineViewController.m */; };
 		DB70FD9616BA320800FD1A8E /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = DB70FD9416BA320700FD1A8E /* back.png */; };
@@ -190,6 +192,7 @@
 		DB41070E16E86BFF00DE7DB7 /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPathQuery.h; sourceTree = "<group>"; };
 		DB41070F16E86BFF00DE7DB7 /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPathQuery.m; sourceTree = "<group>"; };
 		DB41071416E86D8E00DE7DB7 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
+		DB477A0F17817A5800B6653A /* dot_border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dot_border.png; sourceTree = "<group>"; };
 		DB49CAC3170582DE004F3C7B /* LeafMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafMenuItem.h; path = Views/LeafMenuItem.h; sourceTree = "<group>"; };
 		DB49CAC4170582DF004F3C7B /* LeafMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeafMenuItem.m; path = Views/LeafMenuItem.m; sourceTree = "<group>"; };
 		DB4B31771738E291008D7173 /* menu_setting@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_setting@2x.png"; sourceTree = "<group>"; };
@@ -244,6 +247,8 @@
 		DB61B75717125DB900838477 /* Singleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
 		DB61B75817125EC100838477 /* LeafStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafStack.h; sourceTree = "<group>"; };
 		DB61B75917125EC200838477 /* LeafStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeafStack.m; sourceTree = "<group>"; };
+		DB66EE7417816F11007D1FB6 /* LeafCommentData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafCommentData.h; sourceTree = "<group>"; };
+		DB66EE7517816F11007D1FB6 /* LeafCommentData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeafCommentData.m; sourceTree = "<group>"; };
 		DB6F05BE1727A7DB00139ADB /* LeafOfflineModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafOfflineModel.h; sourceTree = "<group>"; };
 		DB6F05BF1727A7DB00139ADB /* LeafOfflineModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeafOfflineModel.m; sourceTree = "<group>"; };
 		DB6F05C11727CF8400139ADB /* LeafOfflineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafOfflineViewController.h; path = Controllers/LeafOfflineViewController.h; sourceTree = "<group>"; };
@@ -748,6 +753,8 @@
 				DB8BC5CF1749FD4F00E42CDF /* LeafHTTPRequest.m */,
 				DB131D69177AEF1F000BE0BB /* LeafCookieManager.h */,
 				DB131D6A177AEF1F000BE0BB /* LeafCookieManager.m */,
+				DB66EE7417816F11007D1FB6 /* LeafCommentData.h */,
+				DB66EE7517816F11007D1FB6 /* LeafCommentData.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -755,6 +762,7 @@
 		DBD825C616B644D600EC4439 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				DB477A0F17817A5800B6653A /* dot_border.png */,
 				DBC97353174BB1A100D53BAE /* share_default@2x.png */,
 				DBC97354174BB1A100D53BAE /* share_default.png */,
 				DBEBFDB0174B124200356587 /* comment_btn_normal@2x.png */,
@@ -1072,6 +1080,7 @@
 				DBC97355174BB1A100D53BAE /* share_default@2x.png in Resources */,
 				DBC97356174BB1A100D53BAE /* share_default.png in Resources */,
 				DB9F79ED175F849A00BA34A8 /* about.html in Resources */,
+				DB477A1017817A5800B6653A /* dot_border.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1146,6 +1155,7 @@
 				DB8BC5D01749FD4F00E42CDF /* LeafHTTPRequest.m in Sources */,
 				DB377D22175C8F7F00A3CEC7 /* LeafHtmlController.m in Sources */,
 				DB131D6B177AEF1F000BE0BB /* LeafCookieManager.m in Sources */,
+				DB66EE7617816F11007D1FB6 /* LeafCommentData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

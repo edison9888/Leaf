@@ -7,8 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LeafCommentData.h"
+
+typedef enum {
+    LeafCommentItemStyleChild = 0,
+    LeafCommentItemStyleCurrent
+}LeafCommentItemStyle;
+
+@interface LeafCommentItem : UIView
+
++ (CGFloat)heightForComment:(NSString *)comment style:(LeafCommentItemStyle)style;
+- (void) loadData:(LeafCommentData *)info style:(LeafCommentItemStyle)style;
+
+@end
 
 @interface LeafCommentCell : UIView
-+ (CGFloat)heightForComment:(NSString *)comment;
-- (void) loadData:(NSDictionary *)info;
++ (CGFloat)heightForComment:(LeafCommentData *)data;
+- (void) loadData:(LeafCommentData *)data;
 @end

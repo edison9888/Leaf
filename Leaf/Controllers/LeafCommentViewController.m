@@ -8,6 +8,8 @@
 #import "UIColor+MLPFlatColors.h"
 
 #import "LeafCommentViewController.h"
+
+#import "LeafCommentData.h"
 #import "LeafCommentModel.h"
 #import "LeafCommentCell.h"
 #import "LeafBottomBar.h"
@@ -221,6 +223,7 @@
     [_commentModel cancel];
 }
 
+
 #pragma mark - 
 #pragma mark - UITableViewDataSource UITableViewDelegate 
 
@@ -232,13 +235,13 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     int index = indexPath.row;
-    NSString *comment = @"";
+    
     if (index >= 0 && index < _commentModel.dataArray.count) {
         LeafCommentData *data = [_commentModel.dataArray objectAtIndex:index];
-        comment = data.comment;
+        return [LeafCommentCell heightForComment:data];
     }
     
-    return [LeafCommentCell heightForComment:comment];
+    return 44.0f;
 }
 
 
@@ -257,17 +260,7 @@
     }
      LeafCommentCell *commentCell = (LeafCommentCell *)[cell.contentView viewWithTag:kLeafCommentCellTag];
     LeafCommentData *data = [_commentModel.dataArray safeObjectAtIndex:indexPath.row];
-    
-    
-    if (data) {
-        NSString *name = data.name;
-        if (!data.name || [data.name isEqualToString:@""]) {
-            name = @"匿名";
-        }
-
-        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:name, @"name", data.time, @"time", data.comment, @"comment", data.support, @"support", data.against, @"against", nil];
-        [commentCell loadData:dict];
-    }
+    [commentCell loadData:data];
     
     return cell;
 }

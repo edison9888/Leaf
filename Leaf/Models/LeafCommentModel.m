@@ -9,6 +9,7 @@
 #import "ASIFormDataRequest.h"
 
 #import "LeafCookieManager.h"
+#import "LeafCommentData.h"
 #import "LeafCommentModel.h"
 
  // @"http://www.cnbeta.com/api/getComment.php?article=" // old api deprecated
@@ -17,30 +18,6 @@
 #define kLeafSupportURL @"http://www.cnbeta.com/Ajax.vote.php?tid=%@&support=1"
 #define kLeafAgainstURL @"http://www.cnbeta.com/Ajax.vote.php?tid=%@&against=1"
 #define kLeafVoteURL @"http://www.cnbeta.com/comment.htm"
-
-@implementation LeafCommentData
-@synthesize name = _name;
-@synthesize time = _time;
-@synthesize comment = _comment;
-@synthesize tid = _tid;
-@synthesize support = _support;
-@synthesize against = _against;
-@synthesize parent = _parent;
-
-- (void)dealloc
-{
-    [_name release], _name = nil;
-    [_time release], _time = nil;
-    [_comment release], _comment = nil;
-    [_tid release], _tid = nil;
-    [_comment release], _comment = nil;
-    [_against release], _against = nil;
-    [_parent release], _parent = nil;
-    
-    [super dealloc];
-}
-
-@end
 
 
 @interface LeafCommentModel ()
