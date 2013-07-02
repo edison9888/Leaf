@@ -241,7 +241,7 @@
     verify.delegate = (id<UITextFieldDelegate>)self;
     verify.font = kLeafFont15;
     verify.keyboardAppearance = UIKeyboardAppearanceDefault;
-    verify.keyboardType = UIKeyboardTypeNumberPad;
+    verify.keyboardType = UIKeyboardTypeDefault;
     _verify = verify;
     [shareView addSubview:verify];
     
@@ -273,34 +273,45 @@
 {
     [self clearHUDBlock];
     [self dismissHUD];
+    
+    if (!request.responseData) {
+        NSLog(@"error: response is nil");
+        return;
+    }
     NSString *response = [request responseString];
     NSLog(@"response: %@", response);
-    return;
-    if (response && response.length>0) {
-        unichar ch = [response characterAtIndex:0];
-        NSLog(@"response: %d", ch);
-        if (ch == 49) { // wrong verify num
-            [self postMessage:@"验证码错误，请重试！" type:LeafStatusBarOverlayTypeError];
-            [self refreshVerifyNumber];
-        }
-        else if(ch == 53){ // success
-            [self postMessage:@"评论成功, 稍后生效!" type:LeafStatusBarOverlayTypeSuccess];
-            [self clearHUDBlock];
-            [self dismissViewControllerWithOption:LeafAnimationOptionVertical completion:NULL];
+    
+    NSData *data = request.responseData;
+    
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:NULL];
+    if (dict) {
+        NSString *status = [dict stringForKey:@"status"];
+        
+        if ([status isEqualToString:@"error"]) {
+            NSDictionary *result = [dict objectForKey:@"result"];
+            int error_code = [result intForKey:@"error_code"];
+            if (error_code == 6) {
+                [self postMessage:@"该文章禁止评论!" type:LeafStatusBarOverlayTypeError];
+                [self dismissViewControllerWithOption:LeafAnimationOptionVertical completion:NULL];
+            }
+            else if(error_code == 8)
+            {
+                [self postMessage:@"验证码错误，请重试！" type:LeafStatusBarOverlayTypeError];
+                [self refreshVerifyNumber];
+            }
+            else
+            {
+                [self postMessage:@"评论失败，请重试！" type:LeafStatusBarOverlayTypeError];
+                [self refreshVerifyNumber];
+            }
         }
         else
         {
-            [self postMessage:@"评论失败，请重试！" type:LeafStatusBarOverlayTypeError];
-            [self refreshVerifyNumber];
-
+            [self postMessage:@"评论成功, 稍后生效!" type:LeafStatusBarOverlayTypeSuccess];
+            [self dismissViewControllerWithOption:LeafAnimationOptionVertical completion:NULL];
         }
     }
-    else
-    {
-        [self postMessage:@"评论失败，请重试！" type:LeafStatusBarOverlayTypeError];
-        [self refreshVerifyNumber];
-        
-    }
+    
 }
 
 - (void)commentFailed:(ASIHTTPRequest *)request
