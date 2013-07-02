@@ -581,6 +581,9 @@ iframe { \
         return;
     }
     NSString *page = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    if (!page) {
+        [self postMessage:@"网页编码错误" type:LeafStatusBarOverlayTypeError];
+    }
     NSString *html = [self injectLeafCSS:page];
     [page release];
     

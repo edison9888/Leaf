@@ -53,6 +53,7 @@
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlStr]];
     [request setHTTPMethod:@"GET"];
     [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+    [request setValue:@"utf-8" forHTTPHeaderField:@"Accept-Encoding:"];
     self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
     
     if (!_connection) {

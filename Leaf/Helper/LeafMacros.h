@@ -32,9 +32,9 @@
 
 // URL Stuff
 
-#define kNewsListURL @"http://www.cnbeta.com/api/getNewsList.php?limit=20"
-#define kMoreNewsURL @"http://www.cnbeta.com/api/getNewsList.php?fromArticleId=%@&limit=10"
-#define kArticleUrl  @"http://www.cnbeta.com/api/getNewsContent2.php?articleId=%@"
+#define kNewsListURL @"http://api.cnbeta.com/capi/phone/newslist?limit=20"
+#define kMoreNewsURL @"http://api.cnbeta.com/capi/phone/newslist?fromArticleId=%@&limit=10"
+#define kArticleUrl  @"http://api.cnbeta.com/capi/phone/newscontent2?articleId=%@"
 #define kCBArticle @"http://www.cnbeta.com/articles/%@.htm"
 #define kCNLogoURL @"http://www.cnbeta.com/images/cnlogo.gif"
 

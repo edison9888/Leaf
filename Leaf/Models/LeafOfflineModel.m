@@ -15,8 +15,8 @@
 #import "LeafNewsData.h"
 
 #define kLeafOfflineTotal   50
-#define kDownloadNewsListURL @"http://www.cnbeta.com/api/getNewsList.php?limit=%d"
-#define kArticleUrl  @"http://www.cnbeta.com/api/getNewsContent2.php?articleId=%@"
+#define kDownloadNewsListURL @"http://api.cnbeta.com/capi/phone/newslist?limit=%d"
+//#define kArticleUrl  @"http://www.cnbeta.com/api/getNewsContent2.php?articleId=%@"
 
 
 @interface LeafOfflineModel ()
