@@ -26,5 +26,6 @@ typedef enum{
 }
 
 - (void)loadData:(LeafNewsData *)data withStyle:(LeafItemStyle)style;
+- (void)updateReadStatus:(NSString *)articleId;
 
 @end

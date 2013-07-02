@@ -72,8 +72,10 @@ SINGLETON_FOR_CLASS(LeafSQLiteManager);
     const char *selectSql = [sql UTF8String];
     sqlite3_stmt *statement;
     if (sqlite3_prepare_v2(_db, selectSql, -1, &statement, nil) == SQLITE_OK) {
-        NSLog(@"select ok.");
-        return YES;
+        if (sqlite3_step(statement) == SQLITE_ROW) {
+            return YES;
+        }
+        return NO;
     }
     sqlite3_finalize(statement);
     return NO;

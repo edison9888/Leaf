@@ -13,6 +13,7 @@
 #import "LeafHelper.h"
 #import "UIImageView+WebCache.h"
 #import "UIColor+MLPFlatColors.h"
+#import "LeafSQLiteManager.h"
 
 #define kMaxLines       3
 #define kCellTitleFont  [UIFont fontWithName:@"FZLTHK--GBK1-0" size:15.0f]
@@ -120,6 +121,19 @@
     }
 }
 
+- (void)updateReadStatus:(NSString *)articleId
+{
+    LeafSQLiteManager *manager = [LeafSQLiteManager sharedInstance];
+    BOOL readed = [manager select:articleId];
+    if (readed) {
+        [_title setTextColor:[UIColor colorWithRed:CGColorConvert(102) green:CGColorConvert(102) blue:CGColorConvert(102) alpha:1.0f]];
+    }
+    else {
+        [_title setTextColor:[UIColor blackColor]];
+    }
+    
+}
+
 - (void)loadData:(LeafNewsData *)data withStyle:(LeafItemStyle)style
 {
     if (!data) {
@@ -179,6 +193,8 @@
         [_content setFrame:CGRectMake(originX, originY, size.width, offsetY)];
             
     }
+    
+    [self updateReadStatus:data.articleId];
     
     [_box setText:data.cmtNum];
 }

@@ -17,6 +17,7 @@
 #import "LeafContentViewController.h"
 #import "LeafPhotoViewController.h"
 #import "UIColor+MLPFlatColors.h"
+#import "LeafSQLiteManager.h"
 
 #define kLeafNewsItemTag 1001
 #define kScaleFactor 0.02f
@@ -290,8 +291,18 @@
         NSLog(@"error: tableview out of bounds");
         return;
     }
+    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    LeafNewsItem *item = (LeafNewsItem *)[cell viewWithTag:kLeafNewsItemTag];
+    
     LeafNewsData *data = [_leaves safeObjectAtIndex:indexPath.row];
-    if (data) {       
+    if (data) {
+        LeafSQLiteManager *manager = [LeafSQLiteManager sharedInstance];
+        [manager insertRow:data.articleId];
+        
+        if (item && [item respondsToSelector:@selector(updateReadStatus:)]) {
+            [item updateReadStatus:data.articleId];
+        }
         LeafContentViewController *vc = [[LeafContentViewController alloc] initWithLeafData:data];
         vc.view.frame = self.view.bounds;
         [self presentViewController:vc option:LeafAnimationOptionHorizontal completion:^{
