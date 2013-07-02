@@ -55,6 +55,8 @@
 		DB61B7531711501C00838477 /* LeafProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61B7521711501C00838477 /* LeafProgressBar.m */; };
 		DB61B75A17125EC200838477 /* LeafStack.m in Sources */ = {isa = PBXBuildFile; fileRef = DB61B75917125EC200838477 /* LeafStack.m */; };
 		DB66EE7617816F11007D1FB6 /* LeafCommentData.m in Sources */ = {isa = PBXBuildFile; fileRef = DB66EE7517816F11007D1FB6 /* LeafCommentData.m */; };
+		DB68ECBB17826EE200883EBB /* LeafSQLiteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB68ECBA17826EE200883EBB /* LeafSQLiteManager.m */; };
+		DB68ECBD1782783900883EBB /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DB68ECBC1782783900883EBB /* libsqlite3.0.dylib */; };
 		DB6F05C01727A7DB00139ADB /* LeafOfflineModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6F05BF1727A7DB00139ADB /* LeafOfflineModel.m */; };
 		DB6F05C31727CF8400139ADB /* LeafOfflineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6F05C21727CF8400139ADB /* LeafOfflineViewController.m */; };
 		DB70FD9616BA320800FD1A8E /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = DB70FD9416BA320700FD1A8E /* back.png */; };
@@ -252,6 +254,9 @@
 		DB61B75917125EC200838477 /* LeafStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeafStack.m; sourceTree = "<group>"; };
 		DB66EE7417816F11007D1FB6 /* LeafCommentData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafCommentData.h; sourceTree = "<group>"; };
 		DB66EE7517816F11007D1FB6 /* LeafCommentData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeafCommentData.m; sourceTree = "<group>"; };
+		DB68ECB917826EE200883EBB /* LeafSQLiteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafSQLiteManager.h; sourceTree = "<group>"; };
+		DB68ECBA17826EE200883EBB /* LeafSQLiteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeafSQLiteManager.m; sourceTree = "<group>"; };
+		DB68ECBC1782783900883EBB /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		DB6F05BE1727A7DB00139ADB /* LeafOfflineModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafOfflineModel.h; sourceTree = "<group>"; };
 		DB6F05BF1727A7DB00139ADB /* LeafOfflineModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeafOfflineModel.m; sourceTree = "<group>"; };
 		DB6F05C11727CF8400139ADB /* LeafOfflineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeafOfflineViewController.h; path = Controllers/LeafOfflineViewController.h; sourceTree = "<group>"; };
@@ -441,6 +446,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB68ECBD1782783900883EBB /* libsqlite3.0.dylib in Frameworks */,
 				DB9FDE7317093548002E4052 /* CFNetwork.framework in Frameworks */,
 				DB9FDE711709352F002E4052 /* libz.dylib in Frameworks */,
 				DB9FDE6F17093527002E4052 /* SystemConfiguration.framework in Frameworks */,
@@ -518,6 +524,7 @@
 		DB61AECA16B2589D006EC642 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DB68ECBC1782783900883EBB /* libsqlite3.0.dylib */,
 				DB9FDE7217093548002E4052 /* CFNetwork.framework */,
 				DB9FDE701709352F002E4052 /* libz.dylib */,
 				DB9FDE6E17093527002E4052 /* SystemConfiguration.framework */,
@@ -770,6 +777,8 @@
 				DB131D6A177AEF1F000BE0BB /* LeafCookieManager.m */,
 				DB66EE7417816F11007D1FB6 /* LeafCommentData.h */,
 				DB66EE7517816F11007D1FB6 /* LeafCommentData.m */,
+				DB68ECB917826EE200883EBB /* LeafSQLiteManager.h */,
+				DB68ECBA17826EE200883EBB /* LeafSQLiteManager.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1171,6 +1180,7 @@
 				DB377D22175C8F7F00A3CEC7 /* LeafHtmlController.m in Sources */,
 				DB131D6B177AEF1F000BE0BB /* LeafCookieManager.m in Sources */,
 				DB66EE7617816F11007D1FB6 /* LeafCommentData.m in Sources */,
+				DB68ECBB17826EE200883EBB /* LeafSQLiteManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
