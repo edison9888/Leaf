@@ -39,6 +39,8 @@ normal: FZLTHK--GBK1-0
 bold: FZLTZHK--GBK1-0
 
 ======================== New API ===========================================
+# news content
+http://api.cnbeta.com/capi/phone/newscontent2?articleId=243155
 
 # Cookie
 (
