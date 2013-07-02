@@ -175,6 +175,7 @@
     [_container addSubview:tableView];
     _table = tableView;
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _table.allowsSelection = NO;
     [_table setBackgroundColor:kLeafBackgroundColor];
     [tableView release];
      
@@ -255,6 +256,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         LeafCommentCell *commentCell = [[LeafCommentCell alloc] init];
         commentCell.tag = kLeafCommentCellTag;
+        commentCell.delegate = (NSObject<LeafCommentCellDelegate> *)self;
         [cell.contentView addSubview:commentCell];
         [commentCell release];
     }
@@ -265,31 +267,34 @@
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+
+#pragma mark -
+#pragma mark - LeafCommentCellDelegate Methods
+
+- (void)leafCommentItemTapped:(LeafCommentItem *)item
 {
-    _curIndex = indexPath.row;
-    CGRect rectInTableView = [tableView rectForRowAtIndexPath:indexPath];
-    CGRect rectInSuperView = [tableView convertRect:rectInTableView toView:tableView.superview];
     
-    CGFloat minY = CGRectGetMinY(rectInSuperView);
+    CGRect bounds = item.bounds;
+    CGRect rect = [item convertRect:bounds toView:_table.superview];
+     
+    CGFloat minY = CGRectGetMinY(rect);
     CGFloat offsetY = 0.0f;
     if (minY > 80.0f) {
         offsetY = minY - 80.0f;
         _menuBar.type = LeafMenuBarArrowTypeDown;
     }
     else{
-        CGFloat maxY = CGRectGetMaxY(rectInSuperView);
+        CGFloat maxY = CGRectGetMaxY(rect);
         offsetY = maxY - 11.0f;
         if (offsetY > CGRectGetHeight(_container.frame) - 88.0f) {
             offsetY = CGRectGetHeight(_container.frame) - 88.0f;
         }
         _menuBar.type = LeafMenuBarArrowTypeUp;
-
+        
     }
     
     _menuBar.offsetY = offsetY;
     [_menuBar show];
-
 }
 
 #pragma mark -

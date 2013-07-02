@@ -242,13 +242,47 @@
 @end
     
 @implementation LeafCommentCell
-
+@synthesize delegate = _delegate;
 - (void)dealloc
 {
     _current = nil;
     _child = nil;
+    _delegate = nil;
     
     [super dealloc];
+}
+
+- (id)init
+{
+    if (self = [super init]) {
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCurrent:)];
+        _current = [[LeafCommentItem alloc] init];
+        [_current addGestureRecognizer:tap];
+        [tap release];
+        [self addSubview:_current];
+        _child = nil;
+    }
+    
+    return self;
+}
+
+
+#pragma mark -
+
+- (void)tapCurrent:(UITapGestureRecognizer *)recognizer
+{
+    LeafCommentItem *item = (LeafCommentItem *)recognizer.view;
+    if (_delegate && [_delegate respondsToSelector:@selector(leafCommentItemTapped:)]) {
+        [_delegate leafCommentItemTapped:item];
+    }
+}
+
+- (void)tapChild:(UITapGestureRecognizer *)recognizer
+{
+    LeafCommentItem *item = (LeafCommentItem *)recognizer.view;
+    if (_delegate && [_delegate respondsToSelector:@selector(leafCommentItemTapped:)]) {
+        [_delegate leafCommentItemTapped:item];
+    }
 }
 
 + (CGFloat)heightForComment:(LeafCommentData *)data
@@ -268,16 +302,6 @@
     return height;
 }
 
-- (id)init
-{
-    if (self = [super init]) {
-        _current = [[LeafCommentItem alloc] init];
-        [self addSubview:_current];
-        _child = nil;
-    }
-    
-    return self;
-}
 
 - (void) loadData:(LeafCommentData *)data
 {
@@ -292,7 +316,10 @@
         [_current loadData:parent style:LeafCommentItemStyleCurrent];
         
         if (!_child) {
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapChild:)];
             LeafCommentItem *child = [[LeafCommentItem alloc] init];
+            [child addGestureRecognizer:tap];
+            [tap release];
             [self addSubview:child];
             _child = child;
             [child release];

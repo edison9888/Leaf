@@ -21,7 +21,25 @@ typedef enum {
 
 @end
 
+@protocol LeafCommentCellDelegate;
+
 @interface LeafCommentCell : UIView
+{
+    NSObject <LeafCommentCellDelegate> *_delegate;
+}
+
+@property (nonatomic, assign) NSObject <LeafCommentCellDelegate> *delegate;
+
 + (CGFloat)heightForComment:(LeafCommentData *)data;
 - (void) loadData:(LeafCommentData *)data;
 @end
+
+@protocol LeafCommentCellDelegate <NSObject>
+
+@optional
+- (void)leafCommentItemTapped:(LeafCommentItem *)item;
+
+@end
+
+
+
