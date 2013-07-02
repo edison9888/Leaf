@@ -98,9 +98,9 @@
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:kLeafVoteURL]];
     [request setRequestCookies:cookies];
     [request setUseCookiePersistence:NO];
-    request.delegate = self;
-    request.didFinishSelector = @selector(requestDidFinish:);
-    request.didFailSelector = @selector(requestDidFailed:);
+    //request.delegate = self;
+    //request.didFinishSelector = @selector(requestDidFinish:);
+    //request.didFailSelector = @selector(requestDidFailed:);
     [request setPostValue:op forKey:@"op"];
     [request setPostValue:_articleId forKey:@"sid"];
     [request setPostValue:tid forKey:@"tid"];
