@@ -19,7 +19,7 @@
 #define kLeafCommentMarginTop 12.0f
 #define kLeafCommentMarginBottom 30.0f
 #define kLeafCommentMarginX 15.0f
-#define kLeafCommentChildMarginX 30.0f
+#define kLeafCommentChildMarginX 40.0f
 #define kLeafCommentHeadMarginY 12.0f
 #define kLeafCommentHeadMarginX 15.0f
 #define kLeafCommentHeadHeight 15.0f
