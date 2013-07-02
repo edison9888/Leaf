@@ -87,8 +87,9 @@ pid:7635829
 # 验证码错误
 {"status":"error","result":{"error_code":"8","message":"\u9a8c\u8bc1\u7801\u4e0d\u6b63\u786e"}}
 
-# 该文章
+# 该文章禁止评论
 
+{"status":"error","result":{"error_code":"6","message":"\u9a8c\u8bc1\u7801\u4e0d\u6b63\u786e"}}
 # 顶
 http://www.cnbeta.com/comment.htm
 op=support&YII_CSRF_TOKEN=39b21937f7887ac7a2dcdf016c9c668b7133114a&sid=242221&tid=7617904
