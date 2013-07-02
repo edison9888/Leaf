@@ -6,14 +6,16 @@
 //  Copyright (c) 2013年 Mobimtech. All rights reserved.
 //
 #import "UIColor+MLPFlatColors.h"
-#import "ASIHTTPRequest.h"
+#import "ASIFormDataRequest.h"
 #import "UIImageView+WebCache.h"
 #import "SDImageCache.h"
+#import "GCDHelper.h"
+#import "LeafCookieManager.h"
 
 #import "LeafReplyController.h"
 
-
-#define kLeafReplyHTTPBody @"tid=%@&sid=%@&valimg_main=%@&comment=%@&nowsubject=&nowpage=1&nowemail=cryrivers@cnbeta.com"
+#define kLeafVerifyURL @"http://www.cnbeta.com/captcha.htm?refresh=1"
+#define kLeafCommentURL @"http://www.cnbeta.com/comment.htm"
 
 @interface LeafReplyController ()
 {
@@ -21,11 +23,12 @@
     UITextView *_statusTextView;
     UIImageView *_valimg;
     UITextField *_verify;
-    ASIHTTPRequest *_request;
+    ASIFormDataRequest *_request;
+    NSString *_verifyURL;
 }
 
-@property (nonatomic, retain) ASIHTTPRequest *request;
-
+@property (nonatomic, retain) ASIFormDataRequest *request;
+@property (nonatomic, retain) NSString *verifyURL;
 - (void)refreshVerifyNumber;
 - (BOOL)checkTextFields;
 
@@ -35,6 +38,7 @@
 @synthesize articleId = _articleId;
 @synthesize request = _request;
 @synthesize tid = _tid;
+@synthesize verifyURL = _verifyURL;
 
 - (void)dealloc
 {
@@ -42,6 +46,7 @@
     [_request clearDelegatesAndCancel];
     [_request release], _request = nil;
     [_tid release], _tid = nil;
+    [_verifyURL release], _verifyURL = nil;
     [super dealloc];
 }
 
@@ -61,6 +66,14 @@
         NSLog(@"invalid text input.");
         return;
     }
+ 
+    LeafCookieManager *manager = [LeafCookieManager sharedInstance];
+    NSHTTPCookie *cookie = [manager cookieForToken];
+    NSHTTPCookie *session = [manager cookieForSession];
+    if (!cookie || !session) {
+        return;
+    }
+    NSString *token = [manager token];
     
     __block LeafReplyController *controller = self;
     [self setDismissBlockForHUD:^{
@@ -69,23 +82,28 @@
         }
     }];
     [self showHUD:RFHUDTypeLoading status:@"正在发送评论"];
+    NSURL *url = [NSURL URLWithString:kLeafCommentURL];
+
     
-    NSURL *url = [NSURL URLWithString:@"http://www.cnbeta.com/Ajax.comment.php?ver=new"];
-    NSLog(@"url: %@", url.absoluteString);
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    NSMutableArray *cookies = [NSMutableArray arrayWithObjects:cookie, session, nil];
+    
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     self.request = request;
-    NSString *body = [NSString stringWithFormat:kLeafReplyHTTPBody, _tid, _articleId, _verify.text, [[_statusTextView.text stringByAppendingString:kLeafAds] stringByEncodeCharacterEntities]];
+    [request setRequestCookies:cookies];
+    [request setUseCookiePersistence:NO];
     [request setRequestMethod:@"POST"];
-    [request addRequestHeader:@"Content-Type" value:@"application/x-www-form-urlencoded; charset=utf-8"];
-    NSString *referer = [NSString stringWithFormat:kCBArticle, _articleId];
-    [request addRequestHeader:@"Referer" value:referer];
+    //[request addRequestHeader:@"Content-Type" value:@"application/x-www-form-urlencoded; charset=utf-8"];
     request.delegate = self;
     [request setDidFinishSelector:@selector(commentSuccess:)];
     [request setDidFailSelector:@selector(commentFailed:)];
-    [request appendPostData:[body  dataUsingEncoding:NSUTF8StringEncoding]];
+    [request setPostValue:@"publish" forKey:@"op"];
+    [request setPostValue:_articleId forKey:@"sid"];
+    if (_tid && ![_tid isEqualToString:@""]) {
+        [request setPostValue:_tid forKey:@"pid"];
+    }
+    [request setPostValue:_verify.text forKey:@"seccode"];
+    [request setPostValue:token forKey:@"YII_CSRF_TOKEN"];
     [request startAsynchronous];
-    
-    NSLog(@"body: %@", body);
 }
 
 
@@ -94,10 +112,41 @@
 
 - (void)refreshVerifyNumber
 {
-    NSString *verifyURL = @"http://www.cnbeta.com/validate1.php";
-    [[SDImageCache sharedImageCache] removeImageForKey:verifyURL];
-    [_valimg setImageWithURL:[NSURL URLWithString:verifyURL]];
-    _verify.text = @"";
+    //NSString *verifyURL = @"http://www.cnbeta.com/validate1.php";
+    [GCDHelper dispatchBlock:^{
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        
+        LeafCookieManager *manager = [LeafCookieManager sharedInstance];
+        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:kLeafVerifyURL]];
+        [request startSynchronous];
+        if (request.responseCookies) {
+            for (NSHTTPCookie *cookie in request.responseCookies) {
+                if (cookie && [cookie.name isEqualToString:@"PHPSESSID"]) {
+                    [manager updateSessionId:cookie.value];
+                }
+            }
+        }
+
+        NSData *data = request.responseData;
+        if (data) {
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:NULL];
+            if (dict) {
+                NSString *url = [dict stringForKey:@"url"];
+                self.verifyURL = [NSString stringWithFormat:@"http://www.cnbeta.com%@", url];
+                NSLog(@"verifyURL: %@", _verifyURL);
+            }
+        }
+        
+    } complete:^{
+        
+        [[SDImageCache sharedImageCache] removeImageForKey:_verifyURL];
+        [_valimg setImageWithURL:[NSURL URLWithString:_verifyURL] success:^(UIImage *image) {
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        } failure:^(NSError *error) {
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        }];
+        _verify.text = @"";
+    }];
 }
 
 
@@ -170,13 +219,16 @@
     [shareBg addSubview:textView];
     [textView release];
     
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(refreshVerifyNumber)];
     CGFloat offsetX = CGRectGetMinX(shareBg.frame);
     CGFloat offsetY = CGRectGetMaxY(shareBg.frame) + 10.0f;
-    UIImageView *valimg = [[UIImageView alloc] initWithFrame:CGRectMake(offsetX, offsetY, 50, 22)];
+    UIImageView *valimg = [[UIImageView alloc] initWithFrame:CGRectMake(offsetX, offsetY, 55, 24)];
+    valimg.userInteractionEnabled = YES;
+    [valimg addGestureRecognizer:tap];
     _valimg = valimg;
     [shareView addSubview:valimg];
     offsetX = CGRectGetMaxX(valimg.frame) + 10.0f;
-    
+    [tap release];
 
     UITextField *verify = [[UITextField alloc] initWithFrame:CGRectMake(offsetX, offsetY, 55, 24)];
     verify.textAlignment = NSTextAlignmentLeft;
@@ -221,7 +273,8 @@
     [self clearHUDBlock];
     [self dismissHUD];
     NSString *response = [request responseString];
-   // NSLog(@"response: %@", response);
+    NSLog(@"response: %@", response);
+    return;
     if (response && response.length>0) {
         unichar ch = [response characterAtIndex:0];
         NSLog(@"response: %d", ch);

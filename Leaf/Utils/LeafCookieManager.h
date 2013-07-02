@@ -11,13 +11,17 @@
 @interface LeafCookieManager : NSObject
 {
     NSString *_token;
+    NSString *_sessionId;
 }
 
 @property (nonatomic, retain) NSString *token;
+@property (nonatomic, retain) NSString *sessionId;
 
 + (LeafCookieManager *)sharedInstance;
 
-- (NSHTTPCookie *)cookie;
-- (void)updateCookie:(NSString *)token;
+- (NSHTTPCookie *)cookieForToken;
+- (NSHTTPCookie *)cookieForSession;
 
+- (void)updateToken:(NSString *)token;
+- (void)updateSessionId:(NSString *)sessionId;
 @end

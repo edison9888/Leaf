@@ -15,6 +15,11 @@ typedef enum {
 }LeafCommentItemStyle;
 
 @interface LeafCommentItem : UIView
+{
+    LeafCommentData *_data;
+}
+
+@property (nonatomic, retain) LeafCommentData *data;
 
 + (CGFloat)heightForComment:(NSString *)comment style:(LeafCommentItemStyle)style;
 - (void) loadData:(LeafCommentData *)info style:(LeafCommentItemStyle)style;

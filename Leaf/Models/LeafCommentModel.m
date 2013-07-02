@@ -87,7 +87,7 @@
 {
     LeafCookieManager *manager = [LeafCookieManager sharedInstance];
     
-    NSHTTPCookie *cookie = [manager cookie];
+    NSHTTPCookie *cookie = [manager cookieForToken];
     if (!cookie) {
         return;
     }
@@ -148,38 +148,33 @@
         return;
     }
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.responseData options:NSJSONReadingMutableContainers error:NULL];
-    LeafCookieManager *manager = [LeafCookieManager sharedInstance];
-    if (dict) {
-        if(![manager cookie]) {
-            NSString *token = [dict stringForKey:@"token"];
+    NSDictionary *result = [dict objectForKey:@"result"];
+    if (result) {
+        LeafCookieManager *manager = [LeafCookieManager sharedInstance];
+        if(![manager cookieForToken]) {
+            NSString *token = [result stringForKey:@"token"];
             if (token && ![token isEqualToString:@""]) {
-                [manager updateCookie:token];
+                [manager updateToken:token];
             }
         }
-        
-        NSDictionary *result = [dict objectForKey:@"result"];
-        
-        if (result) {
+        NSDictionary *cmntStore = [result objectForKey:@"cmntstore"];
+        if (cmntStore) {
+            NSArray *keys = [cmntStore allKeys];
             
-            NSDictionary *cmntStore = [result objectForKey:@"cmntstore"];
-            if (cmntStore) {
-                NSArray *keys = [cmntStore allKeys];
-                
-                for (NSString *key  in keys) {
-                    NSDictionary *comment = [cmntStore objectForKey:key];
-                    if (comment) {
-                        LeafCommentData *data = [self dataForDict:comment];
-                        NSString *pid = [comment stringForKey:@"pid"];
-                        if (pid && ![pid isEqualToString:@""]) {
-                            NSDictionary *parent = [cmntStore objectForKey:pid];
-                            data.parent = [self dataForDict:parent];
-                        }
-                        [_dataArray addObject:data];
+            for (NSString *key  in keys) {
+                NSDictionary *comment = [cmntStore objectForKey:key];
+                if (comment) {
+                    LeafCommentData *data = [self dataForDict:comment];
+                    NSString *pid = [comment stringForKey:@"pid"];
+                    if (pid && ![pid isEqualToString:@""]) {
+                        NSDictionary *parent = [cmntStore objectForKey:pid];
+                        data.parent = [self dataForDict:parent];
                     }
+                    [_dataArray addObject:data];
                 }
             }
         }
-        
+
         [[NSNotificationCenter defaultCenter] postNotificationName:kLeafLoadCommentSuccess object:self];
     }
     else {

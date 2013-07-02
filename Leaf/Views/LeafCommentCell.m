@@ -55,7 +55,7 @@
 @end
 
 @implementation LeafCommentItem
-
+@synthesize data = _data;
 - (void)dealloc
 {
     _head = nil;
@@ -66,6 +66,7 @@
     _support = nil;
     _unlike = nil;
     _against = nil;
+    [_data release], _data = nil;
     
     [super dealloc];
 }
@@ -180,6 +181,7 @@
 
 - (void) loadData:(LeafCommentData *)data style:(LeafCommentItemStyle)style
 {
+    self.data = data;
     NSString *name = data.name;
     NSString *time = data.time;
     NSString *comment = data.comment;

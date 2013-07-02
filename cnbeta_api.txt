@@ -39,6 +39,12 @@ normal: FZLTHK--GBK1-0
 bold: FZLTZHK--GBK1-0
 
 ======================== New API ===========================================
+# news list
+http://api.cnbeta.com/capi/phone/newslist?limit=20
+
+# more news
+
+
 # news content
 http://api.cnbeta.com/capi/phone/newscontent2?articleId=243155
 
@@ -53,6 +59,35 @@ http://www.cnbeta.com/comment.htm?op=info&page=1&sid=242247
 # 验证码
 http://www.cnbeta.com/captcha.htm?refresh=1&_=1372059813687
 http://www.cnbeta.com/captcha.htm?v=51c7f8a3d26f8
+
+# 评论
+http://www.cnbeta.com/comment.htm
+# Form Data
+op:publish
+content:做啥都不容易啊。
+seccode:gbce
+YII_CSRF_TOKEN:c46aef213434c34f45cdc8cf075ce0d5dac5159b
+sid:243160
+
+# 回复
+http://www.cnbeta.com/comment.htm
+# Form Data
+op:publish
+subject:Re:Intel工厂发生化学物质泄露 12人送医
+content:这个和文章有关系吗？
+name:
+seccode:wuwj
+YII_CSRF_TOKEN:c46aef213434c34f45cdc8cf075ce0d5dac5159b
+sid:243160
+pid:7635829
+
+# 评论成功
+{"status":"success","result":"comment done"}
+
+# 验证码错误
+{"status":"error","result":{"error_code":"8","message":"\u9a8c\u8bc1\u7801\u4e0d\u6b63\u786e"}}
+
+# 该文章
 
 # 顶
 http://www.cnbeta.com/comment.htm

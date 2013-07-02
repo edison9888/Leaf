@@ -15,6 +15,7 @@
 
 @implementation LeafCookieManager
 @synthesize token = _token;
+@synthesize sessionId = _sessionId;
 
 SINGLETON_FOR_CLASS(LeafCookieManager);
 
@@ -26,7 +27,7 @@ SINGLETON_FOR_CLASS(LeafCookieManager);
     return self;
 }
 
-- (NSHTTPCookie *)cookie
+- (NSHTTPCookie *)cookieForToken
 {
     if (!_token) {
         return nil;
@@ -42,10 +43,31 @@ SINGLETON_FOR_CLASS(LeafCookieManager);
     return cookie;
 }
 
+- (NSHTTPCookie *)cookieForSession
+{
+    if (!_sessionId) {
+        return nil;
+    }
+    
+    NSDictionary *properties = [[[NSMutableDictionary alloc] init] autorelease];
+    [properties setValue:_sessionId forKey:NSHTTPCookieValue];
+    [properties setValue:@"PHPSESSID" forKey:NSHTTPCookieName];
+    [properties setValue:@"www.cnbeta.com" forKey:NSHTTPCookieDomain];
+    //[properties setValue:[NSDate dateWithTimeIntervalSinceNow:60*60] forKey:NSHTTPCookie];
+    [properties setValue:@"/" forKey:NSHTTPCookiePath];
+    NSHTTPCookie *cookie = [[[NSHTTPCookie alloc] initWithProperties:properties] autorelease];
+    return cookie;
 
-- (void)updateCookie:(NSString *)token
+}
+
+- (void)updateToken:(NSString *)token
 {
     self.token = token;
+}
+
+- (void)updateSessionId:(NSString *)sessionId
+{
+    self.sessionId = sessionId;
 }
 
 @end

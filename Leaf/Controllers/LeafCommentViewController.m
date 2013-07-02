@@ -27,14 +27,16 @@
     UITableView *_table;
     LeafLoadingView *_loading;
     LeafMenuBar *_menuBar;
-    int _curIndex;
+    LeafCommentData *_data;
 }
 
+@property (nonatomic, retain) LeafCommentData *data;
 @property (nonatomic, retain) NSString *articleId;
 
 @end
 
 @implementation LeafCommentViewController
+@synthesize data = _data;
 @synthesize articleId = _articleId;
 
 - (void)dealloc
@@ -43,7 +45,7 @@
     [_commentModel release], _commentModel = nil;
     [_articleId release], _articleId = nil;
     [_menuBar release], _menuBar = nil;
-    
+    [_data release], _data = nil;
     _table = nil;
     
     [super dealloc];
@@ -273,7 +275,7 @@
 
 - (void)leafCommentItemTapped:(LeafCommentItem *)item
 {
-    
+    self.data = item.data;
     CGRect bounds = item.bounds;
     CGRect rect = [item convertRect:bounds toView:_table.superview];
      
@@ -302,7 +304,7 @@
 
 - (void)menuBar:(LeafMenuBar *)menubar didClickedItemWithType:(LeafMenuBarItemType)type
 {
-    LeafCommentData *data = [_commentModel.dataArray safeObjectAtIndex:_curIndex];
+    LeafCommentData *data = self.data;
     if (!data) {
         [self postMessage:@"数据错误， 请刷新再试！" type:LeafStatusBarOverlayTypeWarning];
         return;
@@ -333,6 +335,7 @@
         [self postMessage:@"复制成功!"];
         UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
         pasteBoard.string = data.comment;
+        NSLog(@"pasted board: %@", data.comment);
     }
 }
 
