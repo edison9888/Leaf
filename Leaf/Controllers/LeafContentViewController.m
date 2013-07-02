@@ -128,7 +128,7 @@ iframe { \
     content.backgroundColor = [UIColor clearColor];
     content.opaque = NO;
     content.delegate = self;
-    content.scrollView.bounces = NO;
+    //content.scrollView.bounces = NO;
     content.dataDetectorTypes = UIDataDetectorTypeNone;
     _content = content;
     [_container addSubview:content];
