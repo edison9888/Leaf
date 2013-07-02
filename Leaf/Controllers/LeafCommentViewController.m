@@ -135,6 +135,7 @@
 {
     LeafReplyController *controller = [[LeafReplyController alloc] init];
     controller.articleId = _articleId;
+    controller.tid = nil;
     [self presentViewController:controller
                          option:LeafAnimationOptionVertical
                      completion:^{
