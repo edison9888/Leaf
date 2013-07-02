@@ -66,7 +66,7 @@
         NSLog(@"invalid text input.");
         return;
     }
- 
+    NSString *content = [_statusTextView.text stringByAppendingString:@" -- (来自 Leaf for iPhone)"];
     LeafCookieManager *manager = [LeafCookieManager sharedInstance];
     NSHTTPCookie *cookie = [manager cookieForToken];
     NSHTTPCookie *session = [manager cookieForSession];
@@ -97,6 +97,7 @@
     [request setDidFinishSelector:@selector(commentSuccess:)];
     [request setDidFailSelector:@selector(commentFailed:)];
     [request setPostValue:@"publish" forKey:@"op"];
+    [request setPostValue:content forKey:@"content"];
     [request setPostValue:_articleId forKey:@"sid"];
     if (_tid && ![_tid isEqualToString:@""]) {
         [request setPostValue:_tid forKey:@"pid"];
