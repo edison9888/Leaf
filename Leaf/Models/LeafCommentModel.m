@@ -147,6 +147,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kLeafLoadCommentFailed object:self];
         return;
     }
+    [_dataArray removeAllObjects];
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.responseData options:NSJSONReadingMutableContainers error:NULL];
     NSDictionary *result = [dict objectForKey:@"result"];
     if (result) {
