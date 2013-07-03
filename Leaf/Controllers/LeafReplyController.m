@@ -66,7 +66,7 @@
         NSLog(@"invalid text input.");
         return;
     }
-    NSString *content = [_statusTextView.text stringByAppendingString:@" -- (来自 Leaf for iPhone)"];
+    NSString *content = _statusTextView.text;
     LeafCookieManager *manager = [LeafCookieManager sharedInstance];
     NSHTTPCookie *cookie = [manager cookieForToken];
     NSHTTPCookie *session = [manager cookieForSession];
@@ -92,13 +92,15 @@
     [request setRequestCookies:cookies];
     [request setUseCookiePersistence:NO];
     [request setRequestMethod:@"POST"];
-    //[request addRequestHeader:@"Content-Type" value:@"application/x-www-form-urlencoded; charset=utf-8"];
+    [request addRequestHeader:@"Content-Type" value:@"application/x-www-form-urlencoded; charset=utf-8"];
     request.delegate = self;
     [request setDidFinishSelector:@selector(commentSuccess:)];
     [request setDidFailSelector:@selector(commentFailed:)];
     [request setPostValue:@"publish" forKey:@"op"];
     [request setPostValue:content forKey:@"content"];
     [request setPostValue:_articleId forKey:@"sid"];
+    [request setPostValue:@"" forKey:@"name"];
+    [request setPostValue:@"Re:" forKey:@"subject"];
     if (_tid && ![_tid isEqualToString:@""]) {
         [request setPostValue:_tid forKey:@"pid"];
     }
@@ -119,6 +121,13 @@
         
         LeafCookieManager *manager = [LeafCookieManager sharedInstance];
         ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:kLeafVerifyURL]];
+        NSHTTPCookie *session = [manager cookieForSession];
+        NSHTTPCookie *token = [manager cookieForToken];
+        if (session && token) {
+            NSMutableArray *cookies = [NSMutableArray arrayWithObjects:token, session, nil];
+            [request setRequestCookies:cookies];
+            [request setUseCookiePersistence:NO];
+        }
         [request startSynchronous];
         if (request.responseCookies) {
             for (NSHTTPCookie *cookie in request.responseCookies) {
@@ -260,11 +269,20 @@
     [_statusTextView becomeFirstResponder];
 }
 
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 
 #pragma mark -
 #pragma mark - ASIHTTPReqeust Delegate
