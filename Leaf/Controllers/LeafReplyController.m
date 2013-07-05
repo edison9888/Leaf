@@ -14,7 +14,7 @@
 
 #import "LeafReplyController.h"
 
-#define kLeafVerifyURL @"http://www.cnbeta.com/captcha.htm?refresh=1"
+#define kLeafVerifyURL @"http://www.cnbeta.com/captcha.htm?refresh=1&_=%@"
 #define kLeafCommentURL @"http://www.cnbeta.com/comment.htm"
 
 @interface LeafReplyController ()
@@ -115,19 +115,21 @@
 
 - (void)refreshVerifyNumber
 {
-    //NSString *verifyURL = @"http://www.cnbeta.com/validate1.php";
     [GCDHelper dispatchBlock:^{
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        NSDate *date = [NSDate date];
+        NSString *timestamp = [NSString stringWithFormat:@"%lld", (long long)([date timeIntervalSince1970] * 1000)];
         
         LeafCookieManager *manager = [LeafCookieManager sharedInstance];
-        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:kLeafVerifyURL]];
+        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:kLeafVerifyURL, timestamp]]];
         NSHTTPCookie *session = [manager cookieForSession];
         NSHTTPCookie *token = [manager cookieForToken];
-        if (session && token) {
+        if (token && session) {
             NSMutableArray *cookies = [NSMutableArray arrayWithObjects:token, session, nil];
             [request setRequestCookies:cookies];
             [request setUseCookiePersistence:NO];
-        }
+         }
+
         [request startSynchronous];
         if (request.responseCookies) {
             for (NSHTTPCookie *cookie in request.responseCookies) {
