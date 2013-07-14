@@ -94,7 +94,7 @@
 	[request setDidFailSelector:@selector(webPageFetchFailed:)];
 	[request setDidFinishSelector:@selector(webPageFetchSucceeded:)];
 	[request setDelegate:self];
-	
+	[request addRequestHeader:@"User-Agent" value:kLeafUserAgent];
 	[request setUrlReplacementMode:ASIReplaceExternalResourcesWithLocalURLs];
 	
 	// It is strongly recommended that you set both a downloadCache and a downloadDestinationPath for all ASIWebPageRequests
@@ -137,7 +137,7 @@
     [request setDownloadCache:[ASIDownloadCache sharedCache]];
 	[request setCachePolicy:ASIOnlyLoadIfNotCachedCachePolicy];
     
-
+    [request addRequestHeader:@"User-Agent" value:kLeafUserAgent];
 	
     [request setCacheStoragePolicy:ASICacheForSessionDurationCacheStoragePolicy];
 	[request setDownloadDestinationPath:[[ASIDownloadCache sharedCache] pathToStoreCachedResponseDataForRequest:request]];

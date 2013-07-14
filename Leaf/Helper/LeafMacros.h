@@ -40,3 +40,4 @@
 
 // ads
 #define kLeafAds @" -- (来自Leaf for iPhone)"
+#define kLeafUserAgent @"cnBeta.COM 1.0.30 (iPhone; iPhone OS 6.0.0; en_US"

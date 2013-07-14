@@ -54,6 +54,7 @@
     [request setHTTPMethod:@"GET"];
     [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     [request setValue:@"utf-8" forHTTPHeaderField:@"Accept-Encoding:"];
+    [request setValue:kLeafUserAgent forHTTPHeaderField:@"User-Agent"];
     self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
     
     if (!_connection) {
