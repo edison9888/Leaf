@@ -97,6 +97,9 @@
     [request setRequestCookies:cookies];
     [request setUseCookiePersistence:NO];
     [request setRequestMethod:@"POST"];
+    [request addRequestHeader:@"Referer" value:[NSString stringWithFormat:kCBArticle, _articleId]];
+    [request addRequestHeader:@"Origin" value:@"http://www.cnbeta.com"];
+    [request addRequestHeader:@"Host" value:@"www.cnbeta.com"];
     [request addRequestHeader:@"Content-Type" value:@"application/x-www-form-urlencoded; charset=utf-8"];
     request.delegate = self;
     [request setDidFinishSelector:@selector(commentSuccess:)];
