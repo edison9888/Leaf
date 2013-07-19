@@ -57,16 +57,19 @@
 - (void)loadCommentSuccess:(NSNotification *)notification
 {
     [self hideLeafLoadingView];
-    
-    [_commentModel.dataArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        int i = [[(LeafCommentData *)obj1 support] intValue];
-        int j = [[(LeafCommentData *)obj2 support] intValue];
-        return [__INT(j) compare:__INT(i)];
-
-    }];
-    
-    [_table reloadData];
-    
+    if (_commentModel.dataArray && _commentModel.dataArray.count > 0) {
+        [_commentModel.dataArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            int i = [[(LeafCommentData *)obj1 support] intValue];
+            int j = [[(LeafCommentData *)obj2 support] intValue];
+            return [__INT(j) compare:__INT(i)];
+            
+        }];
+        
+        [_table reloadData];
+    }
+    else {
+        [self postMessage:@"暂无评论!" type:LeafStatusBarOverlayTypeWarning];
+    }
 }
 
 
