@@ -15,7 +15,7 @@
 #import "LeafReplyController.h"
 
 #define kLeafVerifyURL @"http://www.cnbeta.com/captcha.htm?refresh=1&_=%@"
-#define kLeafCommentURL @"http://www.cnbeta.com/comment.htm"
+#define kLeafCommentURL @"http://www.cnbeta.com/comment"
 
 @interface LeafReplyController ()
 {
@@ -25,10 +25,12 @@
     UITextField *_verify;
     ASIFormDataRequest *_request;
     NSString *_verifyURL;
+    UIImage *_verifyImage;
 }
 
 @property (nonatomic, retain) ASIFormDataRequest *request;
 @property (nonatomic, retain) NSString *verifyURL;
+@property (nonatomic, retain) UIImage *verifyImage;
 - (void)refreshVerifyNumber;
 - (BOOL)checkTextFields;
 
@@ -39,6 +41,7 @@
 @synthesize request = _request;
 @synthesize tid = _tid;
 @synthesize verifyURL = _verifyURL;
+@synthesize verifyImage = _verifyImage;
 
 - (void)dealloc
 {
@@ -46,6 +49,7 @@
     [_request clearDelegatesAndCancel];
     [_request release], _request = nil;
     [_tid release], _tid = nil;
+    [_verifyImage release], _verifyImage = nil;
     [_verifyURL release], _verifyURL = nil;
     [super dealloc];
 }
@@ -71,6 +75,7 @@
     NSHTTPCookie *cookie = [manager cookieForToken];
     NSHTTPCookie *session = [manager cookieForSession];
     if (!cookie || !session) {
+        [self postMessage:@"验证码无效!" type:LeafStatusBarOverlayTypeWarning];
         return;
     }
     NSString *token = [manager token];
@@ -122,23 +127,25 @@
         
         LeafCookieManager *manager = [LeafCookieManager sharedInstance];
         ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:kLeafVerifyURL, timestamp]]];
+        [request addRequestHeader:@"Referer" value:[NSString stringWithFormat:kCBArticle, _articleId]];
+        
         NSHTTPCookie *session = [manager cookieForSession];
         NSHTTPCookie *token = [manager cookieForToken];
         if (token && session) {
             NSMutableArray *cookies = [NSMutableArray arrayWithObjects:token, session, nil];
             [request setRequestCookies:cookies];
-            [request setUseCookiePersistence:NO];
-         }
-
+        }
+        [request setUseCookiePersistence:NO];
         [request startSynchronous];
         if (request.responseCookies) {
             for (NSHTTPCookie *cookie in request.responseCookies) {
+                NSLog(@"cookie: %@",[cookie description]);
                 if (cookie && [cookie.name isEqualToString:@"PHPSESSID"]) {
                     [manager updateSessionId:cookie.value];
                 }
             }
         }
-
+        session = [manager cookieForSession];
         NSData *data = request.responseData;
         if (data) {
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:NULL];
@@ -146,17 +153,26 @@
                 NSString *url = [dict stringForKey:@"url"];
                 self.verifyURL = [NSString stringWithFormat:@"http://www.cnbeta.com%@", url];
                 NSLog(@"verifyURL: %@", _verifyURL);
+                
+                ASIHTTPRequest *veriReq = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:_verifyURL]];
+                
+                if (session) {
+                    NSMutableArray *cookies = [NSMutableArray arrayWithObjects:session, nil];
+                    [veriReq setRequestCookies:cookies];
+                    [veriReq setUseCookiePersistence:NO];
+                }
+                [veriReq  addRequestHeader:@"Referer" value:[NSString stringWithFormat:kCBArticle, _articleId]];
+                [veriReq startSynchronous];
+                
+                if (veriReq.responseData) {
+                   self.verifyImage = [UIImage imageWithData:veriReq.responseData];
+                }
             }
         }
         
     } complete:^{
-        
-        [[SDImageCache sharedImageCache] removeImageForKey:_verifyURL];
-        [_valimg setImageWithURL:[NSURL URLWithString:_verifyURL] success:^(UIImage *image) {
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        } failure:^(NSError *error) {
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        }];
+
+        _valimg.image = _verifyImage;
         _verify.text = @"";
     }];
 }

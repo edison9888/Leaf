@@ -14,10 +14,10 @@
 
  // @"http://www.cnbeta.com/api/getComment.php?article=" // old api deprecated
 
-#define kLeafCommentURL @"http://www.cnbeta.com/comment.htm?op=info&page=1&sid="
+#define kLeafCommentURL @"http://www.cnbeta.com/comment?op=info&page=1&sid=%@&_=%@"
 #define kLeafSupportURL @"http://www.cnbeta.com/Ajax.vote.php?tid=%@&support=1"
 #define kLeafAgainstURL @"http://www.cnbeta.com/Ajax.vote.php?tid=%@&against=1"
-#define kLeafVoteURL @"http://www.cnbeta.com/comment.htm"
+#define kLeafVoteURL @"http://www.cnbeta.com/comment"
 
 
 @interface LeafCommentModel ()
@@ -63,13 +63,19 @@
     }
     
     self.articleId = articleId;
-    NSString *url = [kLeafCommentURL stringByAppendingString:articleId];
+    NSDate *date = [NSDate date];
+    NSString *timestamp = [NSString stringWithFormat:@"%lld", (long long)([date timeIntervalSince1970] * 1000)];
+    
+    NSString *url = [NSString stringWithFormat:kLeafCommentURL, articleId, timestamp];
 
     if (_request) {
         [_request clearDelegatesAndCancel];
     }
     self.request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
     _request.delegate = self;
+    [_request addRequestHeader:@"Host" value:@"www.cnbeta.com"];
+    [_request addRequestHeader:@"Referer" value:[NSString stringWithFormat:kCBArticle, _articleId]];
+    
     _request.didFinishSelector = @selector(commentDidFinish:);
     _request.didFailSelector = @selector(commentDidFailed:);
     [_request startAsynchronous];
@@ -98,6 +104,9 @@
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:kLeafVoteURL]];
     [request setRequestCookies:cookies];
     [request setUseCookiePersistence:NO];
+    [request addRequestHeader:@"Host" value:@"www.cnbeta.com"];
+    [request addRequestHeader:@"Referer" value:[NSString stringWithFormat:kCBArticle, _articleId]];
+    [request addRequestHeader:@"Origin" value:@"http://www.cnbeta.com"];
     //request.delegate = self;
     //request.didFinishSelector = @selector(requestDidFinish:);
     //request.didFailSelector = @selector(requestDidFailed:);
